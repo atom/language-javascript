@@ -1,0 +1,8 @@
+{
+  "name": "Folding",
+  "scope": "source.js",
+  "settings": {
+    "foldingStartMarker": "\\{\\s*(//.*)?$|\\[\\s*(//.*)?$|\\(\\s*(//.*)?$",
+    "foldingStopMarker": "^\\s*\\}|^\\s*\\]|^\\s*\\)"
+  }
+}

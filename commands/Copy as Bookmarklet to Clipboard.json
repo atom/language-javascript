@@ -1,0 +1,9 @@
+{
+  "beforeRunningCommand": "nop",
+  "command": "#!/usr/bin/env perl\n#\n# Written by John Gruber, taken with permission from:\n# http://daringfireball.net/2007/03/javascript_bookmarklet_builder\n\nuse strict;\nuse warnings;\nuse URI::Escape qw(uri_escape_utf8);\nuse open  IO  => \":utf8\",       # UTF8 by default\n          \":std\";               # Apply to STDIN/STDOUT/STDERR\n\nmy $src = do { local $/; <> };\n\n# Zap the first line if there's already a bookmarklet comment:\n$src =~ s{^// ?javascript:.+\\n}{};\nmy $bookmarklet = $src;\n\n$bookmarklet =~ s{^\\s*//.+\\n}{}gm;  # Kill comments.\n$bookmarklet =~ s{\\t}{ }gm;         # Tabs to spaces\n$bookmarklet =~ s{ +}{ }gm;         # Space runs to one space\n$bookmarklet =~ s{^\\s+}{}gm;        # Kill line-leading whitespace\n$bookmarklet =~ s{\\s+$}{}gm;        # Kill line-ending whitespace\n$bookmarklet =~ s{\\n}{}gm;          # Kill newlines\n\n# Escape single- and double-quotes, spaces, control chars, unicode:\n$bookmarklet = \"javascript:\" .\n    uri_escape_utf8($bookmarklet, qq('\" \\x00-\\x1f\\x7f-\\xff));\n\nprint \"// $bookmarklet\\n\" . $src;\n\n# Put bookmarklet on clipboard:\n`/bin/echo -n '$bookmarklet' | /usr/bin/pbcopy`;\n",
+  "input": "selection",
+  "keyEquivalent": "^H",
+  "name": "Copy as Bookmarklet to Clipboard",
+  "output": "replaceSelectedText",
+  "scope": "source.js"
+}

@@ -1,0 +1,6 @@
+{
+  "content": "switch (${1:expression}) {\ncase ${2:expression}:\n\t$4\n\tbreak;$5\ndefault:\n\t${3:$TM_SELECTED_TEXT}\n}",
+  "name": "switch",
+  "scope": "source.js",
+  "tabTrigger": "switch"
+}

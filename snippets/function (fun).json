@@ -1,0 +1,6 @@
+{
+  "content": "function ${1:function_name}(${2:argument}) {\n\t${0:// body...}\n}",
+  "name": "Function",
+  "scope": "source.js",
+  "tabTrigger": "fun"
+}

@@ -1,0 +1,14 @@
+{
+  "beforeRunningCommand": "nop",
+  "command": "#!/usr/bin/env bash\n\ncat <<SNIPPET\n${TM_SELECTED_TEXT:-$TM_CURRENT_WORD}: function (\\${1:args}) {\n\t\\$0\n}\\${2:,}\nSNIPPET",
+  "fallbackInput": "word",
+  "input": "selection",
+  "inputFormat": "text",
+  "keyEquivalent": "~$\r",
+  "name": "New Method",
+  "outputCaret": "afterOutput",
+  "outputFormat": "snippet",
+  "outputLocation": "replaceInput",
+  "scope": "source.js",
+  "version": 2
+}

@@ -1,0 +1,6 @@
+{
+  "content": "function ($1) {\n\t${0:$TM_SELECTED_TEXT}\n}",
+  "name": "Anonymous Function",
+  "scope": "source.js",
+  "tabTrigger": "f"
+}

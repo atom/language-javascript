@@ -1,0 +1,6 @@
+{
+  "content": "setTimeout(${2:function () {\n\t${3:$TM_SELECTED_TEXT}\n\\}}, ${1:10});",
+  "name": "setTimeout function",
+  "scope": "source.js",
+  "tabTrigger": "timeout"
+}

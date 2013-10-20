@@ -1,0 +1,6 @@
+{
+  "content": "for (${2:var }${20:i} = 0; ${20:i} < ${1:Things}.length; ${20:i}++) {\n\t${100:${1:Things}[${20:i}]}\n}",
+  "name": "for (…) {…}",
+  "scope": "source.js",
+  "tabTrigger": "for"
+}

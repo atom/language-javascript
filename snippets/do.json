@@ -1,0 +1,6 @@
+{
+  "content": "do {\n\t${2:$TM_SELECTED_TEXT}\n} while (${1:true});",
+  "name": "do",
+  "scope": "source.js",
+  "tabTrigger": "do"
+}

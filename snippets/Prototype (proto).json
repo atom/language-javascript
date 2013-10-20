@@ -1,0 +1,6 @@
+{
+  "content": "${1:class_name}.prototype.${2:method_name} = function (${3:first_argument}) {\n\t${0:// body...}\n};",
+  "name": "Prototype",
+  "scope": "source.js",
+  "tabTrigger": "proto"
+}

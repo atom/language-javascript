@@ -1,0 +1,6 @@
+{
+  "content": "else {\n\t${1:$TM_SELECTED_TEXT}\n}",
+  "name": "else",
+  "scope": "source.js",
+  "tabTrigger": "else"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Symbol List Class",
+  "scope": "source.js entity.name.type.class",
+  "settings": {
+    "showInSymbolList": "1",
+    "symbolTransformation": "\n      s/^/• /g;\n   "
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Indentation",
+  "scope": "source.js",
+  "settings": {
+    "decreaseIndentPattern": "^(.*\\*/)?\\s*(\\}|\\)|case|default)",
+    "increaseIndentPattern": "(?x)\n\t\t(\n\t\t\t\\{ [^}\"']*\n\t\t|\t\\( [^)\"']*\n\t\t|\tcase[\\s\\S]*:\n\t\t|\tdefault:\n\t\t)\n\t\t$\n\t"
+  }
+}

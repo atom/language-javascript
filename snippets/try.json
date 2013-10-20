@@ -1,0 +1,6 @@
+{
+  "content": "try {\n\t${1:statements}\n} catch (${2:variable}) {\n\t${3:statements}\n}${4: finally {\n\t${5:statements}\n\\}}",
+  "name": "try",
+  "scope": "source.js",
+  "tabTrigger": "try"
+}

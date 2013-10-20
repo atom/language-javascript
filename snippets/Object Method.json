@@ -1,0 +1,6 @@
+{
+  "content": "${1:method_name}: function (${3:attribute}){\n\t$0\n}${10:,}",
+  "name": "Object Method",
+  "scope": "source.js",
+  "tabTrigger": ":f"
+}

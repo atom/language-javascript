@@ -1,0 +1,6 @@
+{
+  "content": "getElementsByClassName(${1:'${2:className}'})",
+  "name": "getElementsByClassName",
+  "scope": "source.js",
+  "tabTrigger": "get"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Symbol List Banned",
+  "scope": "source.js meta.property.function entity.name.function, source.js entity.name.type.object, source.js entity.name.type.instance",
+  "settings": {
+    "showInSymbolList": "0"
+  }
+}

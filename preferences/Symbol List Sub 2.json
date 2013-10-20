@@ -1,0 +1,8 @@
+{
+  "name": "Symbol List Sub 2",
+  "scope": "source.js meta.group meta.group object.property.function",
+  "settings": {
+    "showInSymbolList": "1",
+    "symbolTransformation": "\n      s/^/  :/g;\n   "
+  }
+}

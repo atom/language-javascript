@@ -1,0 +1,15 @@
+{
+  "beforeRunningCommand": "nop",
+  "command": "#!/usr/bin/env bash\n[[ -f \"${TM_SUPPORT_PATH}/lib/bash_init.sh\" ]] && . \"${TM_SUPPORT_PATH}/lib/bash_init.sh\"\n\n# index created using: curl -s 'http://devguru.com/technologies/javascript/index.asp'|grep -o '<a href=\"[0-9]*.asp\">[a-z][a-zA-Z]*</a>'|perl -pe 's/<a href=\"([^\"]*)\">([^<]*)<\\/a>/$2\\t$1/'|sort|uniq|gzip >dev_guru_index.gz\n\nref=$(zgrep -w \"^${TM_SELECTED_TEXT:-$TM_CURRENT_WORD}\" \"$TM_BUNDLE_SUPPORT/dev_guru_index.gz\"|cut -f2)\n\n[[ -n \"$ref\" ]] && exit_show_html \"<meta http-equiv='Refresh' content='0;URL=http://devguru.com/technologies/javascript/$ref'>\"\n\necho \"No documentation found.\"",
+  "fallbackInput": "word",
+  "input": "selection",
+  "inputFormat": "text",
+  "keyEquivalent": "^h",
+  "name": "Documentation for Word / Selection",
+  "outputCaret": "afterOutput",
+  "outputFormat": "text",
+  "outputLocation": "toolTip",
+  "scope": "source.js",
+  "semanticClass": "lookup.define.js",
+  "version": 2
+}

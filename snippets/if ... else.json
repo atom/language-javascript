@@ -1,0 +1,6 @@
+{
+  "content": "if (${1:true}) {\n\t${2:$TM_SELECTED_TEXT}\n} else {\n\t$3\n}",
+  "name": "if … else",
+  "scope": "source.js",
+  "tabTrigger": "ife"
+}

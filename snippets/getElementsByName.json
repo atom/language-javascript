@@ -1,0 +1,6 @@
+{
+  "content": "getElementsByName(${1:'${2:name}'})",
+  "name": "getElementsByName",
+  "scope": "source.js",
+  "tabTrigger": "get"
+}

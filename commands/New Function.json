@@ -1,0 +1,10 @@
+{
+  "beforeRunningCommand": "nop",
+  "command": "cat <<SNIPPET\nfunction ${TM_SELECTED_TEXT:-$TM_CURRENT_WORD}(\\${1:args}) {\n\t\\$0\n}\nSNIPPET",
+  "fallbackInput": "word",
+  "input": "selection",
+  "keyEquivalent": "$\r",
+  "name": "New Function",
+  "output": "insertAsSnippet",
+  "scope": "source.js"
+}

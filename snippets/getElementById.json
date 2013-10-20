@@ -1,0 +1,6 @@
+{
+  "content": "getElementById(${1:'${2:id}'})",
+  "name": "getElementById",
+  "scope": "source.js",
+  "tabTrigger": "get"
+}

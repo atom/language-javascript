@@ -1,0 +1,9 @@
+{
+  "beforeRunningCommand": "nop",
+  "command": "#!/usr/bin/env python\n\nimport os\nimport sys\n\nsys.path.append(os.path.join(os.environ[\"TM_BUNDLE_SUPPORT\"], \"lib\"))\n\nimport jsbeautifier\n\nopts = jsbeautifier.default_options()\n\nif os.environ[\"TM_SOFT_TABS\"] == 'NO':\n    opts.indent_size = 1\n    opts.indent_char = '\\t'\nelse:\n    opts.indent_size = int(os.environ[\"TM_TAB_SIZE\"])\n\nprint jsbeautifier.beautify_file('-', opts)\n",
+  "input": "selection",
+  "keyEquivalent": "^H",
+  "name": "Reformat Document / Selection",
+  "output": "replaceSelectedText",
+  "scope": "source.js"
+}
