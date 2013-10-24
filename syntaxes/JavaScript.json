@@ -5,6 +5,7 @@
     "htc",
     "jsx"
   ],
+  "firstLineMatch": "^#!.*\\bnode",
   "keyEquivalent": "^~J",
   "name": "JavaScript",
   "patterns": [
