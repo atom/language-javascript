@@ -491,6 +491,10 @@
     {
       "match": "\\[|\\]",
       "name": "meta.brace.square.js"
+    },
+    {
+      "match": "\\A#!.*$",
+      "name": "comment.line.shebang.js"
     }
   ],
   "repository": {
