@@ -1,0 +1,7 @@
+{
+  "source.js": {
+    "editor": {
+      "commentStart": "// "
+    }
+  }
+}
