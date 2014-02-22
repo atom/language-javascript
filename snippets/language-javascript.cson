@@ -1,0 +1,61 @@
+'.source.js':
+  'Object Method':
+    'prefix': ':f'
+    'body': '${1:method_name}: function (${3:attribute}){\n\t$0\n}${10:,}'
+  'Object key — key: "value"':
+    'prefix': ':'
+    'body': '${1:key}: ${2:"${3:value}"}${4:, }'
+  'Prototype':
+    'prefix': 'proto'
+    'body': '${1:class_name}.prototype.${2:method_name} = function (${3:first_argument}) {\n\t${0:// body...}\n};'
+  'do':
+    'prefix': 'do'
+    'body': 'do {\n\t$2\n} while (${1:true});'
+  'else':
+    'prefix': 'else'
+    'body': 'else {\n\t$1\n}'
+  'for in':
+    'prefix': 'forin'
+    'body': 'for (${1:variable} in ${2:object}) {\n\t${5:if (${3:object}.hasOwnProperty(${4:variable})) {\n\t\t$6\n\t\\}}\n}'
+  'Function':
+    'prefix': 'fun'
+    'body': 'function ${1:function_name}(${2:argument}) {\n\t${0:// body...}\n}'
+  'Anonymous Function':
+    'prefix': 'f'
+    'body': 'function ($1) {\n\t$2\n}'
+  'getElementById':
+    'prefix': 'get'
+    'body': 'getElementById(${1:\'${2:id}\'})'
+  'getElementsByClassName':
+    'prefix': 'get'
+    'body': 'getElementsByClassName(${1:\'${2:className}\'})'
+  'getElementsByName':
+    'prefix': 'get'
+    'body': 'getElementsByName(${1:\'${2:name}\'})'
+  'getElementsByTagName':
+    'prefix': 'get'
+    'body': 'getElementsByTagName(${1:\'${2:tagName}\'})'
+  'if … else':
+    'prefix': 'ife'
+    'body': 'if (${1:true}) {\n\t$2\n} else {\n\t$3\n}'
+  'if':
+    'prefix': 'if'
+    'body': 'if (${1:true}) {\n\t$2\n}'
+  'log':
+    'prefix': 'log'
+    'body': 'console.log($1);$0'
+  'setInterval function':
+    'prefix': 'interval'
+    'body': 'setInterval(${2:function () {\n\t$3\n\\}}, ${1:10});'
+  'setTimeout function':
+    'prefix': 'timeout'
+    'body': 'setTimeout(${2:function () {\n\t$3\n\\}}, ${1:10});'
+  'switch':
+    'prefix': 'switch'
+    'body': 'switch (${1:expression}) {\ncase ${2:expression}:\n\t$4\n\tbreak;$5\ndefault:\n\t$3\n}'
+  'try':
+    'prefix': 'try'
+    'body': 'try {\n\t${1:statements}\n} catch (${2:variable}) {\n\t${3:statements}\n}${4: finally {\n\t${5:statements}\n\\}}'
+  'while':
+    'prefix': 'while'
+    'body': 'while (${1:true}) {\n\t$2\n}'

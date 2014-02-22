@@ -1,6 +1,0 @@
-{
-  "content": "while (${1:true}) {\n\t${2:$TM_SELECTED_TEXT}\n}",
-  "name": "while",
-  "scope": "source.js",
-  "tabTrigger": "while"
-}

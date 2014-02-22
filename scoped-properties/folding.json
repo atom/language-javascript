@@ -1,7 +1,0 @@
-{
-  ".source.js": {
-    "editor": {
-      "foldEndPattern": "^\\s*\\}|^\\s*\\]|^\\s*\\)"
-    }
-  }
-}

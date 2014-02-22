@@ -1,6 +1,0 @@
-{
-  "content": "console.log($1);$0",
-  "name": "log",
-  "scope": "source.js",
-  "tabTrigger": "log"
-}
