@@ -4,6 +4,7 @@
   'htc'
   'jsx'
   '_js'
+  'es6'
 ]
 'firstLineMatch': '^#!.*\\bnode'
 'keyEquivalent': '^~J'
