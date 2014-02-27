@@ -16,7 +16,7 @@
     'body': 'else {\n\t$1\n}'
   'for in':
     'prefix': 'forin'
-    'body': 'for (${1:variable} in ${2:object}) {\n\t${5:if (${3:object}.hasOwnProperty(${4:variable})) {\n\t\t$6\n\t\\}}\n}'
+    'body': 'for (${1:variable} in ${2:object}) {\n\t${5:if (${3:object}.hasOwnProperty(${4:variable})) {\n\t\t$6\n\t}}\n}'
   'Function':
     'prefix': 'fun'
     'body': 'function ${1:function_name}(${2:argument}) {\n\t${0:// body...}\n}'
