@@ -46,16 +46,16 @@
     'body': 'console.log($1);$0'
   'setInterval function':
     'prefix': 'interval'
-    'body': 'setInterval(${2:function () {\n\t$3\n\\}}, ${1:10});'
+    'body': 'setInterval(${2:function () {\n\t$3\n}}, ${1:10});'
   'setTimeout function':
     'prefix': 'timeout'
-    'body': 'setTimeout(${2:function () {\n\t$3\n\\}}, ${1:10});'
+    'body': 'setTimeout(${2:function () {\n\t$3\n}}, ${1:10});'
   'switch':
     'prefix': 'switch'
     'body': 'switch (${1:expression}) {\ncase ${2:expression}:\n\t$4\n\tbreak;$5\ndefault:\n\t$3\n}'
   'try':
     'prefix': 'try'
-    'body': 'try {\n\t${1:statements}\n} catch (${2:variable}) {\n\t${3:statements}\n}${4: finally {\n\t${5:statements}\n\\}}'
+    'body': 'try {\n\t${1:statements}\n} catch (${2:variable}) {\n\t${3:statements}\n}${4: finally {\n\t${5:statements}\n}}'
   'while':
     'prefix': 'while'
     'body': 'while (${1:true}) {\n\t$2\n}'
