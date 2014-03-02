@@ -14,6 +14,9 @@
   'else':
     'prefix': 'else'
     'body': 'else {\n\t$1\n}'
+  'for':
+    'prefix' : 'for'
+    'body' : 'for (var i = 0; i < ${1:array}.length; i++) {\n\t${2:array}[i]\n}'
   'for in':
     'prefix': 'forin'
     'body': 'for (${1:variable} in ${2:object}) {\n\t${5:if (${3:object}.hasOwnProperty(${4:variable})) {\n\t\t$6\n\t}}\n}'
