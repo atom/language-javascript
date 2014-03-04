@@ -1,7 +1,7 @@
 '.source.js':
   'Object Method':
     'prefix': ':f'
-    'body': '${1:method_name}: function (${3:attribute}){\n\t$0\n}${10:,}'
+    'body': '${1:method_name}: function (${2:attribute}){\n\t$3\n}${4:,}'
   'Object key — key: "value"':
     'prefix': ':'
     'body': '${1:key}: ${2:"${3:value}"}${4:, }'
