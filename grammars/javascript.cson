@@ -286,15 +286,15 @@
     'name': 'comment.block.html.js'
   }
   {
-    'match': '(?<!\\.)\\b(boolean|byte|char|class|double|enum|float|function|int|interface|long|short|void)\\b'
+    'match': '(?<!\\.)\\b(class|enum|function|interface|void)\\b'
     'name': 'storage.type.js'
   }
   {
-    'match': '(?<!\\.)\\b(const|export|extends|final|implements|native|private|protected|public|static|synchronized|throws|transient|var|volatile)\\b'
+    'match': '(?<!\\.)\\b(const|export|extends|implements|let|private|protected|public|static|var)\\b'
     'name': 'storage.modifier.js'
   }
   {
-    'match': '(?<!\\.)\\b(break|case|catch|continue|default|do|else|finally|for|goto|if|import|package|return|switch|throw|try|while)\\b'
+    'match': '(?<!\\.)\\b(break|case|catch|continue|default|do|else|finally|for|if|import|package|return|switch|throw|try|while|yield)\\b'
     'name': 'keyword.control.js'
   }
   {
