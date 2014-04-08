@@ -285,39 +285,39 @@
     'name': 'comment.block.html.js'
   }
   {
-    'match': '(?<!\\.)\\b(class|enum|function|interface|void)\\b'
+    'match': '(?<!\\.)\\b(class|enum|function|interface|void)(?!\\s*:)\\b'
     'name': 'storage.type.js'
   }
   {
-    'match': '(?<!\\.)\\b(const|export|extends|implements|let|private|protected|public|static|var)\\b'
+    'match': '(?<!\\.)\\b(const|export|extends|implements|let|private|protected|public|static|var)(?!\\s*:)\\b'
     'name': 'storage.modifier.js'
   }
   {
-    'match': '(?<!\\.)\\b(break|case|catch|continue|default|do|else|finally|for|if|import|package|return|switch|throw|try|while|yield)\\b'
+    'match': '(?<!\\.)\\b(break|case|catch|continue|default|do|else|finally|for|if|import|package|return|switch|throw|try|while|yield)(?!\\s*:)\\b'
     'name': 'keyword.control.js'
   }
   {
-    'match': '(?<!\\.)\\b(delete|in|instanceof|new|typeof|with)\\b'
+    'match': '(?<!\\.)\\b(delete|in|instanceof|new|typeof|with)(?!\\s*:)\\b'
     'name': 'keyword.operator.js'
   }
   {
-    'match': '(?<!\\.)\\btrue\\b'
+    'match': '(?<!\\.)\\btrue(?!\\s*:)\\b'
     'name': 'constant.language.boolean.true.js'
   }
   {
-    'match': '(?<!\\.)\\bfalse\\b'
+    'match': '(?<!\\.)\\bfalse(?!\\s*:)\\b'
     'name': 'constant.language.boolean.false.js'
   }
   {
-    'match': '(?<!\\.)\\bnull\\b'
+    'match': '(?<!\\.)\\bnull(?!\\s*:)\\b'
     'name': 'constant.language.null.js'
   }
   {
-    'match': '(?<!\\.)\\b(super|this)\\b'
+    'match': '(?<!\\.)\\b(super|this)(?!\\s*:)\\b'
     'name': 'variable.language.js'
   }
   {
-    'match': '(?<!\\.)\\b(debugger)\\b'
+    'match': '(?<!\\.)\\b(debugger)(?!\\s*:)\\b'
     'name': 'keyword.other.js'
   }
   {
