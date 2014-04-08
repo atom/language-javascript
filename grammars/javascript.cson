@@ -1,4 +1,3 @@
-'comment': 'JavaScript Syntax: version 2.0'
 'fileTypes': [
   'js'
   'htc'
@@ -7,7 +6,6 @@
   'es6'
 ]
 'firstLineMatch': '^#!.*\\bnode'
-'keyEquivalent': '^~J'
 'name': 'JavaScript'
 'patterns': [
   {
