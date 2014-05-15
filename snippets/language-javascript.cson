@@ -38,15 +38,15 @@
   'getElementsByTagName':
     'prefix': 'get'
     'body': 'getElementsByTagName(${1:\'${2:tagName}\'})'
+  'Immediately-Invoked Function Expression':
+    'prefix': 'iife'
+    'body': '(function() {\n${1:\t"use strict";\n}\t$2\n}());'
   'if … else':
     'prefix': 'ife'
     'body': 'if (${1:true}) {\n\t$2\n} else {\n\t$3\n}'
   'if':
     'prefix': 'if'
     'body': 'if (${1:true}) {\n\t$2\n}'
-  'Immediately-Invoked Function Expression':
-    'prefix': 'iife'
-    'body': '(function() {\n${1:\t"use strict";\n}\t$2\n}());'
   'log':
     'prefix': 'log'
     'body': 'console.log($1);$0'
