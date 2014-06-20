@@ -2,5 +2,12 @@
   'editor':
     'commentStart': '// '
     'foldEndPattern': '^\\s*\\}|^\\s*\\]|^\\s*\\)'
-    'increaseIndentPattern': '(?x)\n\t\t(\n\t\t\t\\{ [^}"\']*\n\t\t|\t\\( [^)"\']*\n\t\t|\tcase[\\s\\S]*:\n\t\t|\tdefault:\n\t\t)\n\t\t$\n\t'
+    'increaseIndentPattern': '(?x)
+      (
+         \\{ [^}"\']*
+      |  \\( [^)"\']*
+      |  case[\\s\\S]*:
+      |  default:
+      )
+      $'
     'decreaseIndentPattern': '^(.*\\*/)?\\s*(\\}|\\)|case|default)'
