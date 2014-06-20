@@ -3,13 +3,15 @@
     'commentStart': '// '
     'foldEndPattern': '^\\s*\\}|^\\s*\\]|^\\s*\\)'
     'increaseIndentPattern': '(?x)
-      (
-         \\{ [^}"\']*
-      |  \\( [^)"\']*
-      |  case[\\s\\S]*:
-      |  default:
-      )
-      $'
+        \\{ [^}"\']* $
+      | \\( [^)"\']* $
+      | case[\\s\\S]*: $
+      | default: $
+      | ^ \\s* if \\s* \\( (?!.*?\\belse\\b)
+      | ^ \\s* \\}? \\s* else \\s*
+      | ^ \\s* (for|while) \\s* \\(
+      '
     'decreaseIndentPattern': '(?x)
-       ^(.*\\*/)?\\s*(\\}|\\)|case|default)
-      |^\\s* else \\s*$'
+        ^(.*\\*/)?\\s*(\\}|\\)|case|default)
+      | ^\\s* else \\s*$
+      '
