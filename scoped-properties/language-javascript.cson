@@ -10,6 +10,7 @@
       | ^ \\s* if \\s* \\( (?!.*?\\belse\\b)
       | ^ \\s* \\}? \\s* else \\s*
       | ^ \\s* (for|while) \\s* \\(
+      | ^ \\s* do \\s* $
       '
     'decreaseIndentPattern': '(?x)
         ^(.*\\*/)?\\s*(\\}|\\)|case|default)
