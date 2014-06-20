@@ -10,4 +10,6 @@
       |  default:
       )
       $'
-    'decreaseIndentPattern': '^(.*\\*/)?\\s*(\\}|\\)|case|default)'
+    'decreaseIndentPattern': '(?x)
+       ^(.*\\*/)?\\s*(\\}|\\)|case|default)
+      |^\\s* else \\s*$'
