@@ -13,6 +13,6 @@
       | ^ \\s* do \\s* $
       '
     'decreaseIndentPattern': '(?x)
-        ^(.*\\*/)?\\s*(\\}|\\)|case|default)
+        ^(.*\\*/)?\\s*(\\}|\\))
       | ^\\s* else \\s*$
       '
