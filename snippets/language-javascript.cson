@@ -73,4 +73,4 @@
     'body': 'while (${1:true}) {\n\t$2\n}'
   'Start Docblock':
     'prefix': '/**'
-    'body': '/**\n * $0\n */'
+    'body': '/**\n * $1\n */$0'
