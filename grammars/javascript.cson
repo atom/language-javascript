@@ -425,15 +425,12 @@
   'function-params':
     'patterns': [
       {
-        'begin': '(?![\\s,)])'
+        'begin': '(?=[\\p{L}\\p{Nl}$_])'
         'end': '(?=[,)])'
         'patterns': [
           {
-            'match': '\\G[$_a-zA-Z][$_a-zA-Z0-9]*'
+            'match': '\\G[\\p{L}\\p{Nl}$_][\\p{L}\\p{Nl}$\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}\\x{200C}\\x{200D}]*'
             'name': 'variable.parameter.function.js'
-          }
-          {
-            'include': '$self'
           }
         ]
       }
