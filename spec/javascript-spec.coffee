@@ -28,6 +28,12 @@ describe "Javascript grammar", ->
         expect(tokens[2].scopes).toEqual ["source.js", scope, "punctuation.definition.string.end.js"]
 
   describe "regular expressions", ->
+    it "tokenizes regular expressions", ->
+      {tokens} = grammar.tokenizeLine('/test/')
+      expect(tokens[0]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[1]).toEqual value: 'test', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[2]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+
     it "tokenizes regular expressions inside arrays", ->
       {tokens} = grammar.tokenizeLine('[/test/]')
       expect(tokens[0]).toEqual value: '[', scopes: ['source.js', 'meta.brace.square.js']
@@ -35,3 +41,13 @@ describe "Javascript grammar", ->
       expect(tokens[2]).toEqual value: 'test', scopes: ['source.js', 'string.regexp.js']
       expect(tokens[3]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
       expect(tokens[4]).toEqual value: ']', scopes: ['source.js', 'meta.brace.square.js']
+
+  it "tokenizes the / arithmetic operator when separated by newlines", ->
+    lines = grammar.tokenizeLines """
+      1
+      / 2
+    """
+
+    expect(lines[0][0]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.js']
+    expect(lines[1][0]).toEqual value: '/ ', scopes: ['source.js']
+    expect(lines[1][1]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
