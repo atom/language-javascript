@@ -26,3 +26,12 @@ describe "Javascript grammar", ->
         expect(tokens[1].scopes).toEqual ["source.js", scope]
         expect(tokens[2].value).toEqual delim
         expect(tokens[2].scopes).toEqual ["source.js", scope, "punctuation.definition.string.end.js"]
+
+  describe "regular expressions", ->
+    it "tokenizes regular expressions inside arrays", ->
+      {tokens} = grammar.tokenizeLine('[/test/]')
+      expect(tokens[0]).toEqual value: '[', scopes: ['source.js', 'meta.brace.square.js']
+      expect(tokens[1]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[2]).toEqual value: 'test', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[3]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+      expect(tokens[4]).toEqual value: ']', scopes: ['source.js', 'meta.brace.square.js']
