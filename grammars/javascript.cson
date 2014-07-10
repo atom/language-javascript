@@ -296,7 +296,7 @@
     'name': 'comment.block.html.js'
   }
   {
-    'match': '(?<!\\.)\\b(class|enum|function|interface|void)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(class|enum|function|interface)(?!\\s*:)\\b'
     'name': 'storage.type.js'
   }
   {
@@ -308,7 +308,7 @@
     'name': 'keyword.control.js'
   }
   {
-    'match': '(?<!\\.)\\b(delete|in|instanceof|new|typeof|with)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(delete|in|instanceof|new|typeof|with|void)(?!\\s*:)\\b'
     'name': 'keyword.operator.js'
   }
   {
