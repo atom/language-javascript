@@ -41,6 +41,11 @@ describe "Javascript grammar", ->
       expect(tokens[2]).toEqual value: 'test', scopes: ['source.js', 'string.regexp.js']
       expect(tokens[3]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
       expect(tokens[4]).toEqual value: ']', scopes: ['source.js', 'meta.brace.square.js']
+      
+  describe "operators", ->
+    it "tokenizes void correctly", ->
+      {tokens} = grammar.tokenizeLine('void')
+      expect(tokens[0]).toEqual value: 'void', scopes: ['source.js', 'keyword.operator.js']
 
   it "tokenizes the / arithmetic operator when separated by newlines", ->
     lines = grammar.tokenizeLines """
