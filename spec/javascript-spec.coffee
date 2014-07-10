@@ -47,12 +47,12 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('void')
       expect(tokens[0]).toEqual value: 'void', scopes: ['source.js', 'keyword.operator.js']
 
-  it "tokenizes the / arithmetic operator when separated by newlines", ->
-    lines = grammar.tokenizeLines """
-      1
-      / 2
-    """
+    it "tokenizes the / arithmetic operator when separated by newlines", ->
+      lines = grammar.tokenizeLines """
+        1
+        / 2
+      """
 
-    expect(lines[0][0]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.js']
-    expect(lines[1][0]).toEqual value: '/ ', scopes: ['source.js']
-    expect(lines[1][1]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
+      expect(lines[0][0]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.js']
+      expect(lines[1][0]).toEqual value: '/ ', scopes: ['source.js']
+      expect(lines[1][1]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
