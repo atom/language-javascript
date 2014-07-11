@@ -304,7 +304,7 @@
     'name': 'storage.modifier.js'
   }
   {
-    'match': '(?<!\\.)\\b(break|case|catch|continue|default|do|else|finally|for|if|import|package|return|switch|throw|try|while|yield|with)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(break|case|catch|continue|default|do|else|finally|for|if|import|package|return|switch|throw|try|while|with|yield)(?!\\s*:)\\b'
     'name': 'keyword.control.js'
   }
   {
