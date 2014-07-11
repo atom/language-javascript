@@ -304,11 +304,11 @@
     'name': 'storage.modifier.js'
   }
   {
-    'match': '(?<!\\.)\\b(break|case|catch|continue|default|do|else|finally|for|if|import|package|return|switch|throw|try|while|yield)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(break|case|catch|continue|default|do|else|finally|for|if|import|package|return|switch|throw|try|while|yield|with)(?!\\s*:)\\b'
     'name': 'keyword.control.js'
   }
   {
-    'match': '(?<!\\.)\\b(delete|in|instanceof|new|typeof|with|void)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(delete|in|instanceof|new|typeof|void)(?!\\s*:)\\b'
     'name': 'keyword.operator.js'
   }
   {
