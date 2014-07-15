@@ -420,6 +420,14 @@
     'match': '\\A#!.*$'
     'name': 'comment.line.shebang.js'
   }
+  {
+    'match': '(?<!\\.)\\b(require)(?!\\s*:)\\b'
+    'name': 'support.function.js'
+  }
+  {
+    'match': '(?<!\\.)\\b(module|exports|__filename|__dirname|global|process)(?!\\s*:)\\b'
+    'name': 'support.variable.js'
+  }
 ]
 'repository':
   'function-params':
