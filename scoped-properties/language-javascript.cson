@@ -7,9 +7,9 @@
       | \\( [^)"\']* $
       | case[\\s\\S]*: $
       | default: $
-      | ^ \\s* if \\s* \\( (?!.*?\\belse\\b)
+      | ^ \\s* if \\s* \\( (?!.*?(\\b(else)\\b|;\\s*$))
       | ^ \\s* \\}? \\s* else \\s*
-      | ^ \\s* (for|while) \\s* \\(
+      | ^ \\s* (for|while) \\s* \\( (?!.*?;\\s*$)
       | ^ \\s* do \\s* $
       '
     'decreaseIndentPattern': '(?x)
