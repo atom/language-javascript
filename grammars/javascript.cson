@@ -268,6 +268,9 @@
         'match': '\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
         'name': 'constant.character.escape.js'
       }
+      {
+        'include': '#interpolated_js'
+      }
     ]
   }
   {
@@ -456,6 +459,22 @@
           {
             'match': '\\G[\\p{L}\\p{Nl}$_][\\p{L}\\p{Nl}$\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}\\x{200C}\\x{200D}]*'
             'name': 'variable.parameter.function.js'
+          }
+        ]
+      }
+    ]
+  'interpolated_js':
+    'patterns': [
+      {
+        'begin': '\\$\\{'
+        'captures':
+          '0':
+            'name': 'punctuation.section.embedded.js'
+        'end': '\\}'
+        'name': 'source.js.embedded.source'
+        'patterns': [
+          {
+            'include': '$self'
           }
         ]
       }

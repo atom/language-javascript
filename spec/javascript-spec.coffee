@@ -72,7 +72,10 @@ describe "Javascript grammar", ->
 
   describe "ES6 string templates", ->
     it "tokenizes them as strings", ->
-      {tokens} = grammar.tokenizeLine('`hey`')
+      {tokens} = grammar.tokenizeLine('`hey ${name}`')
       expect(tokens[0]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.begin.js']
-      expect(tokens[1]).toEqual value: 'hey', scopes: ['source.js', 'string.quoted.template.js']
-      expect(tokens[2]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.end.js']
+      expect(tokens[1]).toEqual value: 'hey ', scopes: ['source.js', 'string.quoted.template.js']
+      expect(tokens[2]).toEqual value: '${', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
+      expect(tokens[3]).toEqual value: 'name', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source']
+      expect(tokens[4]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
+      expect(tokens[5]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.end.js']
