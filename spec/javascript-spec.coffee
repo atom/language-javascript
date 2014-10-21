@@ -55,6 +55,16 @@ describe "Javascript grammar", ->
       expect(tokens[3]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
       expect(tokens[4]).toEqual value: ']', scopes: ['source.js', 'meta.brace.square.js']
 
+      {tokens} = grammar.tokenizeLine('[1, /test/]')
+      expect(tokens[0]).toEqual value: '[', scopes: ['source.js', 'meta.brace.square.js']
+      expect(tokens[1]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.js']
+      expect(tokens[2]).toEqual value: ',', scopes: ['source.js', 'meta.delimiter.object.comma.js']
+      expect(tokens[3]).toEqual value: ' ', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[4]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[5]).toEqual value: 'test', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[6]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+      expect(tokens[7]).toEqual value: ']', scopes: ['source.js', 'meta.brace.square.js']
+
   describe "operators", ->
     it "tokenizes void correctly", ->
       {tokens} = grammar.tokenizeLine('void')
