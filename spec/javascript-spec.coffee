@@ -89,3 +89,8 @@ describe "Javascript grammar", ->
       expect(tokens[3]).toEqual value: 'name', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source']
       expect(tokens[4]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
       expect(tokens[5]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.end.js']
+
+  describe "default: in a switch statement", ->
+    it "tokenizes it as a keyword", ->
+      {tokens} = grammar.tokenizeLine('default: ')
+      expect(tokens[0]).toEqual value: 'default', scopes: ['source.js', 'keyword.control.js']
