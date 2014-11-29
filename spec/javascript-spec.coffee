@@ -6,7 +6,7 @@ describe "Javascript grammar", ->
       atom.packages.activatePackage("language-javascript")
 
     runs ->
-      grammar = atom.syntax.grammarForScopeName("source.js")
+      grammar = atom.grammars.grammarForScopeName("source.js")
 
   it "parses the grammar", ->
     expect(grammar).toBeTruthy()
