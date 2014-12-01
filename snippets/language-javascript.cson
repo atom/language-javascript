@@ -56,6 +56,9 @@
   'error':
     'prefix': 'error'
     'body': 'console.error($1);$0'
+  'new Promise': 
+    'prefix': 'prom'
+    'body': 'new Promise(function(resolve, reject) {\n\t$1\n});$0'
   'setInterval function':
     'prefix': 'interval'
     'body': 'setInterval(${2:function () {\n\t$3\n}}, ${1:10});'
