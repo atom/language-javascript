@@ -94,3 +94,36 @@ describe "Javascript grammar", ->
     it "tokenizes it as a keyword", ->
       {tokens} = grammar.tokenizeLine('default: ')
       expect(tokens[0]).toEqual value: 'default', scopes: ['source.js', 'keyword.control.js']
+
+  it "tokenizes comments in function params", ->
+    {tokens} = grammar.tokenizeLine('foo: function (/**Bar*/bar){')
+
+    expect(tokens[4]).toEqual value: '(', scopes: ['source.js', 'meta.function.json.js', 'punctuation.definition.parameters.begin.js']
+    expect(tokens[5]).toEqual value: '/**', scopes: ['source.js', 'meta.function.json.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+    expect(tokens[6]).toEqual value: 'Bar', scopes: ['source.js', 'meta.function.json.js', 'comment.block.documentation.js']
+    expect(tokens[7]).toEqual value: '*/', scopes: ['source.js', 'meta.function.json.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+    expect(tokens[8]).toEqual value: 'bar', scopes: ['source.js', 'meta.function.json.js', 'variable.parameter.function.js']
+
+  it "tokenizes /* */ comments", ->
+    {tokens} = grammar.tokenizeLine('/**/')
+
+    expect(tokens[0]).toEqual value: '/*', scopes: ['source.js', 'comment.block.js', 'punctuation.definition.comment.js']
+    expect(tokens[1]).toEqual value: '*/', scopes: ['source.js', 'comment.block.js', 'punctuation.definition.comment.js']
+
+    {tokens} = grammar.tokenizeLine('/* foo */')
+
+    expect(tokens[0]).toEqual value: '/*', scopes: ['source.js', 'comment.block.js', 'punctuation.definition.comment.js']
+    expect(tokens[1]).toEqual value: ' foo ', scopes: ['source.js', 'comment.block.js']
+    expect(tokens[2]).toEqual value: '*/', scopes: ['source.js', 'comment.block.js', 'punctuation.definition.comment.js']
+
+  it "tokenizes /** */ comments", ->
+    {tokens} = grammar.tokenizeLine('/***/')
+
+    expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+    expect(tokens[1]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+
+    {tokens} = grammar.tokenizeLine('/** foo */')
+
+    expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+    expect(tokens[1]).toEqual value: ' foo ', scopes: ['source.js', 'comment.block.documentation.js']
+    expect(tokens[2]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']

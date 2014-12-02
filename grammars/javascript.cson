@@ -274,20 +274,7 @@
     ]
   }
   {
-    'begin': '/\\*\\*(?!/)'
-    'captures':
-      '0':
-        'name': 'punctuation.definition.comment.js'
-    'end': '\\*/'
-    'name': 'comment.block.documentation.js'
-  }
-  {
-    'begin': '/\\*'
-    'captures':
-      '0':
-        'name': 'punctuation.definition.comment.js'
-    'end': '\\*/'
-    'name': 'comment.block.js'
+    'include': '#comments'
   }
   {
     'begin': '(^[ \\t]+)?(?=//)'
@@ -466,6 +453,9 @@
           }
         ]
       }
+      {
+        'include': '#comments'
+      }
     ]
   'interpolated_js':
     'patterns': [
@@ -481,5 +471,24 @@
             'include': '$self'
           }
         ]
+      }
+    ]
+  'comments':
+    'patterns': [
+      {
+        'begin': '/\\*\\*(?!/)'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.comment.js'
+        'end': '\\*/'
+        'name': 'comment.block.documentation.js'
+      }
+      {
+        'begin': '/\\*'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.comment.js'
+        'end': '\\*/'
+        'name': 'comment.block.js'
       }
     ]
