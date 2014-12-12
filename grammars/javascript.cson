@@ -391,7 +391,7 @@
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.string.begin.js'
-    'end': '(/)[igm]*'
+    'end': '(/)[gimuy]*'
     'endCaptures':
       '1':
         'name': 'punctuation.definition.string.end.js'
