@@ -67,7 +67,7 @@
     'body': 'setTimeout(${2:function () {\n\t$3\n}}, ${1:10});'
   'switch':
     'prefix': 'switch'
-    'body': 'switch (${1:expression}) {\ncase ${2:expression}:\n\t$4\n\tbreak;$5\ndefault:\n\t$3\n}'
+    'body': 'switch (${1:expression}) {\n\tcase ${2:expression}:\n\t\t$4\n\t\tbreak;$5\n\tdefault:\n\t\t$3\n}'
   'try':
     'prefix': 'try'
     'body': 'try {\n\t${1:statements}\n} catch (${2:variable}) {\n\t${3:statements}\n}${4: finally {\n\t${5:statements}\n}}'
