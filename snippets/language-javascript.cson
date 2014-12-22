@@ -38,6 +38,12 @@
   'getElementsByTagName':
     'prefix': 'get'
     'body': 'getElementsByTagName(${1:\'${2:tagName}\'})'
+  'querySelector':
+    'prefix': 'qs'
+    'body': 'querySelector(${1:\'${2:query}\'})'
+  'querySelectorAll':
+    'prefix': 'qsa'
+    'body': 'querySelectorAll(${1:\'${2:query}\'})'
   'Immediately-Invoked Function Expression':
     'prefix': 'iife'
     'body': '(function() {\n\t${1:"use strict";\n}\t$2\n}());'
@@ -56,7 +62,7 @@
   'error':
     'prefix': 'error'
     'body': 'console.error($1);$0'
-  'new Promise': 
+  'new Promise':
     'prefix': 'prom'
     'body': 'new Promise(function(resolve, reject) {\n\t$1\n});$0'
   'setInterval function':
