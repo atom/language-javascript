@@ -62,6 +62,9 @@
   'error':
     'prefix': 'error'
     'body': 'console.error($1);$0'
+  'inspect':
+    'prefix': 'inspect'
+    'body': 'console.log(require(\'util\').inspect($0, { depth: null }));'
   'new Promise':
     'prefix': 'prom'
     'body': 'new Promise(function(resolve, reject) {\n\t$1\n});$0'
