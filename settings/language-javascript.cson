@@ -7,9 +7,6 @@
       | \\( [^)"\']* $
       | case[\\s\\S]*: $
       | default: $
-      | ^ \\s* \\}? \\s* else \\s* (?!.*?;\\s*$)
-      | ^ \\s* (for|while) \\s* \\( (?!.*?;\\s*$)
-      | ^ \\s* do \\s* $
       '
     'decreaseIndentPattern': '(?x)
         ^ \\s* (\\s* /[*] .* [*]/ \\s*)* [})]

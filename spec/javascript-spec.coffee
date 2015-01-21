@@ -1,3 +1,5 @@
+{TextEditor} = require 'atom'
+
 describe "Javascript grammar", ->
   grammar = null
 
@@ -145,3 +147,52 @@ describe "Javascript grammar", ->
     expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
     expect(tokens[1]).toEqual value: ' foo ', scopes: ['source.js', 'comment.block.documentation.js']
     expect(tokens[2]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+
+  describe "indentation", ->
+    editor = null
+
+    beforeEach ->
+      editor = new TextEditor({})
+      editor.setGrammar(grammar)
+
+    expectPreservedIndentation = (text) ->
+      editor.setText(text)
+      editor.autoIndentBufferRows(0, text.split("\n").length - 1)
+      expect(editor.getText()).toBe text
+
+    it "indents allman-style curly braces", ->
+      expectPreservedIndentation """
+        if (true)
+        {
+          for (;;)
+          {
+            while (true)
+            {
+              x();
+            }
+          }
+        }
+
+        else
+        {
+          do
+          {
+            y();
+          } while (true);
+        }
+      """
+
+    it "indents non-allman-style curly braces", ->
+      expectPreservedIndentation """
+        if (true) {
+          for (;;) {
+            while (true) {
+              x();
+            }
+          }
+        } else {
+          do {
+            y();
+          } while (true);
+        }
+      """
