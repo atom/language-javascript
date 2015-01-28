@@ -157,8 +157,18 @@ describe "Javascript grammar", ->
 
     expectPreservedIndentation = (text) ->
       editor.setText(text)
-      editor.autoIndentBufferRows(0, text.split("\n").length - 1)
-      expect(editor.getText()).toBe text
+      editor.autoIndentBufferRows(0, editor.getLineCount() - 1)
+
+      expectedLines = text.split("\n")
+      actualLines = editor.getText().split("\n")
+      for actualLine, i in actualLines
+        expect([
+          actualLine,
+          editor.indentLevelForLine(actualLine)
+        ]).toEqual([
+          expectedLines[i],
+          editor.indentLevelForLine(expectedLines[i])
+        ])
 
     it "indents allman-style curly braces", ->
       expectPreservedIndentation """
@@ -172,7 +182,6 @@ describe "Javascript grammar", ->
             }
           }
         }
-
         else
         {
           do
@@ -195,4 +204,27 @@ describe "Javascript grammar", ->
             y();
           } while (true);
         }
+      """
+
+    it "indents collection literals", ->
+      expectPreservedIndentation """
+        [
+          {
+            a: b,
+            c: d
+          },
+          e,
+          f
+        ]
+      """
+
+    it "indents function arguments", ->
+      expectPreservedIndentation """
+        f(
+          g(
+            h,
+            i
+          ),
+          j
+        );
       """
