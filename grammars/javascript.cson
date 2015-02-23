@@ -319,7 +319,7 @@
     'name': 'keyword.control.js'
   }
   {
-    'match': '(?<!\\.)\\b(delete|in|instanceof|new|typeof|void)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(delete|in|of|instanceof|new|typeof|void)(?!\\s*:)\\b'
     'name': 'keyword.operator.js'
   }
   {
