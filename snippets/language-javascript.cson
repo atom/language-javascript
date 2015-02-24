@@ -20,6 +20,9 @@
   'for in':
     'prefix': 'forin'
     'body': 'for (${1:variable} in ${2:object}) {\n\t${5:if (${3:object}.hasOwnProperty(${4:variable})) {\n\t\t$6\n\t}}\n}'
+  'for of':
+    'prefix': 'forof'
+    'body': 'for (${1:variable} of ${2:iterable}) {\n\t$3\n}'
   'Function':
     'prefix': 'fun'
     'body': 'function ${1:function_name}(${2:argument}) {\n\t${0:// body...}\n}'
