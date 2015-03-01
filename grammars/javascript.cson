@@ -4,6 +4,8 @@
   'htc'
   '_js'
   'es6'
+  'jsx'
+  'jsxinc'
 ]
 'firstLineMatch': '^#!.*\\b(node|iojs)'
 'name': 'JavaScript'
