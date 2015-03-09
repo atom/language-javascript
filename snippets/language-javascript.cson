@@ -89,3 +89,6 @@
   'Start Docblock':
     'prefix': '/**'
     'body': '/**\n * $1\n */$0'
+  'CommonJS require':
+    'prefix': 'req'
+    'body': 'var ${1:module} = require(\'${1:module}\');'
