@@ -4,6 +4,7 @@
   'htc'
   '_js'
   'es6'
+  'pjs'
 ]
 'firstLineMatch': '^#!.*\\b(node|iojs)'
 'name': 'JavaScript'
