@@ -29,6 +29,12 @@
   'Anonymous Function':
     'prefix': 'f'
     'body': 'function ($1) {\n\t$2\n}'
+  'Generator':
+    'prefix': 'gen',
+    'body': 'function* ${1:function_name}(${2:argument}) {\n\t${0:// body...}\n}'
+  'Anonymous Generator':
+    'prefix': 'g'
+    'body': 'function* ($1) {\n\t$2\n}'
   'getElementById':
     'prefix': 'get'
     'body': 'getElementById(${1:\'${2:id}\'})'
