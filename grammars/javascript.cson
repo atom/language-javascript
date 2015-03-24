@@ -6,7 +6,7 @@
   'es6'
   'pjs'
 ]
-'firstLineMatch': '^#!.*\\b(node|iojs)'
+'firstLineMatch': '^#!.*\\b(node|iojs|JavaScript)'
 'name': 'JavaScript'
 'patterns': [
   {
