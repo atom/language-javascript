@@ -314,7 +314,16 @@
     'name': 'storage.modifier.js'
   }
   {
-    'match': '(?<!\\.)\\b(break|case|catch|continue|do|else|finally|for|if|import|from|package|return|switch|throw|try|while|with|yield)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?',
+    'captures':
+      '1':
+        'name': 'keyword.control.js'
+      '2':
+        'name': 'storage.modifier.js'
+    'name': 'meta.control.yield.js'
+  }
+  {
+    'match': '(?<!\\.)\\b(break|case|catch|continue|do|else|finally|for|if|import|from|package|return|switch|throw|try|while|with)(?!\\s*:)\\b'
     'name': 'keyword.control.js'
   }
   {

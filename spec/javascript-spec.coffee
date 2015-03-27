@@ -140,6 +140,15 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
       expect(tokens[6]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
 
+  describe "ES6 yield", ->
+    it "Tokenizes yield", ->
+      {tokens} = grammar.tokenizeLine('yield next')
+      expect(tokens[0]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
+    it "Tokenizes yield*", ->
+      {tokens} = grammar.tokenizeLine('yield * next')
+      expect(tokens[0]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: '*', scopes: ['source.js', 'meta.control.yield.js', 'storage.modifier.js']
+
 
   describe "default: in a switch statement", ->
     it "tokenizes it as a keyword", ->
