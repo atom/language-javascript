@@ -100,6 +100,49 @@ describe "Javascript grammar", ->
       expect(lines[1][0]).toEqual value: '/ ', scopes: ['source.js']
       expect(lines[1][1]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
 
+    it "should tokenizes = correctly", ->
+      {tokens} = grammar.tokenizeLine('test = 2')
+      expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
+      expect(tokens[1]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
+
+    it "should tokenizes + correctly", ->
+      {tokens} = grammar.tokenizeLine('test + 2')
+      expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
+      expect(tokens[1]).toEqual value: '+', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
+
+    describe "operators with 2 characters", ->
+      it "should tokenizes += correctly", ->
+        {tokens} = grammar.tokenizeLine('test += 2')
+        expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
+        expect(tokens[1]).toEqual value: '+=', scopes: ['source.js', 'keyword.operator.js']
+        expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
+        expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
+
+      it "should tokenizes -= correctly", ->
+        {tokens} = grammar.tokenizeLine('test -= 2')
+        expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
+        expect(tokens[1]).toEqual value: '-=', scopes: ['source.js', 'keyword.operator.js']
+        expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
+        expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
+
+      it "should tokenizes *= correctly", ->
+        {tokens} = grammar.tokenizeLine('test *= 2')
+        expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
+        expect(tokens[1]).toEqual value: '*=', scopes: ['source.js', 'keyword.operator.js']
+        expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
+        expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
+
+      it "should tokenizes /= correctly", ->
+        {tokens} = grammar.tokenizeLine('test /= 2')
+        expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
+        expect(tokens[1]).toEqual value: '/=', scopes: ['source.js', 'keyword.operator.js']
+        expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
+        expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
+
   describe "ES6 string templates", ->
     it "tokenizes them as strings", ->
       {tokens} = grammar.tokenizeLine('`hey ${name}`')
