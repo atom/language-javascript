@@ -98,3 +98,6 @@
   'CommonJS require':
     'prefix': 'req'
     'body': 'var ${1:module} = require(\'${1:module}\');'
+  'Class':
+    'prefix': 'class'
+    'body': 'class ${1:ClassName} {\n\tconstructor($2) {\n\t\t$3\n\t}\n}'
