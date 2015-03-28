@@ -11,9 +11,18 @@
   'do':
     'prefix': 'do'
     'body': 'do {\n\t$2\n} while (${1:true});'
+  'if':
+    'prefix': 'if'
+    'body': 'if (${1:true}) {\n\t$2\n}'
+  'if … else':
+    'prefix': 'ife'
+    'body': 'if (${1:true}) {\n\t$2\n} else {\n\t$3\n}'
   'else':
     'prefix': 'else'
     'body': 'else {\n\t$1\n}'
+  'else if':
+    'prefix': 'elseif'
+    'body': 'else if (${1:true}) {\n\t$2\n}'
   'for':
     'prefix' : 'for'
     'body' : 'for (var ${2:i} = 0; ${2:i} < ${1:array}.length; ${2:i}++) {\n\t${1:array}[${2:i}]$3\n}'
@@ -56,12 +65,6 @@
   'Immediately-Invoked Function Expression':
     'prefix': 'iife'
     'body': '(function() {\n\t${1:\'use strict\';\n}\t$2\n}());'
-  'if … else':
-    'prefix': 'ife'
-    'body': 'if (${1:true}) {\n\t$2\n} else {\n\t$3\n}'
-  'if':
-    'prefix': 'if'
-    'body': 'if (${1:true}) {\n\t$2\n}'
   'log':
     'prefix': 'log'
     'body': 'console.log($1);$0'
