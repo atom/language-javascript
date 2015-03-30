@@ -35,24 +35,24 @@
   'Anonymous Generator':
     'prefix': 'g'
     'body': 'function* ($1) {\n\t$2\n}'
-  'getElementById':
-    'prefix': 'get'
-    'body': 'getElementById(${1:\'${2:id}\'})'
   'getElementsByClassName':
     'prefix': 'get'
-    'body': 'getElementsByClassName(${1:\'${2:className}\'})'
+    'body': 'getElementsByClassName(${1:\'${2:className}\'})$3'
   'getElementsByName':
     'prefix': 'get'
-    'body': 'getElementsByName(${1:\'${2:name}\'})'
+    'body': 'getElementsByName(${1:\'${2:name}\'})$3'
   'getElementsByTagName':
     'prefix': 'get'
-    'body': 'getElementsByTagName(${1:\'${2:tagName}\'})'
+    'body': 'getElementsByTagName(${1:\'${2:tagName}\'})$3'
+  'getElementById':
+    'prefix': 'get'
+    'body': 'getElementById(${1:\'${2:id}\'})$3'
   'querySelector':
     'prefix': 'qs'
-    'body': 'querySelector(${1:\'${2:query}\'})'
+    'body': 'querySelector(${1:\'${2:query}\'})$3'
   'querySelectorAll':
     'prefix': 'qsa'
-    'body': 'querySelectorAll(${1:\'${2:query}\'})'
+    'body': 'querySelectorAll(${1:\'${2:query}\'})$3'
   'Immediately-Invoked Function Expression':
     'prefix': 'iife'
     'body': '(function() {\n\t${1:"use strict";\n}\t$2\n}());'
