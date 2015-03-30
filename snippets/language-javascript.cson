@@ -48,13 +48,13 @@
     'prefix': 'get'
     'body': 'getElementsByClassName(${1:\'${2:className}\'})$3'
   'getElementsByName':
-    'prefix': 'get'
+    'prefix': 'getn'
     'body': 'getElementsByName(${1:\'${2:name}\'})$3'
   'getElementsByTagName':
-    'prefix': 'get'
+    'prefix': 'gett'
     'body': 'getElementsByTagName(${1:\'${2:tagName}\'})$3'
   'getElementById':
-    'prefix': 'get'
+    'prefix': 'geti'
     'body': 'getElementById(${1:\'${2:id}\'})$3'
   'querySelector':
     'prefix': 'qs'
