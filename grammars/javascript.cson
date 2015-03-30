@@ -3,12 +3,44 @@
   'js'
   'htc'
   '_js'
+  'es'
   'es6'
   'pjs'
 ]
 'firstLineMatch': '^#!.*\\b(node|iojs|JavaScript)'
 'name': 'JavaScript'
 'patterns': [
+  {
+    'begin': '(?<!\\.)\\b(import)(?!\\s*:)\\b'
+    'beginCaptures':
+      '1':
+        'name': 'keyword.control.js'
+    'patterns': [
+      {
+        'include': '#strings'
+      }
+      {
+        'match': '\\b(as|from)\\b',
+        'name': 'keyword.control.js'
+      }
+      {
+        'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+      }
+      {
+        'match': ','
+        'name': 'meta.delimiter.object.comma.js'
+      }
+      {
+        'match': '\\{|\\}'
+        'name': 'meta.brace.curly.js'
+      }
+    ]
+    'end': '(;)?\\n'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.terminator.statement.js'
+    'name': 'meta.import.js'
+  }
   {
     'captures':
       '1':
@@ -200,6 +232,23 @@
     ]
   }
   {
+    'match': '\\b(class)(?:(?:\\s+(extends)\\s+(\\w+(?:\\.\\w*)?))|(?:(?:\\s+(\\w+(?:\\.\\w*)?))(?:\\s+(extends)\\s+(\\w+(?:\\.\\w*)?))?))'
+    'captures':
+      '1':
+        'name': 'storage.type.class.js'
+      '2':
+        'name': 'storage.modifier.js',
+      '3':
+        'name': 'entity.name.type.js'
+      '4':
+        'name': 'entity.name.type.js'
+      '5':
+        'name': 'storage.modifier.js',
+      '6':
+        'name': 'entity.name.type.js'
+    'name': 'meta.class.js'
+  }
+  {
     'captures':
       '1':
         'name': 'keyword.operator.new.js'
@@ -221,58 +270,7 @@
     'name': 'constant.numeric.js'
   }
   {
-    'begin': '\''
-    'beginCaptures':
-      '0':
-        'name': 'punctuation.definition.string.begin.js'
-    'end': '\''
-    'endCaptures':
-      '0':
-        'name': 'punctuation.definition.string.end.js'
-    'name': 'string.quoted.single.js'
-    'patterns': [
-      {
-        'match': '\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
-        'name': 'constant.character.escape.js'
-      }
-    ]
-  }
-  {
-    'begin': '"'
-    'beginCaptures':
-      '0':
-        'name': 'punctuation.definition.string.begin.js'
-    'end': '"'
-    'endCaptures':
-      '0':
-        'name': 'punctuation.definition.string.end.js'
-    'name': 'string.quoted.double.js'
-    'patterns': [
-      {
-        'match': '\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)'
-        'name': 'constant.character.escape.js'
-      }
-    ]
-  }
-  {
-    'begin': '`'
-    'beginCaptures':
-      '0':
-        'name': 'punctuation.definition.string.begin.js'
-    'end': '`'
-    'endCaptures':
-      '0':
-        'name': 'punctuation.definition.string.end.js'
-    'name': 'string.quoted.template.js'
-    'patterns': [
-      {
-        'match': '\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
-        'name': 'constant.character.escape.js'
-      }
-      {
-        'include': '#interpolated_js'
-      }
-    ]
+    'include': '#strings'
   }
   {
     'include': '#comments'
@@ -304,6 +302,10 @@
     'name': 'comment.block.html.js'
   }
   {
+    'match': '=>',
+    'name': 'storage.type.arrow.js'
+  }
+  {
     'match': '(?<!\\.)\\b(class|enum|function|interface)(?!\\s*:)\\b'
     'name': 'storage.type.js'
   }
@@ -312,7 +314,16 @@
     'name': 'storage.modifier.js'
   }
   {
-    'match': '(?<!\\.)\\b(break|case|catch|continue|do|else|finally|for|if|import|from|package|return|switch|throw|try|while|with|yield)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?',
+    'captures':
+      '1':
+        'name': 'keyword.control.js'
+      '2':
+        'name': 'storage.modifier.js'
+    'name': 'meta.control.yield.js'
+  }
+  {
+    'match': '(?<!\\.)\\b(break|case|catch|continue|do|else|finally|for|if|import|from|package|return|switch|throw|try|while|with)(?!\\s*:)\\b'
     'name': 'keyword.control.js'
   }
   {
@@ -442,6 +453,63 @@
   }
 ]
 'repository':
+  'strings':
+    'patterns': [
+      {
+        'begin': '\''
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.js'
+        'end': '\''
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.js'
+        'name': 'string.quoted.single.js'
+        'patterns': [
+          {
+            'match': '\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
+            'name': 'constant.character.escape.js'
+          }
+        ]
+      }
+      {
+        'begin': '"'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.js'
+        'end': '"'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.js'
+        'name': 'string.quoted.double.js'
+        'patterns': [
+          {
+            'match': '\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)'
+            'name': 'constant.character.escape.js'
+          }
+        ]
+      }
+      {
+        'begin': '`'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.js'
+        'end': '`'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.js'
+        'name': 'string.quoted.template.js'
+        'patterns': [
+          {
+            'match': '\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
+            'name': 'constant.character.escape.js'
+          }
+          {
+            'include': '#interpolated_js'
+          }
+        ]
+      }
+    ]
   'function-params':
     'patterns': [
       {

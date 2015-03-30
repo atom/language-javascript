@@ -110,6 +110,46 @@ describe "Javascript grammar", ->
       expect(tokens[4]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
       expect(tokens[5]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.end.js']
 
+  describe "ES6 class", ->
+    it "tokenizes class", ->
+      {tokens} = grammar.tokenizeLine('class MyClass')
+      expect(tokens[0]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
+      expect(tokens[2]).toEqual value: 'MyClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+    it "tokenizes class...extends", ->
+      {tokens} = grammar.tokenizeLine('class MyClass extends SomeClass')
+      expect(tokens[0]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
+      expect(tokens[2]).toEqual value: 'MyClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+      expect(tokens[4]).toEqual value: 'extends', scopes: ['source.js', 'meta.class.js', 'storage.modifier.js']
+      expect(tokens[6]).toEqual value: 'SomeClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+    it "tokenizes anonymous class", ->
+      {tokens} = grammar.tokenizeLine('class extends SomeClass')
+      expect(tokens[0]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
+      expect(tokens[2]).toEqual value: 'extends', scopes: ['source.js', 'meta.class.js', 'storage.modifier.js']
+      expect(tokens[4]).toEqual value: 'SomeClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+
+  describe "ES6 import", ->
+    it "Tokenizes import ... as", ->
+      {tokens} = grammar.tokenizeLine('import \'react\' as React')
+      expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[6]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+    it "Tokenizes import ... from", ->
+      {tokens} = grammar.tokenizeLine('import React from \'react\'')
+      expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[4]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      {tokens} = grammar.tokenizeLine('import {React} from \'react\'')
+      expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[6]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+
+  describe "ES6 yield", ->
+    it "Tokenizes yield", ->
+      {tokens} = grammar.tokenizeLine('yield next')
+      expect(tokens[0]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
+    it "Tokenizes yield*", ->
+      {tokens} = grammar.tokenizeLine('yield * next')
+      expect(tokens[0]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: '*', scopes: ['source.js', 'meta.control.yield.js', 'storage.modifier.js']
+
+
   describe "default: in a switch statement", ->
     it "tokenizes it as a keyword", ->
       {tokens} = grammar.tokenizeLine('default: ')
