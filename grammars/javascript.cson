@@ -99,7 +99,7 @@
     'name': 'meta.function.js'
   }
   {
-    'begin': '([a-zA-Z_?.$][\\w?.$]*)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()' #
+    'begin': '([a-zA-Z_?.$][\\w?.$]*)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
     'beginCaptures':
       '1':
         'name': 'support.class.js'
