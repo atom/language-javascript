@@ -158,12 +158,14 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('class MyClass')
       expect(tokens[0]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
       expect(tokens[2]).toEqual value: 'MyClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+
     it "tokenizes class...extends", ->
       {tokens} = grammar.tokenizeLine('class MyClass extends SomeClass')
       expect(tokens[0]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
       expect(tokens[2]).toEqual value: 'MyClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
       expect(tokens[4]).toEqual value: 'extends', scopes: ['source.js', 'meta.class.js', 'storage.modifier.js']
       expect(tokens[6]).toEqual value: 'SomeClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+
     it "tokenizes anonymous class", ->
       {tokens} = grammar.tokenizeLine('class extends SomeClass')
       expect(tokens[0]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
@@ -175,6 +177,7 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('import \'react\' as React')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
       expect(tokens[6]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+
     it "Tokenizes import ... from", ->
       {tokens} = grammar.tokenizeLine('import React from \'react\'')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
@@ -187,11 +190,25 @@ describe "Javascript grammar", ->
     it "Tokenizes yield", ->
       {tokens} = grammar.tokenizeLine('yield next')
       expect(tokens[0]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
+
     it "Tokenizes yield*", ->
       {tokens} = grammar.tokenizeLine('yield * next')
       expect(tokens[0]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
       expect(tokens[2]).toEqual value: '*', scopes: ['source.js', 'meta.control.yield.js', 'storage.modifier.js']
 
+  it "doesn't confuse strings and functions (regression)", ->
+    {tokens} = grammar.tokenizeLine("'a'.b(':c(d)')")
+
+    expect(tokens[0]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
+    expect(tokens[1]).toEqual value: "a", scopes: ['source.js', 'string.quoted.single.js']
+    expect(tokens[2]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
+    expect(tokens[3]).toEqual value: ".", scopes: ['source.js', 'meta.delimiter.method.period.js']
+    expect(tokens[4]).toEqual value: "b", scopes: ['source.js']
+    expect(tokens[5]).toEqual value: "(", scopes: ['source.js', 'meta.brace.round.js']
+    expect(tokens[6]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
+    expect(tokens[7]).toEqual value: ":c(d)", scopes: ['source.js', 'string.quoted.single.js']
+    expect(tokens[8]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
+    expect(tokens[9]).toEqual value: ")", scopes: ['source.js', 'meta.brace.round.js']
 
   describe "default: in a switch statement", ->
     it "tokenizes it as a keyword", ->
