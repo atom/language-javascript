@@ -357,6 +357,16 @@ describe "Javascript grammar", ->
         }
       """
 
+    it "doesn't indent case statements, because it wouldn't know when to outdent", ->
+      expectPreservedIndentation """
+        switch (e) {
+          case 5:
+          something();
+          case 6:
+          somethingElse();
+        }
+      """
+
     it "indents collection literals", ->
       expectPreservedIndentation """
         [
