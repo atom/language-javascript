@@ -372,8 +372,8 @@
     'name': 'constant.language.null.js'
   }
   {
-		'match': '(?<!\\.)\\b([A-Z][A-Z0-9_]+)(?!\\s*:)\\b'
-		'name': 'constant.other.js'
+    'match': '(?<!\\.)\\b([A-Z][A-Z0-9_]+)(?!\\s*:)\\b'
+    'name': 'constant.other.js'
   }
   {
     'match': '(?<!\\.)\\b(super|this)(?!\\s*:)\\b'
