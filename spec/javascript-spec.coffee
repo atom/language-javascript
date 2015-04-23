@@ -227,6 +227,14 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('default: ')
       expect(tokens[0]).toEqual value: 'default', scopes: ['source.js', 'keyword.control.js']
 
+  it "tokenizes arrow functions with params", ->
+    {tokens} = grammar.tokenizeLine('(param1,param2)=>{}')
+    expect(tokens[0]).toEqual value: '(', scopes: ['source.js', 'meta.function.arrow.js', 'punctuation.definition.parameters.begin.js']
+    expect(tokens[1]).toEqual value: 'param1', scopes: ['source.js', 'meta.function.arrow.js', 'variable.parameter.function.js']
+    expect(tokens[3]).toEqual value: 'param2', scopes: ['source.js', 'meta.function.arrow.js', 'variable.parameter.function.js']
+    expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.function.arrow.js', 'punctuation.definition.parameters.end.js']
+    expect(tokens[5]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.arrow.js']
+
   it "tokenizes comments in function params", ->
     {tokens} = grammar.tokenizeLine('foo: function (/**Bar*/bar){')
 

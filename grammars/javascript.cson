@@ -274,6 +274,25 @@
     'name': 'meta.class.js'
   }
   {
+    'name': 'meta.function.arrow.js'
+    'begin': '(?<![A-Za-z0-9])(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.definition.parameters.begin.js'
+
+    'end': '(\\))(\\s*=>)'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.parameters.end.js'
+      '2':
+        'name': 'storage.type.arrow.js'
+    'patterns': [
+      {
+        'include': '#function-params'
+      }
+    ]
+  }
+  {
     'captures':
       '1':
         'name': 'keyword.operator.new.js'
