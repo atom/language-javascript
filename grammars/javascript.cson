@@ -339,7 +339,7 @@
     'name': 'storage.modifier.js'
   }
   {
-    'match': '(?<!\\.)\\b(const)(?!\\s*:)\\b\\s+(\\w+)'
+    'match': '(?<!\\.)\\b(const)(?!\\s*:)\\b\\s+([$_a-zA-Z][[$_a-zA-Z0-9]*)'
     'captures':
       '1':
         'name': 'storage.modifier.js'
