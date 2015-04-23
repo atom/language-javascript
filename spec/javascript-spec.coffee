@@ -144,11 +144,33 @@ describe "Javascript grammar", ->
         expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
 
   describe "constants", ->
-    it "tokenizes ALL_CAPS variables correctly", ->
+    it "tokenizes ALL_CAPS variables as constants", ->
       {tokens} = grammar.tokenizeLine('var MY_COOL_VAR = 42;')
       expect(tokens[0]).toEqual value: 'var', scopes: ['source.js', 'storage.modifier.js']
       expect(tokens[1]).toEqual value: ' ', scopes: ['source.js']
       expect(tokens[2]).toEqual value: 'MY_COOL_VAR', scopes: ['source.js', 'constant.other.js']
+      expect(tokens[3]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[4]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[5]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[6]).toEqual value: '42', scopes: ['source.js', 'constant.numeric.js']
+      expect(tokens[7]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+
+      {tokens} = grammar.tokenizeLine('something = MY_COOL_VAR * 1;')
+      expect(tokens[0]).toEqual value: 'something ', scopes: ['source.js']
+      expect(tokens[1]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[3]).toEqual value: 'MY_COOL_VAR', scopes: ['source.js', 'constant.other.js']
+      expect(tokens[4]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[5]).toEqual value: '*', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[6]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[7]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.js']
+      expect(tokens[8]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+
+    it "tokenizes variables declared using `const` as constants", ->
+      {tokens} = grammar.tokenizeLine('const myCoolVar = 42;')
+      expect(tokens[0]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[1]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[2]).toEqual value: 'myCoolVar', scopes: ['source.js', 'constant.other.js']
       expect(tokens[3]).toEqual value: ' ', scopes: ['source.js']
       expect(tokens[4]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
       expect(tokens[5]).toEqual value: ' ', scopes: ['source.js']
