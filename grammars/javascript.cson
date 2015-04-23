@@ -348,7 +348,7 @@
     'name': 'meta.control.yield.js'
   }
   {
-    'match': '(?<!\\.)\\b(break|case|catch|continue|do|else|finally|for|if|import|from|package|return|switch|throw|try|while|with)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(await|break|case|catch|continue|do|else|finally|for|if|import|from|package|return|switch|throw|try|while|with)(?!\\s*:)\\b'
     'name': 'keyword.control.js'
   }
   {
