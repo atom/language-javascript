@@ -85,6 +85,13 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('0O1411')
       expect(tokens[0]).toEqual value: '0O1411', scopes: ['source.js', 'constant.numeric.js']
 
+    it "verifies that regular expressions have explicit count modifiers", ->
+      fs = require 'fs'
+      source = fs.readFileSync 'grammars/javascript.cson', 'utf8'
+      expect(source.search /{,/).toEqual -1
+      source = fs.readFileSync 'grammars/regular expressions (javascript).cson', 'utf8'
+      expect(source.search /{,/).toEqual -1
+
   describe "operators", ->
     it "tokenizes void correctly", ->
       {tokens} = grammar.tokenizeLine('void')
