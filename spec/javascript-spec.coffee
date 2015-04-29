@@ -1,4 +1,6 @@
 {TextEditor} = require 'atom'
+fs = require 'fs'
+path = require 'path'
 
 describe "Javascript grammar", ->
   grammar = null
@@ -86,10 +88,10 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: '0O1411', scopes: ['source.js', 'constant.numeric.js']
 
     it "verifies that regular expressions have explicit count modifiers", ->
-      fs = require 'fs'
-      source = fs.readFileSync 'grammars/javascript.cson', 'utf8'
+      source = fs.readFileSync(path.resolve(__dirname, '..', 'grammars', 'javascript.cson'), 'utf8')
       expect(source.search /{,/).toEqual -1
-      source = fs.readFileSync 'grammars/regular expressions (javascript).cson', 'utf8'
+
+      source = fs.readFileSync(path.resolve(__dirname, '..', 'grammars', 'regular expressions (javascript).cson'), 'utf8')
       expect(source.search /{,/).toEqual -1
 
   describe "operators", ->
