@@ -627,7 +627,7 @@
   'docblock':
     'patterns': [
       {
-        'match': '(?<!\\w)@(a(?:bstract|ccess|lias|u(?:gments|thor)|rg(?:ument)?)|borrows|c(?:allback|lass(?:desc)?|o(?:nst(?:ant|ructs)?|pyright))|de(?:fault(?:value)?|precated|sc(?:ription)?)|e(?:num|mits|vent|x(?:ample|ports|ternal|tends))|f(?:ile(?:overview)?|ires|unction)|global|host|i(?:gnore|mplements|n(?:heritdoc|ner|stance|terface))|kind|l(?:ends|i(?:cense|stens))|m(?:e(?:mber(?:of)?|thod)|ix(?:ex|in)|odule)|name(?:space)?|over(?:ride|view)|p(?:aram|r(?:ivate|op(?:erty)?|otected))|re(?:adonly|quires|turn(?:s)?)|s(?:ee|ince|tatic|ummary)|t(?:h(?:is|rows)|odo|utorial|ype(?:def)?)|var(?:iation)?|version|virtual)\\b'
+        'match': '(?<!\\w)@(a(?:bstract|ccess|lias|u(?:gments|thor)|sync|ttribute|rg(?:ument)?)|b(?:eta|orrows|ubbles)|c(?:allback|lass(?:desc)?|o(?:nfig|nst(?:ant|ruct(?:s|or))?|pyright)|hainable)|de(?:fault(?:value)?|precated|sc(?:ription)?)|e(?:num|mits|vent|x(?:ample|ports|ternal|ten(?:ds|sion(?:for|_for)?)))|f(?:or|ile(?:overview)?|ires|inal|unction)|global|host|i(?:gnore|mplements|n(?:heritdoc|ner|stance|terface))|kind|l(?:ends|i(?:cense|stens))|m(?:ain|e(?:mber(?:of)?|thod)|ix(?:ex|in)|odule)|name(?:space)?|over(?:ride|view)|p(?:aram|r(?:ivate|op(?:erty)?|otected))|re(?:ad(?:o|O)nly|quire(?:s|d)|turn(?:s)?)|s(?:ee|ince|tatic|ummary|ubmodule)|t(?:h(?:is|rows)|odo|utorial|ype(?:def)?)|var(?:iation)?|version|virtual|uses|writeOnce)\\b'
         'name': 'storage.type.class.jsdoc'
       }
     ]
