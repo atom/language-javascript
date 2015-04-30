@@ -186,6 +186,13 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: '42', scopes: ['source.js', 'constant.numeric.js']
       expect(tokens[7]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
+  describe "Properties", ->
+    it "tokenizes properties", ->
+      {tokens} = grammar.tokenizeLine('obj.prop1.prop2.prop3')
+      expect(tokens[2]).toEqual value: 'prop1', scopes: ['source.js', 'entity.name.property.js']
+      expect(tokens[4]).toEqual value: 'prop2', scopes: ['source.js', 'entity.name.property.js']
+      expect(tokens[6]).toEqual value: 'prop3', scopes: ['source.js', 'entity.name.property.js']
+
   describe "ES6 string templates", ->
     it "tokenizes them as strings", ->
       {tokens} = grammar.tokenizeLine('`hey ${name}`')
