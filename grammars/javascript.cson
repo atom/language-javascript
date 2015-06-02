@@ -439,7 +439,7 @@
     'name': 'support.constant.dom.js'
   }
   {
-    'match': '\\bon(R(ow(s(inserted|delete)|e(nter|xit))|e(s(ize(start|end)?|et)|adystatechange))|Mouse(o(ut|ver)|down|up|move)|B(efore(cut|deactivate|u(nload|pdate)|p(aste|rint)|editfocus|activate)|lur)|S(croll|top|ubmit|elect(start|ionchange)?)|H(over|elp)|C(hange|ont(extmenu|rolselect)|ut|ellchange|l(ick|ose))|D(eactivate|ata(setc(hanged|omplete)|available)|r(op|ag(start|over|drop|en(ter|d)|leave)?)|blclick)|Unload|P(aste|ropertychange)|Error(update)?|Key(down|up|press)|Focus|Load|A(ctivate|fter(update|print)|bort))\\b'
+    'match': '\\bon(Rowsinserted|Rowsdelete|Rowenter|Rowexit|Resize|Resizestart|Resizeend|Reset|Readystatechange|Mouseout|Mouseover|Mousedown|Mouseup|Mousemove|Beforecut|Beforedeactivate|Beforeunload|Beforeupdate|Beforepaste|Beforeprint|Beforeeditfocus|Beforeactivate|Blur|Scrolltop|Submit|Select|Selectstart|Selectionchange|Hover|Help|Change|Contextmenu|Controlselect|Cut|Cellchange|Clock|Close|Deactivate|Datasetchanged|Datasetcomplete|Dataavailable|Drop|Drag|Dragstart|Dragover|Dragdrop|Dragenter|Dragend|Dragleave|Dblclick|Unload|Paste|Propertychange|Error|Errorupdate|Keydown|Keyup|Keypress|Focus|Load|Activate|Afterupdate|Afterprint|Abort)\\b'
     'name': 'support.function.event-handler.js'
   }
   {
