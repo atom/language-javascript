@@ -631,7 +631,7 @@
   'docblock':
     'patterns': [
       {
-        'match': '(?<!\\w)@(a(?:bstract|ccess|lias|u(?:gments|thor)|sync|ttribute|rg(?:ument)?)|b(?:eta|orrows|ubbles)|c(?:allback|lass(?:desc)?|o(?:nfig|nst(?:ant|ruct(?:s|or))?|pyright)|hainable)|de(?:fault(?:value)?|precated|sc(?:ription)?)|e(?:num|mits|vent|x(?:ample|ports|ternal|ten(?:ds|sion(?:for|_for)?)))|f(?:or|ile(?:overview)?|ires|inal|unction)|global|host|i(?:gnore|mplements|n(?:heritdoc|ner|stance|terface))|kind|l(?:ends|i(?:cense|stens))|m(?:ain|e(?:mber(?:of)?|thod)|ix(?:ex|in)|odule)|name(?:space)?|over(?:ride|view)|p(?:aram|r(?:ivate|op(?:erty)?|otected))|re(?:ad(?:o|O)nly|quire(?:s|d)|turn(?:s)?)|s(?:ee|ince|tatic|ummary|ubmodule)|t(?:h(?:is|rows)|odo|utorial|ype(?:def)?)|var(?:iation)?|version|virtual|uses|writeOnce)\\b'
+        'match': '(?<!\\w)@(abstract|access|alias|augments|author|async|attribute|arg|argument|beta|borrows|bubbes|callback|class|classdesc|config|const|constant|constructs|constructor|copyright|chainable|default|defaultvalue|deprecated|desc|description|enum|emits|event|example|exports|external|extends|extension|extensionfor|extension_for|for|file|fileoverview|fires|final|function|global|host|ignore|implements|inheritdoc|inner|instance|interface|kind|lends|license|listens|main|member|memberof|method|mixex|mixin|module|name|namespace|override|overview|param|private|prop|property|protected|readonly|readOnly|requires|required|return|returns|see|since|static|summary|submodule|this|throws|todo|tutorial|type|typedef|var|variation|version|virtual|uses|writeOnce)\\b'
         'name': 'storage.type.class.jsdoc'
       }
     ]
