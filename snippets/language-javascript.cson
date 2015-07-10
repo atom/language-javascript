@@ -1,9 +1,9 @@
 '.source.js':
   'Object Method':
-    'prefix': ':f'
+    'prefix': 'kf'
     'body': '${1:method_name}: function (${2:attribute}) {\n\t$3\n}${4:,}'
   'Object key — key: "value"':
-    'prefix': ':'
+    'prefix': 'kv'
     'body': '${1:key}: ${2:\'${3:value}\'}${4:, }'
   'Prototype':
     'prefix': 'proto'
