@@ -48,16 +48,19 @@ describe "Javascript grammar", ->
   describe "instantiation", ->
     it "tokenizes the new keyword and instance entities", ->
       {tokens} = grammar.tokenizeLine('new something')
-      expect(tokens[0]).toEqual value: 'new', scopes: ['source.js', 'keyword.operator.new.js']
-      expect(tokens[1]).toEqual value: 'something', scopes: ['source.js', 'entity.instance.js']
+      expect(tokens[0]).toEqual value: 'new', scopes: ['source.js', 'meta.class.instance.constructor', 'keyword.operator.new.js']
+      expect(tokens[1]).toEqual value: ' ', scopes: ['source.js', 'meta.class.instance.constructor']
+      expect(tokens[2]).toEqual value: 'something', scopes: ['source.js', 'meta.class.instance.constructor', 'entity.instance.js']
 
       {tokens} = grammar.tokenizeLine('new Something')
-      expect(tokens[0]).toEqual value: 'new', scopes: ['source.js', 'keyword.operator.new.js']
-      expect(tokens[1]).toEqual value: 'Something', scopes: ['source.js', 'entity.instance.js']
+      expect(tokens[0]).toEqual value: 'new', scopes: ['source.js', 'meta.class.instance.constructor', 'keyword.operator.new.js']
+      expect(tokens[1]).toEqual value: ' ', scopes: ['source.js', 'meta.class.instance.constructor']
+      expect(tokens[2]).toEqual value: 'Something', scopes: ['source.js', 'meta.class.instance.constructor', 'entity.instance.js']
 
       {tokens} = grammar.tokenizeLine('new $something')
-      expect(tokens[0]).toEqual value: 'new', scopes: ['source.js', 'keyword.operator.new.js']
-      expect(tokens[1]).toEqual value: '$something', scopes: ['source.js', 'entity.instance.js']
+      expect(tokens[0]).toEqual value: 'new', scopes: ['source.js', 'meta.class.instance.constructor', 'keyword.operator.new.js']
+      expect(tokens[1]).toEqual value: ' ', scopes: ['source.js', 'meta.class.instance.constructor']
+      expect(tokens[2]).toEqual value: '$something', scopes: ['source.js', 'meta.class.instance.constructor', 'entity.instance.js']
 
   describe "regular expressions", ->
     it "tokenizes regular expressions", ->
