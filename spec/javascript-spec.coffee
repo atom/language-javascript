@@ -205,7 +205,7 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: ',', scopes: ['source.js', 'meta.delimiter.object.comma.js']
       expect(tokens[7]).toEqual value: 'second', scopes: ['source.js', 'constant.other.js']
       expect(tokens[8]).toEqual value: ',', scopes: ['source.js', 'meta.delimiter.object.comma.js']
-      expect(tokens[9]).toEqual value: '...', scopes: ['source.js', 'meta.delimiter.object.spread.js']
+      expect(tokens[9]).toEqual value: '...', scopes: ['source.js', 'keyword.operator.js']
       expect(tokens[10]).toEqual value: 'rest', scopes: ['source.js', 'constant.other.js']
       expect(tokens[11]).toEqual value: '}', scopes: ['source.js', 'meta.brace.curly.js']
       expect(tokens[12]).toEqual value: ' ', scopes: ['source.js']

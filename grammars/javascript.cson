@@ -388,7 +388,7 @@
       }
       {
         'match': '\\.\\.\\.'
-        'name': 'meta.delimiter.object.spread.js'
+        'name': 'keyword.operator.js'
       }
       {
         'match': ','
