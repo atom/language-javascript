@@ -363,12 +363,49 @@
     'name': 'storage.modifier.js'
   }
   {
-    'match': '(?<!\\.)\\b(const)(?!\\s*:)\\b\\s+([$_a-zA-Z][$_a-zA-Z0-9]*)'
-    'captures':
+    'begin': '(?<!\\.)\\b(const)(?!\\s*:)\\b\\s+'
+    'beginCaptures':
       '1':
         'name': 'storage.modifier.js'
-      '2':
-        'name': 'constant.other.js'
+    'end': '(=)\\s+'
+    'endCaptures':
+      '1':
+        'name': 'keyword.operator.js'
+    'patterns': [
+      {
+        'match': '([$_a-zA-Z][$_a-zA-Z0-9]*)\\s*(:)\\s*([$_a-zA-Z][$_a-zA-Z0-9]*)?'
+        'captures':
+          '2':
+            'name': 'keyword.operator.js'
+          '3':
+            'name': 'constant.other.js'
+      }
+      {
+        'match': '([$_a-zA-Z][$_a-zA-Z0-9]*)'
+        'captures':
+          '1':
+            'name': 'constant.other.js'
+      }
+      {
+        'match': '\\.\\.\\.'
+        'name': 'meta.delimiter.object.spread.js'
+      }
+      {
+        'match': ','
+        'name': 'meta.delimiter.object.comma.js'
+      }
+      {
+        'match': '\\{|\\}'
+        'name': 'meta.brace.curly.js'
+      }
+      {
+        'match': '\\[|\\]'
+        'name': 'meta.brace.square.js'
+      }
+      {
+        'match': '\\s+'
+      }
+    ]
   }
   {
     'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?',
