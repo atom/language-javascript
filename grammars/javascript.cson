@@ -303,7 +303,7 @@
         'name': 'keyword.operator.new.js'
       '2':
         'name': 'entity.name.type.instance.js'
-    'match': '(new)\\s+(\\w+(?:\\.\\w*)?)'
+    'match': '(new)\\s+(\\$?\\w+(?:\\.\\w*)?)'
     'name': 'meta.class.instance.constructor'
   }
   {
