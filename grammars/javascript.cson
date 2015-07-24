@@ -5,6 +5,7 @@
   '_js'
   'es'
   'es6'
+  'jsm'
   'pjs'
   'xsjs'
   'xsjslib'
@@ -302,7 +303,7 @@
         'name': 'keyword.operator.new.js'
       '2':
         'name': 'entity.name.type.instance.js'
-    'match': '(new)\\s+(\\w+(?:\\.\\w*)?)'
+    'match': '(new)\\s+(\\$?\\w+(?:\\.\\w*)?)'
     'name': 'meta.class.instance.constructor'
   }
   {
@@ -362,12 +363,49 @@
     'name': 'storage.modifier.js'
   }
   {
-    'match': '(?<!\\.)\\b(const)(?!\\s*:)\\b\\s+([$_a-zA-Z][$_a-zA-Z0-9]*)'
-    'captures':
+    'begin': '(?<!\\.)\\b(const)(?!\\s*:)\\b\\s+'
+    'beginCaptures':
       '1':
         'name': 'storage.modifier.js'
-      '2':
-        'name': 'constant.other.js'
+    'end': '(=)\\s+'
+    'endCaptures':
+      '1':
+        'name': 'keyword.operator.js'
+    'patterns': [
+      {
+        'match': '([$_a-zA-Z][$_a-zA-Z0-9]*)\\s*(:)\\s*([$_a-zA-Z][$_a-zA-Z0-9]*)?'
+        'captures':
+          '2':
+            'name': 'keyword.operator.js'
+          '3':
+            'name': 'constant.other.js'
+      }
+      {
+        'match': '([$_a-zA-Z][$_a-zA-Z0-9]*)'
+        'captures':
+          '1':
+            'name': 'constant.other.js'
+      }
+      {
+        'match': '\\.\\.\\.'
+        'name': 'keyword.operator.js'
+      }
+      {
+        'match': ','
+        'name': 'meta.delimiter.object.comma.js'
+      }
+      {
+        'match': '\\{|\\}'
+        'name': 'meta.brace.curly.js'
+      }
+      {
+        'match': '\\[|\\]'
+        'name': 'meta.brace.square.js'
+      }
+      {
+        'match': '\\s+'
+      }
+    ]
   }
   {
     'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?',
@@ -592,7 +630,7 @@
     'patterns': [
       {
         'begin': '(?=[\\p{L}\\p{Nl}$_])'
-        'end': '(?=[,)])'
+        'end': '(?=[,)\\/])'
         'patterns': [
           {
             'match': '\\G[\\p{L}\\p{Nl}$_][\\p{L}\\p{Nl}$\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}\\x{200C}\\x{200D}]*'
@@ -623,7 +661,7 @@
   'docblock':
     'patterns': [
       {
-        'match': '(?<!\\w)@(abstract|access|alias|augments|author|async|attribute|arg|argument|beta|borrows|bubbes|callback|class|classdesc|config|const|constant|constructs|constructor|copyright|chainable|default|defaultvalue|deprecated|desc|description|enum|emits|event|example|exports|external|extends|extension|extensionfor|extension_for|for|file|fileoverview|fires|final|function|global|host|ignore|implements|inheritdoc|inner|instance|interface|kind|lends|license|listens|main|member|memberof|method|mixex|mixin|module|name|namespace|override|overview|param|private|prop|property|protected|readonly|readOnly|requires|required|return|returns|see|since|static|summary|submodule|this|throws|todo|tutorial|type|typedef|var|variation|version|virtual|uses|writeOnce)\\b'
+        'match': '(?<!\\w)@(abstract|access|alias|augments|author|async|attribute|arg|argument|beta|borrows|bubbes|callback|class|classdesc|config|const|constant|constructs|constructor|copyright|chainable|default|defaultvalue|deprecated|desc|description|enum|emits|event|example|exports|external|extends|extension|extensionfor|extension_for|for|file|fileoverview|fires|final|function|global|host|ignore|implements|inheritdoc|inner|instance|interface|kind|lends|license|listens|main|member|memberof|method|mixex|mixin(?:s|)|module|name|namespace|override|overview|param|private|prop|property|protected|readonly|readOnly|requires|required|return|returns|see|since|static|summary|submodule|this|throws|todo|tutorial|type|typedef|var|variation|version|virtual|uses|writeOnce)\\b'
         'name': 'storage.type.class.jsdoc'
       }
     ]
