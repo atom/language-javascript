@@ -239,14 +239,14 @@ describe "Javascript grammar", ->
       expect(tokens[3]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
   describe "Functions", ->
-      it "tokenizes support constants", ->
-        {tokens} = grammar.tokenizeLine('awesome.2fnlknwdlks4g();')
-        expect(tokens[0]).toEqual value: 'awesome', scopes: ['source.js']
-        expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
-        expect(tokens[2]).toEqual value: '2fnlknwdlks4g', scopes: ['source.js', 'support.function.js']
-        expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
-        expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
-        expect(tokens[5]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+    it "tokenizes support constants", ->
+      {tokens} = grammar.tokenizeLine('awesome.2fnlknwdlks4g();')
+      expect(tokens[0]).toEqual value: 'awesome', scopes: ['source.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
+      expect(tokens[2]).toEqual value: '2fnlknwdlks4g', scopes: ['source.js', 'support.function.js']
+      expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[5]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
   describe "ES6 string templates", ->
     it "tokenizes them as strings", ->
