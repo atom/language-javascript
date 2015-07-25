@@ -82,10 +82,10 @@
     'body': 'new Promise(function(resolve, reject) {\n\t$1\n});$0'
   'setInterval function':
     'prefix': 'interval'
-    'body': 'setInterval(${2:function () {\n\t$3\n}}, ${1:10});'
+    'body': 'setInterval(${2:function () {\n\t$3\n\\}}, ${1:10});'
   'setTimeout function':
     'prefix': 'timeout'
-    'body': 'setTimeout(${2:function () {\n\t$3\n}}, ${1:10});'
+    'body': 'setTimeout(${2:function () {\n\t$3\n\\}}, ${1:10});'
   'switch':
     'prefix': 'switch'
     'body': 'switch (${1:expression}) {\n\tcase ${2:expression}:\n\t\t$4\n\t\tbreak;$5\n\tdefault:\n\t\t$3\n}'
