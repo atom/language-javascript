@@ -626,6 +626,9 @@
           {
             'include': '#function-params'
           }
+          {
+            'include': '#strings'
+          }
         ]
 
         'end': '(\\))'
