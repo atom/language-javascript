@@ -259,6 +259,55 @@
     ]
   }
   {
+    'begin': '^\\s*(?=@\\s*[A-Za-z_][A-Za-z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z_0-9]*)*\\s*\\()'
+    'end': '(\\))'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.arguments.end.js'
+    'name': 'meta.function.decorator.js'
+    'patterns': [
+      {
+        'begin': '(?=(@)\\s*[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*\\s*\\()'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.decorator.js'
+        'contentName': 'entity.name.function.decorator.js'
+        'end': '(?=\\s*\\()'
+      }
+      {
+        'begin': '(\\()'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.arguments.begin.js'
+        'contentName': 'meta.function.decorator.arguments.js'
+        'end': '(?=\\))'
+        'patterns': [
+          {
+            'include': '#function-params'
+          }
+          {
+            'include': '$self'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    'begin': '^\\s*(?=@\\s*[A-Za-z_][A-Za-z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z_0-9]*)*)'
+    'contentName': 'entity.name.function.decorator.js'
+    'end': '(?=\\s|$\\n?|#)'
+    'name': 'meta.function.decorator.js'
+    'patterns': [
+      {
+        'begin': '(?=(@)\\s*[A-Za-z_][A-Za-z0-9_]*(\\.[A-Za-z_][A-Za-z0-9_]*)*)'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.decorator.js'
+        'end': '(?=\\s|$\\n?|#)'
+      }
+    ]
+  }
+  {
     'include': '#methods'
   }
   {
