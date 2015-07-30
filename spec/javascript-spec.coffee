@@ -212,6 +212,14 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: '42', scopes: ['source.js', 'constant.numeric.js']
       expect(tokens[7]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
+      {tokens} = grammar.tokenizeLine('(const hi);')
+      expect(tokens[0]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[1]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[3]).toEqual value: 'hi', scopes: ['source.js', 'constant.other.js']
+      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[5]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+
       {tokens} = grammar.tokenizeLine('const {first:f,second,...rest} = obj;')
       expect(tokens[0]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
       expect(tokens[1]).toEqual value: ' ', scopes: ['source.js']
