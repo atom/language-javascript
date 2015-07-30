@@ -242,6 +242,25 @@ describe "Javascript grammar", ->
       expect(tokens[8]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
       expect(tokens[9]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
+    it "tokenizes variables declared with `const` in for-in and for-of loops", ->
+      {tokens} = grammar.tokenizeLine 'for (const elem of array) {'
+      expect(tokens[0]).toEqual value: 'for', scopes: ['source.js', 'keyword.control.js']
+      expect(tokens[1]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[2]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[3]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[4]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[5]).toEqual value: 'elem', scopes: ['source.js', 'constant.other.js']
+      expect(tokens[6]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[7]).toEqual value: 'of', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[8]).toEqual value: ' array', scopes: ['source.js']
+      expect(tokens[9]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
+
+      {tokens} = grammar.tokenizeLine 'for (const name in object) {'
+      expect(tokens[5]).toEqual value: 'name', scopes: ['source.js', 'constant.other.js']
+      expect(tokens[6]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[7]).toEqual value: 'in', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[8]).toEqual value: ' object', scopes: ['source.js']
+
     it "tokenizes support constants", ->
       {tokens} = grammar.tokenizeLine('awesome = cool.systemLanguage;')
       expect(tokens[0]).toEqual value: 'awesome ', scopes: ['source.js']
