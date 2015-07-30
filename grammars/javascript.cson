@@ -367,10 +367,12 @@
     'beginCaptures':
       '1':
         'name': 'storage.modifier.js'
-    'end': '(=)'
+    'end': '(=|of|in)|(;)'
     'endCaptures':
       '1':
         'name': 'keyword.operator.js'
+      '2':
+        'name': 'punctuation.terminator.statement.js'
     'patterns': [
       {
         'match': '([$_a-zA-Z][$_a-zA-Z0-9]*)\\s*(:)\\s*([$_a-zA-Z][$_a-zA-Z0-9]*)?'
