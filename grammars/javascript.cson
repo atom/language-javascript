@@ -363,11 +363,11 @@
     'name': 'storage.modifier.js'
   }
   {
-    'begin': '(?<!\\.)\\b(const)(?!\\s*:)\\b\\s+'
+    'begin': '(?<!\\.)\\b(const)(?!\\s*:)\\b'
     'beginCaptures':
       '1':
         'name': 'storage.modifier.js'
-    'end': '(=|of|in)|(;)'
+    'end': '(=|of|in)|(;)|(?<!,)\\n'
     'endCaptures':
       '1':
         'name': 'keyword.operator.js'
@@ -397,15 +397,16 @@
         'name': 'meta.delimiter.object.comma.js'
       }
       {
+        'match': '\\(|\\)'
+        'name': 'meta.brace.round.js'
+      }
+      {
         'match': '\\{|\\}'
         'name': 'meta.brace.curly.js'
       }
       {
         'match': '\\[|\\]'
         'name': 'meta.brace.square.js'
-      }
-      {
-        'match': '\\s+'
       }
     ]
   }
