@@ -367,7 +367,7 @@
     'beginCaptures':
       '1':
         'name': 'storage.modifier.js'
-    'end': '(=|of|in)|(;)'
+    'end': '(=|of|in)|(;)|(?<!,)\\n'
     'endCaptures':
       '1':
         'name': 'keyword.operator.js'
