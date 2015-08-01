@@ -259,6 +259,7 @@
     ]
   }
   {
+<<<<<<< HEAD
     'begin': '^\\s*(?=@\\s*[A-Za-z_][A-Za-z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z_0-9]*)*\\s*\\()'
     'end': '(\\))'
     'endCaptures':
@@ -286,6 +287,9 @@
             'include': '#function-params'
           }
           {
+            'include': '#comments'
+          }
+          {
             'include': '$self'
           }
         ]
@@ -294,16 +298,38 @@
   }
   {
     'begin': '^\\s*(?=@\\s*[A-Za-z_][A-Za-z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z_0-9]*)*)'
-    'contentName': 'entity.name.function.decorator.js'
-    'end': '(?=\\s|$\\n?|#)'
-    'name': 'meta.function.decorator.js'
+    'contentName': 'entity.name.function.annotation.js'
+    'end': '(?=\\s|$\\n?|//)'
+    'name': 'meta.function.annotation.js'
     'patterns': [
       {
         'begin': '(?=(@)\\s*[A-Za-z_][A-Za-z0-9_]*(\\.[A-Za-z_][A-Za-z0-9_]*)*)'
         'beginCaptures':
           '1':
-            'name': 'punctuation.definition.decorator.js'
-        'end': '(?=\\s|$\\n?|#)'
+            'name': 'punctuation.definition.annotation.js'
+        'end': '(?=\\s|$\\n?|//)'
+        'patterns': [
+          {
+            'include': '#comments'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    'begin': '\\b(constructor)\\s*(\\()'
+    'beginCaptures':
+      '1':
+        'name': 'entity.name.constructor.js'
+      '2':
+        'name': 'punctuation.definition.parameters.begin.js'
+    'end': '(\\))'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.parameters.end.js'
+    'patterns': [
+      {
+        'include': '#function-params'
       }
     ]
   }
@@ -364,8 +390,7 @@
     'name': 'support.function.js.console'
   }
   {
-    'match': '\\b((0(x|X)[0-9a-fA-F]+)|(0(b|B)[01]+)|(0(o|O)[0-7]+)|([0-9]+(\\.[0-9]+)?)((e|E)[+-]?[0-9]+)?)\\b'
-    'name': 'constant.numeric.js'
+    'include': '#numbers'
   }
   {
     'include': '#strings'
@@ -412,14 +437,16 @@
     'name': 'storage.modifier.js'
   }
   {
-    'begin': '(?<!\\.)\\b(const)(?!\\s*:)\\b\\s+'
+    'begin': '(?<!\\.)\\b(const)(?!\\s*:)\\b'
     'beginCaptures':
       '1':
         'name': 'storage.modifier.js'
-    'end': '(=)'
+    'end': '(=|of|in)|(;)|(?<!,)\\n'
     'endCaptures':
       '1':
         'name': 'keyword.operator.js'
+      '2':
+        'name': 'punctuation.terminator.statement.js'
     'patterns': [
       {
         'match': '([$_a-zA-Z][$_a-zA-Z0-9]*)\\s*(:)\\s*([$_a-zA-Z][$_a-zA-Z0-9]*)?'
@@ -444,15 +471,16 @@
         'name': 'meta.delimiter.object.comma.js'
       }
       {
+        'match': '\\(|\\)'
+        'name': 'meta.brace.round.js'
+      }
+      {
         'match': '\\{|\\}'
         'name': 'meta.brace.curly.js'
       }
       {
         'match': '\\[|\\]'
         'name': 'meta.brace.square.js'
-      }
-      {
-        'match': '\\s+'
       }
     ]
   }
@@ -601,6 +629,13 @@
   }
 ]
 'repository':
+  'numbers':
+    'patterns': [
+      {
+        'match': '(\\+|\\-)?\\b((0(x|X)[0-9a-fA-F]+)|(0(b|B)[01]+)|(0(o|O)[0-7]+)|([0-9]+(\\.[0-9]+)?)((e|E)[+-]?[0-9]+)?)\\b'
+        'name': 'constant.numeric.js'
+      }
+    ]
   'strings':
     'patterns': [
       {
@@ -689,17 +724,37 @@
   'function-params':
     'patterns': [
       {
-        'begin': '(?=[\\p{L}\\p{Nl}$_])'
-        'end': '(?=[,)\\/])'
-        'patterns': [
-          {
-            'match': '\\G[\\p{L}\\p{Nl}$_][\\p{L}\\p{Nl}$\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}\\x{200C}\\x{200D}]*'
-            'name': 'variable.parameter.function.js'
-          }
-        ]
+        'include': '#numbers'
+      }
+      {
+        'include': '#strings'
+      }
+      {
+        'match': '\\(|\\)'
+        'name': 'meta.brace.round.js'
+      }
+      {
+        'match': '\\[|\\]'
+        'name': 'meta.brace.square.js'
+      }
+      {
+        'match': '\\{|\\}'
+        'name': 'meta.brace.curly.js'
+      }
+      {
+        'match': ','
+        'name': 'meta.object.delimiter.js'
+      }
+      {
+        'match': '='
+        'name': 'keyword.operator.js'
       }
       {
         'include': '#comments'
+      }
+      {
+        'match': '[a-zA-Z_$][a-zA-Z_$0-9]*'
+        'name': 'variable.parameter.function.js'
       }
     ]
   'interpolated_js':
