@@ -325,6 +325,16 @@ describe "Javascript grammar", ->
       expect(tokens[2]).toEqual value: 'extends', scopes: ['source.js', 'meta.class.js', 'storage.modifier.js']
       expect(tokens[4]).toEqual value: 'SomeClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
 
+    it "tokenizes constructors", ->
+      {tokens} = grammar.tokenizeLine('constructor(a, b)')
+      expect(tokens[0]).toEqual value: 'constructor', scopes: ['source.js', 'entity.name.constructor.js']
+      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'punctuation.definition.parameters.begin.js']
+      expect(tokens[2]).toEqual value: 'a', scopes: ['source.js', 'variable.parameter.function.js']
+      expect(tokens[3]).toEqual value: ',', scopes: ['source.js', 'meta.object.delimiter.js']
+      expect(tokens[4]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[5]).toEqual value: 'b', scopes: ['source.js', 'variable.parameter.function.js']
+      expect(tokens[6]).toEqual value: ')', scopes: ['source.js', 'punctuation.definition.parameters.end.js']
+
   describe "ES6 import", ->
     it "Tokenizes import ... as", ->
       {tokens} = grammar.tokenizeLine('import \'react\' as React')
@@ -410,8 +420,34 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'f', scopes: ['source.js', 'meta.method.js', 'entity.name.function.js']
       expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.method.js', 'punctuation.definition.parameters.begin.js']
       expect(tokens[2]).toEqual value: 'a', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
-      expect(tokens[4]).toEqual value: 'b', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
-      expect(tokens[5]).toEqual value: ')', scopes: ['source.js', 'meta.method.js', 'punctuation.definition.parameters.end.js']
+      expect(tokens[3]).toEqual value: ',', scopes: ['source.js', 'meta.method.js', 'meta.object.delimiter.js']
+      expect(tokens[5]).toEqual value: 'b', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
+      expect(tokens[6]).toEqual value: ')', scopes: ['source.js', 'meta.method.js', 'punctuation.definition.parameters.end.js']
+
+      {tokens} = grammar.tokenizeLine('hi({host, root = "./", plugins = [a, "b", "c", d]}) {}')
+      expect(tokens[0]).toEqual value: 'hi', scopes: ['source.js', 'meta.method.js', 'entity.name.function.js']
+      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.method.js', 'punctuation.definition.parameters.begin.js']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.method.js', 'meta.brace.curly.js']
+      expect(tokens[3]).toEqual value: 'host', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
+      expect(tokens[4]).toEqual value: ',', scopes: ['source.js', 'meta.method.js', 'meta.object.delimiter.js']
+      expect(tokens[6]).toEqual value: 'root', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
+      expect(tokens[8]).toEqual value: '=', scopes: ['source.js', 'meta.method.js', 'keyword.operator.js']
+      expect(tokens[10]).toEqual value: '"', scopes: ['source.js', 'meta.method.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[11]).toEqual value: './', scopes: ['source.js', 'meta.method.js', 'string.quoted.double.js']
+      expect(tokens[12]).toEqual value: '"', scopes: ['source.js', 'meta.method.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
+      expect(tokens[13]).toEqual value: ',', scopes: ['source.js', 'meta.method.js', 'meta.object.delimiter.js']
+      expect(tokens[15]).toEqual value: 'plugins', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
+      expect(tokens[17]).toEqual value: '=', scopes: ['source.js', 'meta.method.js', 'keyword.operator.js']
+      expect(tokens[19]).toEqual value: '[', scopes: ['source.js', 'meta.method.js', 'meta.brace.square.js']
+      expect(tokens[20]).toEqual value: 'a', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
+      expect(tokens[21]).toEqual value: ',', scopes: ['source.js', 'meta.method.js', 'meta.object.delimiter.js']
+      expect(tokens[23]).toEqual value: '"', scopes: ['source.js', 'meta.method.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[26]).toEqual value: ',', scopes: ['source.js', 'meta.method.js', 'meta.object.delimiter.js']
+      expect(tokens[28]).toEqual value: '"', scopes: ['source.js', 'meta.method.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[33]).toEqual value: 'd', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
+      expect(tokens[34]).toEqual value: ']', scopes: ['source.js', 'meta.method.js', 'meta.brace.square.js']
+      expect(tokens[35]).toEqual value: '}', scopes: ['source.js', 'meta.method.js', 'meta.brace.curly.js']
+      expect(tokens[36]).toEqual value: ')', scopes: ['source.js', 'meta.method.js', 'punctuation.definition.parameters.end.js']
 
     it "tokenizes functions", ->
       {tokens} = grammar.tokenizeLine('var func = function nonAnonymous(')
