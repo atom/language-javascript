@@ -95,30 +95,41 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
       expect(tokens[7]).toEqual value: ']', scopes: ['source.js', 'meta.brace.square.js']
 
-      {tokens} = grammar.tokenizeLine('0x1D306')
-      expect(tokens[0]).toEqual value: '0x1D306', scopes: ['source.js', 'constant.numeric.js']
-
-      {tokens} = grammar.tokenizeLine('0X1D306')
-      expect(tokens[0]).toEqual value: '0X1D306', scopes: ['source.js', 'constant.numeric.js']
-
-      {tokens} = grammar.tokenizeLine('0b011101110111010001100110')
-      expect(tokens[0]).toEqual value: '0b011101110111010001100110', scopes: ['source.js', 'constant.numeric.js']
-
-      {tokens} = grammar.tokenizeLine('0B011101110111010001100110')
-      expect(tokens[0]).toEqual value: '0B011101110111010001100110', scopes: ['source.js', 'constant.numeric.js']
-
-      {tokens} = grammar.tokenizeLine('0o1411')
-      expect(tokens[0]).toEqual value: '0o1411', scopes: ['source.js', 'constant.numeric.js']
-
-      {tokens} = grammar.tokenizeLine('0O1411')
-      expect(tokens[0]).toEqual value: '0O1411', scopes: ['source.js', 'constant.numeric.js']
-
     it "verifies that regular expressions have explicit count modifiers", ->
       source = fs.readFileSync(path.resolve(__dirname, '..', 'grammars', 'javascript.cson'), 'utf8')
       expect(source.search /{,/).toEqual -1
 
       source = fs.readFileSync(path.resolve(__dirname, '..', 'grammars', 'regular expressions (javascript).cson'), 'utf8')
       expect(source.search /{,/).toEqual -1
+
+  describe "numbers", ->
+    it "tokenizes hexadecimals", ->
+      {tokens} = grammar.tokenizeLine('0x1D306')
+      expect(tokens[0]).toEqual value: '0x1D306', scopes: ['source.js', 'constant.numeric.js']
+
+      {tokens} = grammar.tokenizeLine('0X1D306')
+      expect(tokens[0]).toEqual value: '0X1D306', scopes: ['source.js', 'constant.numeric.js']
+
+    it "tokenizes binary literals", ->
+      {tokens} = grammar.tokenizeLine('0b011101110111010001100110')
+      expect(tokens[0]).toEqual value: '0b011101110111010001100110', scopes: ['source.js', 'constant.numeric.js']
+
+      {tokens} = grammar.tokenizeLine('0B011101110111010001100110')
+      expect(tokens[0]).toEqual value: '0B011101110111010001100110', scopes: ['source.js', 'constant.numeric.js']
+
+    it "tokenizes octal literals", ->
+      {tokens} = grammar.tokenizeLine('0o1411')
+      expect(tokens[0]).toEqual value: '0o1411', scopes: ['source.js', 'constant.numeric.js']
+
+      {tokens} = grammar.tokenizeLine('0O1411')
+      expect(tokens[0]).toEqual value: '0O1411', scopes: ['source.js', 'constant.numeric.js']
+
+    it "tokenizes decimals", ->
+      {tokens} = grammar.tokenizeLine('5e-10')
+      expect(tokens[0]).toEqual value: '5e-10', scopes: ['source.js', 'constant.numeric.js']
+
+      {tokens} = grammar.tokenizeLine('-5E+5')
+      expect(tokens[0]).toEqual value: '-5E+5', scopes: ['source.js', 'constant.numeric.js']
 
   describe "operators", ->
     it "tokenizes void correctly", ->
