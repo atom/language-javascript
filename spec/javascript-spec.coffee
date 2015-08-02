@@ -478,6 +478,18 @@ describe "Javascript grammar", ->
       expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.function.arrow.js', 'punctuation.definition.parameters.end.js']
       expect(tokens[5]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.arrow.js']
 
+  describe "decorators and annotations", ->
+    it "tokenizes decorators", ->
+      {tokens} = grammar.tokenizeLine('@thisIsADecorator(true)')
+      expect(tokens[0]).toEqual value: '@thisIsADecorator', scopes: ['source.js', 'meta.function.decorator.js', 'entity.name.function.decorator.js']
+      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.function.decorator.js', 'punctuation.definition.arguments.begin.js']
+      expect(tokens[2]).toEqual value: 'true', scopes: ['source.js', 'meta.function.decorator.js', 'meta.function.decorator.arguments.js', 'variable.parameter.function.js']
+      expect(tokens[3]).toEqual value: ')', scopes: ['source.js', 'meta.function.decorator.js', 'punctuation.definition.arguments.end.js']
+
+    it "tokenizes annotations", ->
+      {tokens} = grammar.tokenizeLine('@thisIsAnAnnotation')
+      expect(tokens[0]).toEqual value: '@thisIsAnAnnotation', scopes: ['source.js', 'meta.function.annotation.js', 'entity.name.function.annotation.js']
+
   describe "comments", ->
     it "tokenizes /* */ comments", ->
       {tokens} = grammar.tokenizeLine('/**/')
