@@ -259,6 +259,23 @@
     ]
   }
   {
+    'begin': '\\b(constructor)\\s*(\\()'
+    'beginCaptures':
+      '1':
+        'name': 'entity.name.constructor.js'
+      '2':
+        'name': 'punctuation.definition.parameters.begin.js'
+    'end': '(\\))'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.parameters.end.js'
+    'patterns': [
+      {
+        'include': '#function-params'
+      }
+    ]
+  }
+  {
     'include': '#methods'
   }
   {
@@ -315,8 +332,7 @@
     'name': 'support.function.js.console'
   }
   {
-    'match': '\\b((0(x|X)[0-9a-fA-F]+)|(0(b|B)[01]+)|(0(o|O)[0-7]+)|([0-9]+(\\.[0-9]+)?)((e|E)[+-]?[0-9]+)?)\\b'
-    'name': 'constant.numeric.js'
+    'include': '#numbers'
   }
   {
     'include': '#strings'
@@ -555,6 +571,13 @@
   }
 ]
 'repository':
+  'numbers':
+    'patterns': [
+      {
+        'match': '(\\+|\\-)?\\b((0(x|X)[0-9a-fA-F]+)|(0(b|B)[01]+)|(0(o|O)[0-7]+)|([0-9]+(\\.[0-9]+)?)((e|E)[+-]?[0-9]+)?)\\b'
+        'name': 'constant.numeric.js'
+      }
+    ]
   'strings':
     'patterns': [
       {
@@ -643,17 +666,37 @@
   'function-params':
     'patterns': [
       {
-        'begin': '(?=[\\p{L}\\p{Nl}$_])'
-        'end': '(?=[,)\\/])'
-        'patterns': [
-          {
-            'match': '\\G[\\p{L}\\p{Nl}$_][\\p{L}\\p{Nl}$\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}\\x{200C}\\x{200D}]*'
-            'name': 'variable.parameter.function.js'
-          }
-        ]
+        'include': '#numbers'
+      }
+      {
+        'include': '#strings'
+      }
+      {
+        'match': '\\(|\\)'
+        'name': 'meta.brace.round.js'
+      }
+      {
+        'match': '\\[|\\]'
+        'name': 'meta.brace.square.js'
+      }
+      {
+        'match': '\\{|\\}'
+        'name': 'meta.brace.curly.js'
+      }
+      {
+        'match': ','
+        'name': 'meta.object.delimiter.js'
+      }
+      {
+        'match': '='
+        'name': 'keyword.operator.js'
       }
       {
         'include': '#comments'
+      }
+      {
+        'match': '[a-zA-Z_$][a-zA-Z_$0-9]*'
+        'name': 'variable.parameter.function.js'
       }
     ]
   'interpolated_js':
