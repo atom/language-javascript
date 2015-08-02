@@ -95,41 +95,30 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
       expect(tokens[7]).toEqual value: ']', scopes: ['source.js', 'meta.brace.square.js']
 
-    it "verifies that regular expressions have explicit count modifiers", ->
-      source = fs.readFileSync(path.resolve(__dirname, '..', 'grammars', 'javascript.cson'), 'utf8')
-      expect(source.search /{,/).toEqual -1
-
-      source = fs.readFileSync(path.resolve(__dirname, '..', 'grammars', 'regular expressions (javascript).cson'), 'utf8')
-      expect(source.search /{,/).toEqual -1
-
-  describe "numbers", ->
-    it "tokenizes hexadecimals", ->
       {tokens} = grammar.tokenizeLine('0x1D306')
       expect(tokens[0]).toEqual value: '0x1D306', scopes: ['source.js', 'constant.numeric.js']
 
       {tokens} = grammar.tokenizeLine('0X1D306')
       expect(tokens[0]).toEqual value: '0X1D306', scopes: ['source.js', 'constant.numeric.js']
 
-    it "tokenizes binary literals", ->
       {tokens} = grammar.tokenizeLine('0b011101110111010001100110')
       expect(tokens[0]).toEqual value: '0b011101110111010001100110', scopes: ['source.js', 'constant.numeric.js']
 
       {tokens} = grammar.tokenizeLine('0B011101110111010001100110')
       expect(tokens[0]).toEqual value: '0B011101110111010001100110', scopes: ['source.js', 'constant.numeric.js']
 
-    it "tokenizes octal literals", ->
       {tokens} = grammar.tokenizeLine('0o1411')
       expect(tokens[0]).toEqual value: '0o1411', scopes: ['source.js', 'constant.numeric.js']
 
       {tokens} = grammar.tokenizeLine('0O1411')
       expect(tokens[0]).toEqual value: '0O1411', scopes: ['source.js', 'constant.numeric.js']
 
-    it "tokenizes decimals", ->
-      {tokens} = grammar.tokenizeLine('5e-10')
-      expect(tokens[0]).toEqual value: '5e-10', scopes: ['source.js', 'constant.numeric.js']
+    it "verifies that regular expressions have explicit count modifiers", ->
+      source = fs.readFileSync(path.resolve(__dirname, '..', 'grammars', 'javascript.cson'), 'utf8')
+      expect(source.search /{,/).toEqual -1
 
-      {tokens} = grammar.tokenizeLine('-5E+5')
-      expect(tokens[0]).toEqual value: '-5E+5', scopes: ['source.js', 'constant.numeric.js']
+      source = fs.readFileSync(path.resolve(__dirname, '..', 'grammars', 'regular expressions (javascript).cson'), 'utf8')
+      expect(source.search /{,/).toEqual -1
 
   describe "operators", ->
     it "tokenizes void correctly", ->
@@ -223,32 +212,6 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: '42', scopes: ['source.js', 'constant.numeric.js']
       expect(tokens[7]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
-      lines = grammar.tokenizeLines """
-        const a,
-        b,
-        c
-        if(a)
-      """
-      expect(lines[0][0]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
-      expect(lines[0][1]).toEqual value: ' ', scopes: ['source.js']
-      expect(lines[0][2]).toEqual value: 'a', scopes: ['source.js', 'constant.other.js']
-      expect(lines[0][3]).toEqual value: ',', scopes: ['source.js', 'meta.delimiter.object.comma.js']
-      expect(lines[1][0]).toEqual value: 'b', scopes: ['source.js', 'constant.other.js']
-      expect(lines[1][1]).toEqual value: ',', scopes: ['source.js', 'meta.delimiter.object.comma.js']
-      expect(lines[2][0]).toEqual value: 'c', scopes: ['source.js', 'constant.other.js']
-      expect(lines[3][0]).toEqual value: 'if', scopes: ['source.js', 'keyword.control.js']
-      expect(lines[3][1]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
-      expect(lines[3][2]).toEqual value: 'a', scopes: ['source.js']
-      expect(lines[3][3]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
-
-      {tokens} = grammar.tokenizeLine('(const hi);')
-      expect(tokens[0]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
-      expect(tokens[1]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
-      expect(tokens[3]).toEqual value: 'hi', scopes: ['source.js', 'constant.other.js']
-      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
-      expect(tokens[5]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
-
       {tokens} = grammar.tokenizeLine('const {first:f,second,...rest} = obj;')
       expect(tokens[0]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
       expect(tokens[1]).toEqual value: ' ', scopes: ['source.js']
@@ -278,25 +241,6 @@ describe "Javascript grammar", ->
       expect(tokens[7]).toEqual value: 'regex', scopes: ['source.js', 'string.regexp.js']
       expect(tokens[8]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
       expect(tokens[9]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
-
-    it "tokenizes variables declared with `const` in for-in and for-of loops", ->
-      {tokens} = grammar.tokenizeLine 'for (const elem of array) {'
-      expect(tokens[0]).toEqual value: 'for', scopes: ['source.js', 'keyword.control.js']
-      expect(tokens[1]).toEqual value: ' ', scopes: ['source.js']
-      expect(tokens[2]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
-      expect(tokens[3]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[4]).toEqual value: ' ', scopes: ['source.js']
-      expect(tokens[5]).toEqual value: 'elem', scopes: ['source.js', 'constant.other.js']
-      expect(tokens[6]).toEqual value: ' ', scopes: ['source.js']
-      expect(tokens[7]).toEqual value: 'of', scopes: ['source.js', 'keyword.operator.js']
-      expect(tokens[8]).toEqual value: ' array', scopes: ['source.js']
-      expect(tokens[9]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
-
-      {tokens} = grammar.tokenizeLine 'for (const name in object) {'
-      expect(tokens[5]).toEqual value: 'name', scopes: ['source.js', 'constant.other.js']
-      expect(tokens[6]).toEqual value: ' ', scopes: ['source.js']
-      expect(tokens[7]).toEqual value: 'in', scopes: ['source.js', 'keyword.operator.js']
-      expect(tokens[8]).toEqual value: ' object', scopes: ['source.js']
 
     it "tokenizes support constants", ->
       {tokens} = grammar.tokenizeLine('awesome = cool.systemLanguage;')
@@ -335,16 +279,6 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
       expect(tokens[2]).toEqual value: 'extends', scopes: ['source.js', 'meta.class.js', 'storage.modifier.js']
       expect(tokens[4]).toEqual value: 'SomeClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
-
-    it "tokenizes constructors", ->
-      {tokens} = grammar.tokenizeLine('constructor(a, b)')
-      expect(tokens[0]).toEqual value: 'constructor', scopes: ['source.js', 'entity.name.constructor.js']
-      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'punctuation.definition.parameters.begin.js']
-      expect(tokens[2]).toEqual value: 'a', scopes: ['source.js', 'variable.parameter.function.js']
-      expect(tokens[3]).toEqual value: ',', scopes: ['source.js', 'meta.object.delimiter.js']
-      expect(tokens[4]).toEqual value: ' ', scopes: ['source.js']
-      expect(tokens[5]).toEqual value: 'b', scopes: ['source.js', 'variable.parameter.function.js']
-      expect(tokens[6]).toEqual value: ')', scopes: ['source.js', 'punctuation.definition.parameters.end.js']
 
   describe "ES6 import", ->
     it "Tokenizes import ... as", ->
@@ -431,34 +365,8 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'f', scopes: ['source.js', 'meta.method.js', 'entity.name.function.js']
       expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.method.js', 'punctuation.definition.parameters.begin.js']
       expect(tokens[2]).toEqual value: 'a', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
-      expect(tokens[3]).toEqual value: ',', scopes: ['source.js', 'meta.method.js', 'meta.object.delimiter.js']
-      expect(tokens[5]).toEqual value: 'b', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
-      expect(tokens[6]).toEqual value: ')', scopes: ['source.js', 'meta.method.js', 'punctuation.definition.parameters.end.js']
-
-      {tokens} = grammar.tokenizeLine('hi({host, root = "./", plugins = [a, "b", "c", d]}) {}')
-      expect(tokens[0]).toEqual value: 'hi', scopes: ['source.js', 'meta.method.js', 'entity.name.function.js']
-      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.method.js', 'punctuation.definition.parameters.begin.js']
-      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.method.js', 'meta.brace.curly.js']
-      expect(tokens[3]).toEqual value: 'host', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
-      expect(tokens[4]).toEqual value: ',', scopes: ['source.js', 'meta.method.js', 'meta.object.delimiter.js']
-      expect(tokens[6]).toEqual value: 'root', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
-      expect(tokens[8]).toEqual value: '=', scopes: ['source.js', 'meta.method.js', 'keyword.operator.js']
-      expect(tokens[10]).toEqual value: '"', scopes: ['source.js', 'meta.method.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
-      expect(tokens[11]).toEqual value: './', scopes: ['source.js', 'meta.method.js', 'string.quoted.double.js']
-      expect(tokens[12]).toEqual value: '"', scopes: ['source.js', 'meta.method.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
-      expect(tokens[13]).toEqual value: ',', scopes: ['source.js', 'meta.method.js', 'meta.object.delimiter.js']
-      expect(tokens[15]).toEqual value: 'plugins', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
-      expect(tokens[17]).toEqual value: '=', scopes: ['source.js', 'meta.method.js', 'keyword.operator.js']
-      expect(tokens[19]).toEqual value: '[', scopes: ['source.js', 'meta.method.js', 'meta.brace.square.js']
-      expect(tokens[20]).toEqual value: 'a', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
-      expect(tokens[21]).toEqual value: ',', scopes: ['source.js', 'meta.method.js', 'meta.object.delimiter.js']
-      expect(tokens[23]).toEqual value: '"', scopes: ['source.js', 'meta.method.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
-      expect(tokens[26]).toEqual value: ',', scopes: ['source.js', 'meta.method.js', 'meta.object.delimiter.js']
-      expect(tokens[28]).toEqual value: '"', scopes: ['source.js', 'meta.method.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
-      expect(tokens[33]).toEqual value: 'd', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
-      expect(tokens[34]).toEqual value: ']', scopes: ['source.js', 'meta.method.js', 'meta.brace.square.js']
-      expect(tokens[35]).toEqual value: '}', scopes: ['source.js', 'meta.method.js', 'meta.brace.curly.js']
-      expect(tokens[36]).toEqual value: ')', scopes: ['source.js', 'meta.method.js', 'punctuation.definition.parameters.end.js']
+      expect(tokens[4]).toEqual value: 'b', scopes: ['source.js', 'meta.method.js', 'variable.parameter.function.js']
+      expect(tokens[5]).toEqual value: ')', scopes: ['source.js', 'meta.method.js', 'punctuation.definition.parameters.end.js']
 
     it "tokenizes functions", ->
       {tokens} = grammar.tokenizeLine('var func = function nonAnonymous(')
