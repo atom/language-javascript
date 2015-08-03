@@ -127,8 +127,8 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('5e-10')
       expect(tokens[0]).toEqual value: '5e-10', scopes: ['source.js', 'constant.numeric.js']
 
-      {tokens} = grammar.tokenizeLine('-5E+5')
-      expect(tokens[0]).toEqual value: '-5E+5', scopes: ['source.js', 'constant.numeric.js']
+      {tokens} = grammar.tokenizeLine('5E+5')
+      expect(tokens[0]).toEqual value: '5E+5', scopes: ['source.js', 'constant.numeric.js']
 
   describe "operators", ->
     it "tokenizes void correctly", ->
