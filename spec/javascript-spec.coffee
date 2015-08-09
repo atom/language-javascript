@@ -296,6 +296,16 @@ describe "Javascript grammar", ->
       expect(tokens[7]).toEqual value: 'in', scopes: ['source.js', 'keyword.operator.js']
       expect(tokens[8]).toEqual value: ' object', scopes: ['source.js']
 
+      {tokens} = grammar.tokenizeLine 'const index = 0;'
+      expect(tokens[0]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[2]).toEqual value: 'index', scopes: ['source.js', 'constant.other.js']
+      expect(tokens[4]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
+
+      {tokens} = grammar.tokenizeLine 'const offset = 0;'
+      expect(tokens[0]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[2]).toEqual value: 'offset', scopes: ['source.js', 'constant.other.js']
+      expect(tokens[4]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
+
     it "tokenizes support constants", ->
       {tokens} = grammar.tokenizeLine('awesome.2fnlknwdlks4g;')
       expect(tokens[0]).toEqual value: 'awesome', scopes: ['source.js']
