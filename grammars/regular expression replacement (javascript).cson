@@ -1,6 +1,6 @@
 'fileTypes': []
 'hideFromUser': true
-'name': 'Regular Expressions (JavaScript)'
+'name': 'Regular Expression Replacement (JavaScript)'
 'patterns': [
   {
     'include': '#regexp'
@@ -119,4 +119,4 @@
         'include': '#regex-character-class'
       }
     ]
-'scopeName': 'source.js.regexp'
+'scopeName': 'source.js.regexp.replacement'
