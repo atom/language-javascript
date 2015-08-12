@@ -10,8 +10,16 @@
   'regexp-replacement':
     'patterns': [
       {
+        'match': '\\$[0-9]{1,2}|\\$[&`\']'
+        'name': 'variable.regexp.replacement'
+      }
+      {
+        'match': '\\$\\$'
+        'name': 'constant.character.escape.dollar.regexp.replacement'
+      }
+      {
         'match': '\\\\.'
-        'name': 'constant.character.escape.backslash.regexp'
+        'name': 'constant.character.escape.backslash.regexp.replacement'
       }
     ]
 'scopeName': 'source.js.regexp.replacement'
