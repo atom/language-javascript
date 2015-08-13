@@ -18,7 +18,7 @@
         'name': 'constant.character.escape.dollar.regexp.replacement'
       }
       {
-        'match': '\\\\.'
+        'match': '\\\\[^$]'
         'name': 'constant.character.escape.backslash.regexp.replacement'
       }
     ]
