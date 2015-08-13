@@ -36,10 +36,6 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('with')
       expect(tokens[0]).toEqual value: 'with', scopes: ['source.js', 'keyword.control.js']
 
-    it "tokenizes async as a keyword", ->
-      {tokens} = grammar.tokenizeLine('async')
-      expect(tokens[0]).toEqual value: 'async', scopes: ['source.js', 'keyword.control.js']
-
   describe "built-in globals", ->
     it "tokenizes them as support classes", ->
       {tokens} = grammar.tokenizeLine('window')
@@ -491,6 +487,10 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'async', scopes: ['source.js', 'meta.function.js', 'storage.modifier.js']
       expect(tokens[2]).toEqual value: 'function', scopes: ['source.js', 'meta.function.js', 'storage.type.function.js']
       expect(tokens[4]).toEqual value: 'f', scopes: ['source.js', 'meta.function.js', 'entity.name.function.js']
+
+      {tokens} = grammar.tokenizeLine('async f(){}')
+      expect(tokens[0]).toEqual value: 'async', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[2]).toEqual value: 'f', scopes: ['source.js', 'meta.method.js', 'entity.name.function.js']
 
     it "tokenizes arrow functions with params", ->
       {tokens} = grammar.tokenizeLine('(param1,param2)=>{}')
