@@ -1,7 +1,3 @@
-{TextEditor} = require 'atom'
-fs = require 'fs'
-path = require 'path'
-
 describe "Regular Expression Replacement grammar", ->
   grammar = null
 
