@@ -1,6 +1,6 @@
-'fileTypes': []
-'hideFromUser': true
+'scopeName': 'source.js.regexp.replacement'
 'name': 'Regular Expression Replacement (JavaScript)'
+'fileTypes': []
 'patterns': [
   {
     'include': '#regexp-replacement'
@@ -22,4 +22,3 @@
         'name': 'constant.character.escape.backslash.regexp.replacement'
       }
     ]
-'scopeName': 'source.js.regexp.replacement'
