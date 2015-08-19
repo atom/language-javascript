@@ -91,7 +91,7 @@
     'body': 'switch (${1:expression}) {\n\tcase ${2:expression}:\n\t\t$4\n\t\tbreak;$5\n\tdefault:\n\t\t$3\n}'
   'try':
     'prefix': 'try'
-    'body': 'try {\n\t$1\n} catch (${2:e}) {\n\t$3\n}${4: finally {\n\t$5\n}}'
+    'body': 'try {\n\t$1\n} catch (${2:e}) {\n\t$3\n}${4: finally {\n\t$5\n\\}}'
   'while':
     'prefix': 'while'
     'body': 'while (${1:true}) {\n\t$2\n}'
