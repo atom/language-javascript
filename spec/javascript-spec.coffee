@@ -296,21 +296,23 @@ describe "Javascript grammar", ->
       expect(tokens[7]).toEqual value: 'in', scopes: ['source.js', 'keyword.operator.js']
       expect(tokens[8]).toEqual value: ' object', scopes: ['source.js']
 
-    it "tokenizes support constants", ->
-      {tokens} = grammar.tokenizeLine('awesome.2fnlknwdlks4g;')
-      expect(tokens[0]).toEqual value: 'awesome', scopes: ['source.js']
-      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
-      expect(tokens[2]).toEqual value: '2fnlknwdlks4g', scopes: ['source.js', 'support.constant.js']
-      expect(tokens[3]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+      {tokens} = grammar.tokenizeLine 'const index = 0;'
+      expect(tokens[0]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[2]).toEqual value: 'index', scopes: ['source.js', 'constant.other.js']
+      expect(tokens[4]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
 
-  describe "Functions", ->
+      {tokens} = grammar.tokenizeLine 'const offset = 0;'
+      expect(tokens[0]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[2]).toEqual value: 'offset', scopes: ['source.js', 'constant.other.js']
+      expect(tokens[4]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
+
     it "tokenizes support constants", ->
-      {tokens} = grammar.tokenizeLine('awesome.2fnlknwdlks4g();')
-      expect(tokens[0]).toEqual value: 'awesome', scopes: ['source.js']
-      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
-      expect(tokens[2]).toEqual value: '2fnlknwdlks4g', scopes: ['source.js', 'support.function.js']
-      expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
-      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
+      {tokens} = grammar.tokenizeLine('awesome = cool.systemLanguage;')
+      expect(tokens[0]).toEqual value: 'awesome ', scopes: ['source.js']
+      expect(tokens[1]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[2]).toEqual value: ' cool', scopes: ['source.js']
+      expect(tokens[3]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
+      expect(tokens[4]).toEqual value: 'systemLanguage', scopes: ['source.js', 'support.constant.js']
       expect(tokens[5]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
   describe "ES6 string templates", ->
@@ -382,7 +384,7 @@ describe "Javascript grammar", ->
     expect(tokens[1]).toEqual value: "a", scopes: ['source.js', 'string.quoted.single.js']
     expect(tokens[2]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
     expect(tokens[3]).toEqual value: ".", scopes: ['source.js', 'meta.delimiter.method.period.js']
-    expect(tokens[4]).toEqual value: "b", scopes: ['source.js', 'support.function.js']
+    expect(tokens[4]).toEqual value: "b", scopes: ['source.js']
     expect(tokens[5]).toEqual value: "(", scopes: ['source.js', 'meta.brace.round.js']
     expect(tokens[6]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
     expect(tokens[7]).toEqual value: ":c(d)", scopes: ['source.js', 'string.quoted.single.js']
@@ -397,6 +399,25 @@ describe "Javascript grammar", ->
     expect(tokens[4]).toEqual value: '"', scopes: ['source.js', 'meta.method.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
     expect(tokens[5]).toEqual value: ')', scopes: ['source.js', 'meta.method.js', 'punctuation.definition.parameters.end.js']
     expect(tokens[6]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+
+    delimsByScope =
+      "string.quoted.double.js": '"'
+      "string.quoted.single.js": "'"
+
+    for scope, delim of delimsByScope
+      {tokens} = grammar.tokenizeLine('a.push(' + delim + 'x' + delim + ' + y + ' + delim + ':function()' + delim + ');')
+      expect(tokens[2]).toEqual value: 'push', scopes: ['source.js', 'support.function.js']
+      expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[4]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.begin.js']
+      expect(tokens[5]).toEqual value: 'x', scopes: ['source.js', scope]
+      expect(tokens[6]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.end.js']
+      expect(tokens[8]).toEqual value: '+', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[9]).toEqual value: ' y ', scopes: ['source.js']
+      expect(tokens[10]).toEqual value: '+', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[12]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.begin.js']
+      expect(tokens[13]).toEqual value: ':function()', scopes: ['source.js', scope]
+      expect(tokens[14]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.end.js']
+      expect(tokens[15]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
 
   describe "default: in a switch statement", ->
     it "tokenizes it as a keyword", ->
@@ -477,6 +498,10 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'async', scopes: ['source.js', 'meta.function.js', 'storage.modifier.js']
       expect(tokens[2]).toEqual value: 'function', scopes: ['source.js', 'meta.function.js', 'storage.type.function.js']
       expect(tokens[4]).toEqual value: 'f', scopes: ['source.js', 'meta.function.js', 'entity.name.function.js']
+
+      {tokens} = grammar.tokenizeLine('async f(){}')
+      expect(tokens[0]).toEqual value: 'async', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[2]).toEqual value: 'f', scopes: ['source.js', 'meta.method.js', 'entity.name.function.js']
 
     it "tokenizes arrow functions with params", ->
       {tokens} = grammar.tokenizeLine('(param1,param2)=>{}')
