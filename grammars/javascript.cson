@@ -23,6 +23,9 @@
         'include': '#strings'
       }
       {
+        'include': '#comments'
+      }
+      {
         'match': '\\b(as|from)\\b',
         'name': 'keyword.control.js'
       }
@@ -341,23 +344,6 @@
     'include': '#comments'
   }
   {
-    'begin': '(^[ \\t]+)?(?=//)'
-    'beginCaptures':
-      '1':
-        'name': 'punctuation.whitespace.comment.leading.js'
-    'end': '(?!\\G)'
-    'patterns': [
-      {
-        'begin': '//'
-        'beginCaptures':
-          '0':
-            'name': 'punctuation.definition.comment.js'
-        'end': '\\n'
-        'name': 'comment.line.double-slash.js'
-      }
-    ]
-  }
-  {
     'captures':
       '0':
         'name': 'punctuation.definition.comment.html.js'
@@ -423,6 +409,9 @@
       {
         'match': '\\[|\\]'
         'name': 'meta.brace.square.js'
+      }
+      {
+        'include': '#comments'
       }
     ]
   }
@@ -744,5 +733,22 @@
             'name': 'punctuation.definition.comment.js'
         'end': '\\*/'
         'name': 'comment.block.js'
+      }
+      {
+        'begin': '(^[ \\t]+)?(?=//)'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.whitespace.comment.leading.js'
+        'end': '(?!\\G)'
+        'patterns': [
+          {
+            'begin': '//'
+            'beginCaptures':
+              '0':
+                'name': 'punctuation.definition.comment.js'
+            'end': '\\n'
+            'name': 'comment.line.double-slash.js'
+          }
+        ]
       }
     ]
