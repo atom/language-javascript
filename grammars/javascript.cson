@@ -375,11 +375,11 @@
     'name': 'storage.type.js'
   }
   {
-    'match': '(?<!\\.)\\b(async|export|extends|implements|let|private|protected|public|static)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(async|export|extends|implements|private|protected|public|static)(?!\\s*:)\\b'
     'name': 'storage.modifier.js'
   }
   {
-    'match': '(?<!\\.)\\b(var)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(let|var)(?!\\s*:)\\b'
     'name': 'storage.type.var.js'
   }
   {
