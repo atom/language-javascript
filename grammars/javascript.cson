@@ -410,6 +410,9 @@
         'match': '\\[|\\]'
         'name': 'meta.brace.square.js'
       }
+      {
+        'include': '#comments'
+      }
     ]
   }
   {
