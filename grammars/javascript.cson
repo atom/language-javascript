@@ -23,6 +23,9 @@
         'include': '#strings'
       }
       {
+        'include': '#comments'
+      }
+      {
         'match': '\\b(as|from)\\b',
         'name': 'keyword.control.js'
       }
