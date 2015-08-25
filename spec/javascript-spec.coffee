@@ -538,6 +538,14 @@ describe "Javascript grammar", ->
       expect(tokens[3]).toEqual value: ' ', scopes: ['source.js', 'comment.block.documentation.js']
       expect(tokens[4]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
 
+    it "tokenizes // comments", ->
+      {tokens} = grammar.tokenizeLine('import point; // comment')
+      expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: 'point', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[3]).toEqual value: '; ', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[4]).toEqual value: '//', scopes: ['source.js', 'meta.import.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
+      expect(tokens[5]).toEqual value: ' comment', scopes: ['source.js', 'meta.import.js', 'comment.line.double-slash.js']
+
     it "tokenizes comments inside function parameters correctly", ->
       {tokens} = grammar.tokenizeLine('function test(arg1 /*, arg2 */) {}')
       expect(tokens[0]).toEqual value: 'function', scopes: ['source.js', 'meta.function.js', 'storage.type.function.js']
