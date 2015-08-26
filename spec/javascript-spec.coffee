@@ -31,6 +31,21 @@ describe "Javascript grammar", ->
         expect(tokens[2].value).toEqual delim
         expect(tokens[2].scopes).toEqual ["source.js", scope, "punctuation.definition.string.end.js"]
 
+    it "tokenizes invalid multiline strings", ->
+      lines = grammar.tokenizeLines("'line1\nline2\\\nline3'")
+      expect(lines[0][0]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
+      expect(lines[0][1]).toEqual value: 'line1', scopes: ['source.js', 'string.quoted.single.js', 'invalid.illegal.string.js']
+      expect(lines[1][0]).toEqual value: 'line2\\', scopes: ['source.js', 'string.quoted.single.js']
+      expect(lines[2][0]).toEqual value: 'line3', scopes: ['source.js', 'string.quoted.single.js']
+      expect(lines[2][1]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
+
+      lines = grammar.tokenizeLines('"line1\nline2\\\nline3"')
+      expect(lines[0][0]).toEqual value: '"', scopes: ['source.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
+      expect(lines[0][1]).toEqual value: 'line1', scopes: ['source.js', 'string.quoted.double.js', 'invalid.illegal.string.js']
+      expect(lines[1][0]).toEqual value: 'line2\\', scopes: ['source.js', 'string.quoted.double.js']
+      expect(lines[2][0]).toEqual value: 'line3', scopes: ['source.js', 'string.quoted.double.js']
+      expect(lines[2][1]).toEqual value: '"', scopes: ['source.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
+
   describe "keywords", ->
     it "tokenizes with as a keyword", ->
       {tokens} = grammar.tokenizeLine('with')
