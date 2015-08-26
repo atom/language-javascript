@@ -31,6 +31,23 @@ describe "Javascript grammar", ->
         expect(tokens[2].value).toEqual delim
         expect(tokens[2].scopes).toEqual ["source.js", scope, "punctuation.definition.string.end.js"]
 
+    it "tokenizes invalid multiline strings", ->
+      delimsByScope =
+        "string.quoted.double.js": '"'
+        "string.quoted.single.js": "'"
+
+      for scope, delim of delimsByScope
+        lines = grammar.tokenizeLines delim + """
+          line1
+          line2\\
+          line3
+        """ + delim
+        expect(lines[0][0]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.begin.js']
+        expect(lines[0][1]).toEqual value: 'line1', scopes: ['source.js', scope, 'invalid.illegal.string.js']
+        expect(lines[1][0]).toEqual value: 'line2\\', scopes: ['source.js', scope]
+        expect(lines[2][0]).toEqual value: 'line3', scopes: ['source.js', scope]
+        expect(lines[2][1]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.end.js']
+
   describe "keywords", ->
     it "tokenizes with as a keyword", ->
       {tokens} = grammar.tokenizeLine('with')
