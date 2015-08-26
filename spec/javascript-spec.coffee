@@ -384,7 +384,7 @@ describe "Javascript grammar", ->
     expect(tokens[1]).toEqual value: "a", scopes: ['source.js', 'string.quoted.single.js']
     expect(tokens[2]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
     expect(tokens[3]).toEqual value: ".", scopes: ['source.js', 'meta.delimiter.method.period.js']
-    expect(tokens[4]).toEqual value: "b", scopes: ['source.js']
+    expect(tokens[4]).toEqual value: "b", scopes: ['source.js', 'support.function.js']
     expect(tokens[5]).toEqual value: "(", scopes: ['source.js', 'meta.brace.round.js']
     expect(tokens[6]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
     expect(tokens[7]).toEqual value: ":c(d)", scopes: ['source.js', 'string.quoted.single.js']
@@ -434,7 +434,6 @@ describe "Javascript grammar", ->
       expect(tokens[8]).toEqual value: 'nonAnonymous', scopes: ['source.js', 'meta.function.js', 'entity.name.function.js']
       expect(tokens[9]).toEqual value: '(', scopes: ['source.js', 'meta.function.js', 'punctuation.definition.parameters.begin.js']
 
-    it "tokenizes methods", ->
       {tokens} = grammar.tokenizeLine('f(a, b) {}')
       expect(tokens[0]).toEqual value: 'f', scopes: ['source.js', 'meta.method.js', 'entity.name.function.js']
       expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.method.js', 'punctuation.definition.parameters.begin.js']
@@ -467,6 +466,17 @@ describe "Javascript grammar", ->
       expect(tokens[34]).toEqual value: ']', scopes: ['source.js', 'meta.method.js', 'meta.brace.square.js']
       expect(tokens[35]).toEqual value: '}', scopes: ['source.js', 'meta.method.js', 'meta.brace.curly.js']
       expect(tokens[36]).toEqual value: ')', scopes: ['source.js', 'meta.method.js', 'punctuation.definition.parameters.end.js']
+
+      {tokens} = grammar.tokenizeLine('hello.wow().submit();')
+      expect(tokens[0]).toEqual value: 'hello', scopes: ['source.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
+      expect(tokens[2]).toEqual value: 'wow', scopes: ['source.js', 'support.function.js']
+      expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[5]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
+      expect(tokens[6]).toEqual value: 'submit', scopes: ['source.js', 'support.function.dom.js']
+      expect(tokens[7]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[8]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
 
     it "tokenizes functions", ->
       {tokens} = grammar.tokenizeLine('var func = function nonAnonymous(')
@@ -510,6 +520,17 @@ describe "Javascript grammar", ->
       expect(tokens[3]).toEqual value: 'param2', scopes: ['source.js', 'meta.function.arrow.js', 'variable.parameter.function.js']
       expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.function.arrow.js', 'punctuation.definition.parameters.end.js']
       expect(tokens[5]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.arrow.js']
+
+  describe "properties", ->
+    it "tokenizes them", ->
+      {tokens} = grammar.tokenizeLine('hello.prop.anotherProp.window;');
+      expect(tokens[0]).toEqual value: 'hello', scopes: ['source.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
+      expect(tokens[2]).toEqual value: 'prop', scopes: ['source.js', 'entity.name.property.js']
+      expect(tokens[3]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
+      expect(tokens[4]).toEqual value: 'anotherProp', scopes: ['source.js', 'entity.name.property.js']
+      expect(tokens[5]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
+      expect(tokens[6]).toEqual value: 'window', scopes: ['source.js', 'support.class.js']
 
   describe "comments", ->
     it "tokenizes /* */ comments", ->
