@@ -300,6 +300,29 @@
   }
   {
     'name': 'meta.function.arrow.js'
+    'begin': '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
+    'beginCaptures':
+      '1':
+        'name': 'entity.name.function.js'
+      '2':
+        'name': 'keyword.operator.js'
+      '3':
+        'name': 'punctuation.definition.parameters.begin.js'
+    'comment': 'match stuff like: play = (a,b) => { … }'
+    'end': '(\\))(\\s*=>)'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.parameters.end.js'
+      '2':
+        'name': 'storage.type.arrow.js'
+    'patterns': [
+      {
+        'include': '#function-params'
+      }
+    ]
+  }
+  {
+    'name': 'meta.function.arrow.js'
     'begin': '(?<![A-Za-z0-9])(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
     'beginCaptures':
       '1':

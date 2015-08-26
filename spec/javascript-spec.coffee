@@ -511,6 +511,16 @@ describe "Javascript grammar", ->
       expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.function.arrow.js', 'punctuation.definition.parameters.end.js']
       expect(tokens[5]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.arrow.js']
 
+    it "tokenizes stored arrow functions with params", ->
+      {tokens} = grammar.tokenizeLine('var func = (param1,param2)=>{}')
+      expect(tokens[0]).toEqual value: 'var', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[2]).toEqual value: 'func', scopes: ['source.js', 'meta.function.arrow.js', 'entity.name.function.js']
+      expect(tokens[4]).toEqual value: '=', scopes: ['source.js', 'meta.function.arrow.js', 'keyword.operator.js']
+      expect(tokens[7]).toEqual value: 'param1', scopes: ['source.js', 'meta.function.arrow.js', 'variable.parameter.function.js']
+      expect(tokens[9]).toEqual value: 'param2', scopes: ['source.js', 'meta.function.arrow.js', 'variable.parameter.function.js']
+      expect(tokens[10]).toEqual value: ')', scopes: ['source.js', 'meta.function.arrow.js', 'punctuation.definition.parameters.end.js']
+      expect(tokens[11]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.arrow.js']
+
   describe "comments", ->
     it "tokenizes /* */ comments", ->
       {tokens} = grammar.tokenizeLine('/**/')
