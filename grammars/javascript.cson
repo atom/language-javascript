@@ -300,15 +300,11 @@
   }
   {
     'name': 'meta.function.arrow.js'
-    'begin': '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
+    'begin': '(?<![A-Za-z0-9])(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
     'beginCaptures':
       '1':
-        'name': 'entity.name.function.js'
-      '2':
-        'name': 'keyword.operator.js'
-      '3':
         'name': 'punctuation.definition.parameters.begin.js'
-    'comment': 'match stuff like: play = (a,b) => { … }'
+
     'end': '(\\))(\\s*=>)'
     'endCaptures':
       '1':
@@ -322,12 +318,16 @@
     ]
   }
   {
+    'comment': 'match stuff like: play = (a,b) => { … }'
     'name': 'meta.function.arrow.js'
-    'begin': '(?<![A-Za-z0-9])(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
+    'begin': '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
     'beginCaptures':
       '1':
+        'name': 'entity.name.function.js'
+      '2':
+        'name': 'keyword.operator.js'
+      '3':
         'name': 'punctuation.definition.parameters.begin.js'
-
     'end': '(\\))(\\s*=>)'
     'endCaptures':
       '1':
