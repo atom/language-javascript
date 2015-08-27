@@ -551,7 +551,7 @@ describe "Javascript grammar", ->
 
   describe "properties", ->
     it "tokenizes them", ->
-      {tokens} = grammar.tokenizeLine('hello.prop.anotherProp.notAProp().yesProp.window;');
+      {tokens} = grammar.tokenizeLine('hello.prop.anotherProp.notAProp().yesProp.window;')
       expect(tokens[0]).toEqual value: 'hello', scopes: ['source.js']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
       expect(tokens[2]).toEqual value: 'prop', scopes: ['source.js', 'entity.name.property.js']
