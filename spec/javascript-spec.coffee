@@ -514,7 +514,7 @@ describe "Javascript grammar", ->
       expect(tokens[1]).toEqual value: "a", scopes: ['source.js', 'string.quoted.single.js']
       expect(tokens[2]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
       expect(tokens[3]).toEqual value: ".", scopes: ['source.js', 'meta.delimiter.method.period.js']
-      expect(tokens[4]).toEqual value: "b", scopes: ['source.js']
+      expect(tokens[4]).toEqual value: "b", scopes: ['source.js', 'support.function.js']
       expect(tokens[5]).toEqual value: "(", scopes: ['source.js', 'meta.brace.round.js']
       expect(tokens[6]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
       expect(tokens[7]).toEqual value: ":c(d)", scopes: ['source.js', 'string.quoted.single.js']
