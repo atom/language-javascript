@@ -551,14 +551,20 @@ describe "Javascript grammar", ->
 
   describe "properties", ->
     it "tokenizes them", ->
-      {tokens} = grammar.tokenizeLine('hello.prop.anotherProp.window;');
+      {tokens} = grammar.tokenizeLine('hello.prop.anotherProp.notAProp().yesProp.window;');
       expect(tokens[0]).toEqual value: 'hello', scopes: ['source.js']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
       expect(tokens[2]).toEqual value: 'prop', scopes: ['source.js', 'entity.name.property.js']
       expect(tokens[3]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
       expect(tokens[4]).toEqual value: 'anotherProp', scopes: ['source.js', 'entity.name.property.js']
       expect(tokens[5]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
-      expect(tokens[6]).toEqual value: 'window', scopes: ['source.js', 'support.class.js']
+      expect(tokens[6]).toEqual value: 'notAProp', scopes: ['source.js', 'support.function.js']
+      expect(tokens[7]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[8]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[9]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
+      expect(tokens[10]).toEqual value: 'yesProp', scopes: ['source.js', 'entity.name.property.js']
+      expect(tokens[9]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
+      expect(tokens[12]).toEqual value: 'window', scopes: ['source.js', 'support.class.js']
 
   describe "comments", ->
     it "tokenizes /* */ comments", ->
