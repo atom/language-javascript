@@ -493,7 +493,7 @@ describe "Javascript grammar", ->
 
     it "tokenizes stored arrow functions with params", ->
       {tokens} = grammar.tokenizeLine('var func = (param1,param2)=>{}')
-      expect(tokens[0]).toEqual value: 'var', scopes: ['source.js', 'storage.type.var.js']
+      expect(tokens[0]).toEqual value: 'var', scopes: ['source.js', 'storage.modifier.js']
       expect(tokens[2]).toEqual value: 'func', scopes: ['source.js', 'meta.function.arrow.js', 'entity.name.function.js']
       expect(tokens[4]).toEqual value: '=', scopes: ['source.js', 'meta.function.arrow.js', 'keyword.operator.js']
       expect(tokens[7]).toEqual value: 'param1', scopes: ['source.js', 'meta.function.arrow.js', 'variable.parameter.function.js']
