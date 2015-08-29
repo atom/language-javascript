@@ -527,12 +527,6 @@
     'match': '(?<=\\.)([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
     'name': 'entity.name.property.js'
   }
-  {
-    'match': '!=|!==|<=|>=|<<=|>>=|>>>=|\\*=|(?<!\\()/=|%=|\\+=|\\-=|&=|\\^=|!|%|&|\\*|\\-\\-|\\-|\\+\\+|\\+|~|===|==|=|<>|<|>|!|&&|\\|\\||\\?|\\:|\\^'
-    'comment': 'match 2-character operator first'
-    'name': 'keyword.operator.js'
-  }
-  {
     'match': '\\b(Infinity|NaN|undefined)\\b'
     'name': 'constant.language.js'
   }
@@ -551,6 +545,11 @@
         'include': 'source.js.regexp'
       }
     ]
+  }
+  {
+    'match': '!=|!==|<=|>=|<<=|>>=|>>>=|\\*=|(?<!\\()/=|%=|\\+=|\\-=|&=|\\^=|!|%|&|\\*|/|\\-\\-|\\-|\\+\\+|\\+|~|===|==|=|<>|<|>|!|&&|\\|\\||\\?|\\:|\\^'
+    'comment': 'match 2-character operator first'
+    'name': 'keyword.operator.js'
   }
   {
     'match': '\\;'
