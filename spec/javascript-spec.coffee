@@ -367,7 +367,7 @@ describe "Javascript grammar", ->
 
     it "tokenizes constructors", ->
       {tokens} = grammar.tokenizeLine('constructor(a, b)')
-      expect(tokens[0]).toEqual value: 'constructor', scopes: ['source.js', 'entity.name.constructor.js']
+      expect(tokens[0]).toEqual value: 'constructor', scopes: ['source.js', 'entity.name.function.constructor.js']
       expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'punctuation.definition.parameters.begin.js']
       expect(tokens[2]).toEqual value: 'a', scopes: ['source.js', 'variable.parameter.function.js']
       expect(tokens[3]).toEqual value: ',', scopes: ['source.js', 'meta.object.delimiter.js']
