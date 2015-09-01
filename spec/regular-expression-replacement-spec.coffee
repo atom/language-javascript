@@ -36,9 +36,25 @@ describe "Regular Expression Replacement grammar", ->
       expect(tokens[1]).toEqual value: '1', scopes: ['source.js.regexp.replacement']
 
   describe "Numeric placeholders", ->
+    it "doesn't tokenize $0 as a variable", ->
+      {tokens} = grammar.tokenizeLine('$0')
+      expect(tokens[0]).toEqual value: '$0', scopes: ['source.js.regexp.replacement']
+
+    it "doesn't tokenize $00 as a variable", ->
+      {tokens} = grammar.tokenizeLine('$00')
+      expect(tokens[0]).toEqual value: '$00', scopes: ['source.js.regexp.replacement']
+
     it "tokenizes $1 as a variable", ->
       {tokens} = grammar.tokenizeLine('$1')
       expect(tokens[0]).toEqual value: '$1', scopes: ['source.js.regexp.replacement', 'variable.regexp.replacement']
+
+    it "tokenizes $01 as a variable", ->
+      {tokens} = grammar.tokenizeLine('$01')
+      expect(tokens[0]).toEqual value: '$01', scopes: ['source.js.regexp.replacement', 'variable.regexp.replacement']
+
+    it "tokenizes $3 as a variable", ->
+      {tokens} = grammar.tokenizeLine('$3')
+      expect(tokens[0]).toEqual value: '$3', scopes: ['source.js.regexp.replacement', 'variable.regexp.replacement']
 
     it "tokenizes $10 as a variable", ->
       {tokens} = grammar.tokenizeLine('$10')
