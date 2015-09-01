@@ -10,7 +10,7 @@
   'regexp-replacement':
     'patterns': [
       {
-        'match': '\\$[0-9]{1,2}|\\$[&`\']'
+        'match': '\\$([1-9][0-9]|[1-9]|0[1-9]|[&`\'])'
         'name': 'variable.regexp.replacement'
       }
       {
