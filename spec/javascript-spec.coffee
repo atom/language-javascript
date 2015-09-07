@@ -64,17 +64,17 @@ describe "Javascript grammar", ->
   describe "instantiation", ->
     it "tokenizes the new keyword and instance entities", ->
       {tokens} = grammar.tokenizeLine('new something')
-      expect(tokens[0]).toEqual value: 'new', scopes: ['source.js', 'meta.class.instance.constructor', 'keyword.operator.new.js']
+      expect(tokens[0]).toEqual value: 'new', scopes: ['source.js', 'meta.class.instance.constructor', 'keyword.operator.language.js']
       expect(tokens[1]).toEqual value: ' ', scopes: ['source.js', 'meta.class.instance.constructor']
       expect(tokens[2]).toEqual value: 'something', scopes: ['source.js', 'meta.class.instance.constructor', 'entity.name.type.instance.js']
 
       {tokens} = grammar.tokenizeLine('new Something')
-      expect(tokens[0]).toEqual value: 'new', scopes: ['source.js', 'meta.class.instance.constructor', 'keyword.operator.new.js']
+      expect(tokens[0]).toEqual value: 'new', scopes: ['source.js', 'meta.class.instance.constructor', 'keyword.operator.language.js']
       expect(tokens[1]).toEqual value: ' ', scopes: ['source.js', 'meta.class.instance.constructor']
       expect(tokens[2]).toEqual value: 'Something', scopes: ['source.js', 'meta.class.instance.constructor', 'entity.name.type.instance.js']
 
       {tokens} = grammar.tokenizeLine('new $something')
-      expect(tokens[0]).toEqual value: 'new', scopes: ['source.js', 'meta.class.instance.constructor', 'keyword.operator.new.js']
+      expect(tokens[0]).toEqual value: 'new', scopes: ['source.js', 'meta.class.instance.constructor', 'keyword.operator.language.js']
       expect(tokens[1]).toEqual value: ' ', scopes: ['source.js', 'meta.class.instance.constructor']
       expect(tokens[2]).toEqual value: '$something', scopes: ['source.js', 'meta.class.instance.constructor', 'entity.name.type.instance.js']
 
@@ -150,7 +150,7 @@ describe "Javascript grammar", ->
   describe "operators", ->
     it "tokenizes void correctly", ->
       {tokens} = grammar.tokenizeLine('void')
-      expect(tokens[0]).toEqual value: 'void', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[0]).toEqual value: 'void', scopes: ['source.js', 'keyword.operator.language.js']
 
     it "tokenizes the / arithmetic operator when separated by newlines", ->
       lines = grammar.tokenizeLines """
