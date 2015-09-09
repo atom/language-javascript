@@ -354,7 +354,7 @@
     'name': 'entity.name.type.object.js.console'
   }
   {
-    'match': '\\b(\\.)(assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)\\b(?=\\()'
+    'match': '\\b(\\.)(assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)(?=\\()'
     'captures':
       '1':
         'name': 'meta.delimiter.method.period.js'
