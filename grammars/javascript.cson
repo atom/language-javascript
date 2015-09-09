@@ -354,8 +354,12 @@
     'name': 'entity.name.type.object.js.console'
   }
   {
-    'match': '\\.(warn|info|log|error|time|timeEnd|assert)\\b'
-    'name': 'support.function.js.console'
+    'match': '\\b(\\.)(assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)(?=\\()'
+    'captures':
+      '1':
+        'name': 'meta.delimiter.method.period.js'
+      '2':
+        'name': 'support.function.js.console'
   }
   {
     'include': '#numbers'
