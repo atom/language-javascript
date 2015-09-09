@@ -598,9 +598,9 @@ describe "Javascript grammar", ->
       expect(tokens[7]).toEqual value: ', arg2 ', scopes: ['source.js', 'meta.function.js', 'comment.block.js']
       expect(tokens[8]).toEqual value: '*/', scopes: ['source.js', 'meta.function.js', 'comment.block.js', 'punctuation.definition.comment.js']
       expect(tokens[9]).toEqual value: ')', scopes: ['source.js', 'meta.function.js', 'punctuation.definition.parameters.end.js']
-      expect(tokens[10]).toEqual value: ' ', scopes: ['source.js']
-      expect(tokens[11]).toEqual value: '{', scopes: ['source.js', 'punctuation.section.scope.begin.js']
-      expect(tokens[12]).toEqual value: '}', scopes: ['source.js', 'punctuation.section.scope.end.js']
+      expect(tokens[10]).toEqual value: ' ', scopes: ['source.js', 'meta.function.js']
+      expect(tokens[11]).toEqual value: '{', scopes: ['source.js', 'meta.function.js', 'punctuation.definition.function.body.begin.js']
+      expect(tokens[12]).toEqual value: '}', scopes: ['source.js', 'meta.function.js', 'punctuation.definition.function.body.end.js']
 
       {tokens} = grammar.tokenizeLine('foo: function (/**Bar*/bar){')
       expect(tokens[5]).toEqual value: '(', scopes: ['source.js', 'meta.function.json.js', 'punctuation.definition.parameters.begin.js']
