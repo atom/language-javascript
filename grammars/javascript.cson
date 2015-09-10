@@ -319,57 +319,68 @@
   }
   {
     'name': 'meta.function.arrow.js'
-    'begin': '(?<![A-Za-z0-9])(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
+    'begin': '(?<![A-Za-z0-9])(?=\\((?:[^\\(\\)]*)?\\)\\s*=>)'
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.parameters.begin.js'
 
-    'end': '(\\))(\\s*=>)'
+    'end': '\\}'
     'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
-      '2':
-        'name': 'storage.type.arrow.js'
+      '0':
+        'name': 'punctuation.definition.function.body.end.js'
     'patterns': [
       {
-        'include': '#numbers'
+        'begin': '\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.begin.js'
+        'end': '(\\))(\\s*=>)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.parameters.end.js'
+          '2':
+            'name': 'storage.type.arrow.js'
+        'patterns': [
+          {
+            'include': '#numbers'
+          }
+          {
+            'include': '#strings'
+          }
+          {
+            'match': '\\[|\\]'
+            'name': 'meta.brace.square.js'
+          }
+          {
+            'match': '\\{|\\}'
+            'name': 'meta.brace.curly.js'
+          }
+          {
+            'match': ','
+            'name': 'meta.object.delimiter.js'
+          }
+          {
+            'match': '='
+            'name': 'keyword.operator.js'
+          }
+          {
+            'include': '#comments'
+          }
+          {
+            'match': '[a-zA-Z_$][a-zA-Z_$0-9]*'
+            'name': 'variable.parameter.function.js'
+          }
+        ]
       }
       {
-        'include': '#strings'
-      }
-      {
-        'match': '\\(|\\)'
-        'name': 'meta.brace.round.js'
-      }
-      {
-        'match': '\\[|\\]'
-        'name': 'meta.brace.square.js'
-      }
-      {
-        'match': '\\{|\\}'
-        'name': 'meta.brace.curly.js'
-      }
-      {
-        'match': ','
-        'name': 'meta.object.delimiter.js'
-      }
-      {
-        'match': '='
-        'name': 'keyword.operator.js'
-      }
-      {
-        'include': '#comments'
-      }
-      {
-        'match': '[a-zA-Z_$][a-zA-Z_$0-9]*'
-        'name': 'variable.parameter.function.js'
+        'include': '#function-body'
       }
     ]
   }
   {
     'comment': 'match stuff like: play = (a,b) => { … }'
     'name': 'meta.function.arrow.js'
-    'begin': '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
+    'begin': '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(?=\\((?:[^\\(\\)]*)?\\)\\s*=>)'
     'beginCaptures':
       '1':
         'name': 'entity.name.function.js'
@@ -377,45 +388,56 @@
         'name': 'keyword.operator.js'
       '3':
         'name': 'punctuation.definition.parameters.begin.js'
-    'end': '(\\))(\\s*=>)'
+    'end': '\\}'
     'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
-      '2':
-        'name': 'storage.type.arrow.js'
+      '0':
+        'name': 'punctuation.definition.function.body.end.js'
     'patterns': [
       {
-        'include': '#numbers'
+        'begin': '\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.begin.js'
+        'end': '(\\))(\\s*=>)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.parameters.end.js'
+          '2':
+            'name': 'storage.type.arrow.js'
+        'patterns': [
+          {
+            'include': '#numbers'
+          }
+          {
+            'include': '#strings'
+          }
+          {
+            'match': '\\[|\\]'
+            'name': 'meta.brace.square.js'
+          }
+          {
+            'match': '\\{|\\}'
+            'name': 'meta.brace.curly.js'
+          }
+          {
+            'match': ','
+            'name': 'meta.object.delimiter.js'
+          }
+          {
+            'match': '='
+            'name': 'keyword.operator.js'
+          }
+          {
+            'include': '#comments'
+          }
+          {
+            'match': '[a-zA-Z_$][a-zA-Z_$0-9]*'
+            'name': 'variable.parameter.function.js'
+          }
+        ]
       }
       {
-        'include': '#strings'
-      }
-      {
-        'match': '\\(|\\)'
-        'name': 'meta.brace.round.js'
-      }
-      {
-        'match': '\\[|\\]'
-        'name': 'meta.brace.square.js'
-      }
-      {
-        'match': '\\{|\\}'
-        'name': 'meta.brace.curly.js'
-      }
-      {
-        'match': ','
-        'name': 'meta.object.delimiter.js'
-      }
-      {
-        'match': '='
-        'name': 'keyword.operator.js'
-      }
-      {
-        'include': '#comments'
-      }
-      {
-        'match': '[a-zA-Z_$][a-zA-Z_$0-9]*'
-        'name': 'variable.parameter.function.js'
+        'include': '#function-body'
       }
     ]
   }
