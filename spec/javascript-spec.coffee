@@ -236,12 +236,20 @@ describe "Javascript grammar", ->
         expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
 
       describe "compound", ->
-        operators = ["+=", "-=", "*=", "/=", "%=", "<<=", ">>=", ">>>=", "&=", "^=", "|="]
         it "tokenizes compound assignment operators", ->
+          operators = ["+=", "-=", "*=", "/=", "%="]
           for operator in operators
             {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
             expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
             expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.assignment.compound.js']
+            expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
+
+        it "tokenizes bitwise compound assignment operators", ->
+          operators = ["<<=", ">>=", ">>>=", "&=", "^=", "|="]
+          for operator in operators
+            {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
+            expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
+            expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.assignment.compound.bitwise.js']
             expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
 
   describe "constants", ->
