@@ -231,6 +231,21 @@ describe "Javascript grammar", ->
           expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.comparison.js']
           expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
 
+    describe "bitwise", ->
+      it "tokenizes bitwise 'not'", ->
+        {tokens} = grammar.tokenizeLine('~a')
+        expect(tokens[0]).toEqual value: '~', scopes: ['source.js', 'keyword.operator.bitwise.js']
+        expect(tokens[1]).toEqual value: 'a', scopes: ['source.js']
+
+      it "tokenizes bitwise operators", ->
+        operators = ["|", "^", "&"]
+
+        for operator in operators
+          {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
+          expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
+          expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.bitwise.js']
+          expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
+
     describe "arithmetic", ->
       operators = ["*", "/", "-", "%", "+"]
 

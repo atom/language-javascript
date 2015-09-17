@@ -875,7 +875,11 @@
         'name': 'keyword.operator.logical.js'
       }
       {
-        'match': '&|~|<>|\\?|\\:|\\^'
+        'match': '&|\\||\\^|~'
+        'name': 'keyword.operator.bitwise.js'
+      }
+      {
+        'match': '<>|\\?|\\:'
         'comment': 'match 2-character operator first'
         'name': 'keyword.operator.js'
       }
