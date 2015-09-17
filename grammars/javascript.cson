@@ -867,9 +867,17 @@
         'name': 'keyword.operator.assignment.compound.bitwise.js'
       }
       {
-        'match': '!=|!==|<=|>=|!|&|~|===|==|<>|<|>|!|&&|\\|\\||\\?|\\:|\\^'
+        'match': '&&|\\|\\|'
+        'name': 'keyword.operator.logical.js'
+      }
+      {
+        'match': '!=|!==|<=|>=|&|~|===|==|<>|<|>|\\?|\\:|\\^'
         'comment': 'match 2-character operator first'
         'name': 'keyword.operator.js'
+      }
+      {
+        'match': '!'
+        'name': 'keyword.operator.logical.js'
       }
       {
         'match': '\\='

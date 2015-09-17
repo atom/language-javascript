@@ -211,6 +211,16 @@ describe "Javascript grammar", ->
         expect(tokens[0]).toEqual value: 'i', scopes: ['source.js']
         expect(tokens[1]).toEqual value: '--', scopes: ['source.js', 'keyword.operator.decrement.js']
 
+    describe "logical", ->
+      operators = ["&&", "||", "!"]
+
+      it "tokenizes logical operators", ->
+        for operator in operators
+          {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
+          expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
+          expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.logical.js']
+          expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
+
     describe "arithmetic", ->
       operators = ["*", "/", "-", "%", "+"]
 
