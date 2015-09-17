@@ -210,14 +210,12 @@ describe "Javascript grammar", ->
           expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.js']
           expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
 
-      it "tokenizes the / arithmetic operator when separated by newlines", ->
-        lines = grammar.tokenizeLines """
-          1
-          / 2
-        """
-        expect(lines[0][0]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.js']
-        expect(lines[1][0]).toEqual value: '/', scopes: ['source.js', 'keyword.operator.js']
-        expect(lines[1][2]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
+      it "tokenizes the arithmetic operators when separated by newlines", ->
+        for operator in operators
+          lines = grammar.tokenizeLines '1\n' + operator + ' 2'
+          expect(lines[0][0]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.js']
+          expect(lines[1][0]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.js']
+          expect(lines[1][2]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
 
     describe "assignment", ->
       it "tokenizes '=' operator", ->
