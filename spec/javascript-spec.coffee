@@ -501,14 +501,15 @@ describe "Javascript grammar", ->
       expect(tokens[10]).toEqual value: ')', scopes: ['source.js', 'meta.function.arrow.js', 'punctuation.definition.parameters.end.js']
       expect(tokens[11]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.arrow.js']
 
-    it "tokenizes arrow functions stored in object properties", ->
-      {tokens} = grammar.tokenizeLine('Utils.isEmpty = (param1) => {}')
+    it "tokenizes arrow functions with params stored in object properties", ->
+      {tokens} = grammar.tokenizeLine('Utils.isEmpty = (param1, param2) => {}')
       expect(tokens[0]).toEqual value: 'Utils', scopes: ['source.js', 'meta.function.arrow.js', 'support.class.js']
       expect(tokens[2]).toEqual value: 'isEmpty', scopes: ['source.js', 'meta.function.arrow.js', 'entity.name.function.js']
       expect(tokens[4]).toEqual value: '=', scopes: ['source.js', 'meta.function.arrow.js', 'keyword.operator.js']
       expect(tokens[7]).toEqual value: 'param1', scopes: ['source.js', 'meta.function.arrow.js', 'variable.parameter.function.js']
-      expect(tokens[8]).toEqual value: ')', scopes: ['source.js', 'meta.function.arrow.js', 'punctuation.definition.parameters.end.js']
-      expect(tokens[9]).toEqual value: ' =>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.arrow.js']
+      expect(tokens[10]).toEqual value: 'param2', scopes: ['source.js', 'meta.function.arrow.js', 'variable.parameter.function.js']
+      expect(tokens[11]).toEqual value: ')', scopes: ['source.js', 'meta.function.arrow.js', 'punctuation.definition.parameters.end.js']
+      expect(tokens[12]).toEqual value: ' =>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.arrow.js']
 
   describe "strings and functions", ->
     it "doesn't confuse them", ->
