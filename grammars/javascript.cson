@@ -343,7 +343,7 @@
   {
     'comment': 'match stuff like: Sound.play = (a,b) => { … }'
     'name': 'meta.function.arrow.js'
-    'begin': '([a-zA-Z_?$]*).([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
+    'begin': '([a-zA-Z_?$]*)\\.([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
     'beginCaptures':
       '1':
         'name': 'support.class.js'
