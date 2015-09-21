@@ -111,6 +111,21 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
       expect(tokens[7]).toEqual value: ']', scopes: ['source.js', 'meta.brace.square.js']
 
+    it "tokenizes regular expressions inside ternary expressions", ->
+      {tokens} = grammar.tokenizeLine('a ? /b/ : /c/')
+      expect(tokens[ 0]).toEqual value: 'a ', scopes: ['source.js']
+      expect(tokens[ 1]).toEqual value: '?', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[ 2]).toEqual value: ' ', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[ 3]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[ 4]).toEqual value: 'b', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[ 5]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+      expect(tokens[ 6]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[ 7]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[ 8]).toEqual value: ' ', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[ 9]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[10]).toEqual value: 'c', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[11]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+
     it "verifies that regular expressions have explicit count modifiers", ->
       source = fs.readFileSync(path.resolve(__dirname, '..', 'grammars', 'javascript.cson'), 'utf8')
       expect(source.search /{,/).toEqual -1
