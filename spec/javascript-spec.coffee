@@ -53,6 +53,28 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('with')
       expect(tokens[0]).toEqual value: 'with', scopes: ['source.js', 'keyword.control.js']
 
+    map =
+      super: 'variable.language.js'
+      this: 'variable.language.js'
+      null: 'constant.language.null.js'
+      true: 'constant.language.boolean.true.js'
+      false: 'constant.language.boolean.false.js'
+      debugger: 'keyword.other.js'
+      exports: 'support.variable.js'
+      __filename: 'support.variable.js'
+
+    for keyword, scope of map
+      do (keyword, scope) ->
+        it "does not tokenize `#{keyword}` when it is an object key", ->
+          {tokens} = grammar.tokenizeLine("#{keyword}: 1")
+          expect(tokens[0]).toEqual value: keyword, scopes: ['source.js']
+          expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
+
+        it "tokenizes `#{keyword}` in ternary expressions", ->
+          {tokens} = grammar.tokenizeLine("a ? #{keyword} : b")
+          expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
+          expect(tokens[3]).toEqual value: keyword, scopes: ['source.js', scope]
+
   describe "built-in globals", ->
     it "tokenizes them as support classes", ->
       {tokens} = grammar.tokenizeLine('window')
@@ -336,6 +358,15 @@ describe "Javascript grammar", ->
       expect(tokens[4]).toEqual value: 'systemLanguage', scopes: ['source.js', 'support.constant.js']
       expect(tokens[5]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
+    it "does not tokenize constants when they are object keys", ->
+      {tokens} = grammar.tokenizeLine('FOO: 1')
+      expect(tokens[0]).toEqual value: 'FOO', scopes: ['source.js']
+      expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
+
+    it "tokenizes constants in ternary expressions", ->
+      {tokens} = grammar.tokenizeLine('a ? FOO : b')
+      expect(tokens[3]).toEqual value: 'FOO', scopes: ['source.js', 'constant.other.js']
+
   describe "ES6 string templates", ->
     it "tokenizes them as strings", ->
       {tokens} = grammar.tokenizeLine('`hey ${name}`')
@@ -398,6 +429,15 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('yield * next')
       expect(tokens[0]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
       expect(tokens[2]).toEqual value: '*', scopes: ['source.js', 'meta.control.yield.js', 'storage.modifier.js']
+
+    it "does not tokenize yield when it is an object key", ->
+      {tokens} = grammar.tokenizeLine('yield: 1')
+      expect(tokens[0]).toEqual value: 'yield', scopes: ['source.js']
+      expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
+
+    it "tokenizes yield in ternary expressions", ->
+      {tokens} = grammar.tokenizeLine('a ? yield : b')
+      expect(tokens[3]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
 
   describe "default: in a switch statement", ->
     it "tokenizes it as a keyword", ->
