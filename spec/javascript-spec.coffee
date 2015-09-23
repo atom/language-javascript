@@ -211,6 +211,15 @@ describe "Javascript grammar", ->
         expect(tokens[0]).toEqual value: 'i', scopes: ['source.js']
         expect(tokens[1]).toEqual value: '--', scopes: ['source.js', 'keyword.operator.decrement.js']
 
+    describe "conditional ternary", ->
+      it "tokenizes conditional ternary", ->
+        {tokens} = grammar.tokenizeLine('test ? expr1 : expr2')
+        expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
+        expect(tokens[1]).toEqual value: '?', scopes: ['source.js', 'keyword.operator.js']
+        expect(tokens[2]).toEqual value: ' expr1 ', scopes: ['source.js']
+        expect(tokens[3]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
+        expect(tokens[4]).toEqual value: ' expr2', scopes: ['source.js']
+
     describe "logical", ->
       operators = ["&&", "||", "!"]
 
