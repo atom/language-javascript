@@ -368,7 +368,7 @@
   {
     'captures':
       '1':
-        'name': 'keyword.operator.new.js'
+        'name': 'keyword.operator.language.js'
       '2':
         'name': 'entity.name.type.instance.js'
     'match': '(new)\\s+(\\$?\\w+(?:\\.\\w*)?)'
@@ -485,10 +485,6 @@
     'name': 'keyword.control.js'
   }
   {
-    'match': '(?<!\\.)\\b(delete|in|of|instanceof|new|typeof|void)(?!\\s*:)\\b'
-    'name': 'keyword.operator.js'
-  }
-  {
     'match': '(?<!\\.)\\btrue(?!\\s*:)\\b'
     'name': 'constant.language.boolean.true.js'
   }
@@ -567,6 +563,10 @@
         'include': 'source.js.regexp'
       }
     ]
+  }
+  {
+    'match': '(?<!\\.)\\b(delete|in|of|instanceof|new|typeof|void)(?!\\s*:)\\b'
+    'name': 'keyword.operator.language.js'
   }
   {
     'match': '!=|!==|<=|>=|<<=|>>=|>>>=|\\*=|(?<!\\()/=|%=|\\+=|\\-=|&=|\\^=|!|%|&|\\*|/|\\-\\-|\\-|\\+\\+|\\+|~|===|==|=|<>|<|>|!|&&|\\|\\||\\?|\\:|\\^'
