@@ -637,7 +637,7 @@
     'end': '(\\bof\\b|\\bin\\b)|(;)|(=)|(?<!,)\\n'
     'endCaptures':
       '1':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.$1.js'
       '2':
         'name': 'punctuation.terminator.statement.js'
       '3':
@@ -705,7 +705,7 @@
   }
   {
     'match': '(?<!\\.)\\b(delete|in|of|instanceof|new|typeof|void)(?!\\s*:)\\b'
-    'name': 'keyword.operator.js'
+    'name': 'keyword.operator.$1.js'
   }
   {
     'match': '(?<!\\.)\\b(true|false)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(true|false)(?=\\s*:)'

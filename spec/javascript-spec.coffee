@@ -196,9 +196,12 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: '5E+5', scopes: ['source.js', 'constant.numeric.js']
 
   describe "operators", ->
-    it "tokenizes void", ->
-      {tokens} = grammar.tokenizeLine('void')
-      expect(tokens[0]).toEqual value: 'void', scopes: ['source.js', 'keyword.operator.js']
+    it "tokenizes operators", ->
+      operators = ["delete", "in", "of", "instanceof", "new", "typeof", "void"]
+
+      for operator in operators
+        {tokens} = grammar.tokenizeLine(operator)
+        expect(tokens[0]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.' + operator  + '.js']
 
     describe "increment, decrement", ->
       it "tokenizes increment", ->
@@ -395,14 +398,14 @@ describe "Javascript grammar", ->
       expect(tokens[4]).toEqual value: ' ', scopes: ['source.js']
       expect(tokens[5]).toEqual value: 'elem', scopes: ['source.js', 'constant.other.js']
       expect(tokens[6]).toEqual value: ' ', scopes: ['source.js']
-      expect(tokens[7]).toEqual value: 'of', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[7]).toEqual value: 'of', scopes: ['source.js', 'keyword.operator.of.js']
       expect(tokens[8]).toEqual value: ' array', scopes: ['source.js']
       expect(tokens[9]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
 
       {tokens} = grammar.tokenizeLine 'for (const name in object) {'
       expect(tokens[5]).toEqual value: 'name', scopes: ['source.js', 'constant.other.js']
       expect(tokens[6]).toEqual value: ' ', scopes: ['source.js']
-      expect(tokens[7]).toEqual value: 'in', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[7]).toEqual value: 'in', scopes: ['source.js', 'keyword.operator.in.js']
       expect(tokens[8]).toEqual value: ' object', scopes: ['source.js']
 
       {tokens} = grammar.tokenizeLine 'const index = 0;'
