@@ -880,7 +880,6 @@
       }
       {
         'match': '\\?|\\:'
-        'comment': 'match 2-character operator first'
         'name': 'keyword.operator.js'
       }
       {
