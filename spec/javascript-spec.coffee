@@ -196,65 +196,45 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: '5E+5', scopes: ['source.js', 'constant.numeric.js']
 
   describe "operators", ->
-    it "tokenizes void correctly", ->
+    it "tokenizes void", ->
       {tokens} = grammar.tokenizeLine('void')
       expect(tokens[0]).toEqual value: 'void', scopes: ['source.js', 'keyword.operator.js']
 
-    it "tokenizes the / arithmetic operator when separated by newlines", ->
-      lines = grammar.tokenizeLines """
-        1
-        / 2
-      """
-      expect(lines[0][0]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.js']
-      expect(lines[1][0]).toEqual value: '/', scopes: ['source.js', 'keyword.operator.js']
-      expect(lines[1][1]).toEqual value: ' ', scopes: ['source.js']
-      expect(lines[1][2]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
-
-    it "tokenizes = correctly", ->
-      {tokens} = grammar.tokenizeLine('test = 2')
-      expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
-      expect(tokens[1]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
-      expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
-      expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
-
-    it "tokenizes single operators correctly", ->
+    describe "arithmetic", ->
       operators = ["*", "/", "+", "-", "%"]
 
-      for operator in operators
-        {tokens} = grammar.tokenizeLine('test ' + operator + ' 2')
+      it "tokenizes arithmetic operators", ->
+        for operator in operators
+          {tokens} = grammar.tokenizeLine('test ' + operator + ' 2')
+          expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
+          expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.js']
+          expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
+
+      it "tokenizes the / arithmetic operator when separated by newlines", ->
+        lines = grammar.tokenizeLines """
+          1
+          / 2
+        """
+        expect(lines[0][0]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.js']
+        expect(lines[1][0]).toEqual value: '/', scopes: ['source.js', 'keyword.operator.js']
+        expect(lines[1][2]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
+
+    describe "assignment", ->
+      it "tokenizes '=' operator", ->
+        {tokens} = grammar.tokenizeLine('test = 2')
         expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
-        expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.js']
+        expect(tokens[1]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
         expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
         expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
 
-    describe "operators with 2 characters", ->
-      it "tokenizes += correctly", ->
-        {tokens} = grammar.tokenizeLine('test += 2')
-        expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
-        expect(tokens[1]).toEqual value: '+=', scopes: ['source.js', 'keyword.operator.js']
-        expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
-        expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
-
-      it "tokenizes -= correctly", ->
-        {tokens} = grammar.tokenizeLine('test -= 2')
-        expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
-        expect(tokens[1]).toEqual value: '-=', scopes: ['source.js', 'keyword.operator.js']
-        expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
-        expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
-
-      it "tokenizes *= correctly", ->
-        {tokens} = grammar.tokenizeLine('test *= 2')
-        expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
-        expect(tokens[1]).toEqual value: '*=', scopes: ['source.js', 'keyword.operator.js']
-        expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
-        expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
-
-      it "tokenizes /= correctly", ->
-        {tokens} = grammar.tokenizeLine('test /= 2')
-        expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
-        expect(tokens[1]).toEqual value: '/=', scopes: ['source.js', 'keyword.operator.js']
-        expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
-        expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
+      describe "augmented", ->
+        operators = ["+=", "-=", "*=", "/="]
+        it "tokenizes augmented assignment operators", ->
+          for operator in operators
+            {tokens} = grammar.tokenizeLine('test ' + operator + ' 2')
+            expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
+            expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.js']
+            expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
 
   describe "constants", ->
     it "tokenizes ALL_CAPS variables as constants", ->
