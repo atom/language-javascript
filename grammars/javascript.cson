@@ -267,7 +267,7 @@
       '2':
         'name': 'support.constant.js'
       '3':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
     'comment': 'match stuff like: Sound.prototype = { … } when extending an object'
     'match': '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\s*(=)\\s*'
     'name': 'meta.class.js'
@@ -282,7 +282,7 @@
       '3':
         'name': 'entity.name.function.js'
       '4':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       '5':
         'name': 'storage.modifier.js'
       '6':
@@ -312,7 +312,7 @@
       '3':
         'name': 'entity.name.function.js'
       '4':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
     'comment': 'match stuff like: Sound.prototype.play = myfunc'
     'match': '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*'
     'name': 'meta.function.js'
@@ -325,7 +325,7 @@
       '2':
         'name': 'entity.name.function.js'
       '3':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       '4':
         'name': 'storage.modifier.js'
       '5':
@@ -354,7 +354,7 @@
       '1':
         'name': 'entity.name.function.js'
       '2':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       '3':
         'name': 'storage.modifier.js'
       '4':
@@ -538,7 +538,7 @@
       '1':
         'name': 'entity.name.function.js'
       '2':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       '3':
         'name': 'punctuation.definition.parameters.begin.js'
     'end': '(\\))(\\s*=>)'
@@ -563,7 +563,7 @@
       '2':
         'name': 'entity.name.function.js'
       '3':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       '4':
         'name': 'punctuation.definition.parameters.begin.js'
     'end': '(\\))(\\s*=>)'
@@ -634,12 +634,14 @@
     'beginCaptures':
       '1':
         'name': 'storage.modifier.js'
-    'end': '(=|\\bof\\b|\\bin\\b)|(;)|(?<!,)\\n'
+    'end': '(\\bof\\b|\\bin\\b)|(;)|(=)|(?<!,)\\n'
     'endCaptures':
       '1':
         'name': 'keyword.operator.js'
       '2':
         'name': 'punctuation.terminator.statement.js'
+      '3':
+        'name': 'keyword.operator.assignment.js'
     'patterns': [
       {
         'match': '([$_a-zA-Z][$_a-zA-Z0-9]*)\\s*(:)\\s*([$_a-zA-Z][$_a-zA-Z0-9]*)?'
@@ -857,9 +859,13 @@
   'operators':
     'patterns': [
       {
-        'match': '!=|!==|<=|>=|<<=|>>=|>>>=|\\*=|(?<!\\()/=|%=|\\+=|\\-=|&=|\\^=|!|&|~|===|==|=|<>|<|>|!|&&|\\|\\||\\?|\\:|\\^'
+        'match': '!=|!==|<=|>=|<<=|>>=|>>>=|\\*=|(?<!\\()/=|%=|\\+=|\\-=|&=|\\^=|!|&|~|===|==|<>|<|>|!|&&|\\|\\||\\?|\\:|\\^'
         'comment': 'match 2-character operator first'
         'name': 'keyword.operator.js'
+      }
+      {
+        'match': '\\='
+        'name': 'keyword.operator.assignment.js'
       }
       {
         'match': '\\-\\-'
@@ -993,7 +999,7 @@
       }
       {
         'match': '='
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       }
       {
         'include': '#comments'
