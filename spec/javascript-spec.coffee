@@ -200,6 +200,17 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('void')
       expect(tokens[0]).toEqual value: 'void', scopes: ['source.js', 'keyword.operator.js']
 
+    describe "increment, decrement", ->
+      it "tokenizes increment", ->
+        {tokens} = grammar.tokenizeLine('i++')
+        expect(tokens[0]).toEqual value: 'i', scopes: ['source.js']
+        expect(tokens[1]).toEqual value: '++', scopes: ['source.js', 'keyword.operator.increment.js']
+
+      it "tokenizes decrement", ->
+        {tokens} = grammar.tokenizeLine('i--')
+        expect(tokens[0]).toEqual value: 'i', scopes: ['source.js']
+        expect(tokens[1]).toEqual value: '--', scopes: ['source.js', 'keyword.operator.decrement.js']
+
     describe "arithmetic", ->
       operators = ["*", "/", "-", "%", "+"]
 

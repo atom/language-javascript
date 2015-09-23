@@ -857,9 +857,17 @@
   'operators':
     'patterns': [
       {
-        'match': '!=|!==|<=|>=|<<=|>>=|>>>=|\\*=|(?<!\\()/=|%=|\\+=|\\-=|&=|\\^=|!|&|\\-\\-|\\+\\+|~|===|==|=|<>|<|>|!|&&|\\|\\||\\?|\\:|\\^'
+        'match': '!=|!==|<=|>=|<<=|>>=|>>>=|\\*=|(?<!\\()/=|%=|\\+=|\\-=|&=|\\^=|!|&|~|===|==|=|<>|<|>|!|&&|\\|\\||\\?|\\:|\\^'
         'comment': 'match 2-character operator first'
         'name': 'keyword.operator.js'
+      }
+      {
+        'match': '\\-\\-'
+        'name': 'keyword.operator.decrement.js'
+      }
+      {
+        'match': '\\+\\+'
+        'name': 'keyword.operator.increment.js'
       }
       {
         'match': '%|\\*|/|\\-|\\+'
