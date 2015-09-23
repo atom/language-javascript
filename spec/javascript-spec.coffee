@@ -309,7 +309,7 @@ describe "Javascript grammar", ->
       expect(tokens[1]).toEqual value: ' ', scopes: ['source.js']
       expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.brace.curly.js']
       expect(tokens[3]).toEqual value: 'first', scopes: ['source.js']
-      expect(tokens[4]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[4]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.assignment.js']
       expect(tokens[5]).toEqual value: 'f', scopes: ['source.js', 'constant.other.js']
       expect(tokens[6]).toEqual value: ',', scopes: ['source.js', 'meta.delimiter.object.comma.js']
       expect(tokens[7]).toEqual value: 'second', scopes: ['source.js', 'constant.other.js']
@@ -725,7 +725,7 @@ describe "Javascript grammar", ->
     it "tokenizes object functions", ->
       {tokens} = grammar.tokenizeLine('foo: function nonAnonymous(')
       expect(tokens[0]).toEqual value: 'foo', scopes: ['source.js', 'meta.function.json.js', 'entity.name.function.js']
-      expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'meta.function.json.js', 'keyword.operator.js']
+      expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'meta.function.json.js', 'keyword.operator.assignment.js']
       expect(tokens[3]).toEqual value: 'function', scopes: ['source.js', 'meta.function.json.js', 'storage.type.function.js']
       expect(tokens[5]).toEqual value: 'nonAnonymous', scopes: ['source.js', 'meta.function.json.js', 'entity.name.function.js']
       expect(tokens[6]).toEqual value: '(', scopes: ['source.js', 'meta.function.json.js', 'punctuation.definition.parameters.begin.js']
@@ -733,7 +733,7 @@ describe "Javascript grammar", ->
     it "tokenizes quoted object functions", ->
       {tokens} = grammar.tokenizeLine('"foo": function nonAnonymous(')
       expect(tokens[1]).toEqual value: 'foo', scopes: ['source.js', 'meta.function.json.js', 'string.quoted.double.js', 'entity.name.function.js']
-      expect(tokens[3]).toEqual value: ':', scopes: ['source.js', 'meta.function.json.js', 'keyword.operator.js']
+      expect(tokens[3]).toEqual value: ':', scopes: ['source.js', 'meta.function.json.js', 'keyword.operator.assignment.js']
       expect(tokens[5]).toEqual value: 'function', scopes: ['source.js', 'meta.function.json.js', 'storage.type.function.js']
       expect(tokens[7]).toEqual value: 'nonAnonymous', scopes: ['source.js', 'meta.function.json.js', 'entity.name.function.js']
       expect(tokens[8]).toEqual value: '(', scopes: ['source.js', 'meta.function.json.js', 'punctuation.definition.parameters.begin.js']
