@@ -70,10 +70,15 @@ describe "Javascript grammar", ->
           expect(tokens[0]).toEqual value: keyword, scopes: ['source.js']
           expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
 
-        it "tokenizes `#{keyword}` in ternary expressions", ->
+        it "tokenizes `#{keyword}` in the middle of ternary expressions", ->
           {tokens} = grammar.tokenizeLine("a ? #{keyword} : b")
           expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
           expect(tokens[3]).toEqual value: keyword, scopes: ['source.js', scope]
+
+        it "tokenizes `#{keyword}` at the end of ternary expressions", ->
+          {tokens} = grammar.tokenizeLine("a ? b : #{keyword}")
+          expect(tokens[4]).toEqual value: ' ', scopes: ['source.js']
+          expect(tokens[5]).toEqual value: keyword, scopes: ['source.js', scope]
 
   describe "built-in globals", ->
     it "tokenizes them as support classes", ->
@@ -363,9 +368,13 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'FOO', scopes: ['source.js']
       expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
 
-    it "tokenizes constants in ternary expressions", ->
+    it "tokenizes constants in the middle of ternary expressions", ->
       {tokens} = grammar.tokenizeLine('a ? FOO : b')
       expect(tokens[3]).toEqual value: 'FOO', scopes: ['source.js', 'constant.other.js']
+
+    it "tokenizes constants at the end of ternary expressions", ->
+      {tokens} = grammar.tokenizeLine('a ? b : FOO')
+      expect(tokens[5]).toEqual value: 'FOO', scopes: ['source.js', 'constant.other.js']
 
   describe "ES6 string templates", ->
     it "tokenizes them as strings", ->
@@ -435,9 +444,13 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'yield', scopes: ['source.js']
       expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
 
-    it "tokenizes yield in ternary expressions", ->
+    it "tokenizes yield in the middle of ternary expressions", ->
       {tokens} = grammar.tokenizeLine('a ? yield : b')
       expect(tokens[3]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
+
+    it "tokenizes yield at the end of ternary expressions", ->
+      {tokens} = grammar.tokenizeLine('a ? b : yield')
+      expect(tokens[5]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
 
   describe "default: in a switch statement", ->
     it "tokenizes it as a keyword", ->
