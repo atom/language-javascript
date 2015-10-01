@@ -9,6 +9,7 @@
   'pjs'
   'xsjs'
   'xsjslib'
+  'jsx'
 ]
 'firstLineMatch': '^#!.*\\b(node|iojs|JavaScript)'
 'name': 'JavaScript'
