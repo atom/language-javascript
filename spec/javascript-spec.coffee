@@ -431,18 +431,72 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: ')', scopes: ['source.js', 'punctuation.definition.parameters.end.js']
 
   describe "ES6 import", ->
-    it "tokenizes import ... as", ->
-      {tokens} = grammar.tokenizeLine('import \'react\' as React')
+    it "tokenizes import", ->
+      {tokens} = grammar.tokenizeLine('import "module-name";')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(tokens[6]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
 
-    it "tokenizes import ... from", ->
-      {tokens} = grammar.tokenizeLine('import React from \'react\'')
+    it "tokenizes default import", ->
+      {tokens} = grammar.tokenizeLine('import defaultMember from "module-name";')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js']
       expect(tokens[4]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      {tokens} = grammar.tokenizeLine('import {React} from \'react\'')
+
+    it "tokenizes default named import", ->
+      {tokens} = grammar.tokenizeLine('import { default as defaultMember } from "module-name";')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
+      expect(tokens[4]).toEqual value: 'default', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[6]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[8]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[10]).toEqual value: '}', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
+      expect(tokens[12]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+
+    it "tokenizes named import", ->
+      {tokens} = grammar.tokenizeLine('import { member } from "module-name";')
+      expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
+      expect(tokens[4]).toEqual value: 'member', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[6]).toEqual value: '}', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
+      expect(tokens[8]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+
+      {tokens} = grammar.tokenizeLine('import { member1 , member2 as alias2 } from "module-name";')
+      expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
+      expect(tokens[4]).toEqual value: 'member1', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[6]).toEqual value: ',', scopes: ['source.js', 'meta.import.js', 'meta.delimiter.object.comma.js']
+      expect(tokens[8]).toEqual value: 'member2', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[10]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[12]).toEqual value: 'alias2', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[14]).toEqual value: '}', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
+      expect(tokens[16]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+
+    it "tokenizes entire module import", ->
+      {tokens} = grammar.tokenizeLine('import * as name from "module-name";')
+      expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[1]).toEqual value: ' * ', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[2]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[4]).toEqual value: 'name', scopes: ['source.js', 'meta.import.js']
       expect(tokens[6]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+
+    it "tokenizes `import defaultMember, { member } from 'module-name';`", ->
+      {tokens} = grammar.tokenizeLine('import defaultMember, { member } from "module-name";')
+      expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[3]).toEqual value: ',', scopes: ['source.js', 'meta.import.js', 'meta.delimiter.object.comma.js']
+      expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
+      expect(tokens[7]).toEqual value: 'member', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[9]).toEqual value: '}', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
+      expect(tokens[11]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+
+    it "tokenizes `import defaultMember, * as alias from 'module-name';", ->
+      {tokens} = grammar.tokenizeLine('import defaultMember, * as alias from "module-name";')
+      expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[3]).toEqual value: ',', scopes: ['source.js', 'meta.import.js', 'meta.delimiter.object.comma.js']
+      expect(tokens[4]).toEqual value: ' * ', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[5]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[7]).toEqual value: 'alias', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[9]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
 
   describe "ES6 yield", ->
     it "tokenizes yield", ->
