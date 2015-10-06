@@ -41,10 +41,7 @@
         'name': 'meta.brace.curly.js'
       }
     ]
-    'end': '(;)?$'
-    'endCaptures':
-      '1':
-        'name': 'punctuation.terminator.statement.js'
+    'end': '(?=;|$)'
     'name': 'meta.import.js'
   }
   {

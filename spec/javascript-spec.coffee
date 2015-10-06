@@ -652,9 +652,9 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('import point; // comment')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
       expect(tokens[2]).toEqual value: 'point', scopes: ['source.js', 'meta.import.js']
-      expect(tokens[3]).toEqual value: '; ', scopes: ['source.js', 'meta.import.js']
-      expect(tokens[4]).toEqual value: '//', scopes: ['source.js', 'meta.import.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
-      expect(tokens[5]).toEqual value: ' comment', scopes: ['source.js', 'meta.import.js', 'comment.line.double-slash.js']
+      expect(tokens[3]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+      expect(tokens[5]).toEqual value: '//', scopes: ['source.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
+      expect(tokens[6]).toEqual value: ' comment', scopes: ['source.js', 'comment.line.double-slash.js']
 
     it "tokenizes comments inside constant definitions", ->
       {tokens} = grammar.tokenizeLine('const a, // comment')
