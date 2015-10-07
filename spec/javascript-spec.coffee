@@ -505,26 +505,26 @@ describe "Javascript grammar", ->
   describe "ES6 export", ->
     it "tokenizes named export", ->
       {tokens} = grammar.tokenizeLine('export var x = 0;')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
       expect(tokens[2]).toEqual value: 'var', scopes: ['source.js', 'storage.modifier.js']
       expect(tokens[3]).toEqual value: ' x ', scopes: ['source.js']
       expect(tokens[4]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
 
       {tokens} = grammar.tokenizeLine('export let scopedVariable = 0;')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
       expect(tokens[2]).toEqual value: 'let', scopes: ['source.js', 'storage.modifier.js']
       expect(tokens[3]).toEqual value: ' scopedVariable ', scopes: ['source.js']
       expect(tokens[4]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
 
       {tokens} = grammar.tokenizeLine('export const CONSTANT = 0;')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
       expect(tokens[2]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
       expect(tokens[4]).toEqual value: 'CONSTANT', scopes: ['source.js', 'constant.other.js']
       expect(tokens[6]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.js']
 
     it "tokenizes named function export", ->
       {tokens} = grammar.tokenizeLine('export function func(p1, p2){}')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
       expect(tokens[2]).toEqual value: 'function', scopes: ['source.js', 'meta.function.js', 'storage.type.function.js']
       expect(tokens[4]).toEqual value: 'func', scopes: ['source.js', 'meta.function.js', 'entity.name.function.js']
       expect(tokens[5]).toEqual value: '(', scopes: ['source.js', 'meta.function.js', 'punctuation.definition.parameters.begin.js']
@@ -535,50 +535,59 @@ describe "Javascript grammar", ->
 
     it "tokenizes named class export", ->
       {tokens} = grammar.tokenizeLine('export class Foo {}')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
       expect(tokens[2]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
       expect(tokens[4]).toEqual value: 'Foo', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
 
     it "tokenizes existing variable export", ->
       {tokens} = grammar.tokenizeLine('export { bar };')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.brace.curly.js']
-      expect(tokens[4]).toEqual value: '}', scopes: ['source.js', 'meta.brace.curly.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.begin.js']
+      expect(tokens[4]).toEqual value: 'bar', scopes: ['source.js', 'meta.export.js', 'variable.other.module.js']
+      expect(tokens[6]).toEqual value: '}', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.end.js']
 
       {tokens} = grammar.tokenizeLine('export { bar, foo as alias };')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.brace.curly.js']
-      expect(tokens[4]).toEqual value: ',', scopes: ['source.js', 'meta.delimiter.object.comma.js']
-      expect(tokens[6]).toEqual value: '}', scopes: ['source.js', 'meta.brace.curly.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.begin.js']
+      expect(tokens[4]).toEqual value: 'bar', scopes: ['source.js', 'meta.export.js', 'variable.other.module.js']
+      expect(tokens[5]).toEqual value: ',', scopes: ['source.js', 'meta.export.js', 'meta.delimiter.object.comma.js']
+      expect(tokens[7]).toEqual value: 'foo', scopes: ['source.js', 'meta.export.js', 'variable.other.module.js']
+      expect(tokens[9]).toEqual value: 'as', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[11]).toEqual value: 'alias', scopes: ['source.js', 'meta.export.js', 'variable.other.module-alias.js']
+      expect(tokens[13]).toEqual value: '}', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.end.js']
 
     it "tokenizes default export", ->
       {tokens} = grammar.tokenizeLine('export default 123;')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'keyword.control.js']
-      expect(tokens[4]).toEqual value: '123', scopes: ['source.js', 'constant.numeric.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'meta.export.js', 'variable.language.default.js']
+      expect(tokens[4]).toEqual value: '123', scopes: ['source.js', 'meta.export.js', 'constant.numeric.js']
 
       {tokens} = grammar.tokenizeLine('export default name;')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'keyword.control.js']
-      expect(tokens[3]).toEqual value: ' name', scopes: ['source.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'meta.export.js', 'variable.language.default.js']
+      expect(tokens[4]).toEqual value: 'name', scopes: ['source.js', 'meta.export.js', 'variable.other.module.js']
 
       {tokens} = grammar.tokenizeLine('export { foo as default };')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.brace.curly.js']
-      expect(tokens[4]).toEqual value: 'default', scopes: ['source.js', 'keyword.control.js']
-      expect(tokens[6]).toEqual value: '}', scopes: ['source.js', 'meta.brace.curly.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.begin.js']
+      expect(tokens[4]).toEqual value: 'foo', scopes: ['source.js', 'meta.export.js', 'variable.other.module.js']
+      expect(tokens[6]).toEqual value: 'as', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[8]).toEqual value: 'default', scopes: ['source.js', 'meta.export.js', 'variable.language.default.js']
+      expect(tokens[10]).toEqual value: '}', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.end.js']
 
     it "tokenizes default function export", ->
       {tokens} = grammar.tokenizeLine('export default function () {}')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'keyword.control.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'meta.export.js', 'variable.language.default.js']
       expect(tokens[4]).toEqual value: 'function', scopes: ['source.js', 'meta.function.js', 'storage.type.function.js']
       expect(tokens[6]).toEqual value: '(', scopes: ['source.js', 'meta.function.js', 'punctuation.definition.parameters.begin.js']
       expect(tokens[7]).toEqual value: ')', scopes: ['source.js', 'meta.function.js', 'punctuation.definition.parameters.end.js']
+      expect(tokens[9]).toEqual value: '{', scopes: ['source.js', 'punctuation.section.scope.begin.js']
+      expect(tokens[10]).toEqual value: '}', scopes: ['source.js', 'punctuation.section.scope.end.js']
 
       {tokens} = grammar.tokenizeLine('export default function func() {}')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'keyword.control.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'meta.export.js', 'variable.language.default.js']
       expect(tokens[4]).toEqual value: 'function', scopes: ['source.js', 'meta.function.js', 'storage.type.function.js']
       expect(tokens[6]).toEqual value: 'func', scopes: ['source.js', 'meta.function.js', 'entity.name.function.js']
       expect(tokens[7]).toEqual value: '(', scopes: ['source.js', 'meta.function.js', 'punctuation.definition.parameters.begin.js']
@@ -587,34 +596,39 @@ describe "Javascript grammar", ->
 
     it "tokenizes default class export", ->
       {tokens} = grammar.tokenizeLine('export default class {}')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'keyword.control.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'meta.export.js', 'variable.language.default.js']
       expect(tokens[4]).toEqual value: 'class', scopes: ['source.js', 'storage.type.js']
+      expect(tokens[6]).toEqual value: '{', scopes: ['source.js', 'punctuation.section.scope.begin.js']
+      expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'punctuation.section.scope.end.js']
 
       {tokens} = grammar.tokenizeLine('export default class Foo {}')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'keyword.control.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'meta.export.js', 'variable.language.default.js']
       expect(tokens[4]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
       expect(tokens[6]).toEqual value: 'Foo', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
 
     it "tokenizes re-export", ->
       {tokens} = grammar.tokenizeLine('export { name } from "module-name";')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.brace.curly.js']
-      expect(tokens[4]).toEqual value: '}', scopes: ['source.js', 'meta.brace.curly.js']
-      expect(tokens[6]).toEqual value: 'from', scopes: ['source.js', 'keyword.control.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.begin.js']
+      expect(tokens[4]).toEqual value: 'name', scopes: ['source.js', 'meta.export.js', 'variable.other.module.js']
+      expect(tokens[6]).toEqual value: '}', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.end.js']
+      expect(tokens[8]).toEqual value: 'from', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
 
       {tokens} = grammar.tokenizeLine('export * from "module-name";')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[2]).toEqual value: '*', scopes: ['source.js', 'keyword.operator.js']
-      expect(tokens[4]).toEqual value: 'from', scopes: ['source.js', 'keyword.control.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: '*', scopes: ['source.js', 'meta.export.js', 'variable.language.import-all.js']
+      expect(tokens[4]).toEqual value: 'from', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
 
       {tokens} = grammar.tokenizeLine('export { default as alias } from "module-name";')
-      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'storage.modifier.js']
-      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.brace.curly.js']
-      expect(tokens[4]).toEqual value: 'default', scopes: ['source.js', 'keyword.control.js']
-      expect(tokens[6]).toEqual value: '}', scopes: ['source.js', 'meta.brace.curly.js']
-      expect(tokens[8]).toEqual value: 'from', scopes: ['source.js', 'keyword.control.js']
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.begin.js']
+      expect(tokens[4]).toEqual value: 'default', scopes: ['source.js', 'meta.export.js', 'variable.language.default.js']
+      expect(tokens[6]).toEqual value: 'as', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[8]).toEqual value: 'alias', scopes: ['source.js', 'meta.export.js', 'variable.other.module-alias.js']
+      expect(tokens[10]).toEqual value: '}', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.end.js']
+      expect(tokens[12]).toEqual value: 'from', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
 
   describe "ES6 yield", ->
     it "tokenizes yield", ->

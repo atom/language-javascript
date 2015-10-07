@@ -116,6 +116,137 @@
     'name': 'meta.import.js'
   }
   {
+    'comment': 'ES6 export'
+    'begin': '(?<!\\.)\\b(export)(?!\\s*:)\\b'
+    'beginCaptures':
+      '1':
+        'name': 'keyword.control.js'
+    'patterns': [
+      {
+        'include': '#numbers'
+      }
+      {
+        'comment': '`{ member1 , member2 as alias2 , [...] }` inside re-export'
+        'begin': '\\{(?=.*\\bfrom\\b)'
+        'beginCaptures':
+          0:
+            'name': 'punctuation.definition.modules.begin.js'
+        'end': '\\}'
+        'endCaptures':
+          0:
+            'name': 'punctuation.definition.modules.end.js'
+        'patterns': [
+          {
+            'comment': '(default|name) as alias'
+            'captures':
+              '1':
+                'name': 'variable.language.default.js'
+              '2':
+                'name': 'variable.other.module.js'
+              '3':
+                'name': 'keyword.control.js'
+              '4':
+                'name': 'variable.language.default.js'
+              '5':
+                'name': 'invalid.illegal.js'
+              '6':
+                'name': 'variable.other.module-alias.js'
+            'match': '(?x)
+              (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+              \\s*
+              (\\b as \\b)
+              \\s*
+              (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+            '
+          }
+          {
+            'match': ','
+            'name': 'meta.delimiter.object.comma.js'
+          }
+          {
+            'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+            'name': 'variable.other.module.js'
+          }
+        ]
+      }
+      {
+        'comment': '{ member1 , member2 as alias2 , [...] }'
+        'begin': '(?![a-zA-Z_$0-9])\\{'
+        'beginCaptures':
+          0:
+            'name': 'punctuation.definition.modules.begin.js'
+        'end': '\\}'
+        'endCaptures':
+          0:
+            'name': 'punctuation.definition.modules.end.js'
+        'patterns': [
+          {
+            'comment': 'name as (default|alias)'
+            'captures':
+              '1':
+                'name': 'invalid.illegal.js'
+              '2':
+                'name': 'variable.other.module.js'
+              '3':
+                'name': 'keyword.control.js'
+              '4':
+                'name': 'variable.language.default.js'
+              '5':
+                'name': 'invalid.illegal.js'
+              '6':
+                'name': 'variable.other.module-alias.js'
+            'match': '(?x)
+              (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+              \\s*
+              (\\b as \\b)
+              \\s*
+              (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+            '
+          }
+          {
+            'match': ','
+            'name': 'meta.delimiter.object.comma.js'
+          }
+          {
+            'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+            'name': 'variable.other.module.js'
+          }
+        ]
+      }
+      {
+        'match': '\\*(?=.*\\bfrom\\b)'
+        'name': 'variable.language.import-all.js'
+      }
+      {
+        'match': '\\b(default)\\b'
+        'name': 'variable.language.default.js'
+      }
+      {
+        'include': '#strings'
+      }
+      {
+        'include': '#comments'
+      }
+      {
+        'match': '\\b(from)\\b'
+        'name': 'keyword.control.js'
+      }
+      {
+        'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+        'name': 'variable.other.module.js'
+      }
+      {
+        'match': ','
+        'name': 'meta.delimiter.object.comma.js'
+      }
+      {
+        'include': '#operators'
+      }
+    ]
+    'end': '(?=;|\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b|$)'
+    'name': 'meta.export.js'
+  }
+  {
     'captures':
       '1':
         'name': 'support.class.js'
@@ -661,9 +792,7 @@
     ]
   }
   {
-    'match': '!=|!==|<=|>=|<<=|>>=|>>>=|\\*=|(?<!\\()/=|%=|\\+=|\\-=|&=|\\^=|!|%|&|\\*|/|\\-\\-|\\-|\\+\\+|\\+|~|===|==|=|<>|<|>|!|&&|\\|\\||\\?|\\:|\\^'
-    'comment': 'match 2-character operator first'
-    'name': 'keyword.operator.js'
+    'include': '#operators'
   }
   {
     'match': '\\;'
@@ -709,6 +838,14 @@
       {
         'match': '\\b((0(x|X)[0-9a-fA-F]+)|(0(b|B)[01]+)|(0(o|O)[0-7]+)|([0-9]+(\\.[0-9]+)?)((e|E)[+-]?[0-9]+)?)\\b'
         'name': 'constant.numeric.js'
+      }
+    ]
+  'operators':
+    'patterns': [
+      {
+        'match': '!=|!==|<=|>=|<<=|>>=|>>>=|\\*=|(?<!\\()/=|%=|\\+=|\\-=|&=|\\^=|!|%|&|\\*|/|\\-\\-|\\-|\\+\\+|\\+|~|===|==|=|<>|<|>|!|&&|\\|\\||\\?|\\:|\\^'
+        'comment': 'match 2-character operator first'
+        'name': 'keyword.operator.js'
       }
     ]
   'strings':
