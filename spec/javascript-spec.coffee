@@ -434,69 +434,73 @@ describe "Javascript grammar", ->
     it "tokenizes import", ->
       {tokens} = grammar.tokenizeLine('import "module-name";')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: '"', scopes: ['source.js', 'meta.import.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[3]).toEqual value: 'module-name', scopes: ['source.js', 'meta.import.js', 'string.quoted.double.js']
+      expect(tokens[4]).toEqual value: '"', scopes: ['source.js', 'meta.import.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
+      expect(tokens[5]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
     it "tokenizes default import", ->
       {tokens} = grammar.tokenizeLine('import defaultMember from "module-name";')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(tokens[2]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[2]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js', 'variable.other.module.js']
       expect(tokens[4]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
 
     it "tokenizes default named import", ->
       {tokens} = grammar.tokenizeLine('import { default as defaultMember } from "module-name";')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
-      expect(tokens[4]).toEqual value: 'default', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.import.js', 'punctuation.definition.modules.begin.js']
+      expect(tokens[4]).toEqual value: 'default', scopes: ['source.js', 'meta.import.js', 'variable.language.default.js']
       expect(tokens[6]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(tokens[8]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js']
-      expect(tokens[10]).toEqual value: '}', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
+      expect(tokens[8]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js', 'variable.other.module-alias.js']
+      expect(tokens[10]).toEqual value: '}', scopes: ['source.js', 'meta.import.js', 'punctuation.definition.modules.end.js']
       expect(tokens[12]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
 
     it "tokenizes named import", ->
       {tokens} = grammar.tokenizeLine('import { member } from "module-name";')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
-      expect(tokens[4]).toEqual value: 'member', scopes: ['source.js', 'meta.import.js']
-      expect(tokens[6]).toEqual value: '}', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.import.js', 'punctuation.definition.modules.begin.js']
+      expect(tokens[4]).toEqual value: 'member', scopes: ['source.js', 'meta.import.js', 'variable.other.module.js']
+      expect(tokens[6]).toEqual value: '}', scopes: ['source.js', 'meta.import.js', 'punctuation.definition.modules.end.js']
       expect(tokens[8]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
 
       {tokens} = grammar.tokenizeLine('import { member1 , member2 as alias2 } from "module-name";')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
-      expect(tokens[4]).toEqual value: 'member1', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'meta.import.js', 'punctuation.definition.modules.begin.js']
+      expect(tokens[4]).toEqual value: 'member1', scopes: ['source.js', 'meta.import.js', 'variable.other.module.js']
       expect(tokens[6]).toEqual value: ',', scopes: ['source.js', 'meta.import.js', 'meta.delimiter.object.comma.js']
-      expect(tokens[8]).toEqual value: 'member2', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[8]).toEqual value: 'member2', scopes: ['source.js', 'meta.import.js', 'variable.other.module.js']
       expect(tokens[10]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(tokens[12]).toEqual value: 'alias2', scopes: ['source.js', 'meta.import.js']
-      expect(tokens[14]).toEqual value: '}', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
+      expect(tokens[12]).toEqual value: 'alias2', scopes: ['source.js', 'meta.import.js', 'variable.other.module-alias.js']
+      expect(tokens[14]).toEqual value: '}', scopes: ['source.js', 'meta.import.js', 'punctuation.definition.modules.end.js']
       expect(tokens[16]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
 
     it "tokenizes entire module import", ->
       {tokens} = grammar.tokenizeLine('import * as name from "module-name";')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(tokens[1]).toEqual value: ' * ', scopes: ['source.js', 'meta.import.js']
-      expect(tokens[2]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(tokens[4]).toEqual value: 'name', scopes: ['source.js', 'meta.import.js']
-      expect(tokens[6]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: '*', scopes: ['source.js', 'meta.import.js', 'variable.language.import-all.js']
+      expect(tokens[4]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[6]).toEqual value: 'name', scopes: ['source.js', 'meta.import.js', 'variable.other.module-alias.js']
+      expect(tokens[8]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
 
     it "tokenizes `import defaultMember, { member } from 'module-name';`", ->
       {tokens} = grammar.tokenizeLine('import defaultMember, { member } from "module-name";')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(tokens[2]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[2]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js', 'variable.other.module.js']
       expect(tokens[3]).toEqual value: ',', scopes: ['source.js', 'meta.import.js', 'meta.delimiter.object.comma.js']
-      expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
-      expect(tokens[7]).toEqual value: 'member', scopes: ['source.js', 'meta.import.js']
-      expect(tokens[9]).toEqual value: '}', scopes: ['source.js', 'meta.import.js', 'meta.brace.curly.js']
+      expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'meta.import.js', 'punctuation.definition.modules.begin.js']
+      expect(tokens[7]).toEqual value: 'member', scopes: ['source.js', 'meta.import.js', 'variable.other.module.js']
+      expect(tokens[9]).toEqual value: '}', scopes: ['source.js', 'meta.import.js', 'punctuation.definition.modules.end.js']
       expect(tokens[11]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
 
     it "tokenizes `import defaultMember, * as alias from 'module-name';", ->
       {tokens} = grammar.tokenizeLine('import defaultMember, * as alias from "module-name";')
       expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(tokens[2]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js']
+      expect(tokens[2]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js', 'variable.other.module.js']
       expect(tokens[3]).toEqual value: ',', scopes: ['source.js', 'meta.import.js', 'meta.delimiter.object.comma.js']
-      expect(tokens[4]).toEqual value: ' * ', scopes: ['source.js', 'meta.import.js']
-      expect(tokens[5]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(tokens[7]).toEqual value: 'alias', scopes: ['source.js', 'meta.import.js']
-      expect(tokens[9]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[5]).toEqual value: '*', scopes: ['source.js', 'meta.import.js', 'variable.language.import-all.js']
+      expect(tokens[7]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+      expect(tokens[9]).toEqual value: 'alias', scopes: ['source.js', 'meta.import.js', 'variable.other.module-alias.js']
+      expect(tokens[11]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
 
   describe "ES6 export", ->
     it "tokenizes named export", ->
@@ -817,12 +821,9 @@ describe "Javascript grammar", ->
       expect(tokens[4]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
 
     it "tokenizes // comments", ->
-      {tokens} = grammar.tokenizeLine('import point; // comment')
-      expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(tokens[2]).toEqual value: 'point', scopes: ['source.js', 'meta.import.js']
-      expect(tokens[3]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
-      expect(tokens[5]).toEqual value: '//', scopes: ['source.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
-      expect(tokens[6]).toEqual value: ' comment', scopes: ['source.js', 'comment.line.double-slash.js']
+      {tokens} = grammar.tokenizeLine('// comment')
+      expect(tokens[0]).toEqual value: '//', scopes: ['source.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
+      expect(tokens[1]).toEqual value: ' comment', scopes: ['source.js', 'comment.line.double-slash.js']
 
     it "tokenizes comments inside constant definitions", ->
       {tokens} = grammar.tokenizeLine('const a, // comment')
