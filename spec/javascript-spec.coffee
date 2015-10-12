@@ -896,7 +896,7 @@ describe "Javascript grammar", ->
     editor = null
 
     beforeEach ->
-      editor = new TextEditor({})
+      editor = atom.workspace.buildTextEditor()
       editor.setGrammar(grammar)
 
     expectPreservedIndentation = (text) ->
