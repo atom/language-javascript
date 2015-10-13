@@ -1,6 +1,12 @@
-{TextEditor} = require 'atom'
 fs = require 'fs'
 path = require 'path'
+TextEditor = null
+buildTextEditor = (params) ->
+  if atom.workspace.buildTextEditor?
+    atom.workspace.buildTextEditor(params)
+  else
+    TextEditor ?= require('atom').TextEditor
+    new TextEditor(params)
 
 describe "Javascript grammar", ->
   grammar = null
@@ -896,7 +902,7 @@ describe "Javascript grammar", ->
     editor = null
 
     beforeEach ->
-      editor = new TextEditor({})
+      editor = buildTextEditor()
       editor.setGrammar(grammar)
 
     expectPreservedIndentation = (text) ->
