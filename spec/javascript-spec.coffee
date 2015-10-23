@@ -201,14 +201,14 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'void', scopes: ['source.js', 'keyword.operator.js']
 
     describe "arithmetic", ->
-      operators = ["*", "/", "+", "-", "%"]
+      operators = ["*", "/", "-", "%", "+"]
 
       it "tokenizes arithmetic operators", ->
         for operator in operators
-          {tokens} = grammar.tokenizeLine('test ' + operator + ' 2')
-          expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
+          {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
+          expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
           expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.js']
-          expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
+          expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
 
       it "tokenizes the arithmetic operators when separated by newlines", ->
         for operator in operators
