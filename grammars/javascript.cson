@@ -736,18 +736,26 @@
     'name': 'support.class.js'
   }
   {
-    'match': '\\b(shift|showModelessDialog|showModalDialog|showHelp|scroll|scrollX|scrollByPages|scrollByLines|scrollY|scrollTo|stop|strike|sin|sizeToContent|sidebar|signText|sort|sup|sub|substr|substring|splice|split|send|set(Milliseconds|Seconds|Minutes|Hours|Month|Year|FullYear|Date|UTC(Milliseconds|Seconds|Minutes|Hours|Month|FullYear|Date)|Time|Hotkeys|Cursor|Timeout|Interval|ZOptions|Active|Resizable|RequestHeader)|search|sqrt|slice|savePreferences|small|home|handleEvent|navigate|char|charCodeAt|charAt|cos|concat|contextual|confirm|compile|ceil|clear|clearTimeout|clearInterval|captureEvents|call|createStyleSheet|createPopup|createEventObject|to(GMTString|UTCString|String|Source|UpperCase|LowerCase|LocaleString)|test|tan|taint|taintEnabled|isNaN|isFinite|indexOf|italics|disableExternalCapture|dump|detachEvent|unshift|untaint|unescape|unwatch|updateCommands|join|javaEnabled|pop|pow|push|plugins.refresh|paddings|parse|parseInt|parseFloat|print|prompt|preference|escape|enableExternalCapture|eval|elementFromPoint|exp|exec|execScript|execCommand|valueOf|UTC|queryCommandState|queryCommandIndeterm|queryCommandEnabled|queryCommandValue|find|file|fileModifiedDate|fileSize|fileCreatedDate|fileUpdatedDate|fixed|fontsize|fontcolor|forward|floor|fromCharCode|watch|link|load|log|lastIndexOf|asin|anchor|acos|attachEvent|atob|atan|atan2|apply|alert|abs|abort|round|routeEvents|resize|resizeBy|resizeTo|recalc|returnValue|replace|reverse|reload|releaseCapture|releaseEvents|random|go|get(Milliseconds|Seconds|Minutes|Hours|Month|Day|Year|FullYear|Time|Date|TimezoneOffset|UTC(Milliseconds|Seconds|Minutes|Hours|Day|Month|FullYear|Date)|Attention|Selection|ResponseHeader|AllResponseHeaders)|min|moveBy|moveBelow|moveTo|moveToAbsolute|moveAbove|mergeAttributes|match|margins|max|btoa|big|bold|borderWidths|blink|back)\\b(?=\\()'
-    'name': 'support.function.js'
+    'match': '(\\.)?(shift|showModelessDialog|showModalDialog|showHelp|scroll|scrollX|scrollByPages|scrollByLines|scrollY|scrollTo|stop|strike|sin|sizeToContent|sidebar|signText|sort|sup|sub|substr|substring|splice|split|send|set(Milliseconds|Seconds|Minutes|Hours|Month|Year|FullYear|Date|UTC(Milliseconds|Seconds|Minutes|Hours|Month|FullYear|Date)|Time|Hotkeys|Cursor|Timeout|Interval|ZOptions|Active|Resizable|RequestHeader)|search|sqrt|slice|savePreferences|small|home|handleEvent|navigate|char|charCodeAt|charAt|cos|concat|contextual|confirm|compile|ceil|clear|clearTimeout|clearInterval|captureEvents|call|createStyleSheet|createPopup|createEventObject|to(GMTString|UTCString|String|Source|UpperCase|LowerCase|LocaleString)|test|tan|taint|taintEnabled|isNaN|isFinite|indexOf|italics|disableExternalCapture|dump|detachEvent|unshift|untaint|unescape|unwatch|updateCommands|join|javaEnabled|pop|pow|push|plugins.refresh|paddings|parse|parseInt|parseFloat|print|prompt|preference|escape|enableExternalCapture|eval|elementFromPoint|exp|exec|execScript|execCommand|valueOf|UTC|queryCommandState|queryCommandIndeterm|queryCommandEnabled|queryCommandValue|find|file|fileModifiedDate|fileSize|fileCreatedDate|fileUpdatedDate|fixed|fontsize|fontcolor|forward|floor|fromCharCode|watch|link|load|log|lastIndexOf|asin|anchor|acos|attachEvent|atob|atan|atan2|apply|alert|abs|abort|round|routeEvents|resize|resizeBy|resizeTo|recalc|returnValue|replace|reverse|reload|releaseCapture|releaseEvents|random|go|get(Milliseconds|Seconds|Minutes|Hours|Month|Day|Year|FullYear|Time|Date|TimezoneOffset|UTC(Milliseconds|Seconds|Minutes|Hours|Day|Month|FullYear|Date)|Attention|Selection|ResponseHeader|AllResponseHeaders)|min|moveBy|moveBelow|moveTo|moveToAbsolute|moveAbove|mergeAttributes|match|margins|max|btoa|big|bold|borderWidths|blink|back)\\b(?=\\()'
+    'captures':
+      '1':
+        'name': 'meta.delimiter.method.period.js'
+      '2':
+        'name': 'support.function.js'
   }
   {
-    'match': '\\b(substringData|submit|splitText|setNamedItem|setAttribute|setAttributeNode|select|hasChildNodes|hasFeature|namedItem|click|close|cloneNode|createComment|createCDATASection|createCaption|createTHead|createTextNode|createTFoot|createDocumentFragment|createProcessingInstruction|createEntityReference|createElement|createAttribute|tabIndex|insertRow|insertBefore|insertCell|insertData|item|open|deleteRow|deleteCell|deleteCaption|deleteTHead|deleteTFoot|deleteData|focus|write|writeln|add|appendChild|appendData|reset|replaceChild|replaceData|move|moveNamedItem|moveChild|moveAttribute|moveAttributeNode|getNamedItem|getElementsByName|getElementsByTagName|getElementById|getAttribute|getAttributeNode|blur)\\b(?=\\\()'
-    'name': 'support.function.dom.js'
+    'match': '(\\.)(substringData|submit|splitText|setNamedItem|setAttribute|setAttributeNode|select|hasChildNodes|hasFeature|namedItem|click|close|cloneNode|createComment|createCDATASection|createCaption|createTHead|createTextNode|createTFoot|createDocumentFragment|createProcessingInstruction|createEntityReference|createElement|createAttribute|tabIndex|insertRow|insertBefore|insertCell|insertData|item|open|deleteRow|deleteCell|deleteCaption|deleteTHead|deleteTFoot|deleteData|focus|write|writeln|add|appendChild|appendData|reset|replaceChild|replaceData|move|moveNamedItem|moveChild|moveAttribute|moveAttributeNode|getNamedItem|getElementsByName|getElementsByTagName|getElementById|getAttribute|getAttributeNode|blur)\\b(?=\\\()'
+    'captures':
+      '1':
+        'name': 'meta.delimiter.method.period.js'
+      '2':
+        'name': 'support.function.dom.js'
   }
   {
     'match': '(\\.)(systemLanguage|scripts|scrollbars|screenX|screenY|screenTop|screenLeft|style|styleSheets|status|statusText|statusbar|siblingBelow|siblingAbove|source|suffixes|security|securityPolicy|selection|self|history|host|hostname|hash|hasFocus|XMLDocument|XSLDocument|next|namespaces|namespaceURI|nameProp|MIN_VALUE|MAX_VALUE|characterSet|constructor|controllers|cookieEnabled|colorDepth|components|complete|current|cpuClass|clip|clipBoardData|clientInformation|closed|classes|callee|caller|crypto|toolbar|top|textTransform|textIndent|textDecoration|textAlign|tags|SQRT1_2|SQRT2|innerHeight|innerWidth|input|ids|ignoreCase|zIndex|oscpu|onreadystatechange|onLine|outerHeight|outerWidth|opsProfile|opener|offscreenBuffering|NEGATIVE_INFINITY|display|dialogHeight|dialogTop|dialogWidth|dialogLeft|dialogArguments|directories|description|defaultStatus|defaultChecked|defaultCharset|defaultView|userProfile|userLanguage|userAgent|uniqueID|undefined|updateInterval|_content|pixelDepth|port|personalbar|pkcs11|plugins|platform|pathname|paddingRight|paddingBottom|paddingTop|paddingLeft|parent|parentWindow|parentLayer|pageX|pageXOffset|pageY|pageYOffset|protocol|prototype|product|productSub|prompter|previous|prefix|encoding|enabledPlugin|external|expando|embeds|visiblity|vendor|vendorSub|vLinkcolor|URLUnencoded|PI|POSITIVE_INFINITY|filename|fontSize|fontFamily|fontWeight|formName|frames|frameElement|fgColor|E|whiteSpace|listStyleType|lineHeight|linkColor|location|locationbar|localName|lowsrc|length|left|leftContext|lastModified|lastMatch|lastIndex|lastParen|layers|layerX|language|appMinorVersion|appName|appCodeName|appCore|appVersion|availHeight|availTop|availWidth|availLeft|all|arity|arguments|aLinkcolor|above|right|rightContext|responseXML|responeText|readyState|global|x|y|z|mimeTypes|multiline|menubar|marginRight|marginBottom|marginTop|marginLeft|LN10|LN2|LOG10E|LOG2E|bottom|border(Width|RightWidth|BottomWidth|Style|Color|TopWidth|LeftWidth)|bufferDepth|below|backgroundColor|backgroundImage)\\b'
     'captures':
       '1':
-        'name': 'meta.delimiter.method.period.js'
+        'name': 'meta.delimiter.property.period.js'
       '2':
         'name': 'support.constant.js'
   }
@@ -755,7 +763,7 @@
     'match': '(\\.)(shape|systemId|scheme|scope|scrolling|standby|start|size|summary|specified|sectionRowIndex|selected|selectedIndex|hspace|httpEquiv|htmlFor|height|headers|href|hreflang|noResize|notations|notationName|noShade|noHref|nodeName|nodeType|nodeValue|noWrap|nextSibling|name|ch|childNodes|chOff|checked|charset|cite|content|cookie|cords|code|codeBase|codeType|cols|colSpan|color|compact|cells|cellSpacing|cellPadding|clear|className|caption|type|tBodies|title|tHead|text|target|tagName|tFoot|isMap|index|id|implementation|images|options|ownerDocument|object|disabled|dir|doctype|documentElement|docmain|declare|defer|defaultSelected|defaultChecked|defaultValue|dateTime|data|useMap|publicId|parentNode|profile|profileend|prompt|previousDibling|enctype|entities|event|elements|vspace|version|value|valueType|vLink|vAlign|URL|firstChild|form|forms|face|frame|frameBorder|width|link|links|longDesc|lowSrc|lastChild|lang|label|anchors|accessKey|accept|acceptCharset|action|attributes|applets|alt|align|archive|areas|axis|aLink|abbr|rows|rowSpan|rowIndex|rules|rev|referrer|rel|readOnly|multiple|method|media|marginHeight|marginWidth|maxLength|body|border|background|bgColor)\\b'
     'captures':
       '1':
-        'name': 'meta.delimiter.method.period.js'
+        'name': 'meta.delimiter.property.period.js'
       '2':
         'name': 'support.constant.dom.js'
   }
@@ -801,6 +809,18 @@
   }
   {
     'include': '#operators'
+  }
+  {
+    'include': '#method_call'
+  }
+  {
+    'include': '#function_call'
+  }
+  {
+    'include': '#object_variable'
+  }
+  {
+    'include': '#properties'
   }
   {
     'match': '\\;'
@@ -983,6 +1003,132 @@
       {
         'match': '[a-zA-Z_$][a-zA-Z_$0-9]*'
         'name': 'variable.parameter.function.js'
+      }
+    ]
+  'arguments':
+    'patterns': [
+      {
+        'include': '#method_call'
+      }
+      {
+        'include': '#function_call'
+      }
+      {
+        'include': '#numbers'
+      }
+      {
+        'include': '#strings'
+      }
+      {
+        'include': '#object_variable'
+      }
+      {
+        'match': '\\[|\\]'
+        'name': 'meta.brace.square.js'
+      }
+      {
+        'match': ','
+        'name': 'meta.delimiter.object.comma.js'
+      }
+      {
+        'match': '\\{|\\}'
+        'name': 'meta.brace.curly.js'
+      }
+      {
+        'include': '#operators'
+      }
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#properties'
+      }
+      {
+        'match': '(?x) \\b[a-zA-Z_$]\\w* (?= \\s*, | \\) )'
+        'name': 'variable.other.argument.js'
+      }
+      {
+        'comment': 'e.g. 123arg'
+        'match': '(?x) \\b\\d\\w+ (?= \\s* (?: , | \\) ) )'
+        'name': 'invalid.illegal.js'
+      }
+    ]
+  'method_call':
+    'patterns': [
+      {
+        'comment': '.methodCall(arg1, "arg2", [...])'
+        'begin': '(?x) (\\.) (\\w+) \\s* (\\()'
+        'beginCaptures':
+          '1':
+            'name': 'meta.delimiter.method.period.js'
+          '2':
+            'name': 'entity.name.function.js'
+          '3':
+            'name': 'punctuation.definition.arguments.begin.js'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.arguments.end.js'
+        'name': 'meta.method-call.js'
+        'patterns': [
+          {
+            'include': '#arguments'
+          }
+        ]
+      }
+    ]
+  'function_call':
+    'patterns': [
+      {
+        'comment': 'functionCall(arg1, "arg2", [...])'
+        'begin': '(?x) \\b(\\w+) \\s* (\\()'
+        'beginCaptures':
+          '1':
+            'name': 'entity.name.function.js'
+          '2':
+            'name': 'punctuation.definition.arguments.begin.js'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.arguments.end.js'
+        'name': 'meta.function-call.js'
+        'patterns': [
+          {
+            'include': '#arguments'
+          }
+        ]
+      }
+    ]
+  'object_variable':
+    'patterns': [
+      {
+        'comment': '`obj` in `obj.prop`, `obj.methodCall()`'
+        'captures':
+          '1':
+            'name': 'variable.other.object.js'
+          '2':
+            'name': 'invalid.illegal.js'
+        'match': '(?x)
+          (?: (\\b[a-zA-Z_$]\\w*) (?=\\s*\\.) )
+          |
+          (?: (\\b\\d\\w+) (?=\\s*\\.) )
+        '
+      }
+    ]
+  'properties':
+    'patterns': [
+      {
+        'comment': '`prop` in `obj.prop`, `func().prop`'
+        'captures':
+          '1':
+            'name': 'meta.delimiter.property.period.js'
+          '2':
+            'name': 'invalid.illegal.js'
+          '3':
+            'name': 'constant.other.property.js'
+          '4':
+            'name': 'variable.other.property.js'
+        'match': '(?x) (\\.) \\s* (?: (\\b\\d\\w*) | (\\b[A-Z][A-Z0-9_]*) | (\\w*) )'
       }
     ]
   'interpolated_js':
