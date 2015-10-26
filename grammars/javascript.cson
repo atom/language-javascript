@@ -116,7 +116,20 @@
     'name': 'meta.import.js'
   }
   {
-    'comment': 'ES6 export'
+    'comment': 'ES6 export: `export default (variable|class|function, etc.)`'
+    'match': '(?x) \\b(export)\\b \\s* \\b(default)\\b (?:\\s*) \\b((?!\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b)[a-zA-Z_$][a-zA-Z_$0-9]*)?\\b'
+    'captures':
+      '0':
+        'name': 'meta.export.js'
+      '1':
+        'name': 'keyword.control.js'
+      '2':
+        'name': 'variable.language.default.js'
+      '3':
+        'name': 'variable.other.module.js'
+  }
+  {
+    'comment': 'ES6 export, re-export: `export {member as alias, [...]} [from ...]`'
     'begin': '(?<!\\.)\\b(export)(?!\\s*:)\\b'
     'beginCaptures':
       '1':
