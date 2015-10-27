@@ -566,7 +566,7 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('export default 123;')
       expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
       expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'meta.export.js', 'variable.language.default.js']
-      expect(tokens[4]).toEqual value: '123', scopes: ['source.js', 'meta.export.js', 'constant.numeric.js']
+      expect(tokens[4]).toEqual value: '123', scopes: ['source.js', 'constant.numeric.js']
 
       {tokens} = grammar.tokenizeLine('export default name;')
       expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
@@ -580,6 +580,23 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: 'as', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
       expect(tokens[8]).toEqual value: 'default', scopes: ['source.js', 'meta.export.js', 'variable.language.default.js']
       expect(tokens[10]).toEqual value: '}', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.end.js']
+
+      {tokens} = grammar.tokenizeLine('''
+      export default {
+        'prop': 'value'
+      };
+      ''')
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'meta.export.js', 'variable.language.default.js']
+      expect(tokens[4]).toEqual value: '{', scopes: ['source.js', 'meta.brace.curly.js']
+      expect(tokens[6]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[7]).toEqual value: "prop", scopes: ['source.js', 'string.quoted.single.js']
+      expect(tokens[8]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
+      expect(tokens[9]).toEqual value: ":", scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[11]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[12]).toEqual value: "value", scopes: ['source.js', 'string.quoted.single.js']
+      expect(tokens[13]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
+      expect(tokens[15]).toEqual value: '}', scopes: ['source.js', 'meta.brace.curly.js']
 
     it "tokenizes default function export", ->
       {tokens} = grammar.tokenizeLine('export default function () {}')
