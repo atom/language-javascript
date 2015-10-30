@@ -273,7 +273,7 @@
     'name': 'meta.class.js'
   }
   {
-    'begin': '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)(\\()'
+    'begin': '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)(?=\\()'
     'beginCaptures':
       '1':
         'name': 'support.class.js'
@@ -289,17 +289,18 @@
         'name': 'storage.type.function.js'
       '7':
         'name': 'storage.type.function.js'
-      '8':
-        'name': 'punctuation.definition.parameters.begin.js'
     'comment': 'match stuff like: Sound.prototype.play = function() { … }'
-    'end': '(\\))'
+    'end': '\\}'
     'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
+      '0':
+        'name': 'punctuation.definition.function.body.end.js'
     'name': 'meta.function.prototype.js'
     'patterns': [
       {
         'include': '#function-params'
+      }
+      {
+        'include': '#function-body'
       }
     ]
   }
@@ -318,7 +319,7 @@
     'name': 'meta.function.js'
   }
   {
-    'begin': '([a-zA-Z_?.$][\\w?.$]*)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
+    'begin': '([a-zA-Z_?.$][\\w?.$]*)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(?=\\()'
     'beginCaptures':
       '1':
         'name': 'support.class.js'
@@ -337,19 +338,22 @@
       '8':
         'name': 'punctuation.definition.parameters.begin.js'
     'comment': 'match stuff like: Sound.play = function() { … }'
-    'end': '(\\))'
+    'end': '\\}'
     'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
+      '0':
+        'name': 'punctuation.definition.function.body.end.js'
     'name': 'meta.function.js'
     'patterns': [
       {
         'include': '#function-params'
       }
+      {
+        'include': '#function-body'
+      }
     ]
   }
   {
-    'begin': '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
+    'begin': '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(?=\\()'
     'beginCaptures':
       '1':
         'name': 'entity.name.function.js'
@@ -366,19 +370,22 @@
       '7':
         'name': 'punctuation.definition.parameters.begin.js'
     'comment': 'match stuff like: play = function() { … }'
-    'end': '(\\))'
+    'end': '\\}'
     'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
+      '0':
+        'name': 'punctuation.definition.function.body.end.js'
     'name': 'meta.function.js'
     'patterns': [
       {
         'include': '#function-params'
       }
+      {
+        'include': '#function-body'
+      }
     ]
   }
   {
-    'begin': '\\b(?:(async)(?:\\s+))?(function\\*?)\\s*((\\*)|(?:(?:\\s+)(\\*?[a-zA-Z_$]\\w*)))?\\s*(\\()'
+    'begin': '\\b(?:(async)(?:\\s+))?(function\\*?)\\s*((\\*)|(?:(?:\\s+)(\\*?[a-zA-Z_$]\\w*)))?\\s*(?=\\()'
     'beginCaptures':
       '1':
         'name': 'storage.modifier.js'
@@ -391,19 +398,22 @@
       '6':
         'name': 'punctuation.definition.parameters.begin.js'
     'comment': 'match regular function like: function myFunc(arg) { … }'
-    'end': '(\\))'
+    'end': '\\}'
     'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
+      '0':
+        'name': 'punctuation.definition.function.body.end.js'
     'name': 'meta.function.js'
     'patterns': [
       {
         'include': '#function-params'
       }
+      {
+        'include': '#function-body'
+      }
     ]
   }
   {
-    'begin': '\\b([a-zA-Z_?.$][\\w?.$]*)\\s*(:)\\s*\\b(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
+    'begin': '\\b([a-zA-Z_?.$][\\w?.$]*)\\s*(:)\\s*\\b(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(?=\\()'
     'beginCaptures':
       '1':
         'name': 'entity.name.function.js'
@@ -420,19 +430,22 @@
       '7':
         'name': 'punctuation.definition.parameters.begin.js'
     'comment': 'match stuff like: foobar: function() { … }'
-    'end': '(\\))'
+    'end': '\\}'
     'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
+      '0':
+        'name': 'punctuation.definition.function.body.end.js'
     'name': 'meta.function.json.js'
     'patterns': [
       {
         'include': '#function-params'
       }
+      {
+        'include': '#function-body'
+      }
     ]
   }
   {
-    'begin': '(?:((\')([^\']*?)(\'))|((")([^"]*?)(")))\\s*(:)\\s*\\b(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
+    'begin': '(?:((\')([^\']*?)(\'))|((")([^"]*?)(")))\\s*(:)\\s*\\b(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(?=\\()'
     'beginCaptures':
       '1':
         'name': 'string.quoted.single.js'
@@ -463,31 +476,37 @@
       '14':
         'name': 'punctuation.definition.parameters.begin.js'
     'comment': 'Attempt to match "foo": function'
-    'end': '(\\))'
+    'end': '\\}'
     'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
+      '0':
+        'name': 'punctuation.definition.function.body.end.js'
     'name': 'meta.function.json.js'
     'patterns': [
       {
         'include': '#function-params'
       }
+      {
+        'include': '#function-body'
+      }
     ]
   }
   {
-    'begin': '\\b(constructor)\\s*(\\()'
+    'begin': '\\b(constructor)\\s*(?=\\()'
     'beginCaptures':
       '1':
         'name': 'entity.name.function.constructor.js'
       '2':
         'name': 'punctuation.definition.parameters.begin.js'
-    'end': '(\\))'
+    'end': '\\}'
     'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
+      '0':
+        'name': 'punctuation.definition.function.body.end.js'
     'patterns': [
       {
         'include': '#function-params'
+      }
+      {
+        'include': '#function-body'
       }
     ]
   }
@@ -513,27 +532,68 @@
   }
   {
     'name': 'meta.function.arrow.js'
-    'begin': '(?<![A-Za-z0-9])(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
+    'begin': '(?<![A-Za-z0-9])(?=\\((?:[^\\(\\)]*)?\\)\\s*=>)'
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.parameters.begin.js'
 
-    'end': '(\\))(\\s*=>)'
+    'end': '\\}'
     'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
-      '2':
-        'name': 'storage.type.arrow.js'
+      '0':
+        'name': 'punctuation.definition.function.body.end.js'
     'patterns': [
       {
-        'include': '#function-params'
+        'begin': '\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.begin.js'
+        'end': '(\\))(\\s*=>)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.parameters.end.js'
+          '2':
+            'name': 'storage.type.arrow.js'
+        'patterns': [
+          {
+            'include': '#numbers'
+          }
+          {
+            'include': '#strings'
+          }
+          {
+            'match': '\\[|\\]'
+            'name': 'meta.brace.square.js'
+          }
+          {
+            'match': '\\{|\\}'
+            'name': 'meta.brace.curly.js'
+          }
+          {
+            'match': ','
+            'name': 'meta.object.delimiter.js'
+          }
+          {
+            'match': '='
+            'name': 'keyword.operator.js'
+          }
+          {
+            'include': '#comments'
+          }
+          {
+            'match': '[a-zA-Z_$][a-zA-Z_$0-9]*'
+            'name': 'variable.parameter.function.js'
+          }
+        ]
+      }
+      {
+        'include': '#function-body'
       }
     ]
   }
   {
     'comment': 'match stuff like: play = (a,b) => { … }'
     'name': 'meta.function.arrow.js'
-    'begin': '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
+    'begin': '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(?=\\((?:[^\\(\\)]*)?\\)\\s*=>)'
     'beginCaptures':
       '1':
         'name': 'entity.name.function.js'
@@ -541,15 +601,56 @@
         'name': 'keyword.operator.js'
       '3':
         'name': 'punctuation.definition.parameters.begin.js'
-    'end': '(\\))(\\s*=>)'
+    'end': '\\}'
     'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
-      '2':
-        'name': 'storage.type.arrow.js'
+      '0':
+        'name': 'punctuation.definition.function.body.end.js'
     'patterns': [
       {
-        'include': '#function-params'
+        'begin': '\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.begin.js'
+        'end': '(\\))(\\s*=>)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.parameters.end.js'
+          '2':
+            'name': 'storage.type.arrow.js'
+        'patterns': [
+          {
+            'include': '#numbers'
+          }
+          {
+            'include': '#strings'
+          }
+          {
+            'match': '\\[|\\]'
+            'name': 'meta.brace.square.js'
+          }
+          {
+            'match': '\\{|\\}'
+            'name': 'meta.brace.curly.js'
+          }
+          {
+            'match': ','
+            'name': 'meta.object.delimiter.js'
+          }
+          {
+            'match': '='
+            'name': 'keyword.operator.js'
+          }
+          {
+            'include': '#comments'
+          }
+          {
+            'match': '[a-zA-Z_$][a-zA-Z_$0-9]*'
+            'name': 'variable.parameter.function.js'
+          }
+        ]
+      }
+      {
+        'include': '#function-body'
       }
     ]
   }
@@ -933,7 +1034,7 @@
         'name': 'meta.method.js'
         'comment': 'match regular function like: function myFunc(arg) { … }'
 
-        'begin': '\\b((?!(?:break|case|catch|continue|do|else|finally|for|function|if|export|import|package|return|switch|throw|try|while|with)[\\s\\(])(?:[a-zA-Z_$][a-zA-Z_$0-9]*))\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*\\{)'
+        'begin': '\\b((?!(?:break|case|catch|continue|do|else|finally|for|function|if|export|import|package|return|switch|throw|try|while|with)[\\s\\(])(?:[a-zA-Z_$][a-zA-Z_$0-9]*))\\s*(?=\\((?:[^\\(\\)]*)?\\)\\s*\\{)'
         'beginCaptures':
           '1':
             'name': 'entity.name.function.js'
@@ -945,50 +1046,76 @@
             'include': '#function-params'
           }
           {
+            'include': '#function-body'
+          }
+          {
             'include': '#strings'
           }
         ]
 
-        'end': '(\\))'
+        'end': '\\}'
         'endCaptures':
-          '1':
-            'name': 'punctuation.definition.parameters.end.js'
+          '0':
+            'name': 'punctuation.definition.function.body.end.js'
       }
     ]
   'function-params':
     'patterns': [
       {
-        'include': '#numbers'
+        'begin': '\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.begin.js'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.end.js'
+        'patterns': [
+          {
+            'include': '#numbers'
+          }
+          {
+            'include': '#strings'
+          }
+          {
+            'match': '\\[|\\]'
+            'name': 'meta.brace.square.js'
+          }
+          {
+            'match': '\\{|\\}'
+            'name': 'meta.brace.curly.js'
+          }
+          {
+            'match': ','
+            'name': 'meta.object.delimiter.js'
+          }
+          {
+            'match': '='
+            'name': 'keyword.operator.js'
+          }
+          {
+            'include': '#comments'
+          }
+          {
+            'match': '[a-zA-Z_$][a-zA-Z_$0-9]*'
+            'name': 'variable.parameter.function.js'
+          }
+        ]
       }
+    ]
+  'function-body':
+    'patterns': [
       {
-        'include': '#strings'
-      }
-      {
-        'match': '\\(|\\)'
-        'name': 'meta.brace.round.js'
-      }
-      {
-        'match': '\\[|\\]'
-        'name': 'meta.brace.square.js'
-      }
-      {
-        'match': '\\{|\\}'
-        'name': 'meta.brace.curly.js'
-      }
-      {
-        'match': ','
-        'name': 'meta.object.delimiter.js'
-      }
-      {
-        'match': '='
-        'name': 'keyword.operator.js'
-      }
-      {
-        'include': '#comments'
-      }
-      {
-        'match': '[a-zA-Z_$][a-zA-Z_$0-9]*'
-        'name': 'variable.parameter.function.js'
+        'begin': '\\{'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.function.body.begin.js'
+        'end': '(?=\\})'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
       }
     ]
   'interpolated_js':
