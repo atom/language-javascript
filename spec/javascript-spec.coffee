@@ -235,14 +235,14 @@ describe "Javascript grammar", ->
         expect(tokens[1]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.assignment.js']
         expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
 
-      describe "augmented", ->
-        operators = ["+=", "-=", "*=", "/="]
-        it "tokenizes augmented assignment operators", ->
+      describe "compound", ->
+        operators = ["+=", "-=", "*=", "/=", "%=", "<<=", ">>=", ">>>=", "&=", "^=", "|="]
+        it "tokenizes compound assignment operators", ->
           for operator in operators
-            {tokens} = grammar.tokenizeLine('test ' + operator + ' 2')
-            expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
-            expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.js']
-            expect(tokens[3]).toEqual value: '2', scopes: ['source.js', 'constant.numeric.js']
+            {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
+            expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
+            expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.assignment.compound.js']
+            expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
 
   describe "constants", ->
     it "tokenizes ALL_CAPS variables as constants", ->
