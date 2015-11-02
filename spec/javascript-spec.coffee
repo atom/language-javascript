@@ -830,12 +830,7 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: '1', scopes: ['source.js', 'meta.method-call.js', 'constant.numeric.js']
       expect(tokens[7]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
 
-      {tokens} = grammar.tokenizeLine('''
-        gulp.src("./*.js")
-          .pipe(minify())
-          .pipe(gulp.dest("build"))
-      ''')
-      # gulp.src("./*.js")
+      {tokens} = grammar.tokenizeLine('gulp.src("./*.js")')
       expect(tokens[0]).toEqual value: 'gulp', scopes: ['source.js', 'variable.other.object.js']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
       expect(tokens[2]).toEqual value: 'src', scopes: ['source.js', 'meta.method-call.js', 'entity.name.function.js']
@@ -845,28 +840,28 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: '"', scopes: ['source.js', 'meta.method-call.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
       expect(tokens[7]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
 
-      # .pipe(minify())
-      expect(tokens[9]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
-      expect(tokens[10]).toEqual value: 'pipe', scopes: ['source.js', 'meta.method-call.js', 'entity.name.function.js']
-      expect(tokens[11]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.begin.js']
-      expect(tokens[12]).toEqual value: 'minify', scopes: ['source.js', 'meta.method-call.js', 'meta.function-call.js', 'entity.name.function.js']
-      expect(tokens[13]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.function-call.js', 'punctuation.definition.arguments.begin.js']
-      expect(tokens[14]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
-      expect(tokens[15]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
+      {tokens} = grammar.tokenizeLine('.pipe(minify())')
+      expect(tokens[0]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
+      expect(tokens[1]).toEqual value: 'pipe', scopes: ['source.js', 'meta.method-call.js', 'entity.name.function.js']
+      expect(tokens[2]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.begin.js']
+      expect(tokens[3]).toEqual value: 'minify', scopes: ['source.js', 'meta.method-call.js', 'meta.function-call.js', 'entity.name.function.js']
+      expect(tokens[4]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.function-call.js', 'punctuation.definition.arguments.begin.js']
+      expect(tokens[5]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
+      expect(tokens[6]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
 
-      # .pipe(gulp.dest("build"))
-      expect(tokens[17]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
-      expect(tokens[18]).toEqual value: 'pipe', scopes: ['source.js', 'meta.method-call.js', 'entity.name.function.js']
-      expect(tokens[19]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.begin.js']
-      expect(tokens[20]).toEqual value: 'gulp', scopes: ['source.js', 'meta.method-call.js', 'variable.other.object.js']
-      expect(tokens[21]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
-      expect(tokens[22]).toEqual value: 'dest', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'entity.name.function.js']
-      expect(tokens[23]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'punctuation.definition.arguments.begin.js']
-      expect(tokens[24]).toEqual value: '"', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
-      expect(tokens[25]).toEqual value: 'build', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'string.quoted.double.js']
-      expect(tokens[26]).toEqual value: '"', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
-      expect(tokens[27]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
-      expect(tokens[28]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
+      {tokens} = grammar.tokenizeLine('.pipe(gulp.dest("build"))')
+      expect(tokens[0]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
+      expect(tokens[1]).toEqual value: 'pipe', scopes: ['source.js', 'meta.method-call.js', 'entity.name.function.js']
+      expect(tokens[2]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.begin.js']
+      expect(tokens[3]).toEqual value: 'gulp', scopes: ['source.js', 'meta.method-call.js', 'variable.other.object.js']
+      expect(tokens[4]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
+      expect(tokens[5]).toEqual value: 'dest', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'entity.name.function.js']
+      expect(tokens[6]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'punctuation.definition.arguments.begin.js']
+      expect(tokens[7]).toEqual value: '"', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[8]).toEqual value: 'build', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'string.quoted.double.js']
+      expect(tokens[9]).toEqual value: '"', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
+      expect(tokens[10]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
+      expect(tokens[11]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
 
   describe "properties", ->
     it "tokenizes properties", ->
