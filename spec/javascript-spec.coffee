@@ -809,14 +809,36 @@ describe "Javascript grammar", ->
       expect(tokens[15]).toEqual value: '}', scopes: ['source.js', 'meta.function-call.js', 'meta.brace.curly.js']
       expect(tokens[16]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
 
-      {tokens} = grammar.tokenizeLine('a(b(123illegal))')
+    it "tokenizes function calls when they are arguments", ->
+      {tokens} = grammar.tokenizeLine('a(b(c))')
       expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
       expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.begin.js']
       expect(tokens[2]).toEqual value: 'b', scopes: ['source.js', 'meta.function-call.js', 'meta.function-call.js', 'entity.name.function.js']
       expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.function-call.js', 'meta.function-call.js', 'punctuation.definition.arguments.begin.js']
-      expect(tokens[4]).toEqual value: '123illegal', scopes: ['source.js', 'meta.function-call.js', 'meta.function-call.js', 'invalid.illegal.js']
+      expect(tokens[4]).toEqual value: 'c', scopes: ['source.js', 'meta.function-call.js', 'meta.function-call.js', 'variable.other.argument.js']
       expect(tokens[5]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
       expect(tokens[6]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
+
+    it "tokenizes illegal arguments", ->
+      {tokens} = grammar.tokenizeLine('a(1a)')
+      expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
+      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.begin.js']
+      expect(tokens[2]).toEqual value: '1a', scopes: ['source.js', 'meta.function-call.js', 'invalid.illegal.js']
+      expect(tokens[3]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
+
+      {tokens} = grammar.tokenizeLine('a(123a)')
+      expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
+      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.begin.js']
+      expect(tokens[2]).toEqual value: '123a', scopes: ['source.js', 'meta.function-call.js', 'invalid.illegal.js']
+      expect(tokens[3]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
+
+      {tokens} = grammar.tokenizeLine('a(1.prop)')
+      expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
+      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.begin.js']
+      expect(tokens[2]).toEqual value: '1', scopes: ['source.js', 'meta.function-call.js', 'constant.numeric.js']
+      expect(tokens[3]).toEqual value: '.', scopes: ['source.js', 'meta.function-call.js', 'meta.delimiter.property.period.js']
+      expect(tokens[4]).toEqual value: 'prop', scopes: ['source.js', 'meta.function-call.js', 'variable.other.property.js']
+      expect(tokens[5]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
 
   describe "method calls", ->
     it "tokenizes method calls", ->
