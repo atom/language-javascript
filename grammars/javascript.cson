@@ -586,6 +586,9 @@
         'name': 'support.function.js.console'
   }
   {
+    'include': '#object_variable'
+  }
+  {
     'include': '#numbers'
   }
   {
@@ -815,9 +818,6 @@
   }
   {
     'include': '#function_call'
-  }
-  {
-    'include': '#object_variable'
   }
   {
     'include': '#properties'
@@ -1108,7 +1108,7 @@
             'name': 'variable.other.object.js'
           '2':
             'name': 'invalid.illegal.js'
-        'match': '(?:(\\b[a-zA-Z_$]\\w*)|(\\d\\w+))(?=\\s*\\.)'
+        'match': '(?:(\\b[a-zA-Z_$]\\w*)|(\\d\\w*))(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
       }
     ]
   'properties':

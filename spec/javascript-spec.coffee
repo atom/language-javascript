@@ -774,10 +774,10 @@ describe "Javascript grammar", ->
   describe "object variables", ->
     it "tokenizes illegal objects", ->
       {tokens} = grammar.tokenizeLine('1.prop')
-      expect(tokens[0]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.js']
+      expect(tokens[0]).toEqual value: '1', scopes: ['source.js', 'invalid.illegal.js']
 
       {tokens} = grammar.tokenizeLine('123.prop')
-      expect(tokens[0]).toEqual value: '123', scopes: ['source.js', 'constant.numeric.js']
+      expect(tokens[0]).toEqual value: '123', scopes: ['source.js', 'invalid.illegal.js']
 
       {tokens} = grammar.tokenizeLine('123a.prop')
       expect(tokens[0]).toEqual value: '123a', scopes: ['source.js', 'invalid.illegal.js']
@@ -883,7 +883,7 @@ describe "Javascript grammar", ->
       expect(tokens[4]).toEqual value: 'b', scopes: ['source.js', 'variable.other.property.js']
 
       {tokens} = grammar.tokenizeLine('a.123illegal')
-      expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'variable.other.object.js']
+      expect(tokens[0]).toEqual value: 'a', scopes: ['source.js']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
       expect(tokens[2]).toEqual value: '123illegal', scopes: ['source.js', 'invalid.illegal.js']
 
