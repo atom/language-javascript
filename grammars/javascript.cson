@@ -1044,12 +1044,12 @@
         'include': '#properties'
       }
       {
-        'match': '(?x) \\b[a-zA-Z_$]\\w* (?= \\s*, | \\) )'
+        'match': '\\b[a-zA-Z_$]\\w*(?=\\s*,|\\))'
         'name': 'variable.other.argument.js'
       }
       {
         'comment': 'e.g. 123arg'
-        'match': '(?x) \\b\\d\\w+ (?= \\s* (?: , | \\) ) )'
+        'match': '\\b\\d\\w+(?=\\s*(?:,|\\)))'
         'name': 'invalid.illegal.js'
       }
     ]
@@ -1057,7 +1057,7 @@
     'patterns': [
       {
         'comment': '.methodCall(arg1, "arg2", [...])'
-        'begin': '(?x) (\\.) (\\w+) \\s* (\\()'
+        'begin': '(\\.)(\\w+)\\s*(\\()'
         'beginCaptures':
           '1':
             'name': 'meta.delimiter.method.period.js'
@@ -1081,7 +1081,7 @@
     'patterns': [
       {
         'comment': 'functionCall(arg1, "arg2", [...])'
-        'begin': '(?x) \\b(\\w+) \\s* (\\()'
+        'begin': '\\b(\\w+)\\s*(\\()'
         'beginCaptures':
           '1':
             'name': 'entity.name.function.js'
@@ -1124,7 +1124,7 @@
             'name': 'constant.other.property.js'
           '4':
             'name': 'variable.other.property.js'
-        'match': '(?x) (\\.) \\s* (?: (\\b\\d\\w*) | (\\b[A-Z][A-Z0-9_]*) | (\\w*) )'
+        'match': '(\\.)\\s*(?:(\\b\\d\\w*)|(\\b[A-Z][A-Z0-9_]*)|(\\w*))'
       }
     ]
   'interpolated_js':
