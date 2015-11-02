@@ -1103,18 +1103,19 @@
     'patterns': [
       {
         'comment': '`obj` in `obj.prop`, `obj.methodCall()`'
+        'match': '(?:(\\b[a-zA-Z_$]\\w*)|(\\d\\w*))(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
         'captures':
           '1':
             'name': 'variable.other.object.js'
           '2':
             'name': 'invalid.illegal.js'
-        'match': '(?:(\\b[a-zA-Z_$]\\w*)|(\\d\\w*))(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
       }
     ]
   'properties':
     'patterns': [
       {
         'comment': '`prop` in `obj.prop`, `func().prop`'
+        'match': '(\\.)\\s*(?:(\\b\\d\\w*)|(\\b[A-Z][A-Z0-9_]*)|(\\w*))'
         'captures':
           '1':
             'name': 'meta.delimiter.property.period.js'
@@ -1124,7 +1125,6 @@
             'name': 'constant.other.property.js'
           '4':
             'name': 'variable.other.property.js'
-        'match': '(\\.)\\s*(?:(\\b\\d\\w*)|(\\b[A-Z][A-Z0-9_]*)|(\\w*))'
       }
     ]
   'interpolated_js':
