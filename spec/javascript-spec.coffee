@@ -835,7 +835,7 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('a(1.prop)')
       expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
       expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.begin.js']
-      expect(tokens[2]).toEqual value: '1', scopes: ['source.js', 'meta.function-call.js', 'constant.numeric.js']
+      expect(tokens[2]).toEqual value: '1', scopes: ['source.js', 'meta.function-call.js', 'invalid.illegal.js']
       expect(tokens[3]).toEqual value: '.', scopes: ['source.js', 'meta.function-call.js', 'meta.delimiter.property.period.js']
       expect(tokens[4]).toEqual value: 'prop', scopes: ['source.js', 'meta.function-call.js', 'variable.other.property.js']
       expect(tokens[5]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']

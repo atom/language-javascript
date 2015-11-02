@@ -1014,13 +1014,13 @@
         'include': '#function_call'
       }
       {
+        'include': '#object_variable'
+      }
+      {
         'include': '#numbers'
       }
       {
         'include': '#strings'
-      }
-      {
-        'include': '#object_variable'
       }
       {
         'match': '\\[|\\]'
