@@ -1108,11 +1108,7 @@
             'name': 'variable.other.object.js'
           '2':
             'name': 'invalid.illegal.js'
-        'match': '(?x)
-          (?: (\\b[a-zA-Z_$]\\w*) (?=\\s*\\.) )
-          |
-          (?: (\\b\\d\\w+) (?=\\s*\\.) )
-        '
+        'match': '(?:(\\b[a-zA-Z_$]\\w*)|(\\d\\w+))(?=\\s*\\.)'
       }
     ]
   'properties':
