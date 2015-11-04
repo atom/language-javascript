@@ -879,15 +879,15 @@
         'name': 'keyword.operator.bitwise.js'
       }
       {
-        'match': '\\?|\\:'
+        'match': '\\?|:'
         'name': 'keyword.operator.js'
       }
       {
-        'match': '\\='
+        'match': '='
         'name': 'keyword.operator.assignment.js'
       }
       {
-        'match': '\\-\\-'
+        'match': '--'
         'name': 'keyword.operator.decrement.js'
       }
       {
@@ -895,7 +895,7 @@
         'name': 'keyword.operator.increment.js'
       }
       {
-        'match': '%|\\*|/|\\-|\\+'
+        'match': '%|\\*|/|-|\\+'
         'name': 'keyword.operator.js'
       }
     ]
