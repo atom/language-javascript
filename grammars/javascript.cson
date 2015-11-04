@@ -6,6 +6,7 @@
   'es'
   'es6'
   'jsm'
+  'pac'
   'pjs'
   'xsjs'
   'xsjslib'
@@ -116,7 +117,20 @@
     'name': 'meta.import.js'
   }
   {
-    'comment': 'ES6 export'
+    'comment': 'ES6 export: `export default (variable|class|function, etc.)`'
+    'match': '(?x) \\b(export)\\b \\s* \\b(default)\\b (?:\\s*) \\b((?!\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b)[a-zA-Z_$][a-zA-Z_$0-9]*)?\\b'
+    'captures':
+      '0':
+        'name': 'meta.export.js'
+      '1':
+        'name': 'keyword.control.js'
+      '2':
+        'name': 'variable.language.default.js'
+      '3':
+        'name': 'variable.other.module.js'
+  }
+  {
+    'comment': 'ES6 export, re-export: `export {member as alias, [...]} [from ...]`'
     'begin': '(?<!\\.)\\b(export)(?!\\s*:)\\b'
     'beginCaptures':
       '1':
@@ -253,7 +267,7 @@
       '2':
         'name': 'support.constant.js'
       '3':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
     'comment': 'match stuff like: Sound.prototype = { … } when extending an object'
     'match': '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\s*(=)\\s*'
     'name': 'meta.class.js'
@@ -268,7 +282,7 @@
       '3':
         'name': 'entity.name.function.js'
       '4':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       '5':
         'name': 'storage.modifier.js'
       '6':
@@ -298,7 +312,7 @@
       '3':
         'name': 'entity.name.function.js'
       '4':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
     'comment': 'match stuff like: Sound.prototype.play = myfunc'
     'match': '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*'
     'name': 'meta.function.js'
@@ -311,7 +325,7 @@
       '2':
         'name': 'entity.name.function.js'
       '3':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       '4':
         'name': 'storage.modifier.js'
       '5':
@@ -340,7 +354,7 @@
       '1':
         'name': 'entity.name.function.js'
       '2':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       '3':
         'name': 'storage.modifier.js'
       '4':
@@ -394,7 +408,7 @@
       '1':
         'name': 'entity.name.function.js'
       '2':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       '3':
         'name': 'storage.modifier.js'
       '4':
@@ -437,7 +451,7 @@
       '8':
         'name': 'punctuation.definition.string.end.js'
       '9':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       '10':
         'name': 'storage.modifier.js'
       '11':
@@ -524,7 +538,7 @@
       '1':
         'name': 'entity.name.function.js'
       '2':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       '3':
         'name': 'punctuation.definition.parameters.begin.js'
     'end': '(\\))(\\s*=>)'
@@ -549,7 +563,7 @@
       '2':
         'name': 'entity.name.function.js'
       '3':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       '4':
         'name': 'punctuation.definition.parameters.begin.js'
     'end': '(\\))(\\s*=>)'
@@ -623,18 +637,20 @@
     'beginCaptures':
       '1':
         'name': 'storage.modifier.js'
-    'end': '(=|\\bof\\b|\\bin\\b)|(;)|(?<!,)\\n'
+    'end': '(\\bof\\b|\\bin\\b)|(;)|(=)|(?<!,)\\n'
     'endCaptures':
       '1':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.$1.js'
       '2':
         'name': 'punctuation.terminator.statement.js'
+      '3':
+        'name': 'keyword.operator.assignment.js'
     'patterns': [
       {
         'match': '([$_a-zA-Z][$_a-zA-Z0-9]*)\\s*(:)\\s*([$_a-zA-Z][$_a-zA-Z0-9]*)?'
         'captures':
           '2':
-            'name': 'keyword.operator.js'
+            'name': 'keyword.operator.assignment.js'
           '3':
             'name': 'constant.other.js'
       }
@@ -692,7 +708,7 @@
   }
   {
     'match': '(?<!\\.)\\b(delete|in|of|instanceof|new|typeof|void)(?!\\s*:)\\b'
-    'name': 'keyword.operator.js'
+    'name': 'keyword.operator.$1.js'
   }
   {
     'match': '(?<!\\.)\\b(true|false)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(true|false)(?=\\s*:)'
@@ -871,8 +887,43 @@
   'operators':
     'patterns': [
       {
-        'match': '!=|!==|<=|>=|<<=|>>=|>>>=|\\*=|(?<!\\()/=|%=|\\+=|\\-=|&=|\\^=|!|%|&|\\*|/|\\-\\-|\\-|\\+\\+|\\+|~|===|==|=|<>|<|>|!|&&|\\|\\||\\?|\\:|\\^'
-        'comment': 'match 2-character operator first'
+        'match': '%=|\\+=|-=|\\*=|(?<!\\()/='
+        'name': 'keyword.operator.assignment.compound.js'
+      }
+      {
+        'match': '&=|\\^=|<<=|>>=|>>>=|\\|='
+        'name': 'keyword.operator.assignment.compound.bitwise.js'
+      }
+      {
+        'match': '!==|!=|<=|>=|===|==|<|>'
+        'name': 'keyword.operator.comparison.js'
+      }
+      {
+        'match': '&&|!|\\|\\|'
+        'name': 'keyword.operator.logical.js'
+      }
+      {
+        'match': '&|\\||\\^|~'
+        'name': 'keyword.operator.bitwise.js'
+      }
+      {
+        'match': '\\?|:'
+        'name': 'keyword.operator.js'
+      }
+      {
+        'match': '='
+        'name': 'keyword.operator.assignment.js'
+      }
+      {
+        'match': '--'
+        'name': 'keyword.operator.decrement.js'
+      }
+      {
+        'match': '\\+\\+'
+        'name': 'keyword.operator.increment.js'
+      }
+      {
+        'match': '%|\\*|/|-|\\+'
         'name': 'keyword.operator.js'
       }
     ]
@@ -995,7 +1046,7 @@
       }
       {
         'match': '='
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.assignment.js'
       }
       {
         'include': '#comments'
