@@ -859,7 +859,7 @@
   'operators':
     'patterns': [
       {
-        'match': '%=|\\+=|\\-=|\\*=|(?<!\\()/='
+        'match': '%=|\\+=|-=|\\*=|(?<!\\()/='
         'name': 'keyword.operator.assignment.compound.js'
       }
       {
