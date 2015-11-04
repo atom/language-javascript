@@ -196,7 +196,7 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: '5E+5', scopes: ['source.js', 'constant.numeric.js']
 
   describe "operators", ->
-    it "tokenizes operators", ->
+    it "tokenizes them", ->
       operators = ["delete", "in", "of", "instanceof", "new", "typeof", "void"]
 
       for operator in operators
@@ -215,7 +215,7 @@ describe "Javascript grammar", ->
         expect(tokens[1]).toEqual value: '--', scopes: ['source.js', 'keyword.operator.decrement.js']
 
     describe "conditional ternary", ->
-      it "tokenizes conditional ternary", ->
+      it "tokenizes them", ->
         {tokens} = grammar.tokenizeLine('test ? expr1 : expr2')
         expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
         expect(tokens[1]).toEqual value: '?', scopes: ['source.js', 'keyword.operator.js']
@@ -226,7 +226,7 @@ describe "Javascript grammar", ->
     describe "logical", ->
       operators = ["&&", "||", "!"]
 
-      it "tokenizes logical operators", ->
+      it "tokenizes them", ->
         for operator in operators
           {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
           expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
@@ -236,7 +236,7 @@ describe "Javascript grammar", ->
     describe "comparison", ->
       operators = ["<=", ">=", "!=", "!==", "===", "==", "<", ">" ]
 
-      it "tokenizes comparison operators", ->
+      it "tokenizes them", ->
         for operator in operators
           {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
           expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
@@ -249,7 +249,7 @@ describe "Javascript grammar", ->
         expect(tokens[0]).toEqual value: '~', scopes: ['source.js', 'keyword.operator.bitwise.js']
         expect(tokens[1]).toEqual value: 'a', scopes: ['source.js']
 
-      it "tokenizes bitwise operators", ->
+      it "tokenizes them", ->
         operators = ["|", "^", "&"]
 
         for operator in operators
@@ -261,7 +261,7 @@ describe "Javascript grammar", ->
     describe "arithmetic", ->
       operators = ["*", "/", "-", "%", "+"]
 
-      it "tokenizes arithmetic operators", ->
+      it "tokenizes them", ->
         for operator in operators
           {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
           expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
@@ -283,7 +283,7 @@ describe "Javascript grammar", ->
         expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
 
       describe "compound", ->
-        it "tokenizes compound assignment operators", ->
+        it "tokenizes them", ->
           operators = ["+=", "-=", "*=", "/=", "%="]
           for operator in operators
             {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
@@ -291,13 +291,14 @@ describe "Javascript grammar", ->
             expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.assignment.compound.js']
             expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
 
-        it "tokenizes bitwise compound assignment operators", ->
-          operators = ["<<=", ">>=", ">>>=", "&=", "^=", "|="]
-          for operator in operators
-            {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
-            expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
-            expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.assignment.compound.bitwise.js']
-            expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
+        describe "bitwise", ->
+          it "tokenizes them", ->
+            operators = ["<<=", ">>=", ">>>=", "&=", "^=", "|="]
+            for operator in operators
+              {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
+              expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
+              expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.assignment.compound.bitwise.js']
+              expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
 
   describe "constants", ->
     it "tokenizes ALL_CAPS variables as constants", ->
