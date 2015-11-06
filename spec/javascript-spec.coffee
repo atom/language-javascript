@@ -189,11 +189,21 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: '0O1411', scopes: ['source.js', 'constant.numeric.js']
 
     it "tokenizes decimals", ->
+      {tokens} = grammar.tokenizeLine('1234')
+      expect(tokens[0]).toEqual value: '1234', scopes: ['source.js', 'constant.numeric.js']
+
       {tokens} = grammar.tokenizeLine('5e-10')
       expect(tokens[0]).toEqual value: '5e-10', scopes: ['source.js', 'constant.numeric.js']
 
       {tokens} = grammar.tokenizeLine('5E+5')
       expect(tokens[0]).toEqual value: '5E+5', scopes: ['source.js', 'constant.numeric.js']
+
+    it "does not tokenize numbers that are part of a variable", ->
+      {tokens} = grammar.tokenizeLine('hi$1')
+      expect(tokens[0]).toEqual value: 'hi$1', scopes: ['source.js']
+
+      {tokens} = grammar.tokenizeLine('hi_1')
+      expect(tokens[0]).toEqual value: 'hi_1', scopes: ['source.js']
 
   describe "operators", ->
     it "tokenizes them", ->
