@@ -189,11 +189,21 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: '0O1411', scopes: ['source.js', 'constant.numeric.js']
 
     it "tokenizes decimals", ->
+      {tokens} = grammar.tokenizeLine('1234')
+      expect(tokens[0]).toEqual value: '1234', scopes: ['source.js', 'constant.numeric.js']
+
       {tokens} = grammar.tokenizeLine('5e-10')
       expect(tokens[0]).toEqual value: '5e-10', scopes: ['source.js', 'constant.numeric.js']
 
       {tokens} = grammar.tokenizeLine('5E+5')
       expect(tokens[0]).toEqual value: '5E+5', scopes: ['source.js', 'constant.numeric.js']
+
+    it "does not tokenize numbers that are part of a variable", ->
+      {tokens} = grammar.tokenizeLine('hi$1')
+      expect(tokens[0]).toEqual value: 'hi$1', scopes: ['source.js']
+
+      {tokens} = grammar.tokenizeLine('hi_1')
+      expect(tokens[0]).toEqual value: 'hi_1', scopes: ['source.js']
 
   describe "operators", ->
     it "tokenizes them", ->
@@ -450,6 +460,21 @@ describe "Javascript grammar", ->
       expect(tokens[3]).toEqual value: 'name', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source']
       expect(tokens[4]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
       expect(tokens[5]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.end.js']
+
+      {tokens} = grammar.tokenizeLine('`hey ${() => {return hi;}}`')
+      expect(tokens[0]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[1]).toEqual value: 'hey ', scopes: ['source.js', 'string.quoted.template.js']
+      expect(tokens[2]).toEqual value: '${', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
+      expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'meta.function.arrow.js', 'punctuation.definition.parameters.begin.js']
+      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'meta.function.arrow.js', 'punctuation.definition.parameters.end.js']
+      expect(tokens[5]).toEqual value: ' =>', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'meta.function.arrow.js', 'storage.type.arrow.js']
+      expect(tokens[7]).toEqual value: '{', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'meta.brace.curly.js']
+      expect(tokens[8]).toEqual value: 'return', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'keyword.control.js']
+      expect(tokens[9]).toEqual value: ' hi', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source']
+      expect(tokens[10]).toEqual value: ';', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.terminator.statement.js']
+      expect(tokens[11]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'meta.brace.curly.js']
+      expect(tokens[12]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
+      expect(tokens[13]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.end.js']
 
   describe "ES6 class", ->
     it "tokenizes class", ->

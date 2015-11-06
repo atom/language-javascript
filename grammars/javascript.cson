@@ -669,7 +669,7 @@
         'name': 'meta.brace.round.js'
       }
       {
-        'match': '\\{|\\}'
+        'match': '{|}'
         'name': 'meta.brace.curly.js'
       }
       {
@@ -828,10 +828,10 @@
       '2':
         'name': 'punctuation.section.scope.end.js'
     'comment': 'Allows the special return snippet to fire.'
-    'match': '(\\{)(\\})'
+    'match': '({)(})'
   }
   {
-    'match': '\\{|\\}'
+    'match': '{|}'
     'name': 'meta.brace.curly.js'
   }
   {
@@ -851,7 +851,7 @@
   'numbers':
     'patterns': [
       {
-        'match': '\\b((0(x|X)[0-9a-fA-F]+)|(0(b|B)[01]+)|(0(o|O)[0-7]+)|([0-9]+(\\.[0-9]+)?)((e|E)[+-]?[0-9]+)?)\\b'
+        'match': '\\b(?<!\\$|_)((0(x|X)[0-9a-fA-F]+)|(0(b|B)[01]+)|(0(o|O)[0-7]+)|([0-9]+(\\.[0-9]+)?)((e|E)[+-]?[0-9]+)?)\\b'
         'name': 'constant.numeric.js'
       }
     ]
@@ -968,14 +968,16 @@
       {
         'name': 'meta.method.js'
         'comment': 'match regular function like: function myFunc(arg) { … }'
-
         'begin': '\\b((?!(?:break|case|catch|continue|do|else|finally|for|function|if|export|import|package|return|switch|throw|try|while|with)[\\s\\(])(?:[a-zA-Z_$][a-zA-Z_$0-9]*))\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*\\{)'
         'beginCaptures':
           '1':
             'name': 'entity.name.function.js'
           '2':
             'name': 'punctuation.definition.parameters.begin.js'
-
+        'end': '(\\))'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.parameters.end.js'
         'patterns': [
           {
             'include': '#function-params'
@@ -984,11 +986,6 @@
             'include': '#strings'
           }
         ]
-
-        'end': '(\\))'
-        'endCaptures':
-          '1':
-            'name': 'punctuation.definition.parameters.end.js'
       }
     ]
   'function-params':
@@ -1008,7 +1005,7 @@
         'name': 'meta.brace.square.js'
       }
       {
-        'match': '\\{|\\}'
+        'match': '{|}'
         'name': 'meta.brace.curly.js'
       }
       {
@@ -1037,6 +1034,21 @@
         'end': '\\}'
         'name': 'source.js.embedded.source'
         'patterns': [
+          {
+            'begin': '{'
+            'beginCaptures':
+              '0':
+                'name': 'meta.brace.curly.js'
+            'end': '}'
+            'endCaptures':
+              '0':
+                'name': 'meta.brace.curly.js'
+            'patterns': [
+              {
+                'include': '$self'
+              }
+            ]
+          }
           {
             'include': '$self'
           }
