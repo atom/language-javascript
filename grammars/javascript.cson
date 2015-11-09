@@ -23,7 +23,7 @@ patterns: [
     name: 'meta.import.js'
     patterns: [
       {
-        # { member1 , member2 as alias2 , [...] }
+        # `{ member1 , member2 as alias2 , [...] }`
         begin: '\\{'
         beginCaptures:
           0: name: 'punctuation.definition.modules.begin.js'
@@ -32,7 +32,7 @@ patterns: [
           0: name: 'punctuation.definition.modules.end.js'
         patterns: [
           {
-            # (default|name) as alias
+            # `(default|name) as alias`
             match: '(?x)
               (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
               \\s*
@@ -58,7 +58,7 @@ patterns: [
         ]
       }
       {
-        # (default|*|name) as alias
+        # `(default|*|name) as alias`
         match: '(?x)
           (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
           \\s*
@@ -132,7 +132,7 @@ patterns: [
           0: name: 'punctuation.definition.modules.end.js'
         patterns: [
           {
-            # (default|name) as alias
+            # `(default|name) as alias`
             match: '(?x)
               (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
               \\s*
@@ -159,7 +159,7 @@ patterns: [
         ]
       }
       {
-        # { member1 , member2 as alias2 , [...] }
+        # `{ member1 , member2 as alias2 , [...] }`
         begin: '(?![a-zA-Z_$0-9])\\{'
         beginCaptures:
           0: name: 'punctuation.definition.modules.begin.js'
@@ -168,7 +168,7 @@ patterns: [
           0: name: 'punctuation.definition.modules.end.js'
         patterns: [
           {
-            # name as (default|alias)
+            # `name as (default|alias)`
             match: '(?x)
               (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
               \\s*
@@ -226,7 +226,7 @@ patterns: [
     ]
   }
   {
-    # Match stuff like: Sound.prototype = { … } when extending an object
+    # e.g. `Sound.prototype = { … }` when extending an object
     match: '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\s*(=)\\s*'
     captures:
       1: name: 'support.class.js'
@@ -235,7 +235,7 @@ patterns: [
     name: 'meta.class.js'
   }
   {
-    # Match stuff like: Sound.prototype.play = function() { … }
+    # e.g. `Sound.prototype.play = function() { … }`
     begin: '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)(\\()'
     beginCaptures:
       1: name: 'support.class.js'
@@ -257,7 +257,7 @@ patterns: [
     ]
   }
   {
-    # Match stuff like: Sound.prototype.play = myfunc
+    # e.g. `Sound.prototype.play = myfunc`
     match: '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*'
     captures:
       1: name: 'support.class.js'
@@ -267,7 +267,7 @@ patterns: [
     name: 'meta.function.js'
   }
   {
-    # Match stuff like: Sound.play = function() { … }
+    # e.g. `Sound.play = function() { … }`
     begin: '([a-zA-Z_?.$][\\w?.$]*)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
     beginCaptures:
       1: name: 'support.class.js'
@@ -289,7 +289,7 @@ patterns: [
     ]
   }
   {
-    # Match stuff like: play = function() { … }
+    # e.g. `play = function() { … }`
     begin: '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
     beginCaptures:
       1: name: 'entity.name.function.js'
@@ -310,7 +310,7 @@ patterns: [
     ]
   }
   {
-    # Match regular function like: function myFunc(arg) { … }
+    # Regular function: `function myFunc(arg) { … }`
     begin: '\\b(?:(async)(?:\\s+))?(function\\*?)\\s*((\\*)|(?:(?:\\s+)(\\*?[a-zA-Z_$]\\w*)))?\\s*(\\()'
     beginCaptures:
       1: name: 'storage.modifier.js'
@@ -329,7 +329,7 @@ patterns: [
     ]
   }
   {
-    # Match stuff like: foobar: function() { … }
+    # e.g. `foobar: function() { … }`
     begin: '\\b([a-zA-Z_?.$][\\w?.$]*)\\s*(:)\\s*\\b(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
     beginCaptures:
       1: name: 'entity.name.function.js'
@@ -350,7 +350,7 @@ patterns: [
     ]
   }
   {
-    # Attempt to match "foo": function
+    # e.g. `"foo": function`
     begin: '(?:((\')([^\']*?)(\'))|((")([^"]*?)(")))\\s*(:)\\s*\\b(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
     beginCaptures:
       1: name: 'string.quoted.single.js'
@@ -421,7 +421,7 @@ patterns: [
     ]
   }
   {
-    # Match stuff like: play = (a,b) => { … }
+    # e.g. `play = (a,b) => { … }`
     begin: '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
     beginCaptures:
       1: name: 'entity.name.function.js'
@@ -439,7 +439,7 @@ patterns: [
     ]
   }
   {
-    # Match stuff like: Sound.play = (a,b) => { … }
+    # e.g. `Sound.play = (a,b) => { … }`
     begin: '([a-zA-Z_?$]*)\\.([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
     beginCaptures:
       1: name: 'support.class.js'
@@ -807,7 +807,7 @@ repository:
   methods:
     patterns: [
       {
-        # Match regular function like: function myFunc(arg) { … }
+        # Method definition: `foo: (arg) { … }`
         begin: '\\b((?!(?:break|case|catch|continue|do|else|finally|for|function|if|export|import|package|return|switch|throw|try|while|with)[\\s\\(])(?:[a-zA-Z_$][a-zA-Z_$0-9]*))\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*\\{)'
         beginCaptures:
           1: name: 'entity.name.function.js'
