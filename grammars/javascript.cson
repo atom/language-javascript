@@ -299,7 +299,7 @@
     'name': 'meta.function.prototype.js'
     'patterns': [
       {
-        'include': '#function-params'
+        'include': '#function_params'
       }
     ]
   }
@@ -344,7 +344,7 @@
     'name': 'meta.function.js'
     'patterns': [
       {
-        'include': '#function-params'
+        'include': '#function_params'
       }
     ]
   }
@@ -373,7 +373,7 @@
     'name': 'meta.function.js'
     'patterns': [
       {
-        'include': '#function-params'
+        'include': '#function_params'
       }
     ]
   }
@@ -398,7 +398,7 @@
     'name': 'meta.function.js'
     'patterns': [
       {
-        'include': '#function-params'
+        'include': '#function_params'
       }
     ]
   }
@@ -427,7 +427,7 @@
     'name': 'meta.function.json.js'
     'patterns': [
       {
-        'include': '#function-params'
+        'include': '#function_params'
       }
     ]
   }
@@ -470,7 +470,7 @@
     'name': 'meta.function.json.js'
     'patterns': [
       {
-        'include': '#function-params'
+        'include': '#function_params'
       }
     ]
   }
@@ -487,7 +487,7 @@
         'name': 'punctuation.definition.parameters.end.js'
     'patterns': [
       {
-        'include': '#function-params'
+        'include': '#function_params'
       }
     ]
   }
@@ -525,7 +525,7 @@
         'name': 'storage.type.arrow.js'
     'patterns': [
       {
-        'include': '#function-params'
+        'include': '#function_params'
       }
     ]
   }
@@ -548,7 +548,7 @@
         'name': 'storage.type.arrow.js'
     'patterns': [
       {
-        'include': '#function-params'
+        'include': '#function_params'
       }
     ]
   }
@@ -573,7 +573,7 @@
         'name': 'storage.type.arrow.js'
     'patterns': [
       {
-        'include': '#function-params'
+        'include': '#function_params'
       }
     ]
   }
@@ -980,7 +980,7 @@
             'name': 'punctuation.definition.parameters.end.js'
         'patterns': [
           {
-            'include': '#function-params'
+            'include': '#function_params'
           }
           {
             'include': '#strings'
@@ -988,7 +988,7 @@
         ]
       }
     ]
-  'function-params':
+  'function_params':
     'patterns': [
       {
         'include': '#numbers'

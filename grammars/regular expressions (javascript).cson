@@ -7,7 +7,7 @@
   }
 ]
 'repository':
-  'regex-character-class':
+  'regex_character_class':
     'patterns': [
       {
         'match': '\\\\[wWsSdD]|\\.'
@@ -111,11 +111,11 @@
             'name': 'constant.other.character-class.range.regexp'
           }
           {
-            'include': '#regex-character-class'
+            'include': '#regex_character_class'
           }
         ]
       }
       {
-        'include': '#regex-character-class'
+        'include': '#regex_character_class'
       }
     ]
