@@ -15,13 +15,13 @@ firstLineMatch: '^#!.*\\b(node|iojs|JavaScript)'
 name: 'JavaScript'
 patterns: [
   {
-    comment: 'ES6 import'
+    # ES6 import
     begin: '(?<!\\.)\\b(import)(?!\\s*:)\\b'
     beginCaptures:
       1: name: 'keyword.control.js'
     patterns: [
       {
-        comment: '{ member1 , member2 as alias2 , [...] }'
+        # { member1 , member2 as alias2 , [...] }
         begin: '\\{'
         beginCaptures:
           0: name: 'punctuation.definition.modules.begin.js'
@@ -30,7 +30,7 @@ patterns: [
           0: name: 'punctuation.definition.modules.end.js'
         patterns: [
           {
-            comment: '(default|name) as alias'
+            # (default|name) as alias
             captures:
               1: name: 'variable.language.default.js'
               2: name: 'variable.other.module.js'
@@ -56,7 +56,7 @@ patterns: [
         ]
       }
       {
-        comment: '(default|*|name) as alias'
+        # (default|*|name) as alias
         captures:
           1: name: 'variable.language.default.js'
           2: name: 'variable.language.import-all.js'
@@ -103,7 +103,7 @@ patterns: [
     name: 'meta.import.js'
   }
   {
-    comment: 'ES6 export: `export default (variable|class|function, etc.)`'
+    # ES6 export: `export default (variable|class|function, etc.)`
     match: '(?x) \\b(export)\\b \\s* \\b(default)\\b (?:\\s*) \\b((?!\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b)[a-zA-Z_$][a-zA-Z_$0-9]*)?\\b'
     captures:
       0: name: 'meta.export.js'
@@ -112,7 +112,7 @@ patterns: [
       3: name: 'variable.other.module.js'
   }
   {
-    comment: 'ES6 export, re-export: `export {member as alias, [...]} [from ...]`'
+    # ES6 export, re-export: `export {member as alias, [...]} [from ...]`
     begin: '(?<!\\.)\\b(export)(?!\\s*:)\\b'
     beginCaptures:
       1: name: 'keyword.control.js'
@@ -121,7 +121,7 @@ patterns: [
         include: '#numbers'
       }
       {
-        comment: '`{ member1 , member2 as alias2 , [...] }` inside re-export'
+        # `{ member1 , member2 as alias2 , [...] }` inside re-export
         begin: '\\{(?=.*\\bfrom\\b)'
         beginCaptures:
           0: name: 'punctuation.definition.modules.begin.js'
@@ -130,7 +130,7 @@ patterns: [
           0: name: 'punctuation.definition.modules.end.js'
         patterns: [
           {
-            comment: '(default|name) as alias'
+            # (default|name) as alias
             captures:
               1: name: 'variable.language.default.js'
               2: name: 'variable.other.module.js'
@@ -157,7 +157,7 @@ patterns: [
         ]
       }
       {
-        comment: '{ member1 , member2 as alias2 , [...] }'
+        # { member1 , member2 as alias2 , [...] }
         begin: '(?![a-zA-Z_$0-9])\\{'
         beginCaptures:
           0: name: 'punctuation.definition.modules.begin.js'
@@ -166,7 +166,7 @@ patterns: [
           0: name: 'punctuation.definition.modules.end.js'
         patterns: [
           {
-            comment: 'name as (default|alias)'
+            # name as (default|alias)
             captures:
               1: name: 'invalid.illegal.js'
               2: name: 'variable.other.module.js'
@@ -230,7 +230,7 @@ patterns: [
       1: name: 'support.class.js'
       2: name: 'support.constant.js'
       3: name: 'keyword.operator.assignment.js'
-    comment: 'match stuff like: Sound.prototype = { … } when extending an object'
+    # Match stuff like: Sound.prototype = { … } when extending an object
     match: '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\s*(=)\\s*'
     name: 'meta.class.js'
   }
@@ -245,7 +245,7 @@ patterns: [
       6: name: 'storage.type.function.js'
       7: name: 'storage.type.function.js'
       8: name: 'punctuation.definition.parameters.begin.js'
-    comment: 'match stuff like: Sound.prototype.play = function() { … }'
+    # Match stuff like: Sound.prototype.play = function() { … }
     end: '(\\))'
     endCaptures:
       1: name: 'punctuation.definition.parameters.end.js'
@@ -262,7 +262,7 @@ patterns: [
       2: name: 'support.constant.js'
       3: name: 'entity.name.function.js'
       4: name: 'keyword.operator.assignment.js'
-    comment: 'match stuff like: Sound.prototype.play = myfunc'
+    # Match stuff like: Sound.prototype.play = myfunc
     match: '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*'
     name: 'meta.function.js'
   }
@@ -277,7 +277,7 @@ patterns: [
       6: name: 'storage.type.function.js'
       7: name: 'entity.name.function.js'
       8: name: 'punctuation.definition.parameters.begin.js'
-    comment: 'match stuff like: Sound.play = function() { … }'
+    # Match stuff like: Sound.play = function() { … }
     end: '(\\))'
     endCaptures:
       1: name: 'punctuation.definition.parameters.end.js'
@@ -298,7 +298,7 @@ patterns: [
       5: name: 'storage.type.function.js'
       6: name: 'entity.name.function.js'
       7: name: 'punctuation.definition.parameters.begin.js'
-    comment: 'match stuff like: play = function() { … }'
+    # Match stuff like: play = function() { … }
     end: '(\\))'
     endCaptures:
       1: name: 'punctuation.definition.parameters.end.js'
@@ -317,7 +317,7 @@ patterns: [
       4: name: 'storage.type.function.js'
       5: name: 'entity.name.function.js'
       6: name: 'punctuation.definition.parameters.begin.js'
-    comment: 'match regular function like: function myFunc(arg) { … }'
+    # Match regular function like: function myFunc(arg) { … }
     end: '(\\))'
     endCaptures:
       1: name: 'punctuation.definition.parameters.end.js'
@@ -338,7 +338,7 @@ patterns: [
       5: name: 'storage.type.function.js'
       6: name: 'entity.name.function.js'
       7: name: 'punctuation.definition.parameters.begin.js'
-    comment: 'match stuff like: foobar: function() { … }'
+    # Match stuff like: foobar: function() { … }
     end: '(\\))'
     endCaptures:
       1: name: 'punctuation.definition.parameters.end.js'
@@ -366,7 +366,7 @@ patterns: [
       12: name: 'storage.type.function.js'
       13: name: 'entity.name.function.js'
       14: name: 'punctuation.definition.parameters.begin.js'
-    comment: 'Attempt to match "foo": function'
+    # Attempt to match "foo": function
     end: '(\\))'
     endCaptures:
       1: name: 'punctuation.definition.parameters.end.js'
@@ -421,7 +421,7 @@ patterns: [
     ]
   }
   {
-    comment: 'match stuff like: play = (a,b) => { … }'
+    # Match stuff like: play = (a,b) => { … }
     name: 'meta.function.arrow.js'
     begin: '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
     beginCaptures:
@@ -439,7 +439,7 @@ patterns: [
     ]
   }
   {
-    comment: 'match stuff like: Sound.play = (a,b) => { … }'
+    # Match stuff like: Sound.play = (a,b) => { … }
     name: 'meta.function.arrow.js'
     begin: '([a-zA-Z_?$]*)\\.([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
     beginCaptures:
@@ -674,7 +674,7 @@ patterns: [
     captures:
       1: name: 'punctuation.section.scope.begin.js'
       2: name: 'punctuation.section.scope.end.js'
-    comment: 'Allows the special return snippet to fire.'
+    # Allows the special return snippet to fire.
     match: '({)(})'
   }
   {
@@ -808,7 +808,7 @@ repository:
     patterns: [
       {
         name: 'meta.method.js'
-        comment: 'match regular function like: function myFunc(arg) { … }'
+        # Match regular function like: function myFunc(arg) { … }
         begin: '\\b((?!(?:break|case|catch|continue|do|else|finally|for|function|if|export|import|package|return|switch|throw|try|while|with)[\\s\\(])(?:[a-zA-Z_$][a-zA-Z_$0-9]*))\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*\\{)'
         beginCaptures:
           1: name: 'entity.name.function.js'
