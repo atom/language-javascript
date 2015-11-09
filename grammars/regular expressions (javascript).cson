@@ -47,16 +47,12 @@ repository:
       {
         begin: '(\\()((\\?=)|(\\?!))'
         beginCaptures:
-          1:
-            name: 'punctuation.definition.group.regexp'
-          3:
-            name: 'meta.assertion.look-ahead.regexp'
-          4:
-            name: 'meta.assertion.negative-look-ahead.regexp'
+          1: name: 'punctuation.definition.group.regexp'
+          3: name: 'meta.assertion.look-ahead.regexp'
+          4: name: 'meta.assertion.negative-look-ahead.regexp'
         end: '(\\))'
         endCaptures:
-          1:
-            name: 'punctuation.definition.group.regexp'
+          1: name: 'punctuation.definition.group.regexp'
         name: 'meta.group.assertion.regexp'
         patterns: [
           {
@@ -67,12 +63,10 @@ repository:
       {
         begin: '\\((\\?:)?'
         beginCaptures:
-          0:
-            name: 'punctuation.definition.group.regexp'
+          0: name: 'punctuation.definition.group.regexp'
         end: '\\)'
         endCaptures:
-          0:
-            name: 'punctuation.definition.group.regexp'
+          0: name: 'punctuation.definition.group.regexp'
         name: 'meta.group.regexp'
         patterns: [
           {
@@ -83,30 +77,21 @@ repository:
       {
         begin: '(\\[)(\\^)?'
         beginCaptures:
-          1:
-            name: 'punctuation.definition.character-class.regexp'
-          2:
-            name: 'keyword.operator.negation.regexp'
+          1: name: 'punctuation.definition.character-class.regexp'
+          2: name: 'keyword.operator.negation.regexp'
         end: '(\\])'
         endCaptures:
-          1:
-            name: 'punctuation.definition.character-class.regexp'
+          1: name: 'punctuation.definition.character-class.regexp'
         name: 'constant.other.character-class.set.regexp'
         patterns: [
           {
             captures:
-              1:
-                name: 'constant.character.numeric.regexp'
-              2:
-                name: 'constant.character.control.regexp'
-              3:
-                name: 'constant.character.escape.backslash.regexp'
-              4:
-                name: 'constant.character.numeric.regexp'
-              5:
-                name: 'constant.character.control.regexp'
-              6:
-                name: 'constant.character.escape.backslash.regexp'
+              1: name: 'constant.character.numeric.regexp'
+              2: name: 'constant.character.control.regexp'
+              3: name: 'constant.character.escape.backslash.regexp'
+              4: name: 'constant.character.numeric.regexp'
+              5: name: 'constant.character.control.regexp'
+              6: name: 'constant.character.escape.backslash.regexp'
             match: '(?:.|(\\\\(?:[0-7]{3}|x\\h\\h|u\\h\\h\\h\\h))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-7]{3}|x\\h\\h|u\\h\\h\\h\\h))|(\\\\c[A-Z])|(\\\\.))'
             name: 'constant.other.character-class.range.regexp'
           }
