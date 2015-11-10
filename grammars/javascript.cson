@@ -104,7 +104,12 @@ patterns: [
   }
   {
     # ES6 export: `export default (variable|class|function, etc.)`
-    match: '(?x) \\b(export)\\b \\s* \\b(default)\\b (?:\\s*) \\b((?!\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b)[a-zA-Z_$][a-zA-Z_$0-9]*)?\\b'
+    match: '(?x)
+      \\b(export)\\b \\s* \\b(default)\\b
+      (?:\\s*)
+      \\b((?!\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b)
+      [a-zA-Z_$][a-zA-Z_$0-9]*)?\\b
+    '
     captures:
       0: name: 'meta.export.js'
       1: name: 'keyword.control.js'
@@ -236,7 +241,16 @@ patterns: [
   }
   {
     # e.g. `Sound.prototype.play = function() { … }`
-    begin: '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)(\\()'
+    begin: '(?x)
+      ([a-zA-Z_?.$][\\w?.$]*)\\.
+      (prototype)\\.
+      ([a-zA-Z_?.$][\\w?.$]*)
+      \\s*(=)\\s*
+      (?: (async) (?:\\s+) )?
+      (function\\*?)
+      \\s* (\\*?)
+      (\\()
+    '
     beginCaptures:
       1: name: 'support.class.js'
       2: name: 'support.constant.js'
@@ -268,7 +282,16 @@ patterns: [
   }
   {
     # e.g. `Sound.play = function() { … }`
-    begin: '([a-zA-Z_?.$][\\w?.$]*)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
+    begin: '(?x)
+      ([a-zA-Z_?.$][\\w?.$]*)\\.
+      ([a-zA-Z_?.$][\\w?.$]*)
+      \\s*(=)\\s*
+      (?: (async) (?:\\s+) )?
+      (function\\*?)
+      \\s* (\\*?) \\s*
+      ([a-zA-Z_?$][\\w?$]*)?
+      \\s* (\\()
+    '
     beginCaptures:
       1: name: 'support.class.js'
       2: name: 'entity.name.function.js'
@@ -290,7 +313,15 @@ patterns: [
   }
   {
     # e.g. `play = function() { … }`
-    begin: '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
+    begin: '(?x)
+      ([a-zA-Z_?$][\\w?$]*)
+      \\s* (=) \\s*
+      (?: (async) (?:\\s+) )?
+      (function\\*?)
+      \\s* (\\*?) \\s*
+      ([a-zA-Z_?$][\\w?$]*)?
+      \\s* (\\()
+    '
     beginCaptures:
       1: name: 'entity.name.function.js'
       2: name: 'keyword.operator.assignment.js'
@@ -311,7 +342,12 @@ patterns: [
   }
   {
     # Regular function: `function myFunc(arg) { … }`
-    begin: '\\b(?:(async)(?:\\s+))?(function\\*?)\\s*((\\*)|(?:(?:\\s+)(\\*?[a-zA-Z_$]\\w*)))?\\s*(\\()'
+    begin: '(?x)
+      \\b(?: (async) (?:\\s+) )?
+      (function\\*?) \\s*
+      ((\\*) | (?: (?:\\s+) (\\*?[a-zA-Z_$]\\w*)))?
+      \\s* (\\()
+    '
     beginCaptures:
       1: name: 'storage.modifier.js'
       2: name: 'storage.type.function.js'
@@ -330,7 +366,15 @@ patterns: [
   }
   {
     # e.g. `foobar: function() { … }`
-    begin: '\\b([a-zA-Z_?.$][\\w?.$]*)\\s*(:)\\s*\\b(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
+    begin: '(?x)
+      \\b([a-zA-Z_?.$][\\w?.$]*)
+      \\s* (:) \\s*
+      \\b(?: (async) (?:\\s+) )?
+      (function\\*?)
+      \\s* (\\*?) \\s*
+      ([a-zA-Z_?$][\\w?$]*)?
+      \\s* (\\()
+    '
     beginCaptures:
       1: name: 'entity.name.function.js'
       2: name: 'keyword.operator.assignment.js'
@@ -351,7 +395,15 @@ patterns: [
   }
   {
     # e.g. `"foo": function`
-    begin: '(?:((\')([^\']*?)(\'))|((")([^"]*?)(")))\\s*(:)\\s*\\b(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
+    begin: '(?x)
+      (?: ((\')([^\']*?)(\')) | ((")([^"]*?)(")) )
+      \\s* (:) \\s*
+      \\b(?:(async)(?:\\s+))?
+      (function\\*?)
+      \\s* (\\*?) \\s*
+      ([a-zA-Z_?$][\\w?$]*)?
+      \\s* (\\()
+    '
     beginCaptures:
       1: name: 'string.quoted.single.js'
       2: name: 'punctuation.definition.string.begin.js'
@@ -395,7 +447,17 @@ patterns: [
     include: '#methods'
   }
   {
-    match: '\\b(class)(?:(?:\\s+(extends)\\s+(\\w+(?:\\.\\w*)?))|(?:(?:\\s+(\\w+(?:\\.\\w*)?))(?:\\s+(extends)\\s+(\\w+(?:\\.\\w*)?))?))'
+    match: '(?x)
+      \\b(class)
+      (?:
+        (?: \\s+ (extends) \\s+ (\\w+(?:\\.\\w*)?) )
+        |
+        (?:
+          (?: \\s+ (\\w+(?:\\.\\w*)?) )
+          (?: \\s+ (extends) \\s+ (\\w+(?:\\.\\w*)?) )?
+        )
+      )
+    '
     captures:
       1: name: 'storage.type.class.js'
       2: name: 'storage.modifier.js'
@@ -406,7 +468,11 @@ patterns: [
     name: 'meta.class.js'
   }
   {
-    begin: '(?<![A-Za-z0-9])(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
+    begin: '(?x)
+      (?<![A-Za-z0-9])
+      (\\()
+      (?= (?:[^\\(\\)]*)? \\) \\s* => )
+    '
     beginCaptures:
       1: name: 'punctuation.definition.parameters.begin.js'
     end: '(\\))\\s*(=>)'
@@ -422,7 +488,12 @@ patterns: [
   }
   {
     # e.g. `play = (a,b) => { … }`
-    begin: '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
+    begin: '(?x)
+      ([a-zA-Z_?$][\\w?$]*)
+      \\s* (=) \\s*
+      (\\()
+      (?= (?:[^\\(\\)]*)? \\) \\s* => )
+    '
     beginCaptures:
       1: name: 'entity.name.function.js'
       2: name: 'keyword.operator.assignment.js'
@@ -440,7 +511,14 @@ patterns: [
   }
   {
     # e.g. `Sound.play = (a,b) => { … }`
-    begin: '([a-zA-Z_?$]*)\\.([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
+    begin: '(?x)
+      ([a-zA-Z_?$]*)
+      \\.
+      ([a-zA-Z_?$][\\w?$]*)
+      \\s* (=) \\s*
+      (\\()
+      (?= (?:[^\\(\\)]*)? \\) \\s* => )
+    '
     beginCaptures:
       1: name: 'support.class.js'
       2: name: 'entity.name.function.js'
@@ -513,7 +591,11 @@ patterns: [
       3: name: 'keyword.operator.assignment.js'
     patterns: [
       {
-        match: '([$_a-zA-Z][$_a-zA-Z0-9]*)\\s*(:)\\s*([$_a-zA-Z][$_a-zA-Z0-9]*)?'
+        match: '(?x)
+          ([$_a-zA-Z][$_a-zA-Z0-9]*)
+          \\s* (:) \\s*
+          ([$_a-zA-Z][$_a-zA-Z0-9]*)?
+        '
         captures:
           2: name: 'keyword.operator.assignment.js'
           3: name: 'constant.other.js'
@@ -549,7 +631,11 @@ patterns: [
     ]
   }
   {
-    match: '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?|(?<=\\?)(?:\\s*)(yield)(?=\\s*:)',
+    match: '(?x)
+      (?<!\\.)
+      \\b(yield)(?!\\s*:)
+      \\b(?:\\s*(\\*))? | (?<=\\?)(?:\\s*)(yield)(?=\\s*:)
+    '
     captures:
       1: name: 'keyword.control.js'
       2: name: 'storage.modifier.js'
@@ -808,7 +894,15 @@ repository:
     patterns: [
       {
         # Method definition: `foo: (arg) { … }`
-        begin: '\\b((?!(?:break|case|catch|continue|do|else|finally|for|function|if|export|import|package|return|switch|throw|try|while|with)[\\s\\(])(?:[a-zA-Z_$][a-zA-Z_$0-9]*))\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*\\{)'
+        begin: '(?x)
+          \\b (
+            (?! (?:break|case|catch|continue|do|else|finally|for|function|if|export|import|package|return|switch|throw|try|while|with) [\\s\\(] )
+            (?: [a-zA-Z_$][a-zA-Z_$0-9]* )
+          )
+          \\s*
+          (\\()
+          (?= (?:[^\\(\\)]*)? \\) \\s* \\{ )
+        '
         beginCaptures:
           1: name: 'entity.name.function.js'
           2: name: 'punctuation.definition.parameters.begin.js'
