@@ -10,6 +10,7 @@
   'pjs'
   'xsjs'
   'xsjslib'
+  'jscad'
 ]
 'firstLineMatch': '^#!.*\\b(node|iojs|JavaScript)'
 'name': 'JavaScript'
