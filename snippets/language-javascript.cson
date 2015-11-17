@@ -1,13 +1,13 @@
 '.source.js':
   'Object Method':
     'prefix': ':f'
-    'body': '${1:method_name}: function (${2:attribute}) {\n\t$3\n}${4:,}'
+    'body': '${1:methodName}: function (${2:attribute}) {\n\t$3\n}${4:,}'
   'Object key — key: "value"':
     'prefix': ':'
     'body': '${1:key}: ${2:"${3:value}"}${4:, }'
   'Prototype':
     'prefix': 'proto'
-    'body': '${1:class_name}.prototype.${2:method_name} = function (${3:first_argument}) {\n\t${0:// body...}\n};'
+    'body': '${1:ClassName}.prototype.${2:methodName} = function ($3) {\n\t$0\n};'
   'do':
     'prefix': 'do'
     'body': 'do {\n\t$2\n} while (${1:true});'
@@ -31,7 +31,7 @@
     'body': 'function ($1) {\n\t$2\n}'
   'Generator':
     'prefix': 'gen',
-    'body': 'function* ${1:function_name}(${2:argument}) {\n\t${0:// body...}\n}'
+    'body': 'function* ${1:functionName}($2) {\n\t$0\n}'
   'Anonymous Generator':
     'prefix': 'g'
     'body': 'function* ($1) {\n\t$2\n}'
