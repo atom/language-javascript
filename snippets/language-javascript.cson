@@ -25,7 +25,7 @@
     'body': 'for (${1:variable} of ${2:iterable}) {\n\t$3\n}'
   'Function':
     'prefix': 'fun'
-    'body': 'function ${1:function_name}(${2:argument}) {\n\t${0:// body...}\n}'
+    'body': 'function ${1:functionName}($2) {\n\t$0\n}'
   'Anonymous Function':
     'prefix': 'f'
     'body': 'function ($1) {\n\t$2\n}'
