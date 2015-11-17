@@ -1,16 +1,16 @@
 'scopeName': 'source.js'
 'fileTypes': [
   'js'
-  'htc'
   '_js'
   'es'
   'es6'
+  'htc'
+  'jscad'
   'jsm'
   'pac'
   'pjs'
   'xsjs'
   'xsjslib'
-  'jscad'
 ]
 'firstLineMatch': '^#!.*\\b(node|iojs|JavaScript)'
 'name': 'JavaScript'
