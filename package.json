@@ -1,6 +1,6 @@
 {
   "name": "language-javascript",
-  "version": "0.64.0",
+  "version": "0.101.1",
   "description": "JavaScript language support in Atom",
   "engines": {
     "atom": "*",
@@ -14,5 +14,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/atom/language-javascript/issues"
+  },
+  "devDependencies": {
+    "coffeelint": "^1.10.1"
   }
 }
