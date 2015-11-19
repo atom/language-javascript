@@ -1056,49 +1056,7 @@
   'arguments':
     'patterns': [
       {
-        'include': '#method_call'
-      }
-      {
-        'include': '#function_call'
-      }
-      {
-        'include': '#object_variable'
-      }
-      {
-        'include': '#numbers'
-      }
-      {
-        'include': '#strings'
-      }
-      {
-        'match': '\\[|\\]'
-        'name': 'meta.brace.square.js'
-      }
-      {
-        'match': ','
-        'name': 'meta.delimiter.object.comma.js'
-      }
-      {
-        'match': '\\{|\\}'
-        'name': 'meta.brace.curly.js'
-      }
-      {
-        'include': '#operators'
-      }
-      {
-        'include': '#comments'
-      }
-      {
-        'include': '#properties'
-      }
-      {
-        'match': '\\b[a-zA-Z_$]\\w*(?=\\s*,|\\))'
-        'name': 'variable.other.argument.js'
-      }
-      {
-        'comment': 'e.g. 123arg'
-        'match': '\\b\\d\\w+(?=\\s*(?:,|\\)))'
-        'name': 'invalid.illegal.js'
+        'include': '$self'
       }
     ]
   'method_call':
