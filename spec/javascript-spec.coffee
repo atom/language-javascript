@@ -857,20 +857,32 @@ describe "Javascript grammar", ->
       expect(tokens[11]).toEqual value: ')', scopes: ['source.js', 'meta.function.arrow.js', 'punctuation.definition.parameters.end.js']
       expect(tokens[13]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.arrow.js']
 
-  describe "object variables", ->
-    it "tokenizes illegal objects", ->
-      {tokens} = grammar.tokenizeLine('1.prop')
-      expect(tokens[0]).toEqual value: '1', scopes: ['source.js', 'invalid.illegal.js']
+  describe "variables", ->
+    it "tokenizes 'this'", ->
+      {tokens} = grammar.tokenizeLine('this')
+      expect(tokens[0]).toEqual value: 'this', scopes: ['source.js', 'variable.language.js']
 
-      {tokens} = grammar.tokenizeLine('123.prop')
-      expect(tokens[0]).toEqual value: '123', scopes: ['source.js', 'invalid.illegal.js']
+      {tokens} = grammar.tokenizeLine('this.obj.prototype = new El()')
+      expect(tokens[0]).toEqual value: 'this', scopes: ['source.js', 'variable.language.js']
 
-      {tokens} = grammar.tokenizeLine('123a.prop')
-      expect(tokens[0]).toEqual value: '123a', scopes: ['source.js', 'invalid.illegal.js']
+    it "tokenizes 'super'", ->
+      {tokens} = grammar.tokenizeLine('super')
+      expect(tokens[0]).toEqual value: 'super', scopes: ['source.js', 'variable.language.js']
 
-    it "doesn't confuse illegal objects with numbers", ->
-      {tokens} = grammar.tokenizeLine('123.')
-      expect(tokens[0]).toEqual value: '123', scopes: ['source.js', 'constant.numeric.js']
+    describe "objects", ->
+      it "tokenizes illegal objects", ->
+        {tokens} = grammar.tokenizeLine('1.prop')
+        expect(tokens[0]).toEqual value: '1', scopes: ['source.js', 'invalid.illegal.js']
+
+        {tokens} = grammar.tokenizeLine('123.prop')
+        expect(tokens[0]).toEqual value: '123', scopes: ['source.js', 'invalid.illegal.js']
+
+        {tokens} = grammar.tokenizeLine('123a.prop')
+        expect(tokens[0]).toEqual value: '123a', scopes: ['source.js', 'invalid.illegal.js']
+
+      it "doesn't confuse illegal objects with numbers", ->
+        {tokens} = grammar.tokenizeLine('123.')
+        expect(tokens[0]).toEqual value: '123', scopes: ['source.js', 'constant.numeric.js']
 
   describe "function calls", ->
     it "tokenizes function calls", ->

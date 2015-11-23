@@ -262,6 +262,14 @@
     'name': 'meta.export.js'
   }
   {
+    'match': '(?<!\\.)\\b(super|this)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(super|this)(?=\\s*:)'
+    'captures':
+      '1':
+        'name': 'variable.language.js'
+      '2':
+        'name': 'variable.language.js'
+  }
+  {
     'captures':
       '1':
         'name': 'support.class.js'
@@ -733,14 +741,6 @@
         'name': 'constant.other.js'
       '2':
         'name': 'constant.other.js'
-  }
-  {
-    'match': '(?<!\\.)\\b(super|this)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(super|this)(?=\\s*:)'
-    'captures':
-      '1':
-        'name': 'variable.language.js'
-      '2':
-        'name': 'variable.language.js'
   }
   {
     'match': '(?<!\\.)\\b(debugger)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(debugger)(?=\\s*:)'
