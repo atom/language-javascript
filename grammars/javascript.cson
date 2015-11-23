@@ -1121,7 +1121,7 @@
     'patterns': [
       {
         'comment': '`prop` in `obj.prop`, `func().prop`'
-        'match': '(\\.)\\s*(?:(\\b\\d\\w*)|(\\b[A-Z][A-Z0-9_]*)|(\\w*))'
+        'match': '(\\.)\\s*(?:(\\b\\d\\w*)|(\\b[A-Z][A-Z0-9_]*)\\b|(\\w*))'
         'captures':
           '1':
             'name': 'meta.delimiter.property.period.js'

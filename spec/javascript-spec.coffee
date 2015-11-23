@@ -1006,6 +1006,11 @@ describe "Javascript grammar", ->
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
       expect(tokens[2]).toEqual value: 'property', scopes: ['source.js', 'variable.other.property.js']
 
+      {tokens} = grammar.tokenizeLine('obj.Property')
+      expect(tokens[0]).toEqual value: 'obj', scopes: ['source.js', 'variable.other.object.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
+      expect(tokens[2]).toEqual value: 'Property', scopes: ['source.js', 'variable.other.property.js']
+
       {tokens} = grammar.tokenizeLine('a().b')
       expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
       expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.begin.js']
