@@ -577,6 +577,23 @@ describe "Javascript grammar", ->
       expect(tokens[9]).toEqual value: 'alias', scopes: ['source.js', 'meta.import.js', 'variable.other.module-alias.js']
       expect(tokens[11]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
 
+    it "tokenizes comments in statement", ->
+      lines = grammar.tokenizeLines '''
+        import /* comment */ {
+          member1, // comment
+          /* comment */
+          member2
+        } from "module-name";
+      '''
+      expect(lines[0][2]).toEqual value: '/*', scopes: ['source.js', 'meta.import.js', 'comment.block.js', 'punctuation.definition.comment.js']
+      expect(lines[0][3]).toEqual value: ' comment ', scopes: ['source.js', 'meta.import.js', 'comment.block.js']
+      expect(lines[0][4]).toEqual value: '*/', scopes: ['source.js', 'meta.import.js', 'comment.block.js', 'punctuation.definition.comment.js']
+      expect(lines[1][4]).toEqual value: '//', scopes: ['source.js', 'meta.import.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
+      expect(lines[1][5]).toEqual value: ' comment', scopes: ['source.js', 'meta.import.js', 'comment.line.double-slash.js']
+      expect(lines[2][1]).toEqual value: '/*', scopes: ['source.js', 'meta.import.js', 'comment.block.js', 'punctuation.definition.comment.js']
+      expect(lines[2][2]).toEqual value: ' comment ', scopes: ['source.js', 'meta.import.js', 'comment.block.js']
+      expect(lines[2][3]).toEqual value: '*/', scopes: ['source.js', 'meta.import.js', 'comment.block.js', 'punctuation.definition.comment.js']
+
   describe "ES6 export", ->
     it "tokenizes named export", ->
       {tokens} = grammar.tokenizeLine('export var x = 0;')
@@ -685,6 +702,27 @@ describe "Javascript grammar", ->
       expect(tokens[7]).toEqual value: '(', scopes: ['source.js', 'meta.function.js', 'punctuation.definition.parameters.begin.js']
       expect(tokens[8]).toEqual value: ')', scopes: ['source.js', 'meta.function.js', 'punctuation.definition.parameters.end.js']
 
+    it "tokenizes comments in statement", ->
+      lines = grammar.tokenizeLines '''
+        export {
+          member1, // comment
+          /* comment */
+          member2
+        };
+      '''
+      expect(lines[1][4]).toEqual value: '//', scopes: ['source.js', 'meta.export.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
+      expect(lines[1][5]).toEqual value: ' comment', scopes: ['source.js', 'meta.export.js', 'comment.line.double-slash.js']
+      expect(lines[2][1]).toEqual value: '/*', scopes: ['source.js', 'meta.export.js', 'comment.block.js', 'punctuation.definition.comment.js']
+      expect(lines[2][2]).toEqual value: ' comment ', scopes: ['source.js', 'meta.export.js', 'comment.block.js']
+      expect(lines[2][3]).toEqual value: '*/', scopes: ['source.js', 'meta.export.js', 'comment.block.js', 'punctuation.definition.comment.js']
+
+      {tokens} = grammar.tokenizeLine('export {member1, /* comment */ member2} /* comment */ from "module";')
+      expect(tokens[6]).toEqual value: '/*', scopes: ['source.js', 'meta.export.js', 'comment.block.js', 'punctuation.definition.comment.js']
+      expect(tokens[7]).toEqual value: ' comment ', scopes: ['source.js', 'meta.export.js', 'comment.block.js']
+      expect(tokens[8]).toEqual value: '*/', scopes: ['source.js', 'meta.export.js', 'comment.block.js', 'punctuation.definition.comment.js']
+      expect(tokens[13]).toEqual value: '/*', scopes: ['source.js', 'meta.export.js', 'comment.block.js', 'punctuation.definition.comment.js']
+      expect(tokens[14]).toEqual value: ' comment ', scopes: ['source.js', 'meta.export.js', 'comment.block.js']
+      expect(tokens[15]).toEqual value: '*/', scopes: ['source.js', 'meta.export.js', 'comment.block.js', 'punctuation.definition.comment.js']
 
     it "tokenizes default class export", ->
       {tokens} = grammar.tokenizeLine('export default class {}')

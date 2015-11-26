@@ -59,6 +59,9 @@
             'name': 'meta.delimiter.object.comma.js'
           }
           {
+            'include': '#comments'
+          }
+          {
             'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
             'name': 'variable.other.module.js'
           }
@@ -179,6 +182,9 @@
             'name': 'meta.delimiter.object.comma.js'
           }
           {
+            'include': '#comments'
+          }
+          {
             'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
             'name': 'variable.other.module.js'
           }
@@ -217,6 +223,9 @@
               \\s*
               (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
             '
+          }
+          {
+            'include': '#comments'
           }
           {
             'match': ','
