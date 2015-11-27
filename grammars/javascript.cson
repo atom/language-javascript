@@ -513,7 +513,16 @@
     'include': '#methods'
   }
   {
-    'match': '\\b(class)(?:(?:\\s+(extends)\\s+(\\w+(?:\\.\\w*)?))|(?:(?:\\s+(\\w+(?:\\.\\w*)?))(?:\\s+(extends)\\s+(\\w+(?:\\.\\w*)?))?))'
+    'match': '''(?x)
+      \\b(class)
+      (?:
+        (?: \\s+(extends) \\s+ (\\w+(?:\\.\\w*)?) )
+        |
+        (?: (?: \\s+ (\\w+(?:\\.\\w*)?) )
+          (?: \\s+ (extends) \\s+ (\\w+(?:\\.\\w*)?) )?
+        )
+      )
+    '''
     'captures':
       '1':
         'name': 'storage.type.class.js'
