@@ -396,7 +396,7 @@
     ]
   }
   {
-    'begin': '\\b(?:(async)(?:\\s+))?(function\\*?)\\s*((\\*)|(?:(?:\\s+)(\\*?[a-zA-Z_$]\\w*)))?\\s*(\\()'
+    'begin': '\\b(?:(async)(?:\\s+))?(function\\*?)\\s*((\\*)|(?:(?:\\s+)(\\*?[a-zA-Z_$][\\w$]*)))?\\s*(\\()'
     'beginCaptures':
       '1':
         'name': 'storage.modifier.js'
@@ -516,10 +516,10 @@
     'match': '''(?x)
       \\b(class)
       (?:
-        (?: \\s+(extends) \\s+ (\\w+(?:\\.\\w*)?) )
+        (?: \\s+(extends) \\s+ ([a-zA-Z_$][\\w$]*) )
         |
-        (?: (?: \\s+ (\\w+(?:\\.\\w*)?) )
-          (?: \\s+ (extends) \\s+ (\\w+(?:\\.\\w*)?) )?
+        (?: (?: \\s+ ([a-zA-Z_$][\\w$]*) )
+          (?: \\s+ (extends) \\s+ ([a-zA-Z_$][\\w$]*) )?
         )
       )
     '''
@@ -1081,7 +1081,7 @@
     'patterns': [
       {
         'comment': '.methodCall(arg1, "arg2", [...])'
-        'begin': '(\\.)(\\w+)\\s*(\\()'
+        'begin': '(\\.)([a-zA-Z_$][\\w$]*)\\s*(\\()'
         'beginCaptures':
           '1':
             'name': 'meta.delimiter.method.period.js'
@@ -1105,11 +1105,13 @@
     'patterns': [
       {
         'comment': 'functionCall(arg1, "arg2", [...])'
-        'begin': '\\b(\\w+)\\s*(\\()'
+        'begin': '(?:(\\d\\w*)|([a-zA-Z_$][\\w$]*))\\s*(\\()'
         'beginCaptures':
           '1':
-            'name': 'entity.name.function.js'
+            'name': 'invalid.illegal.js'
           '2':
+            'name': 'entity.name.function.js'
+          '3':
             'name': 'punctuation.definition.arguments.begin.js'
         'end': '\\)'
         'endCaptures':
@@ -1127,7 +1129,7 @@
     'patterns': [
       {
         'comment': '`obj` in `obj.prop`, `obj.methodCall()`'
-        'match': '(?:(\\b[a-zA-Z_$]\\w*)|(\\d\\w*))(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
+        'match': '(?:([a-zA-Z_$][\\w$]*)|(\\d\\w*))(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
         'captures':
           '1':
             'name': 'variable.other.object.js'
@@ -1139,7 +1141,7 @@
     'patterns': [
       {
         'comment': '`prop` in `obj.prop`, `func().prop`'
-        'match': '(\\.)\\s*(?:(\\b\\d\\w*)|(\\b[A-Z][A-Z0-9_]*)\\b|(\\w*))'
+        'match': '(\\.)\\s*(?:(\\b\\d\\w*)|([A-Z][A-Z0-9_$]*\\b\\$*)|([\\w$]*))'
         'captures':
           '1':
             'name': 'meta.delimiter.property.period.js'
