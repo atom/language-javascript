@@ -482,6 +482,12 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
       expect(tokens[2]).toEqual value: 'MyClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
 
+      {tokens} = grammar.tokenizeLine('class $abc$')
+      expect(tokens[2]).toEqual value: '$abc$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+
+      {tokens} = grammar.tokenizeLine('class $$')
+      expect(tokens[2]).toEqual value: '$$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+
     it "tokenizes class...extends", ->
       {tokens} = grammar.tokenizeLine('class MyClass extends SomeClass')
       expect(tokens[0]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
@@ -489,11 +495,23 @@ describe "Javascript grammar", ->
       expect(tokens[4]).toEqual value: 'extends', scopes: ['source.js', 'meta.class.js', 'storage.modifier.js']
       expect(tokens[6]).toEqual value: 'SomeClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
 
+      {tokens} = grammar.tokenizeLine('class MyClass extends $abc$')
+      expect(tokens[6]).toEqual value: '$abc$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+
+      {tokens} = grammar.tokenizeLine('class MyClass extends $$')
+      expect(tokens[6]).toEqual value: '$$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+
     it "tokenizes anonymous class", ->
       {tokens} = grammar.tokenizeLine('class extends SomeClass')
       expect(tokens[0]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
       expect(tokens[2]).toEqual value: 'extends', scopes: ['source.js', 'meta.class.js', 'storage.modifier.js']
       expect(tokens[4]).toEqual value: 'SomeClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+
+      {tokens} = grammar.tokenizeLine('class extends $abc$')
+      expect(tokens[4]).toEqual value: '$abc$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+
+      {tokens} = grammar.tokenizeLine('class extends $$')
+      expect(tokens[4]).toEqual value: '$$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
 
     it "tokenizes constructors", ->
       {tokens} = grammar.tokenizeLine('constructor(a, b)')
@@ -789,6 +807,18 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'default', scopes: ['source.js', 'keyword.control.js']
 
   describe "non-anonymous functions", ->
+    it "tokenizes regular functions", ->
+      {tokens} = grammar.tokenizeLine('function nonAnonymous(){}')
+      expect(tokens[0]).toEqual value: 'function', scopes: ['source.js', 'meta.function.js', 'storage.type.function.js']
+      expect(tokens[2]).toEqual value: 'nonAnonymous', scopes: ['source.js', 'meta.function.js', 'entity.name.function.js']
+      expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.function.js', 'punctuation.definition.parameters.begin.js']
+
+      {tokens} = grammar.tokenizeLine('function $abc$(){}')
+      expect(tokens[2]).toEqual value: '$abc$', scopes: ['source.js', 'meta.function.js', 'entity.name.function.js']
+
+      {tokens} = grammar.tokenizeLine('function $$(){}')
+      expect(tokens[2]).toEqual value: '$$', scopes: ['source.js', 'meta.function.js', 'entity.name.function.js']
+
     it "tokenizes methods", ->
       {tokens} = grammar.tokenizeLine('Foo.method = function nonAnonymous(')
       expect(tokens[0]).toEqual value: 'Foo', scopes: ['source.js', 'meta.function.js', 'support.class.js']
@@ -908,6 +938,16 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'super', scopes: ['source.js', 'variable.language.js']
 
     describe "objects", ->
+      it "tokenizes them", ->
+        {tokens} = grammar.tokenizeLine('obj.prop')
+        expect(tokens[0]).toEqual value: 'obj', scopes: ['source.js', 'variable.other.object.js']
+
+        {tokens} = grammar.tokenizeLine('$abc$.prop')
+        expect(tokens[0]).toEqual value: '$abc$', scopes: ['source.js', 'variable.other.object.js']
+
+        {tokens} = grammar.tokenizeLine('$$.prop')
+        expect(tokens[0]).toEqual value: '$$', scopes: ['source.js', 'variable.other.object.js']
+
       it "tokenizes illegal objects", ->
         {tokens} = grammar.tokenizeLine('1.prop')
         expect(tokens[0]).toEqual value: '1', scopes: ['source.js', 'invalid.illegal.js']
@@ -945,6 +985,12 @@ describe "Javascript grammar", ->
       expect(tokens[15]).toEqual value: '}', scopes: ['source.js', 'meta.function-call.js', 'meta.brace.curly.js']
       expect(tokens[16]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
 
+      {tokens} = grammar.tokenizeLine('$abc$()')
+      expect(tokens[0]).toEqual value: '$abc$', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
+
+      {tokens} = grammar.tokenizeLine('$$()')
+      expect(tokens[0]).toEqual value: '$$', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
+
     it "tokenizes function calls when they are arguments", ->
       {tokens} = grammar.tokenizeLine('a(b(c))')
       expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
@@ -954,6 +1000,12 @@ describe "Javascript grammar", ->
       expect(tokens[4]).toEqual value: 'c', scopes: ['source.js', 'meta.function-call.js', 'meta.function-call.js']
       expect(tokens[5]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
       expect(tokens[6]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
+
+    it "tokenizes illegal function calls", ->
+      {tokens} = grammar.tokenizeLine('0illegal()')
+      expect(tokens[0]).toEqual value: '0illegal', scopes: ['source.js', 'meta.function-call.js', 'invalid.illegal.js']
+      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.begin.js']
+      expect(tokens[2]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
 
     it "tokenizes illegal arguments", ->
       {tokens} = grammar.tokenizeLine('a(1a)')
@@ -1004,6 +1056,12 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: '1', scopes: ['source.js', 'meta.method-call.js', 'constant.numeric.js']
       expect(tokens[7]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
 
+      {tokens} = grammar.tokenizeLine('a.$abc$()')
+      expect(tokens[2]).toEqual value: '$abc$', scopes: ['source.js', 'meta.method-call.js', 'entity.name.function.js']
+
+      {tokens} = grammar.tokenizeLine('a.$$()')
+      expect(tokens[2]).toEqual value: '$$', scopes: ['source.js', 'meta.method-call.js', 'entity.name.function.js']
+
       {tokens} = grammar.tokenizeLine('gulp.src("./*.js")')
       expect(tokens[0]).toEqual value: 'gulp', scopes: ['source.js', 'variable.other.object.js']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
@@ -1048,6 +1106,12 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'obj', scopes: ['source.js', 'variable.other.object.js']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
       expect(tokens[2]).toEqual value: 'Property', scopes: ['source.js', 'variable.other.property.js']
+
+      {tokens} = grammar.tokenizeLine('obj.$abc$')
+      expect(tokens[2]).toEqual value: '$abc$', scopes: ['source.js', 'variable.other.property.js']
+
+      {tokens} = grammar.tokenizeLine('obj.$$')
+      expect(tokens[2]).toEqual value: '$$', scopes: ['source.js', 'variable.other.property.js']
 
       {tokens} = grammar.tokenizeLine('a().b')
       expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
