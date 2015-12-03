@@ -657,8 +657,12 @@
     'name': 'storage.type.js'
   }
   {
-    'match': '(?<!\\.)\\b(async|export|extends|implements|let|private|protected|public|static|var)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(async|export|extends|implements|private|protected|public|static)(?!\\s*:)\\b'
     'name': 'storage.modifier.js'
+  }
+  {
+    'match': '(?<!\\.)\\b(let|var)(?!\\s*:)\\b'
+    'name': 'storage.type.var.js'
   }
   {
     'begin': '(?<!\\.)\\b(const)(?!\\s*:)\\b'
