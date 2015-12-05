@@ -107,3 +107,6 @@
   'Exports Function':
     'prefix': 'exp'
     'body': 'exports.${1:functionName} = function ($2) {\n\t${3:// body...}\n};'
+  'Case':
+    'prefix': 'case'
+    'body': 'case ${1:name}: \n\t$2\n\tbreak;'
