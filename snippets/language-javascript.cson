@@ -104,3 +104,6 @@
   'Class':
     'prefix': 'class'
     'body': 'class ${1:ClassName} {\n\tconstructor($2) {\n\t\t$3\n\t}\n}'
+  'Exports Function':
+    'prefix': 'exp'
+    'body': 'exports.${1:functionName} = function ($2) {\n\t${3:// body...}\n};'
