@@ -12,6 +12,7 @@
   'pjs'
   'xsjs'
   'xsjslib'
+  'gradle'
 ]
 'firstLineMatch': '^#!.*\\b(node|iojs|JavaScript)'
 'name': 'JavaScript'
