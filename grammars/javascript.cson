@@ -268,7 +268,7 @@
         'include': '#operators'
       }
     ]
-    'end': '(?=;|\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b|$)'
+    'end': '(?=;|\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b|\\bdelete\\b|$)'
     'name': 'meta.export.js'
   }
   {
