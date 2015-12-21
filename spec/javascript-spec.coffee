@@ -246,9 +246,11 @@ describe "Javascript grammar", ->
       it "tokenizes spread operator", ->
         {tokens} = grammar.tokenizeLine('myFunction(...args);')
         expect(tokens[2]).toEqual value: '...', scopes: ['source.js', 'meta.function-call.js', 'keyword.operator.spread.js']
+        expect(tokens[3]).toEqual value: 'args', scopes: ['source.js', 'meta.function-call.js']
 
         {tokens} = grammar.tokenizeLine('[...iterableObj]')
         expect(tokens[1]).toEqual value: '...', scopes: ['source.js', 'keyword.operator.spread.js']
+        expect(tokens[2]).toEqual value: 'iterableObj', scopes: ['source.js']
 
     describe "comparison", ->
       operators = ["<=", ">=", "!=", "!==", "===", "==", "<", ">" ]
