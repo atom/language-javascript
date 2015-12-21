@@ -694,7 +694,7 @@
       }
       {
         'match': '\\.\\.\\.'
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.spread.js'
       }
       {
         'match': ','
@@ -741,6 +741,10 @@
   {
     'match': '(?<!\\.)\\b(delete|in|of|instanceof|new|typeof|void)(?!\\s*:)\\b'
     'name': 'keyword.operator.$1.js'
+  }
+  {
+    'match': '\\.\\.\\.'
+    'name': 'keyword.operator.spread.js'
   }
   {
     'match': '(?<!\\.)\\b(true|false)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(true|false)(?=\\s*:)'
