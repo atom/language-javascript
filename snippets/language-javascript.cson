@@ -89,6 +89,9 @@
   'switch':
     'prefix': 'switch'
     'body': 'switch (${1:expression}) {\n\tcase ${2:expression}:\n\t\t$4\n\t\tbreak;$5\n\tdefault:\n\t\t$3\n}'
+  'case':
+    'prefix': 'case'
+    'body': 'case ${1:expression}: \n\t$2\n\tbreak;'
   'try':
     'prefix': 'try'
     'body': 'try {\n\t$1\n} catch (${2:e}) {\n\t$3\n}${4: finally {\n\t$5\n\\}}'
@@ -104,9 +107,9 @@
   'Class':
     'prefix': 'class'
     'body': 'class ${1:ClassName} {\n\tconstructor($2) {\n\t\t$3\n\t}\n}'
-  'Exports Function':
-    'prefix': 'exp'
+  'export function':
+    'prefix': 'expfun'
     'body': 'exports.${1:functionName} = function ($2) {\n\t${3:// body...}\n};'
-  'Case':
-    'prefix': 'case'
-    'body': 'case ${1:name}: \n\t$2\n\tbreak;'
+  'export module':
+    'prefix': 'expmod'
+    'body': 'module.exports = ${1:name};'
