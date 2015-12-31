@@ -844,7 +844,6 @@
   {
     'include': '#method_call'
   }
-
   {
     'include': '#function_call'
   }
@@ -1030,7 +1029,6 @@
         ]
       }
     ]
-
   'function-params':
     'patterns': [
       {
