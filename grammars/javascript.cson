@@ -1080,7 +1080,6 @@
           '1':
             'name': 'meta.delimiter.method.period.js'
           '2':
-            'name': 'entity.name.function.js'
             'patterns': [
               {
                 'include': '#functions'
@@ -1109,7 +1108,6 @@
           '1':
             'name': 'invalid.illegal.js'
           '2':
-            'name': 'entity.name.function.js'
             'patterns': [
               {
                 'include': '#functions'
@@ -1143,7 +1141,12 @@
           '1':
             'name': 'support.function.dom.js'
       }
+      {
+        'match': ".*"
+        'name': 'entity.name.function.js'
+      }
     ]
+
   'object_variable':
     'patterns': [
       {
