@@ -1200,7 +1200,7 @@ describe "Javascript grammar", ->
         expect(tokens[5]).toEqual value: 'x', scopes: ['source.js', 'meta.method-call.js', scope]
         expect(tokens[6]).toEqual value: delim, scopes: ['source.js', 'meta.method-call.js', scope, 'punctuation.definition.string.end.js']
         expect(tokens[8]).toEqual value: '+', scopes: ['source.js', 'meta.method-call.js', 'keyword.operator.js']
-        expect(tokens[9]).toEqual value: ' y ', scopes: ['source.js''meta.method-call.js', ]
+        expect(tokens[9]).toEqual value: ' y ', scopes: ['source.js', 'meta.method-call.js' ]
         expect(tokens[10]).toEqual value: '+', scopes: ['source.js', 'meta.method-call.js', 'keyword.operator.js']
         expect(tokens[12]).toEqual value: delim, scopes: ['source.js', 'meta.method-call.js', scope, 'punctuation.definition.string.begin.js']
         expect(tokens[13]).toEqual value: ':function()', scopes: ['source.js', 'meta.method-call.js', scope]
