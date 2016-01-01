@@ -1194,18 +1194,18 @@ describe "Javascript grammar", ->
 
       for scope, delim of delimsByScope
         {tokens} = grammar.tokenizeLine('a.push(' + delim + 'x' + delim + ' + y + ' + delim + ':function()' + delim + ');')
-        expect(tokens[2]).toEqual value: 'push', scopes: ['source.js', 'support.function.js']
-        expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
-        expect(tokens[4]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.begin.js']
-        expect(tokens[5]).toEqual value: 'x', scopes: ['source.js', scope]
-        expect(tokens[6]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.end.js']
-        expect(tokens[8]).toEqual value: '+', scopes: ['source.js', 'keyword.operator.js']
-        expect(tokens[9]).toEqual value: ' y ', scopes: ['source.js']
-        expect(tokens[10]).toEqual value: '+', scopes: ['source.js', 'keyword.operator.js']
-        expect(tokens[12]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.begin.js']
-        expect(tokens[13]).toEqual value: ':function()', scopes: ['source.js', scope]
-        expect(tokens[14]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.end.js']
-        expect(tokens[15]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
+        expect(tokens[2]).toEqual value: 'push', scopes: ['source.js', 'meta.method-call.js', 'support.function.js']
+        expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.brace.round.js']
+        expect(tokens[4]).toEqual value: delim, scopes: ['source.js', 'meta.method-call.js', scope, 'punctuation.definition.string.begin.js']
+        expect(tokens[5]).toEqual value: 'x', scopes: ['source.js', 'meta.method-call.js', scope]
+        expect(tokens[6]).toEqual value: delim, scopes: ['source.js', 'meta.method-call.js', scope, 'punctuation.definition.string.end.js']
+        expect(tokens[8]).toEqual value: '+', scopes: ['source.js', 'meta.method-call.js', 'keyword.operator.js']
+        expect(tokens[9]).toEqual value: ' y ', scopes: ['source.js''meta.method-call.js', ]
+        expect(tokens[10]).toEqual value: '+', scopes: ['source.js', 'meta.method-call.js', 'keyword.operator.js']
+        expect(tokens[12]).toEqual value: delim, scopes: ['source.js', 'meta.method-call.js', scope, 'punctuation.definition.string.begin.js']
+        expect(tokens[13]).toEqual value: ':function()', scopes: ['source.js', 'meta.method-call.js', scope]
+        expect(tokens[14]).toEqual value: delim, scopes: ['source.js', 'meta.method-call.js', scope, 'punctuation.definition.string.end.js']
+        expect(tokens[15]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.brace.round.js']
 
   describe "comments", ->
     it "tokenizes /* */ comments", ->
