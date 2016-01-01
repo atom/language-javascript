@@ -1166,7 +1166,7 @@ describe "Javascript grammar", ->
       expect(tokens[2]).toEqual value: 'C', scopes: ['source.js', 'constant.other.property.js']
 
   describe "strings and functions", ->
-    it "doesn't confuse them", -> 
+    it "doesn't confuse them", ->
       {tokens} = grammar.tokenizeLine("'a'.b(':c(d)')")
       expect(tokens[0]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
       expect(tokens[1]).toEqual value: "a", scopes: ['source.js', 'string.quoted.single.js']
