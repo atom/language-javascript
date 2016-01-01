@@ -1103,6 +1103,26 @@ describe "Javascript grammar", ->
       expect(tokens[9]).toEqual value: '"', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
       expect(tokens[10]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
       expect(tokens[11]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
+ 
+    describe "built-in methods", ->
+      methods = [ "require", "paddings", "parse", "parseInt", "parseFloat", "print", "prompt", "preference", "escape", "enableExternalCapture", "eval", "elementFromPoint", "exp", "exec", "execScript", "execCommand", "valueOf", "UTC", "queryCommandState", "queryCommandIndeterm", "queryCommandEnabled", "queryCommandValue", "find", "file", "fileModifiedDate", "fileSize", "fileCreatedDate", "fileUpdatedDate", "fixed", "fontsize", "fontcolor", "forward", "floor", "fromCharCode", "watch", "link", "load", "log", "lastIndexOf", "asin", "anchor", "acos", "attachEvent", "atob", "atan", "atan2", "apply", "alert", "abs", "abort", "round", "routeEvents", "resize", "resizeBy", "resizeTo", "recalc", "returnValue", "replace", "reverse", "reload", "releaseCapture", "releaseEvents", "random", "go", "get", "getMilliseconds", "getSeconds", "getMinutes", "getHours", "getMonth", "getDay", "getYear", "getFullYear", "getTime", "getDate", "getTimezoneOffset", "getUTC", "getUTCMilliseconds", "getUTCSeconds", "getUTCMinutes", "getUTCHours", "getUTCDay", "getUTCMonth", "getUTCFullYear", "getUTCDate", "getAttention", "getSelection", "getResponseHeader", "getAllResponseHeaders", "min", "moveBy", "moveBelow", "moveTo", "moveToAbsolute", "moveAbove", "mergeAttributes", "match", "margins", "max", "btoa", "big", "bold", "borderWidths", "blink", "back" ]
+      domMethods = [ "substringData", "submit", "splitText", "setNamedItem", "setAttribute", "setAttributeNode", "select", "hasChildNodes", "hasFeature", "namedItem", "click", "close", "cloneNode", "createComment", "createCDATASection", "createCaption", "createTHead", "createTextNode", "createTFoot", "createDocumentFragment", "createProcessingInstruction", "createEntityReference", "createElement", "createAttribute", "tabIndex", "insertRow", "insertBefore", "insertCell", "insertData", "item", "open", "deleteRow", "deleteCell", "deleteCaption", "deleteTHead", "deleteTFoot", "deleteData", "focus", "write", "writeln", "add", "appendChild", "appendData", "reset", "replaceChild", "replaceData", "move", "moveNamedItem", "moveChild", "moveAttribute", "moveAttributeNode", "getNamedItem", "getElementsByName", "getElementsByTagName", "getElementById", "getAttribute", "getAttributeNode", "blur" ]
+  
+      for method in methods
+        it "tokenizes '#{method}'", ->
+          {tokens} = grammar.tokenizeLine('.' + method + '()')
+          expect(tokens[0]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
+          expect(tokens[1]).toEqual value: method, scopes: ['source.js', 'meta.method-call.js', 'support.function.js']
+          expect(tokens[2]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.begin.js']
+          expect(tokens[3]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
+  
+      for domMethod in domMethods
+        it "tokenizes '#{domMethod}'", ->
+          {tokens} = grammar.tokenizeLine('.' + domMethod + '()')
+          expect(tokens[0]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
+          expect(tokens[1]).toEqual value: domMethod, scopes: ['source.js', 'meta.method-call.js', 'support.function.dom.js']
+          expect(tokens[2]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.begin.js']
+          expect(tokens[3]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
 
   describe "properties", ->
     it "tokenizes properties", ->
