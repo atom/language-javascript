@@ -1142,7 +1142,7 @@
             'name': 'support.function.dom.js'
       }
       {
-        'match': ".*"
+        'match': ".+"
         'name': 'entity.name.function.js'
       }
     ]
