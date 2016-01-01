@@ -1103,11 +1103,11 @@ describe "Javascript grammar", ->
       expect(tokens[9]).toEqual value: '"', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
       expect(tokens[10]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
       expect(tokens[11]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
- 
+
     describe "built-in methods", ->
       methods = [ "require", "paddings", "parse", "parseInt", "parseFloat", "print", "prompt", "preference", "escape", "enableExternalCapture", "eval", "elementFromPoint", "exp", "exec", "execScript", "execCommand", "valueOf", "UTC", "queryCommandState", "queryCommandIndeterm", "queryCommandEnabled", "queryCommandValue", "find", "file", "fileModifiedDate", "fileSize", "fileCreatedDate", "fileUpdatedDate", "fixed", "fontsize", "fontcolor", "forward", "floor", "fromCharCode", "watch", "link", "load", "log", "lastIndexOf", "asin", "anchor", "acos", "attachEvent", "atob", "atan", "atan2", "apply", "alert", "abs", "abort", "round", "routeEvents", "resize", "resizeBy", "resizeTo", "recalc", "returnValue", "replace", "reverse", "reload", "releaseCapture", "releaseEvents", "random", "go", "get", "getMilliseconds", "getSeconds", "getMinutes", "getHours", "getMonth", "getDay", "getYear", "getFullYear", "getTime", "getDate", "getTimezoneOffset", "getUTC", "getUTCMilliseconds", "getUTCSeconds", "getUTCMinutes", "getUTCHours", "getUTCDay", "getUTCMonth", "getUTCFullYear", "getUTCDate", "getAttention", "getSelection", "getResponseHeader", "getAllResponseHeaders", "min", "moveBy", "moveBelow", "moveTo", "moveToAbsolute", "moveAbove", "mergeAttributes", "match", "margins", "max", "btoa", "big", "bold", "borderWidths", "blink", "back" ]
       domMethods = [ "substringData", "submit", "splitText", "setNamedItem", "setAttribute", "setAttributeNode", "select", "hasChildNodes", "hasFeature", "namedItem", "click", "close", "cloneNode", "createComment", "createCDATASection", "createCaption", "createTHead", "createTextNode", "createTFoot", "createDocumentFragment", "createProcessingInstruction", "createEntityReference", "createElement", "createAttribute", "tabIndex", "insertRow", "insertBefore", "insertCell", "insertData", "item", "open", "deleteRow", "deleteCell", "deleteCaption", "deleteTHead", "deleteTFoot", "deleteData", "focus", "write", "writeln", "add", "appendChild", "appendData", "reset", "replaceChild", "replaceData", "move", "moveNamedItem", "moveChild", "moveAttribute", "moveAttributeNode", "getNamedItem", "getElementsByName", "getElementsByTagName", "getElementById", "getAttribute", "getAttributeNode", "blur" ]
-  
+
       for method in methods
         it "tokenizes '#{method}'", ->
           {tokens} = grammar.tokenizeLine('.' + method + '()')
@@ -1115,7 +1115,7 @@ describe "Javascript grammar", ->
           expect(tokens[1]).toEqual value: method, scopes: ['source.js', 'meta.method-call.js', 'support.function.js']
           expect(tokens[2]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.begin.js']
           expect(tokens[3]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
-  
+
       for domMethod in domMethods
         it "tokenizes '#{domMethod}'", ->
           {tokens} = grammar.tokenizeLine('.' + domMethod + '()')
@@ -1195,7 +1195,7 @@ describe "Javascript grammar", ->
       for scope, delim of delimsByScope
         {tokens} = grammar.tokenizeLine('a.push(' + delim + 'x' + delim + ' + y + ' + delim + ':function()' + delim + ');')
         expect(tokens[2]).toEqual value: 'push', scopes: ['source.js', 'meta.method-call.js', 'support.function.js']
-        expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.brace.round.js']
+        expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.begin.js']
         expect(tokens[4]).toEqual value: delim, scopes: ['source.js', 'meta.method-call.js', scope, 'punctuation.definition.string.begin.js']
         expect(tokens[5]).toEqual value: 'x', scopes: ['source.js', 'meta.method-call.js', scope]
         expect(tokens[6]).toEqual value: delim, scopes: ['source.js', 'meta.method-call.js', scope, 'punctuation.definition.string.end.js']
@@ -1205,7 +1205,7 @@ describe "Javascript grammar", ->
         expect(tokens[12]).toEqual value: delim, scopes: ['source.js', 'meta.method-call.js', scope, 'punctuation.definition.string.begin.js']
         expect(tokens[13]).toEqual value: ':function()', scopes: ['source.js', 'meta.method-call.js', scope]
         expect(tokens[14]).toEqual value: delim, scopes: ['source.js', 'meta.method-call.js', scope, 'punctuation.definition.string.end.js']
-        expect(tokens[15]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.brace.round.js']
+        expect(tokens[15]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
 
   describe "comments", ->
     it "tokenizes /* */ comments", ->
