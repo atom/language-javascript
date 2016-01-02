@@ -1286,11 +1286,11 @@ describe "Javascript grammar", ->
 
     it "tokenizes console support functions", ->
       {tokens} = grammar.tokenizeLine('console.log()')
-      expect(tokens[0]).toEqual value: 'console', scopes: ['source.js', 'entity.name.type.object.js.console']
-      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
-      expect(tokens[2]).toEqual value: 'log', scopes: ['source.js', 'support.function.js.console']
-      expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
-      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[0]).toEqual value: 'console', scopes: ['source.js', 'meta.method-call.js', 'entity.name.type.object.js.console']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
+      expect(tokens[2]).toEqual value: 'log', scopes: ['source.js', 'meta.method-call.js', 'support.function.js.console']
+      expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.begin.js']
+      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
 
   describe "indentation", ->
     editor = null
