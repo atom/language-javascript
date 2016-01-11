@@ -2,6 +2,6 @@
   'editor':
     'commentStart': '// '
     'foldEndPattern': '^\\s*\\}|^\\s*\\]|^\\s*\\)'
-    'decreaseIndentPattern': "^\\s*[\\}\\]\\)]"
-    'decreaseNextIndentPattern': "[\\}\\]\\)]"
-    'increaseIndentPattern': "[\\{\\[\\(]"
+    decreaseThisIndentPattern: "^\\s*[\\}\\]\\)]"
+    decreaseIndentPattern: "[\\}\\]\\)]"
+    increaseIndentPattern: "[\\{\\[\\(]"
