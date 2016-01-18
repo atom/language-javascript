@@ -994,6 +994,13 @@ describe "Javascript grammar", ->
       expect(tokens[15]).toEqual value: '}', scopes: ['source.js', 'meta.function-call.js', 'meta.brace.curly.js']
       expect(tokens[16]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
 
+      {tokens} = grammar.tokenizeLine('functionCall((123).toString())')
+      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.begin.js']
+      expect(tokens[2]).toEqual value: '(', scopes: ['source.js', 'meta.function-call.js', 'meta.brace.round.js']
+      expect(tokens[3]).toEqual value: '123', scopes: ['source.js', 'meta.function-call.js', 'constant.numeric.js']
+      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'meta.brace.round.js']
+      expect(tokens[9]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
+
       {tokens} = grammar.tokenizeLine('$abc$()')
       expect(tokens[0]).toEqual value: '$abc$', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
 

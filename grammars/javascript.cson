@@ -892,8 +892,17 @@
     'name': 'meta.brace.curly.js'
   }
   {
-    'match': '\\(|\\)'
-    'name': 'meta.brace.round.js'
+    'begin': '\\('
+    'beginCaptures':
+      '0':
+        'name': 'meta.brace.round.js'
+    'end': '\\)'
+    'endCaptures':
+      '0':
+        'name': 'meta.brace.round.js'
+    'patterns': [
+      'include': '$self'
+    ]
   }
   {
     'match': '\\[|\\]'
