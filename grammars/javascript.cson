@@ -1,10 +1,10 @@
 'scopeName': 'source.js'
 'fileTypes': [
-  'gs'
   'js'
   '_js'
   'es'
   'es6'
+  'gs'
   'htc'
   'jscad'
   'jsm'
