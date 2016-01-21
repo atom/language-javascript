@@ -798,15 +798,11 @@
     ]
   }
   {
-    'match': '(?<!\\.)\\b(yield)\\b(?:\\s*(\\*))?|(?<=\\?)(?:\\s*)(yield)(?=\\s*:)',
+    'match': '(?<!\\.)\\b(yield)\\b(?:\\s*(\\*))?'
     'captures':
       '1':
         'name': 'keyword.control.js'
       '2':
-        'name': 'storage.modifier.js'
-      '3':
-        'name': 'keyword.control.js'
-      '4':
         'name': 'storage.modifier.js'
     'name': 'meta.control.yield.js'
   }
