@@ -829,7 +829,7 @@
         'name': 'constant.language.boolean.$1.js'
   }
   {
-    'match': '(?<!\\.)\\b(null)'
+    'match': '(?<!\\.)\\b(null)\\b'
     'captures':
       '1':
         'name': 'constant.language.null.js'
