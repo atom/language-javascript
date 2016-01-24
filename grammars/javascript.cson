@@ -628,12 +628,6 @@
         'name': 'support.function.js.console'
   }
   {
-    'include': '#object_variable'
-  }
-  {
-    'include': '#numbers'
-  }
-  {
     'include': '#strings'
   }
   {
@@ -865,6 +859,12 @@
   }
   {
     'include': '#properties'
+  }
+  {
+    'include': '#object_variable'
+  }
+  {
+    'include': '#numbers'
   }
   {
     'match': '\\;'
