@@ -87,12 +87,22 @@ describe "Javascript grammar", ->
           expect(tokens[5]).toEqual value: keyword, scopes: ['source.js', scope]
 
   describe "built-in globals", ->
-    it "tokenizes them as support classes", ->
+    it "tokenizes built-in classes", ->
       {tokens} = grammar.tokenizeLine('window')
+      expect(tokens[0]).toEqual value: 'window', scopes: ['source.js', 'support.class.js']
+
+      {tokens} = grammar.tokenizeLine('window.name')
       expect(tokens[0]).toEqual value: 'window', scopes: ['source.js', 'support.class.js']
 
       {tokens} = grammar.tokenizeLine('$window')
       expect(tokens[0]).toEqual value: '$window', scopes: ['source.js']
+
+    it "tokenizes built-in variables", ->
+      {tokens} = grammar.tokenizeLine('module')
+      expect(tokens[0]).toEqual value: 'module', scopes: ['source.js', 'support.variable.js']
+
+      {tokens} = grammar.tokenizeLine('module.prop')
+      expect(tokens[0]).toEqual value: 'module', scopes: ['source.js', 'support.variable.js']
 
   describe "instantiation", ->
     it "tokenizes the new keyword and instance entities", ->
