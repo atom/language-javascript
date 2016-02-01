@@ -859,13 +859,17 @@
     'include': '#function_call'
   }
   {
-    'include': '#properties'
-  }
-  {
     'include': '#object_variable'
   }
   {
     'include': '#numbers'
+  }
+  {
+    'include': '#properties'
+  }
+  {
+    'match': '(?<!\\$)\\b[0-9]+[\\w$]*'
+    'name': 'invalid.illegal.identifier.js'
   }
   {
     'match': '\\;'
@@ -918,35 +922,42 @@
   'numbers':
     'patterns': [
       {
-        'match': '\\b(?<!\\$|_)0(x|X)[0-9a-fA-F]+'
+        'match': '\\b(?<!\\$)0(x|X)[0-9a-fA-F]+\\b(?!\\$)'
         'name': 'constant.numeric.hex.js'
       }
       {
-        'match': '\\b(?<!\\$|_)0(b|B)[01]+'
+        'match': '\\b(?<!\\$)0(b|B)[01]+\\b(?!\\$)'
         'name': 'constant.numeric.binary.js'
       }
       {
-        'match': '\\b(?<!\\$|_)0(o|O)?[0-7]+'
+        'match': '\\b(?<!\\$)0(o|O)?[0-7]+\\b(?!\\$)'
         'name': 'constant.numeric.octal.js'
       }
       {
         'match': '''(?x)
-          (?<!\\$|_) (?:
-            (?:
-              (?:\\b[0-9]+(\\.)(?:[0-9]+\\b)?)|
-              (?:(\\.)[0-9]+)|
-              (?:\\b[0-9]+)
-            )
-            ([eE][+-]?[0-9]+)?
-          )
+          (?<!\\$)(?:
+            (?:\\b[0-9]+(\\.)[0-9]+[eE][+-]?[0-9]+\\b)| # 1.1E+3
+            (?:\\B(\\.)[0-9]+[eE][+-]?[0-9]+\\b)|       # .1E+3
+            (?:\\b[0-9]+[eE][+-]?[0-9]+\\b)|            # 1E+3
+            (?:\\b[0-9]+(\\.)[0-9]+\\b)|                # 1.1
+            (?:\\b[0-9]+(\\.)\\B)|                      # 1.
+            (?:\\B(\\.)[0-9]+\\b)|                      # .1
+            (?:\\b[0-9]+\\b)                            # 1
+          )(?!\\$)
         '''
         'captures':
           '0':
             'name': 'constant.numeric.decimal.js'
           '1':
-            'name': 'meta.delimiter.decimal-mark.period.js'
+            'name': 'meta.delimiter.decimal.period.js'
           '2':
-            'name': 'meta.delimiter.decimal-mark.period.js'
+            'name': 'meta.delimiter.decimal.period.js'
+          '3':
+            'name': 'meta.delimiter.decimal.period.js'
+          '4':
+            'name': 'meta.delimiter.decimal.period.js'
+          '5':
+            'name': 'meta.delimiter.decimal.period.js'
       }
     ]
   'operators':
@@ -1205,7 +1216,7 @@
         'begin': '(?:(\\d\\w*)|([a-zA-Z_$][\\w$]*))\\s*(\\()'
         'beginCaptures':
           '1':
-            'name': 'invalid.illegal.js'
+            'name': 'invalid.illegal.identifier.js'
           '2':
             'name': 'entity.name.function.js'
           '3':
@@ -1231,20 +1242,22 @@
           '1':
             'name': 'variable.other.object.js'
           '2':
-            'name': 'invalid.illegal.js'
+            'name': 'invalid.illegal.identifier.js'
       }
     ]
   'properties':
     'patterns': [
       {
         'comment': '`prop` in `obj.prop`, `func().prop`'
-        'match': '(\\.)\\s*(?:([A-Z][A-Z0-9_$]*\\b\\$*)|(\\$*[a-zA-Z_$][\\w$]*))'
+        'match': '(\\.)\\s*(?:([0-9]+[\\w$]*)|([A-Z][A-Z0-9_$]*\\b\\$*)|(\\$*[a-zA-Z_$][\\w$]*))'
         'captures':
           '1':
             'name': 'meta.delimiter.property.period.js'
           '2':
-            'name': 'constant.other.property.js'
+            'name': 'invalid.illegal.identifier.js'
           '3':
+            'name': 'constant.other.property.js'
+          '4':
             'name': 'variable.other.property.js'
       }
     ]
