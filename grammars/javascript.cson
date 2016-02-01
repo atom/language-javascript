@@ -918,8 +918,35 @@
   'numbers':
     'patterns': [
       {
-        'match': '\\b(?<!\\$|_)((0(x|X)[0-9a-fA-F]+)|(0(b|B)[01]+)|(0(o|O)[0-7]+)|([0-9]+(\\.[0-9]+)?)((e|E)[+-]?[0-9]+)?)\\b'
-        'name': 'constant.numeric.js'
+        'match': '\\b(?<!\\$|_)0(x|X)[0-9a-fA-F]+'
+        'name': 'constant.numeric.hex.js'
+      }
+      {
+        'match': '\\b(?<!\\$|_)0(b|B)[01]+'
+        'name': 'constant.numeric.binary.js'
+      }
+      {
+        'match': '\\b(?<!\\$|_)0(o|O)?[0-7]+'
+        'name': 'constant.numeric.octal.js'
+      }
+      {
+        'match': '''(?x)
+          (?<!\\$|_) (?:
+            (?:
+              (?:\\b[0-9]+(\\.)(?:[0-9]+\\b)?)|
+              (?:(\\.)[0-9]+)|
+              (?:\\b[0-9]+)
+            )
+            ([eE][+-]?[0-9]+)?
+          )
+        '''
+        'captures':
+          '0':
+            'name': 'constant.numeric.decimal.js'
+          '1':
+            'name': 'meta.delimiter.decimal-mark.period.js'
+          '2':
+            'name': 'meta.delimiter.decimal-mark.period.js'
       }
     ]
   'operators':
