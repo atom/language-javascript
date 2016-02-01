@@ -1051,10 +1051,6 @@ describe "Javascript grammar", ->
         {tokens} = grammar.tokenizeLine('123a.prop')
         expect(tokens[0]).toEqual value: '123a', scopes: ['source.js', 'invalid.illegal.js']
 
-      it "doesn't confuse illegal objects with numbers", ->
-        {tokens} = grammar.tokenizeLine('123.')
-        expect(tokens[0]).toEqual value: '123', scopes: ['source.js', 'constant.numeric.js']
-
   describe "function calls", ->
     it "tokenizes function calls", ->
       {tokens} = grammar.tokenizeLine('functionCall()')
@@ -1219,11 +1215,6 @@ describe "Javascript grammar", ->
       expect(tokens[2]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'punctuation.definition.arguments.end.js']
       expect(tokens[3]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
       expect(tokens[4]).toEqual value: 'b', scopes: ['source.js', 'variable.other.property.js']
-
-      {tokens} = grammar.tokenizeLine('a.123illegal')
-      expect(tokens[0]).toEqual value: 'a', scopes: ['source.js']
-      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
-      expect(tokens[2]).toEqual value: '123illegal', scopes: ['source.js', 'invalid.illegal.js']
 
     it "tokenizes constant properties", ->
       {tokens} = grammar.tokenizeLine('obj.MY_CONSTANT')

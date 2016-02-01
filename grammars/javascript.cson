@@ -1211,15 +1211,13 @@
     'patterns': [
       {
         'comment': '`prop` in `obj.prop`, `func().prop`'
-        'match': '(\\.)\\s*(?:(\\b\\d\\w*)|([A-Z][A-Z0-9_$]*\\b\\$*)|([\\w$]*))'
+        'match': '(\\.)\\s*(?:([A-Z][A-Z0-9_$]*\\b\\$*)|(\\$*[a-zA-Z_$][\\w$]*))'
         'captures':
           '1':
             'name': 'meta.delimiter.property.period.js'
           '2':
-            'name': 'invalid.illegal.js'
-          '3':
             'name': 'constant.other.property.js'
-          '4':
+          '3':
             'name': 'variable.other.property.js'
       }
     ]
