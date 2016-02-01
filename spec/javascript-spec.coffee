@@ -228,6 +228,11 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: '.', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.decimal.period.js']
       expect(tokens[1]).toEqual value: '1e-23', scopes: ['source.js', 'constant.numeric.decimal.js']
 
+      {tokens} = grammar.tokenizeLine('1.E3')
+      expect(tokens[0]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.decimal.period.js']
+      expect(tokens[2]).toEqual value: 'E3', scopes: ['source.js', 'constant.numeric.decimal.js']
+
     it "does not tokenize numbers that are part of a variable", ->
       {tokens} = grammar.tokenizeLine('hi$1')
       expect(tokens[0]).toEqual value: 'hi$1', scopes: ['source.js']

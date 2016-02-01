@@ -859,10 +859,10 @@
     'include': '#function_call'
   }
   {
-    'include': '#object_variable'
+    'include': '#numbers'
   }
   {
-    'include': '#numbers'
+    'include': '#object_variable'
   }
   {
     'include': '#properties'
@@ -937,12 +937,13 @@
         'match': '''(?x)
           (?<!\\$)(?:
             (?:\\b[0-9]+(\\.)[0-9]+[eE][+-]?[0-9]+\\b)| # 1.1E+3
+            (?:\\b[0-9]+(\\.)[eE][+-]?[0-9]+\\b)|       # 1.E+3
             (?:\\B(\\.)[0-9]+[eE][+-]?[0-9]+\\b)|       # .1E+3
             (?:\\b[0-9]+[eE][+-]?[0-9]+\\b)|            # 1E+3
             (?:\\b[0-9]+(\\.)[0-9]+\\b)|                # 1.1
             (?:\\b[0-9]+(\\.)\\B)|                      # 1.
             (?:\\B(\\.)[0-9]+\\b)|                      # .1
-            (?:\\b[0-9]+\\b)                            # 1
+            (?:\\b[0-9]+\\b(?!\\.))                     # 1
           )(?!\\$)
         '''
         'captures':
@@ -957,6 +958,8 @@
           '4':
             'name': 'meta.delimiter.decimal.period.js'
           '5':
+            'name': 'meta.delimiter.decimal.period.js'
+          '6':
             'name': 'meta.delimiter.decimal.period.js'
       }
     ]
