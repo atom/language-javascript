@@ -4,6 +4,7 @@
   '_js'
   'es'
   'es6'
+  'gs'
   'htc'
   'jscad'
   'jsm'
@@ -643,12 +644,6 @@
     'name': 'entity.name.type.object.js.console'
   }
   {
-    'include': '#object_variable'
-  }
-  {
-    'include': '#numbers'
-  }
-  {
     'include': '#strings'
   }
   {
@@ -794,7 +789,7 @@
         'name': 'keyword.other.js'
   }
   {
-    'match': '(?<!\\$)\\b(Anchor|Applet|Area|Array|Boolean|Button|Checkbox|Date|document|event|FileUpload|Form|Frame|Function|Hidden|History|Image|JavaArray|JavaClass|JavaObject|JavaPackage|java|Layer|Link|Location|Math|MimeType|Number|navigator|netscape|Object|Option|Packages|Password|Plugin|Radio|RegExp|Reset|Select|String|Style|Submit|Symbol|screen|sun|Text|Textarea|window|XMLHttpRequest)\\b'
+    'match': '(?<!\\$)\\b(Anchor|Applet|Area|Array|Boolean|Button|Checkbox|Date|document|event|FileUpload|Form|Frame|Function|Hidden|History|Image|JavaArray|JavaClass|JavaObject|JavaPackage|java|Layer|Link|Location|Map|Math|MimeType|Number|navigator|netscape|Object|Option|Packages|Password|Plugin|Radio|RegExp|Reset|Select|Set|String|Style|Submit|Symbol|screen|sun|Text|Textarea|WeakMap|WeakSet|window|XMLHttpRequest)\\b'
     'name': 'support.class.js'
   }
   {
@@ -855,7 +850,17 @@
     'include': '#function_call'
   }
   {
+    'include': '#numbers'
+  }
+  {
+    'include': '#object_variable'
+  }
+  {
     'include': '#properties'
+  }
+  {
+    'match': '(?<!\\$)\\b[0-9]+[\\w$]*'
+    'name': 'invalid.illegal.identifier.js'
   }
   {
     'match': '\\;'
@@ -883,8 +888,17 @@
     'name': 'meta.brace.curly.js'
   }
   {
-    'match': '\\(|\\)'
-    'name': 'meta.brace.round.js'
+    'begin': '\\('
+    'beginCaptures':
+      '0':
+        'name': 'meta.brace.round.js'
+    'end': '\\)'
+    'endCaptures':
+      '0':
+        'name': 'meta.brace.round.js'
+    'patterns': [
+      'include': '$self'
+    ]
   }
   {
     'match': '\\[|\\]'
@@ -899,8 +913,45 @@
   'numbers':
     'patterns': [
       {
-        'match': '\\b(?<!\\$|_)((0(x|X)[0-9a-fA-F]+)|(0(b|B)[01]+)|(0(o|O)[0-7]+)|([0-9]+(\\.[0-9]+)?)((e|E)[+-]?[0-9]+)?)\\b'
-        'name': 'constant.numeric.js'
+        'match': '\\b(?<!\\$)0(x|X)[0-9a-fA-F]+\\b(?!\\$)'
+        'name': 'constant.numeric.hex.js'
+      }
+      {
+        'match': '\\b(?<!\\$)0(b|B)[01]+\\b(?!\\$)'
+        'name': 'constant.numeric.binary.js'
+      }
+      {
+        'match': '\\b(?<!\\$)0(o|O)?[0-7]+\\b(?!\\$)'
+        'name': 'constant.numeric.octal.js'
+      }
+      {
+        'match': '''(?x)
+          (?<!\\$)(?:
+            (?:\\b[0-9]+(\\.)[0-9]+[eE][+-]?[0-9]+\\b)| # 1.1E+3
+            (?:\\b[0-9]+(\\.)[eE][+-]?[0-9]+\\b)|       # 1.E+3
+            (?:\\B(\\.)[0-9]+[eE][+-]?[0-9]+\\b)|       # .1E+3
+            (?:\\b[0-9]+[eE][+-]?[0-9]+\\b)|            # 1E+3
+            (?:\\b[0-9]+(\\.)[0-9]+\\b)|                # 1.1
+            (?:\\b[0-9]+(\\.)\\B)|                      # 1.
+            (?:\\B(\\.)[0-9]+\\b)|                      # .1
+            (?:\\b[0-9]+\\b(?!\\.))                     # 1
+          )(?!\\$)
+        '''
+        'captures':
+          '0':
+            'name': 'constant.numeric.decimal.js'
+          '1':
+            'name': 'meta.delimiter.decimal.period.js'
+          '2':
+            'name': 'meta.delimiter.decimal.period.js'
+          '3':
+            'name': 'meta.delimiter.decimal.period.js'
+          '4':
+            'name': 'meta.delimiter.decimal.period.js'
+          '5':
+            'name': 'meta.delimiter.decimal.period.js'
+          '6':
+            'name': 'meta.delimiter.decimal.period.js'
       }
     ]
   'operators':
@@ -987,6 +1038,56 @@
           {
             'match': '[^"]*[^\\n\\r"\\\\]$'
             'name': 'invalid.illegal.string.js'
+          }
+        ]
+      }
+      {
+        'begin': '((\\w+)?(html|HTML|Html))\\s*(`)'
+        'beginCaptures':
+          '1':
+            'name': 'entity.name.function.js'
+          '4':
+            'name': 'punctuation.definition.string.begin.js'
+        'end': '`'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.js'
+        'name': 'string.quoted.template.html.js'
+        'patterns': [
+          {
+            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
+            'name': 'constant.character.escape.js'
+          }
+          {
+            'include': '#interpolated_js'
+          }
+          {
+            'include': 'text.html.basic'
+          }
+        ]
+      }
+      {
+        'begin': '((\\w+)?(css|CSS|Css))\\s*(`)'
+        'beginCaptures':
+          '1':
+            'name': 'entity.name.function.js'
+          '4':
+            'name': 'punctuation.definition.string.begin.js'
+        'end': '`'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.js'
+        'name': 'string.quoted.template.css.js'
+        'patterns': [
+          {
+            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
+            'name': 'constant.character.escape.js'
+          }
+          {
+            'include': '#interpolated_js'
+          }
+          {
+            'include': 'source.css'
           }
         ]
       }
@@ -1113,7 +1214,7 @@
         'begin': '(?:(\\d\\w*)|([a-zA-Z_$][\\w$]*))\\s*(\\()'
         'beginCaptures':
           '1':
-            'name': 'invalid.illegal.js'
+            'name': 'invalid.illegal.identifier.js'
           '2':
             'patterns': [
               {
@@ -1173,19 +1274,19 @@
           '1':
             'name': 'variable.other.object.js'
           '2':
-            'name': 'invalid.illegal.js'
+            'name': 'invalid.illegal.identifier.js'
       }
     ]
   'properties':
     'patterns': [
       {
         'comment': '`prop` in `obj.prop`, `func().prop`'
-        'match': '(\\.)\\s*(?:(\\b\\d\\w*)|([A-Z][A-Z0-9_$]*\\b\\$*)|([\\w$]*))'
+        'match': '(\\.)\\s*(?:([0-9]+[\\w$]*)|([A-Z][A-Z0-9_$]*\\b\\$*)|(\\$*[a-zA-Z_$][\\w$]*))'
         'captures':
           '1':
             'name': 'meta.delimiter.property.period.js'
           '2':
-            'name': 'invalid.illegal.js'
+            'name': 'invalid.illegal.identifier.js'
           '3':
             'name': 'constant.other.property.js'
           '4':
