@@ -1404,13 +1404,13 @@ describe "Javascript grammar", ->
   describe "console", ->
     it "tokenizes the console keyword", ->
       {tokens} = grammar.tokenizeLine('console')
-      expect(tokens[0]).toEqual value: 'console', scopes: ['source.js', 'entity.name.type.object.js.console']
+      expect(tokens[0]).toEqual value: 'console', scopes: ['source.js', 'entity.name.type.object.console.js']
 
     it "tokenizes console support functions", ->
       {tokens} = grammar.tokenizeLine('console.log()')
-      expect(tokens[0]).toEqual value: 'console', scopes: ['source.js', 'meta.method-call.js', 'entity.name.type.object.js.console']
+      expect(tokens[0]).toEqual value: 'console', scopes: ['source.js', 'entity.name.type.object.console.js']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
-      expect(tokens[2]).toEqual value: 'log', scopes: ['source.js', 'meta.method-call.js', 'support.function.js.console']
+      expect(tokens[2]).toEqual value: 'log', scopes: ['source.js', 'meta.method-call.js', 'support.function.console.js']
       expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.begin.js']
       expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'punctuation.definition.arguments.end.js']
 

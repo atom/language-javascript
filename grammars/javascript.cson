@@ -617,31 +617,34 @@
     'name': 'meta.class.instance.constructor'
   }
   {
-    'comment': 'console.log(arg1, "arg2", [...])'
-    'begin': '\\b(console)(\\.)(assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)\\s*(\\()'
+    # console.log(arg1, "arg2", [...])
+    'begin': '\\bconsole'
     'beginCaptures':
-      '1':
-        'name': 'entity.name.type.object.js.console'
-      '2':
-        'name': 'meta.delimiter.method.period.js'
-      '3':
-        'name': 'support.function.js.console'
-      '4':
-        'name': 'punctuation.definition.arguments.begin.js'
-    'end': '\\)'
-    'endCaptures':
       '0':
-        'name': 'punctuation.definition.arguments.end.js'
-    'name': 'meta.method-call.js'
+        'name': 'entity.name.type.object.console.js'
+    'end': '(?!\\G)'
     'patterns': [
       {
-        'include': '#arguments'
+        'begin': '\\b(\\.)(assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)\\s*(\\()'
+        'beginCaptures':
+          '1':
+            'name': 'meta.delimiter.method.period.js'
+          '2':
+            'name': 'support.function.console.js'
+          '3':
+            'name': 'punctuation.definition.arguments.begin.js'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.arguments.end.js'
+        'name': 'meta.method-call.js'
+        'patterns': [
+          {
+            'include': '#arguments'
+          }
+        ]
       }
     ]
-  }
-  {
-    'match': '\\b(console)\\b'
-    'name': 'entity.name.type.object.js.console'
   }
   {
     'include': '#strings'
