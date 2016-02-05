@@ -619,7 +619,7 @@
   {
     # console
     # console.log(arg1, "arg2", [...])
-    'begin': '\\bconsole'
+    'begin': '\\bconsole\\b'
     'beginCaptures':
       '0':
         'name': 'entity.name.type.object.console.js'
