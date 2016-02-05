@@ -1183,6 +1183,7 @@
         'endCaptures':
           '0':
             'name': 'punctuation.definition.arguments.end.js'
+        'name': 'meta.arguments.js'
         'patterns': [
           {
             'include': '$self'
