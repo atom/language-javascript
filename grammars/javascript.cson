@@ -626,18 +626,13 @@
     'end': '(?!\\G)'
     'patterns': [
       {
-        'begin': '\\b(\\.)(assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)\\s*(\\()'
+        'begin': '\\b(\\.)(assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)\\s*(?=\\()'
         'beginCaptures':
           '1':
             'name': 'meta.delimiter.method.period.js'
           '2':
             'name': 'support.function.console.js'
-          '3':
-            'name': 'punctuation.definition.arguments.begin.js'
-        'end': '\\)'
-        'endCaptures':
-          '0':
-            'name': 'punctuation.definition.arguments.end.js'
+        'end': '(?<=\\))'
         'name': 'meta.method-call.js'
         'patterns': [
           {
@@ -1180,14 +1175,26 @@
   'arguments':
     'patterns': [
       {
-        'include': '$self'
+        'begin': '\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.arguments.begin.js'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.arguments.end.js'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
       }
     ]
   'method_calls':
     'patterns': [
       {
         # .methodCall(arg1, "arg2", [...])
-        'begin': '(\\.)([a-zA-Z_$][\\w$]*)\\s*(\\()'
+        'begin': '(\\.)([\\w$]+)\\s*(?=\\()'
         'beginCaptures':
           '1':
             'name': 'meta.delimiter.method.period.js'
@@ -1246,16 +1253,15 @@
                 'name': 'support.function.dom.js'
               }
               {
-                'match': ".+"
+                'match': "[a-zA-Z_$][\\w$]*"
                 'name': 'entity.name.function.js'
               }
+              {
+                'match': '[\\d][\\w$]*'
+                'name': 'invalid.illegal.identifier.js'
+              }
             ]
-          '3':
-            'name': 'punctuation.definition.arguments.begin.js'
-        'end': '\\)'
-        'endCaptures':
-          '0':
-            'name': 'punctuation.definition.arguments.end.js'
+        'end': '(?<=\\))'
         'name': 'meta.method-call.js'
         'patterns': [
           {
@@ -1268,11 +1274,9 @@
     'patterns': [
       {
         # functionCall(arg1, "arg2", [...])
-        'begin': '(?:(\\d\\w*)|([a-zA-Z_$][\\w$]*))\\s*(\\()'
+        'begin': '([\\w$]+)\\s*(?=\\()'
         'beginCaptures':
           '1':
-            'name': 'invalid.illegal.identifier.js'
-          '2':
             'patterns': [
               {
                 'match': '''(?x)
@@ -1283,16 +1287,15 @@
                 'name': 'support.function.js'
               }
               {
-                'match': ".+"
+                'match': "[a-zA-Z_$][\\w$]*"
                 'name': 'entity.name.function.js'
               }
+              {
+                'match': '[\\d][\\w$]*'
+                'name': 'invalid.illegal.identifier.js'
+              }
             ]
-          '3':
-            'name': 'punctuation.definition.arguments.begin.js'
-        'end': '\\)'
-        'endCaptures':
-          '0':
-            'name': 'punctuation.definition.arguments.end.js'
+        'end': '(?<=\\))'
         'name': 'meta.function-call.js'
         'patterns': [
           {
