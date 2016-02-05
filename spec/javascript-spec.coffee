@@ -248,6 +248,15 @@ describe "Javascript grammar", ->
         {tokens} = grammar.tokenizeLine(operator)
         expect(tokens[0]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.' + operator  + '.js']
 
+    it "tokenizes spread operator", ->
+      {tokens} = grammar.tokenizeLine('myFunction(...args);')
+      expect(tokens[2]).toEqual value: '...', scopes: ['source.js', 'meta.function-call.js', 'keyword.operator.spread.js']
+      expect(tokens[3]).toEqual value: 'args', scopes: ['source.js', 'meta.function-call.js']
+
+      {tokens} = grammar.tokenizeLine('[...iterableObj]')
+      expect(tokens[1]).toEqual value: '...', scopes: ['source.js', 'keyword.operator.spread.js']
+      expect(tokens[2]).toEqual value: 'iterableObj', scopes: ['source.js']
+
     describe "increment, decrement", ->
       it "tokenizes increment", ->
         {tokens} = grammar.tokenizeLine('i++')
@@ -277,15 +286,6 @@ describe "Javascript grammar", ->
           expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
           expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.logical.js']
           expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
-
-      it "tokenizes spread operator", ->
-        {tokens} = grammar.tokenizeLine('myFunction(...args);')
-        expect(tokens[2]).toEqual value: '...', scopes: ['source.js', 'meta.function-call.js', 'keyword.operator.spread.js']
-        expect(tokens[3]).toEqual value: 'args', scopes: ['source.js', 'meta.function-call.js']
-
-        {tokens} = grammar.tokenizeLine('[...iterableObj]')
-        expect(tokens[1]).toEqual value: '...', scopes: ['source.js', 'keyword.operator.spread.js']
-        expect(tokens[2]).toEqual value: 'iterableObj', scopes: ['source.js']
 
     describe "comparison", ->
       operators = ["<=", ">=", "!=", "!==", "===", "==", "<", ">" ]
