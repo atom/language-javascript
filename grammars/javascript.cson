@@ -617,6 +617,7 @@
     'name': 'meta.class.instance.constructor'
   }
   {
+    # console
     # console.log(arg1, "arg2", [...])
     'begin': '\\bconsole'
     'beginCaptures':
