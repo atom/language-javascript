@@ -538,8 +538,12 @@
     ]
   }
   {
-    'match': '=>',
-    'name': 'storage.type.arrow.js'
+    'match': '(=>)'
+    'captures':
+      '0':
+        'name': 'meta.function.arrow.js'
+      '1':
+        'name': 'storage.type.arrow.js'
   }
   {
     'begin': '\\b(constructor)\\s*(?=\\()'

@@ -1024,6 +1024,9 @@ describe "Javascript grammar", ->
       expect(tokens[8]).toEqual value: '(', scopes: ['source.js', 'meta.function.json.js', 'meta.parameters.js', 'punctuation.definition.parameters.begin.bracket.round.js']
 
     it "tokenizes arrow functions", ->
+      {tokens} = grammar.tokenizeLine('=>')
+      expect(tokens[0]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.arrow.js']
+
       {tokens} = grammar.tokenizeLine('x => x * x')
       expect(tokens[0]).toEqual value: 'x', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'variable.parameter.function.js']
       expect(tokens[2]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.arrow.js']
