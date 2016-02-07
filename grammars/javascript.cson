@@ -543,7 +543,7 @@
       '0':
         'name': 'meta.function.arrow.js'
       '1':
-        'name': 'storage.type.arrow.js'
+        'name': 'storage.type.function.arrow.js'
   }
   {
     'begin': '\\b(constructor)\\s*(?=\\()'
@@ -1107,7 +1107,7 @@
           '1':
             'name': 'punctuation.definition.parameters.end.js'
           '2':
-            'name': 'storage.type.arrow.js'
+            'name': 'storage.type.function.arrow.js'
         'patterns': [
           {
             'include': '#function_params'
@@ -1191,7 +1191,7 @@
     'patterns': [
       {
         'match': '=>'
-        'name': 'storage.type.arrow.js'
+        'name': 'storage.type.function.arrow.js'
       }
       {
         'include': '#function_params'
