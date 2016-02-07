@@ -626,7 +626,7 @@
     'end': '(?!\\G)'
     'patterns': [
       {
-        'begin': '\\b(\\.)(assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)\\s*(?=\\()'
+        'begin': '\\s*(\\.)\\s*(assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)\\s*(?=\\()'
         'beginCaptures':
           '1':
             'name': 'meta.delimiter.method.period.js'
@@ -1195,7 +1195,7 @@
     'patterns': [
       {
         # .methodCall(arg1, "arg2", [...])
-        'begin': '(\\.)([\\w$]+)\\s*(?=\\()'
+        'begin': '(\\.)\\s*([\\w$]+)\\s*(?=\\()'
         'beginCaptures':
           '1':
             'name': 'meta.delimiter.method.period.js'
