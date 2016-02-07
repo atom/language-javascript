@@ -1178,11 +1178,11 @@
         'begin': '\\('
         'beginCaptures':
           '0':
-            'name': 'punctuation.definition.arguments.begin.js'
+            'name': 'punctuation.definition.arguments.begin.bracket.round.js'
         'end': '\\)'
         'endCaptures':
           '0':
-            'name': 'punctuation.definition.arguments.end.js'
+            'name': 'punctuation.definition.arguments.end.bracket.round.js'
         'name': 'meta.arguments.js'
         'patterns': [
           {
