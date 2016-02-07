@@ -454,8 +454,22 @@
   }
   {
     # [param|(params)] => [expression|{statements}]
-    'begin': '(?=(?<![A-Za-z0-9])((\\(([^\\(\\)]*)?\\))|[\\w$]+)\\s*=>)'
-    'end': '(?!(\\s*{|\\G\\(|\\G[\\w$]+|/\\*))((?=\\s*\\S)|(?<=}))'
+    'begin': '''(?x)
+      (?=
+        (?<![A-Za-z0-9])
+        ((\\(([^\\(\\)]*)?\\))|[\\w$]+)
+        \\s*=>
+      )
+    '''
+    'end': '''(?x)
+      (?<=})|
+      ((?!
+        \\s*{|
+        \\G\\(|
+        \\G[\\w$]+|
+        \\s*/\\*|//
+      )(?=\\s*\\S))
+    '''
     'patterns': [
       {
         'begin': '\\G'
@@ -477,13 +491,22 @@
   }
   {
     # [.]foo = ... => ...
-    'begin': '(?=(\\.)?[a-zA-Z_$][\\w$]*\\s*(=)\\s*((\\(([^\\(\\)]*)?\\))|[\\w$]+)\\s*=>)'
+    'begin': '''(?x)
+      (?=
+        (\\.)?[a-zA-Z_$][\\w$]*
+        \\s*(=)\\s*
+        ((\\(([^\\(\\)]*)?\\))|[\\w$]+)
+        \\s*=>
+      )
+    '''
     'end': '''(?x)
-      (?!(
-        \\s*{|\\G(\\.)?[a-zA-Z_$][\\w$]*\\s*(=)\\s*\\(|
+      (?<=})|
+      ((?!
+        \\s*{|
+        \\G(\\.)?[a-zA-Z_$][\\w$]*\\s*(=)\\s*\\(|
         \\G(\\.)?[a-zA-Z_$][\\w$]*\\s*(=)\\s*[\\w$]+|
-        /\\*
-      ))((?=\\s*\\S)|(?<=}))
+        \\s*/\\*|//
+      )(?=\\s*\\S))
     '''
     'patterns': [
       {
@@ -1140,13 +1163,7 @@
   'function_innards':
     'patterns': [
       {
-        'match': '''(?x)
-          (?:\\b(async)\\b\\s*)?
-          \\b(function)
-          \\s*(\\*?)\\s*
-          ([a-zA-Z_$][\\w$]*)?
-          \\s*(?=\\()
-        '''
+        'match': '(?:\\b(async)\\b\\s*)?\\b(function)\\b(?:\\s*(\\*))?'
         'captures':
           '1':
             'name': 'storage.modifier.async.js'
@@ -1154,11 +1171,16 @@
             'name': 'storage.type.function.js'
           '3':
             'name': 'storage.modifier.generator.asterisk.js'
-          '4':
-            'name': 'entity.name.function.js'
+      }
+      {
+        'match': '[a-zA-Z_$][\\w$]*(?=\\s*\\()'
+        'name': 'entity.name.function.js'
       }
       {
         'include': '#function_params'
+      }
+      {
+        'include': '#comments'
       }
     ]
   'arrow_function_innards':
