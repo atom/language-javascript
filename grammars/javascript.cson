@@ -1108,13 +1108,13 @@
   'function_params':
     'patterns': [
       {
-        'begin': '(\\()'
+        'begin': '\\('
         'beginCaptures':
-          '1':
+          '0':
             'name': 'punctuation.definition.parameters.begin.bracket.round.js'
-        'end': '(\\))'
+        'end': '\\)'
         'endCaptures':
-          '1':
+          '0':
             'name': 'punctuation.definition.parameters.end.bracket.round.js'
         'name': 'meta.parameters.js'
         'patterns': [
