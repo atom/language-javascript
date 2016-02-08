@@ -1164,7 +1164,7 @@
           '2':
             'name': 'storage.type.function.js'
           '3':
-            'name': 'storage.modifier.generator.asterisk.js'
+            'name': 'storage.modifier.generator.js'
       }
       {
         'match': '[a-zA-Z_$][\\w$]*(?=\\s*\\()'
