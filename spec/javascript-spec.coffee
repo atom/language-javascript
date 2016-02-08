@@ -1078,7 +1078,7 @@ describe "Javascript grammar", ->
       expect(tokens[9]).toEqual value: '.', scopes: ['source.js', 'meta.function.js', 'meta.parameters.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
       expect(tokens[10]).toEqual value: 'something', scopes: ['source.js', 'meta.function.js', 'meta.parameters.js', 'meta.method-call.js', 'entity.name.function.js']
 
-    it "tokenizes rest parameter", ->
+    it "tokenizes the rest parameter", ->
       {tokens} = grammar.tokenizeLine('(...args) => args[0]')
       expect(tokens[1]).toEqual value: '...', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'keyword.operator.spread.js']
       expect(tokens[2]).toEqual value: 'args', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'variable.parameter.rest.function.js']
