@@ -1194,7 +1194,7 @@
           '1':
             'name': 'variable.parameter.function.js'
       }
-  ]
+    ]
   'arguments':
     'patterns': [
       {
