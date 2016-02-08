@@ -990,6 +990,12 @@ describe "Javascript grammar", ->
 
       {tokens} = grammar.tokenizeLine('write("){");')
       expect(tokens[0]).toEqual value: 'write', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
+      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
+      expect(tokens[2]).toEqual value: '"', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[3]).toEqual value: '){', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'string.quoted.double.js']
+      expect(tokens[4]).toEqual value: '"', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
+      expect(tokens[5]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
+      expect(tokens[6]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
     it "tokenizes named function expressions", ->
       {tokens} = grammar.tokenizeLine('var func = function foo(){}')
