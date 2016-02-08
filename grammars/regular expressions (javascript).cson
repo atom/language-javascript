@@ -94,6 +94,7 @@
         'name': 'constant.other.character-class.set.regexp'
         'patterns': [
           {
+            'match': '(?:.|(\\\\(?:[0-7]{3}|x\\h\\h|u\\h\\h\\h\\h))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-7]{3}|x\\h\\h|u\\h\\h\\h\\h))|(\\\\c[A-Z])|(\\\\.))'
             'captures':
               '1':
                 'name': 'constant.character.numeric.regexp'
@@ -107,7 +108,6 @@
                 'name': 'constant.character.control.regexp'
               '6':
                 'name': 'constant.character.escape.backslash.regexp'
-            'match': '(?:.|(\\\\(?:[0-7]{3}|x\\h\\h|u\\h\\h\\h\\h))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-7]{3}|x\\h\\h|u\\h\\h\\h\\h))|(\\\\c[A-Z])|(\\\\.))'
             'name': 'constant.other.character-class.range.regexp'
           }
           {
