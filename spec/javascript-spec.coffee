@@ -944,11 +944,18 @@ describe "Javascript grammar", ->
     it "tokenizes functions as object properties", ->
       {tokens} = grammar.tokenizeLine('obj.method = function foo(')
       expect(tokens[0]).toEqual value: 'obj', scopes: ['source.js', 'variable.other.object.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.function.js', 'meta.delimiter.method.period.js']
       expect(tokens[2]).toEqual value: 'method', scopes: ['source.js', 'meta.function.js', 'entity.name.function.js']
       expect(tokens[4]).toEqual value: '=', scopes: ['source.js', 'meta.function.js', 'keyword.operator.assignment.js']
       expect(tokens[6]).toEqual value: 'function', scopes: ['source.js', 'meta.function.js', 'storage.type.function.js']
       expect(tokens[8]).toEqual value: 'foo', scopes: ['source.js', 'meta.function.js', 'entity.name.function.js']
       expect(tokens[9]).toEqual value: '(', scopes: ['source.js', 'meta.function.js', 'meta.parameters.js', 'punctuation.definition.parameters.begin.bracket.round.js']
+
+      {tokens} = grammar.tokenizeLine('this.register = function(')
+      expect(tokens[0]).toEqual value: 'this', scopes: ['source.js', 'variable.language.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.function.js', 'meta.delimiter.method.period.js']
+      expect(tokens[2]).toEqual value: 'register', scopes: ['source.js', 'meta.function.js', 'entity.name.function.js']
+      expect(tokens[6]).toEqual value: 'function', scopes: ['source.js', 'meta.function.js', 'storage.type.function.js']
 
     it "tokenizes ES6 method definitions", ->
       {tokens} = grammar.tokenizeLine('f(a, b) {}')
