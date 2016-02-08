@@ -1053,9 +1053,6 @@ describe "Javascript grammar", ->
       expect(tokens[2]).toEqual value: '*', scopes: ['source.js', 'meta.function.js', 'storage.modifier.generator.js']
 
     it "tokenizes arrow functions", ->
-      {tokens} = grammar.tokenizeLine('=>')
-      expect(tokens[0]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.function.arrow.js']
-
       {tokens} = grammar.tokenizeLine('x => x * x')
       expect(tokens[0]).toEqual value: 'x', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'variable.parameter.function.js']
       expect(tokens[2]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.function.arrow.js']
@@ -1077,6 +1074,12 @@ describe "Javascript grammar", ->
       expect(tokens[7]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.function.arrow.js']
       expect(tokens[9]).toEqual value: '{', scopes: ['source.js', 'punctuation.definition.function.body.begin.bracket.curly.js']
       expect(tokens[10]).toEqual value: '}', scopes: ['source.js', 'punctuation.definition.function.body.end.bracket.curly.js']
+
+      lines = grammar.tokenizeLines """
+        a = (x,
+             y) => {}
+      """
+      expect(lines[1][3]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.function.arrow.js']
 
     it "tokenizes stored arrow functions", ->
       {tokens} = grammar.tokenizeLine('var func = (p1, p2) => {}')
