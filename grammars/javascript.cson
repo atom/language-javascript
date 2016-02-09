@@ -1173,6 +1173,14 @@
           '1':
             'name': 'variable.parameter.function.js'
       }
+      {
+        'match': '(\\d[\\w$]*)'
+        'captures':
+          '0':
+            'name': 'meta.parameters.js'
+          '1':
+            'name': 'invalid.illegal.identifier.js'
+      }
     ]
   'arguments':
     'patterns': [

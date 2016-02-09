@@ -1115,6 +1115,15 @@ describe "Javascript grammar", ->
       expect(tokens[1]).toEqual value: '...', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'keyword.operator.spread.js']
       expect(tokens[2]).toEqual value: 'args', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'variable.parameter.rest.function.js']
 
+    it "tokenizes illegal parameters", ->
+      {tokens} = grammar.tokenizeLine('0abc => {}')
+      expect(tokens[0]).toEqual value: '0abc', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'invalid.illegal.identifier.js']
+      expect(tokens[2]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.function.arrow.js']
+
+      {tokens} = grammar.tokenizeLine('(0abc) => {}')
+      expect(tokens[1]).toEqual value: '0abc', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'invalid.illegal.identifier.js']
+      expect(tokens[4]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.function.arrow.js']
+
   describe "variables", ->
     it "tokenizes 'this'", ->
       {tokens} = grammar.tokenizeLine('this')
