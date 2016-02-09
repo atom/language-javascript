@@ -1465,13 +1465,13 @@ describe "Javascript grammar", ->
 
       lines = grammar.tokenizeLines '''
         x  =>
-        // comment
+          // comment
         {}
       '''
       expect(lines[0][0]).toEqual value: 'x', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'variable.parameter.function.js']
       expect(lines[0][2]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.function.arrow.js']
-      expect(lines[1][0]).toEqual value: '//', scopes: ['source.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
-      expect(lines[1][1]).toEqual value: ' comment', scopes: ['source.js', 'comment.line.double-slash.js']
+      expect(lines[1][1]).toEqual value: '//', scopes: ['source.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
+      expect(lines[1][2]).toEqual value: ' comment', scopes: ['source.js', 'comment.line.double-slash.js']
       expect(lines[2][0]).toEqual value: '{', scopes: ['source.js', 'punctuation.definition.function.body.begin.bracket.curly.js']
 
     it "tokenizes comments inside function parameters correctly", ->
