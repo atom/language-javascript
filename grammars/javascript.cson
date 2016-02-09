@@ -422,7 +422,7 @@
           import|package|return|switch|throw|try|while|with)
           [\\s\\(]
         )
-        \\b[a-zA-Z_$][a-zA-Z_$0-9]*
+        \\b[a-zA-Z_$][\\w$]*
         \\s*\\(\\s*
            (("[^"]*")|(\\'[^\\']*\\')|((?!"|\\'|\\(|\\)).))*
         \\)\\s*\\{
@@ -1166,7 +1166,7 @@
         'include': '#function_params'
       }
       {
-        'match': '([a-zA-Z_$][a-zA-Z_$0-9]*)(?=\\s*=>)'
+        'match': '([a-zA-Z_$][\\w$]*)(?=\\s*=>)'
         'captures':
           '0':
             'name': 'meta.parameters.js'
