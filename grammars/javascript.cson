@@ -1084,27 +1084,6 @@
         ]
       }
     ]
-  'arrow_functions':
-    'patterns': [
-      {
-        # (a,b) =>
-        'begin': '(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
-        'beginCaptures':
-          '1':
-            'name': 'punctuation.definition.parameters.begin.js'
-        'end': '(\\))\\s*(=>)'
-        'endCaptures':
-          '1':
-            'name': 'punctuation.definition.parameters.end.js'
-          '2':
-            'name': 'storage.type.function.arrow.js'
-        'patterns': [
-          {
-            'include': '#function_params'
-          }
-        ]
-      }
-    ]
   'function_params':
     'patterns': [
       {
