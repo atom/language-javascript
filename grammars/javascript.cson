@@ -856,8 +856,19 @@
     'match': '({)(})'
   }
   {
-    'match': '{|}'
-    'name': 'meta.brace.curly.js'
+    'begin': '{'
+    'beginCaptures':
+      '0':
+        'name': 'meta.brace.curly.js'
+    'end': '}'
+    'endCaptures':
+      '0':
+        'name': 'meta.brace.curly.js'
+    'patterns': [
+      {
+        'include': '$self'
+      }
+    ]
   }
   {
     'begin': '\\('
@@ -869,7 +880,9 @@
       '0':
         'name': 'meta.brace.round.js'
     'patterns': [
-      'include': '$self'
+      {
+        'include': '$self'
+      }
     ]
   }
   {
