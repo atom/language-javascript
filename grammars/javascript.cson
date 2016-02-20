@@ -287,6 +287,12 @@
     'end': '(?<=})'
     'patterns': [
       {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
         'begin': '\\G'
         'end': '(?<=\\))'
         'name': 'meta.function.js'
@@ -296,12 +302,6 @@
           }
         ]
       }
-      {
-        'include': '#function_body'
-      }
-      {
-        'include': '#comments'
-      }
     ]
   }
   {
@@ -309,6 +309,12 @@
     'begin': '(?=(\\.)?[a-zA-Z_$][\\w$]*\\s*=\\s*(\\basync\\b\\s*)?\\bfunction\\b)'
     'end': '(?<=})'
     'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
       {
         'begin': '\\G'
         'end': '(?<=\\))'
@@ -329,12 +335,6 @@
           }
         ]
       }
-      {
-        'include': '#function_body'
-      }
-      {
-        'include': '#comments'
-      }
     ]
   }
   {
@@ -342,6 +342,12 @@
     'begin': '(?=\\b[a-zA-Z_$][\\w$]*\\s*:\\s*(\\basync\\b\\s*)?\\bfunction\\b)'
     'end': '(?<=})'
     'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
       {
         'begin': '\\G'
         'end': '(?<=\\))'
@@ -360,12 +366,6 @@
           }
         ]
       }
-      {
-        'include': '#function_body'
-      }
-      {
-        'include': '#comments'
-      }
     ]
   }
   {
@@ -373,6 +373,12 @@
     'begin': '(?=((\'[^\']*?\')|("[^"]*?"))\\s*:\\s*(\\basync\\b\\s*)?\\bfunction\\b)'
     'end': '(?<=})'
     'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
       {
         'begin': '\\G'
         'end': '(?<=\\))'
@@ -405,12 +411,6 @@
           }
         ]
       }
-      {
-        'include': '#function_body'
-      }
-      {
-        'include': '#comments'
-      }
     ]
   }
   {
@@ -431,6 +431,12 @@
     'end': '(?<=})'
     'patterns': [
       {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
         'begin': '\\G'
         'end': '(?<=\\))'
         'name': 'meta.function.method.definition.js'
@@ -443,12 +449,6 @@
             'include': '#function_params'
           }
         ]
-      }
-      {
-        'include': '#function_body'
-      }
-      {
-        'include': '#comments'
       }
     ]
   }
@@ -472,6 +472,12 @@
     '''
     'patterns': [
       {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
         'begin': '\\G'
         'end': '(?<=(=>))'
         'name': 'meta.function.arrow.js'
@@ -480,12 +486,6 @@
             'include': '#arrow_function_innards'
           }
         ]
-      }
-      {
-        'include': '#function_body'
-      }
-      {
-        'include': '#comments'
       }
     ]
   }
@@ -510,6 +510,12 @@
     '''
     'patterns': [
       {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
         'begin': '\\G'
         'end': '(?<=(=>))'
         'name': 'meta.function.arrow.js'
@@ -528,12 +534,6 @@
             'include': '#arrow_function_innards'
           }
         ]
-      }
-      {
-        'include': '#function_body'
-      }
-      {
-        'include': '#comments'
       }
     ]
   }
