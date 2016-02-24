@@ -1112,6 +1112,19 @@ describe "Javascript grammar", ->
       expect(tokens[11]).toEqual value: ')', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'punctuation.definition.parameters.end.bracket.round.js']
       expect(tokens[13]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.function.arrow.js']
 
+    it "tokenizes arrow functions in object literals", ->
+      {tokens} = grammar.tokenizeLine('foo: param => {}')
+      expect(tokens[0]).toEqual value: 'foo', scopes: ['source.js', 'meta.function.arrow.json.js', 'entity.name.function.js']
+      expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'meta.function.arrow.json.js', 'keyword.operator.assignment.js']
+      expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'meta.function.arrow.json.js', 'meta.parameters.js', 'variable.parameter.function.js']
+      expect(tokens[5]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.json.js', 'storage.type.function.arrow.js']
+
+      {tokens} = grammar.tokenizeLine('"foo": param => {}')
+      expect(tokens[1]).toEqual value: 'foo', scopes: ['source.js', 'meta.function.arrow.json.js', 'string.quoted.double.js', 'entity.name.function.js']
+      expect(tokens[3]).toEqual value: ':', scopes: ['source.js', 'meta.function.arrow.json.js', 'keyword.operator.assignment.js']
+      expect(tokens[5]).toEqual value: 'param', scopes: ['source.js', 'meta.function.arrow.json.js', 'meta.parameters.js', 'variable.parameter.function.js']
+      expect(tokens[7]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.json.js', 'storage.type.function.arrow.js']
+
     it "tokenizes default parameters", ->
       {tokens} = grammar.tokenizeLine('function multiply(a, b = 1){}')
       expect(tokens[7]).toEqual value: 'b', scopes: ['source.js', 'meta.function.js', 'meta.parameters.js', 'variable.parameter.function.js']
