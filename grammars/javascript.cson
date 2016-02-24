@@ -772,14 +772,6 @@
         'name': 'constant.language.null.js'
   }
   {
-    'match': '(?<!\\.)\\b([A-Z][A-Z0-9_]+)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)([A-Z][A-Z0-9_]+)(?=\\s*:)'
-    'captures':
-      '1':
-        'name': 'constant.other.js'
-      '2':
-        'name': 'constant.other.js'
-  }
-  {
     'match': '(?<!\\.)\\b(debugger)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(debugger)(?=\\s*:)'
     'captures':
       '1':
@@ -852,10 +844,18 @@
     'include': '#numbers'
   }
   {
-    'include': '#object_variable'
+    'include': '#objects'
   }
   {
     'include': '#properties'
+  }
+  {
+    'match': '(?<!\\.)\\b([A-Z][A-Z0-9_]+)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)([A-Z][A-Z0-9_]+)(?=\\s*:)'
+    'captures':
+      '1':
+        'name': 'constant.other.js'
+      '2':
+        'name': 'constant.other.js'
   }
   {
     'match': '(?<!\\$)\\b[0-9]+[\\w$]*'
@@ -1305,31 +1305,55 @@
         ]
       }
     ]
-  'object_variable':
+  'objects':
     'patterns': [
       {
-        'comment': '`obj` in `obj.prop`, `obj.methodCall()`'
-        'match': '(?:([a-zA-Z_$][\\w$]*)|(\\d\\w*))(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
-        'captures':
-          '1':
-            'name': 'variable.other.object.js'
-          '2':
-            'name': 'invalid.illegal.identifier.js'
+        # OBJ in OBJ.prop, OBJ.methodCall()
+        'match': '[A-Z][A-Z0-9_$]*(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
+        'name': 'constant.other.object.js'
+      }
+      {
+        # obj in obj.prop, obj.methodCall()
+        'match': '[a-zA-Z_$][\\w$]*(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
+        'name': 'variable.other.object.js'
       }
     ]
   'properties':
     'patterns': [
       {
-        'comment': '`prop` in `obj.prop`, `func().prop`'
-        'match': '(\\.)\\s*(?:([0-9]+[\\w$]*)|([A-Z][A-Z0-9_$]*\\b\\$*)|(\\$*[a-zA-Z_$][\\w$]*))'
+        # PROP1 in obj.PROP1.prop2, func().PROP1.prop2
+        'match': '(\\.)\\s*([A-Z][A-Z0-9_$]*\\b\\$*)(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
         'captures':
           '1':
             'name': 'meta.delimiter.property.period.js'
           '2':
-            'name': 'invalid.illegal.identifier.js'
-          '3':
+            'name': 'constant.other.object.property.js'
+      }
+      {
+        # prop1 in obj.prop1.prop2, func().prop1.prop2
+        'match': '(\\.)\\s*(\\$*[a-zA-Z_$][\\w$]*)(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
+        'captures':
+          '1':
+            'name': 'meta.delimiter.property.period.js'
+          '2':
+            'name': 'variable.other.object.property.js'
+      }
+      {
+        # PROP in obj.PROP, func().PROP
+        'match': '(\\.)\\s*([A-Z][A-Z0-9_$]*\\b\\$*)'
+        'captures':
+          '1':
+            'name': 'meta.delimiter.property.period.js'
+          '2':
             'name': 'constant.other.property.js'
-          '4':
+      }
+      {
+        # prop in obj.prop, func().prop
+        'match': '(\\.)\\s*(\\$*[a-zA-Z_$][\\w$]*)'
+        'captures':
+          '1':
+            'name': 'meta.delimiter.property.period.js'
+          '2':
             'name': 'variable.other.property.js'
       }
     ]
