@@ -1215,7 +1215,7 @@
         'name': 'meta.parameters.js'
         'patterns': [
           {
-            'match': '(\\.\\.\\.)([a-zA-Z_$][a-zA-Z_$0-9]*)'
+            'match': '(\\.\\.\\.)([a-zA-Z_$][\\w$]*)'
             'captures':
               '1':
                 'name': 'keyword.operator.spread.js'
@@ -1226,7 +1226,7 @@
             'include': '$self'
           }
           {
-            'match': '[a-zA-Z_$][a-zA-Z_$0-9]*'
+            'match': '[a-zA-Z_$][\\w$]*'
             'name': 'variable.parameter.function.js'
           }
         ]
