@@ -169,6 +169,15 @@ describe "Javascript grammar", ->
       expect(tokens[10]).toEqual value: 'c', scopes: ['source.js', 'string.regexp.js']
       expect(tokens[11]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
 
+    it "tokenizes regular expressions inside arrow function expressions", ->
+      {tokens} = grammar.tokenizeLine('getRegex = () => /^helloworld$/;')
+      expect(tokens[9]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[10]).toEqual value: '^', scopes: ['source.js', 'string.regexp.js', 'keyword.control.anchor.regexp']
+      expect(tokens[11]).toEqual value: 'helloworld', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[12]).toEqual value: '$', scopes: ['source.js', 'string.regexp.js', 'keyword.control.anchor.regexp']
+      expect(tokens[13]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+      expect(tokens[14]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+
     it "verifies that regular expressions have explicit count modifiers", ->
       source = fs.readFileSync(path.resolve(__dirname, '..', 'grammars', 'javascript.cson'), 'utf8')
       expect(source.search /{,/).toEqual -1
