@@ -1,11 +1,15 @@
 'scopeName': 'source.js'
 'fileTypes': [
   'js'
-  'htc'
   '_js'
   'es'
   'es6'
+  'gs'
+  'htc'
+  'jscad'
   'jsm'
+  'json5'
+  'pac'
   'pjs'
   'xsjs'
   'xsjslib'
@@ -14,11 +18,88 @@
 'name': 'JavaScript'
 'patterns': [
   {
+    'comment': 'ES6 import'
     'begin': '(?<!\\.)\\b(import)(?!\\s*:)\\b'
     'beginCaptures':
       '1':
         'name': 'keyword.control.js'
     'patterns': [
+      {
+        'comment': '{ member1 , member2 as alias2 , [...] }'
+        'begin': '\\{'
+        'beginCaptures':
+          0:
+            'name': 'punctuation.definition.modules.begin.js'
+        'end': '\\}'
+        'endCaptures':
+          0:
+            'name': 'punctuation.definition.modules.end.js'
+        'patterns': [
+          {
+            'comment': '(default|name) as alias'
+            'captures':
+              '1':
+                'name': 'variable.language.default.js'
+              '2':
+                'name': 'variable.other.module.js'
+              '3':
+                'name': 'keyword.control.js'
+              '4':
+                'name': 'invalid.illegal.js'
+              '5':
+                'name': 'variable.other.module-alias.js'
+            'match': '(?x)
+              (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+              \\s*
+              (\\b as \\b)
+              \\s*
+              (?: (\\b default \\b | \\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+            '
+          }
+          {
+            'match': ','
+            'name': 'meta.delimiter.object.comma.js'
+          }
+          {
+            'include': '#comments'
+          }
+          {
+            'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+            'name': 'variable.other.module.js'
+          }
+        ]
+      }
+      {
+        'comment': '(default|*|name) as alias'
+        'captures':
+          '1':
+            'name': 'variable.language.default.js'
+          '2':
+            'name': 'variable.language.import-all.js'
+          '3':
+            'name': 'variable.other.module.js'
+          '4':
+            'name': 'keyword.control.js'
+          '5':
+            'name': 'invalid.illegal.js'
+          '6':
+            'name': 'variable.other.module-alias.js'
+        'match': '(?x)
+          (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+          \\s*
+          (\\b as \\b)
+          \\s*
+          (?: (\\b default \\b | \\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+        '
+      }
+      {
+        'match': '\\*'
+        'name': 'variable.language.import-all.js'
+      }
+      {
+        'match': '\\b(default)\\b'
+        'name': 'variable.language.default.js'
+      }
       {
         'include': '#strings'
       }
@@ -26,240 +107,586 @@
         'include': '#comments'
       }
       {
-        'match': '\\b(as|from)\\b',
+        'match': '\\b(from)\\b'
+        'name': 'keyword.control.js'
+      }
+      {
+        'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b(?=.*\\bfrom\\b)'
+        'name': 'variable.other.module.js'
+      }
+      {
+        'match': ','
+        'name': 'meta.delimiter.object.comma.js'
+      }
+    ]
+    'end': '(?=;|$)'
+    'name': 'meta.import.js'
+  }
+  {
+    'comment': 'ES6 export: `export default (variable|class|function, etc.)`'
+    'match': '(?x) \\b(export)\\b \\s* \\b(default)\\b (?:\\s*) \\b((?!\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b)[a-zA-Z_$][a-zA-Z_$0-9]*)?\\b'
+    'captures':
+      '0':
+        'name': 'meta.export.js'
+      '1':
+        'name': 'keyword.control.js'
+      '2':
+        'name': 'variable.language.default.js'
+      '3':
+        'name': 'variable.other.module.js'
+  }
+  {
+    'comment': 'ES6 export, re-export: `export {member as alias, [...]} [from ...]`'
+    'begin': '(?<!\\.)\\b(export)(?!\\s*:)\\b'
+    'beginCaptures':
+      '1':
+        'name': 'keyword.control.js'
+    'patterns': [
+      {
+        'include': '#numbers'
+      }
+      {
+        'comment': '`{ member1 , member2 as alias2 , [...] }` inside re-export'
+        'begin': '\\{(?=.*\\bfrom\\b)'
+        'beginCaptures':
+          0:
+            'name': 'punctuation.definition.modules.begin.js'
+        'end': '\\}'
+        'endCaptures':
+          0:
+            'name': 'punctuation.definition.modules.end.js'
+        'patterns': [
+          {
+            'comment': '(default|name) as alias'
+            'captures':
+              '1':
+                'name': 'variable.language.default.js'
+              '2':
+                'name': 'variable.other.module.js'
+              '3':
+                'name': 'keyword.control.js'
+              '4':
+                'name': 'variable.language.default.js'
+              '5':
+                'name': 'invalid.illegal.js'
+              '6':
+                'name': 'variable.other.module-alias.js'
+            'match': '(?x)
+              (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+              \\s*
+              (\\b as \\b)
+              \\s*
+              (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+            '
+          }
+          {
+            'match': ','
+            'name': 'meta.delimiter.object.comma.js'
+          }
+          {
+            'include': '#comments'
+          }
+          {
+            'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+            'name': 'variable.other.module.js'
+          }
+        ]
+      }
+      {
+        'comment': '{ member1 , member2 as alias2 , [...] }'
+        'begin': '(?![a-zA-Z_$0-9])\\{'
+        'beginCaptures':
+          0:
+            'name': 'punctuation.definition.modules.begin.js'
+        'end': '\\}'
+        'endCaptures':
+          0:
+            'name': 'punctuation.definition.modules.end.js'
+        'patterns': [
+          {
+            'comment': 'name as (default|alias)'
+            'captures':
+              '1':
+                'name': 'invalid.illegal.js'
+              '2':
+                'name': 'variable.other.module.js'
+              '3':
+                'name': 'keyword.control.js'
+              '4':
+                'name': 'variable.language.default.js'
+              '5':
+                'name': 'invalid.illegal.js'
+              '6':
+                'name': 'variable.other.module-alias.js'
+            'match': '(?x)
+              (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+              \\s*
+              (\\b as \\b)
+              \\s*
+              (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+            '
+          }
+          {
+            'include': '#comments'
+          }
+          {
+            'match': ','
+            'name': 'meta.delimiter.object.comma.js'
+          }
+          {
+            'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+            'name': 'variable.other.module.js'
+          }
+        ]
+      }
+      {
+        'match': '\\*(?=.*\\bfrom\\b)'
+        'name': 'variable.language.import-all.js'
+      }
+      {
+        'match': '\\b(default)\\b'
+        'name': 'variable.language.default.js'
+      }
+      {
+        'include': '#strings'
+      }
+      {
+        'include': '#comments'
+      }
+      {
+        'match': '\\b(from)\\b'
         'name': 'keyword.control.js'
       }
       {
         'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+        'name': 'variable.other.module.js'
       }
       {
         'match': ','
         'name': 'meta.delimiter.object.comma.js'
       }
       {
-        'match': '\\{|\\}'
-        'name': 'meta.brace.curly.js'
+        'include': '#operators'
       }
     ]
-    'end': '(;)?$'
-    'endCaptures':
-      '1':
-        'name': 'punctuation.terminator.statement.js'
-    'name': 'meta.import.js'
+    'end': '(?=;|\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b|$)'
+    'name': 'meta.export.js'
   }
   {
+    'match': '(?<!\\.)\\b(super|this)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(super|this)(?=\\s*:)'
     'captures':
       '1':
-        'name': 'support.class.js'
+        'name': 'variable.language.js'
       '2':
-        'name': 'support.constant.js'
+        'name': 'variable.language.js'
+  }
+  {
+    # [async] function [name](params)
+    # function* name(params) – generator function declaration
+    'begin': '(?=(\\basync\\b\\s*)?\\bfunction\\b)'
+    'end': '(?<=})'
+    'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
+        'begin': '\\G'
+        'end': '(?<=\\))'
+        'name': 'meta.function.js'
+        'patterns': [
+          {
+            'include': '#function_innards'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    # [.]foo = function...
+    'begin': '(?=(\\.)?[a-zA-Z_$][\\w$]*\\s*=\\s*(\\basync\\b\\s*)?\\bfunction\\b)'
+    'end': '(?<=})'
+    'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
+        'begin': '\\G'
+        'end': '(?<=\\))'
+        'name': 'meta.function.js'
+        'patterns': [
+          {
+            'match': '(\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)\\s*'
+            'captures':
+              '1':
+                'name': 'meta.delimiter.method.period.js'
+              '2':
+                'name': 'entity.name.function.js'
+              '3':
+                'name': 'keyword.operator.assignment.js'
+          }
+          {
+            'include': '#function_innards'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    # foo: function...
+    'begin': '(?=\\b[a-zA-Z_$][\\w$]*\\s*:\\s*(\\basync\\b\\s*)?\\bfunction\\b)'
+    'end': '(?<=})'
+    'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
+        'begin': '\\G'
+        'end': '(?<=\\))'
+        'name': 'meta.function.json.js'
+        'patterns': [
+          {
+            'match': '\\b([a-zA-Z_$][\\w$]*)\\s*(:)\\s*'
+            'captures':
+              '1':
+                'name': 'entity.name.function.js'
+              '2':
+                'name': 'keyword.operator.assignment.js'
+          }
+          {
+            'include': '#function_innards'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    # "foo": function...
+    'begin': '(?=((\'[^\']*?\')|("[^"]*?"))\\s*:\\s*(\\basync\\b\\s*)?\\bfunction\\b)'
+    'end': '(?<=})'
+    'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
+        'begin': '\\G'
+        'end': '(?<=\\))'
+        'name': 'meta.function.json.js'
+        'patterns': [
+          {
+            'match': '(?:((\')([^\']*?)(\'))|((")([^"]*?)(")))\\s*(:)'
+            'captures':
+              '1':
+                'name': 'string.quoted.single.js'
+              '2':
+                'name': 'punctuation.definition.string.begin.js'
+              '3':
+                'name': 'entity.name.function.js'
+              '4':
+                'name': 'punctuation.definition.string.end.js'
+              '5':
+                'name': 'string.quoted.double.js'
+              '6':
+                'name': 'punctuation.definition.string.begin.js'
+              '7':
+                'name': 'entity.name.function.js'
+              '8':
+                'name': 'punctuation.definition.string.end.js'
+              '9':
+                'name': 'keyword.operator.assignment.js'
+          }
+          {
+            'include': '#function_innards'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    # ES6 method definitions: foo() {}
+    'begin': '''(?x)
+      (?=
+        (?!
+          (break|case|catch|continue|do|else|finally|for|function|if|export|
+          import|package|return|switch|throw|try|while|with)
+          [\\s\\(]
+        )
+        \\b[a-zA-Z_$][\\w$]*
+        \\s*\\(\\s*
+           (("[^"]*")|(\\'[^\\']*\\')|((?!"|\\'|\\(|\\)).))*
+        \\)\\s*\\{
+      )
+    '''
+    'end': '(?<=})'
+    'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
+        'begin': '\\G'
+        'end': '(?<=\\))'
+        'name': 'meta.function.method.definition.js'
+        'patterns': [
+          {
+            'match': '\\b([a-zA-Z_$][\\w$]*)'
+            'name': 'entity.name.function.js'
+          }
+          {
+            'include': '#function_params'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    # [param|(params)] => [expression|{statements}]
+    'begin': '''(?x)
+      (?=
+        (?<![A-Za-z0-9])
+        ((\\(([^\\(\\)]*)?\\))|[\\w$]+)
+        \\s*=>
+      )
+    '''
+    'end': '''(?x)
+      (?<=})|
+      ((?!
+        \\s*{|
+        \\G\\(|
+        \\G[\\w$]+|
+        \\s*/\\*|\\s*//
+      )(?=\\s*\\S))
+    '''
+    'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
+        'begin': '\\G'
+        'end': '(?<=(=>))'
+        'name': 'meta.function.arrow.js'
+        'patterns': [
+          {
+            'include': '#arrow_function_innards'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    # [.]foo = ... => ...
+    'begin': '''(?x)
+      (?=
+        (\\.)?[a-zA-Z_$][\\w$]*
+        \\s*(=)\\s*
+        ((\\(([^\\(\\)]*)?\\))|[\\w$]+)
+        \\s*=>
+      )
+    '''
+    'end': '''(?x)
+      (?<=})|
+      ((?!
+        \\s*{|
+        \\G(\\.)?[a-zA-Z_$][\\w$]*\\s*(=)\\s*\\(|
+        \\G(\\.)?[a-zA-Z_$][\\w$]*\\s*(=)\\s*[\\w$]+|
+        \\s*/\\*|\\s*//
+      )(?=\\s*\\S))
+    '''
+    'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
+        'begin': '\\G'
+        'end': '(?<=(=>))'
+        'name': 'meta.function.arrow.js'
+        'patterns': [
+          {
+            'match': '\\G(\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)'
+            'captures':
+              '1':
+                'name': 'meta.delimiter.method.period.js'
+              '2':
+                'name': 'entity.name.function.js'
+              '3':
+                'name': 'keyword.operator.assignment.js'
+          }
+          {
+            'include': '#arrow_function_innards'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    # foo: ... => ...
+    'begin': '''(?x)
+      (?=
+        \\b[a-zA-Z_$][\\w$]*
+        \\s*:\\s*
+        ((\\(([^\\(\\)]*)?\\))|[\\w$]+)
+        \\s*=>
+      )
+    '''
+    'end': '''(?x)
+      (?<=})|
+      ((?!
+        \\s*{|
+        \\G[\\w$]+:|
+        \\s*/\\*|\\s*//
+      )(?=\\s*\\S))
+    '''
+    'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
+        'begin': '\\G'
+        'end': '(?<=(=>))'
+        'name': 'meta.function.arrow.json.js'
+        'patterns': [
+          {
+            'match': '\\b([a-zA-Z_$][\\w$]*)\\s*(:)\\s*'
+            'captures':
+              '1':
+                'name': 'entity.name.function.js'
+              '2':
+                'name': 'keyword.operator.assignment.js'
+          }
+          {
+            'include': '#arrow_function_innards'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    # "foo": ... => ...
+    'begin': '''(?x)
+      (?=
+        ((\'[^\']*?\')|("[^"]*?"))
+        \\s*:\\s*
+        ((\\(([^\\(\\)]*)?\\))|[\\w$]+)
+        \\s*=>
+      )
+    '''
+    'end': '''(?x)
+      (?<=})|
+      ((?!
+        \\G((\'[^\']*?\')|("[^"]*?"))|
+        \\s*{|
+        \\s*/\\*|\\s*//
+      )(?=\\s*\\S))
+    '''
+    'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
+        'begin': '\\G'
+        'end': '(?<=(=>))'
+        'name': 'meta.function.arrow.json.js'
+        'patterns': [
+          {
+            'match': '(?:((\')([^\']*?)(\'))|((")([^"]*?)(")))\\s*(:)'
+            'captures':
+              '1':
+                'name': 'string.quoted.single.js'
+              '2':
+                'name': 'punctuation.definition.string.begin.js'
+              '3':
+                'name': 'entity.name.function.js'
+              '4':
+                'name': 'punctuation.definition.string.end.js'
+              '5':
+                'name': 'string.quoted.double.js'
+              '6':
+                'name': 'punctuation.definition.string.begin.js'
+              '7':
+                'name': 'entity.name.function.js'
+              '8':
+                'name': 'punctuation.definition.string.end.js'
+              '9':
+                'name': 'keyword.operator.assignment.js'
+          }
+          {
+            'include': '#arrow_function_innards'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    'match': '(=>)'
+    'captures':
+      '0':
+        'name': 'meta.function.arrow.js'
+      '1':
+        'name': 'storage.type.function.arrow.js'
+  }
+  {
+    'begin': '\\b(constructor)\\s*(?=\\()'
+    'beginCaptures':
+      '1':
+        'name': 'entity.name.function.constructor.js'
+    'end': '(?<=\\})'
+    'patterns': [
+      {
+        'include': '#function_params'
+      }
+    ]
+  }
+  {
+    'match': '''(?x)
+      \\b(class)
+      (?:
+        (?:\\s+(extends)\\s+([a-zA-Z_$][\\w$]*))
+        |
+        (?:
+          (?:\\s+([a-zA-Z_$][\\w$]*))
+          (?:\\s+(extends)\\s+([a-zA-Z_$][\\w$]*))?
+        )
+      )
+    '''
+    'captures':
+      '1':
+        'name': 'storage.type.class.js'
+      '2':
+        'name': 'storage.modifier.js'
       '3':
-        'name': 'keyword.operator.js'
-    'comment': 'match stuff like: Sound.prototype = { … } when extending an object'
-    'match': '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\s*(=)\\s*'
+        'name': 'entity.name.type.js'
+      '4':
+        'name': 'entity.name.type.js'
+      '5':
+        'name': 'storage.modifier.js'
+      '6':
+        'name': 'entity.name.type.js'
     'name': 'meta.class.js'
-  }
-  {
-    'begin': '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)(\\()'
-    'beginCaptures':
-      '1':
-        'name': 'support.class.js'
-      '2':
-        'name': 'support.constant.js'
-      '3':
-        'name': 'entity.name.function.js'
-      '4':
-        'name': 'keyword.operator.js'
-      '5':
-        'name': 'storage.modifier.js'
-      '6':
-        'name': 'storage.type.function.js'
-      '7':
-        'name': 'storage.type.function.js'
-      '8':
-        'name': 'punctuation.definition.parameters.begin.js'
-    'comment': 'match stuff like: Sound.prototype.play = function() { … }'
-    'end': '(\\))'
-    'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
-    'name': 'meta.function.prototype.js'
-    'patterns': [
-      {
-        'include': '#function-params'
-      }
-    ]
-  }
-  {
-    'captures':
-      '1':
-        'name': 'support.class.js'
-      '2':
-        'name': 'support.constant.js'
-      '3':
-        'name': 'entity.name.function.js'
-      '4':
-        'name': 'keyword.operator.js'
-    'comment': 'match stuff like: Sound.prototype.play = myfunc'
-    'match': '([a-zA-Z_?.$][\\w?.$]*)\\.(prototype)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*'
-    'name': 'meta.function.js'
-  }
-  {
-    'begin': '([a-zA-Z_?.$][\\w?.$]*)\\.([a-zA-Z_?.$][\\w?.$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
-    'beginCaptures':
-      '1':
-        'name': 'support.class.js'
-      '2':
-        'name': 'entity.name.function.js'
-      '3':
-        'name': 'keyword.operator.js'
-      '4':
-        'name': 'storage.modifier.js'
-      '5':
-        'name': 'storage.type.function.js'
-      '6':
-        'name': 'storage.type.function.js'
-      '7':
-        'name': 'entity.name.function.js'
-      '8':
-        'name': 'punctuation.definition.parameters.begin.js'
-    'comment': 'match stuff like: Sound.play = function() { … }'
-    'end': '(\\))'
-    'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
-    'name': 'meta.function.js'
-    'patterns': [
-      {
-        'include': '#function-params'
-      }
-    ]
-  }
-  {
-    'begin': '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
-    'beginCaptures':
-      '1':
-        'name': 'entity.name.function.js'
-      '2':
-        'name': 'keyword.operator.js'
-      '3':
-        'name': 'storage.modifier.js'
-      '4':
-        'name': 'storage.type.function.js'
-      '5':
-        'name': 'storage.type.function.js'
-      '6':
-        'name': 'entity.name.function.js'
-      '7':
-        'name': 'punctuation.definition.parameters.begin.js'
-    'comment': 'match stuff like: play = function() { … }'
-    'end': '(\\))'
-    'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
-    'name': 'meta.function.js'
-    'patterns': [
-      {
-        'include': '#function-params'
-      }
-    ]
-  }
-  {
-    'begin': '\\b(?:(async)(?:\\s+))?(function\\*?)\\s*((\\*)|(?:(?:\\s+)(\\*?[a-zA-Z_$]\\w*)))?\\s*(\\()'
-    'beginCaptures':
-      '1':
-        'name': 'storage.modifier.js'
-      '2':
-        'name': 'storage.type.function.js'
-      '4':
-        'name': 'storage.type.function.js'
-      '5':
-        'name': 'entity.name.function.js'
-      '6':
-        'name': 'punctuation.definition.parameters.begin.js'
-    'comment': 'match regular function like: function myFunc(arg) { … }'
-    'end': '(\\))'
-    'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
-    'name': 'meta.function.js'
-    'patterns': [
-      {
-        'include': '#function-params'
-      }
-    ]
-  }
-  {
-    'begin': '\\b([a-zA-Z_?.$][\\w?.$]*)\\s*(:)\\s*\\b(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
-    'beginCaptures':
-      '1':
-        'name': 'entity.name.function.js'
-      '2':
-        'name': 'keyword.operator.js'
-      '3':
-        'name': 'storage.modifier.js'
-      '4':
-        'name': 'storage.type.function.js'
-      '5':
-        'name': 'storage.type.function.js'
-      '6':
-        'name': 'entity.name.function.js'
-      '7':
-        'name': 'punctuation.definition.parameters.begin.js'
-    'comment': 'match stuff like: foobar: function() { … }'
-    'end': '(\\))'
-    'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
-    'name': 'meta.function.json.js'
-    'patterns': [
-      {
-        'include': '#function-params'
-      }
-    ]
-  }
-  {
-    'begin': '(?:((\')([^\']*?)(\'))|((")([^"]*?)(")))\\s*(:)\\s*\\b(?:(async)(?:\\s+))?(function\\*?)\\s*(\\*?)\\s*([a-zA-Z_?$][\\w?$]*)?\\s*(\\()'
-    'beginCaptures':
-      '1':
-        'name': 'string.quoted.single.js'
-      '2':
-        'name': 'punctuation.definition.string.begin.js'
-      '3':
-        'name': 'entity.name.function.js'
-      '4':
-        'name': 'punctuation.definition.string.end.js'
-      '5':
-        'name': 'string.quoted.double.js'
-      '6':
-        'name': 'punctuation.definition.string.begin.js'
-      '7':
-        'name': 'entity.name.function.js'
-      '8':
-        'name': 'punctuation.definition.string.end.js'
-      '9':
-        'name': 'keyword.operator.js'
-      '10':
-        'name': 'storage.modifier.js'
-      '11':
-        'name': 'storage.type.function.js'
-      '12':
-        'name': 'storage.type.function.js'
-      '13':
-        'name': 'entity.name.function.js'
-      '14':
-        'name': 'punctuation.definition.parameters.begin.js'
-    'comment': 'Attempt to match "foo": function'
-    'end': '(\\))'
-    'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
-    'name': 'meta.function.json.js'
-    'patterns': [
-      {
-        'include': '#function-params'
-      }
-    ]
   }
   {
     'begin': '^\\s*(?=@\\s*[A-Za-z_][A-Za-z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z_0-9]*)*\\s*\\()'
@@ -319,85 +746,6 @@
     ]
   }
   {
-    'begin': '\\b(constructor)\\s*(\\()'
-    'beginCaptures':
-      '1':
-        'name': 'entity.name.constructor.js'
-      '2':
-        'name': 'punctuation.definition.parameters.begin.js'
-    'end': '(\\))'
-    'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
-    'patterns': [
-      {
-        'include': '#function-params'
-      }
-    ]
-  }
-  {
-    'include': '#methods'
-  }
-  {
-    'match': '\\b(class)(?:(?:\\s+(extends)\\s+(\\w+(?:\\.\\w*)?))|(?:(?:\\s+(\\w+(?:\\.\\w*)?))(?:\\s+(extends)\\s+(\\w+(?:\\.\\w*)?))?))'
-    'captures':
-      '1':
-        'name': 'storage.type.class.js'
-      '2':
-        'name': 'storage.modifier.js'
-      '3':
-        'name': 'entity.name.type.js'
-      '4':
-        'name': 'entity.name.type.js'
-      '5':
-        'name': 'storage.modifier.js'
-      '6':
-        'name': 'entity.name.type.js'
-    'name': 'meta.class.js'
-  }
-  {
-    'name': 'meta.function.arrow.js'
-    'begin': '(?<![A-Za-z0-9])(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
-    'beginCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.begin.js'
-
-    'end': '(\\))(\\s*=>)'
-    'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
-      '2':
-        'name': 'storage.type.arrow.js'
-    'patterns': [
-      {
-        'include': '#function-params'
-      }
-    ]
-  }
-  {
-    'comment': 'match stuff like: play = (a,b) => { … }'
-    'name': 'meta.function.arrow.js'
-    'begin': '([a-zA-Z_?$][\\w?$]*)\\s*(=)\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*=>)'
-    'beginCaptures':
-      '1':
-        'name': 'entity.name.function.js'
-      '2':
-        'name': 'keyword.operator.js'
-      '3':
-        'name': 'punctuation.definition.parameters.begin.js'
-    'end': '(\\))(\\s*=>)'
-    'endCaptures':
-      '1':
-        'name': 'punctuation.definition.parameters.end.js'
-      '2':
-        'name': 'storage.type.arrow.js'
-    'patterns': [
-      {
-        'include': '#function-params'
-      }
-    ]
-  }
-  {
     'captures':
       '1':
         'name': 'keyword.operator.new.js'
@@ -407,15 +755,30 @@
     'name': 'meta.class.instance.constructor'
   }
   {
-    'match': '\\b(console)\\b'
-    'name': 'entity.name.type.object.js.console'
-  }
-  {
-    'match': '\\.(warn|info|log|error|time|timeEnd|assert)\\b'
-    'name': 'support.function.js.console'
-  }
-  {
-    'include': '#numbers'
+    # console
+    # console.log(arg1, "arg2", [...])
+    'begin': '\\bconsole\\b'
+    'beginCaptures':
+      '0':
+        'name': 'entity.name.type.object.console.js'
+    'end': '(?!\\G)'
+    'patterns': [
+      {
+        'begin': '\\s*(\\.)\\s*(assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)\\s*(?=\\()'
+        'beginCaptures':
+          '1':
+            'name': 'meta.delimiter.method.period.js'
+          '2':
+            'name': 'support.function.console.js'
+        'end': '(?<=\\))'
+        'name': 'meta.method-call.js'
+        'patterns': [
+          {
+            'include': '#arguments'
+          }
+        ]
+      }
+    ]
   }
   {
     'include': '#strings'
@@ -433,34 +796,36 @@
     'name': 'comment.block.html.js'
   }
   {
-    'match': '=>',
-    'name': 'storage.type.arrow.js'
-  }
-  {
     'match': '(?<!\\.)\\b(class|enum|function|interface)(?!\\s*:)\\b'
     'name': 'storage.type.js'
   }
   {
-    'match': '(?<!\\.)\\b(async|export|extends|implements|let|private|protected|public|static|var)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(async|export|extends|implements|private|protected|public|static)(?!\\s*:)\\b'
     'name': 'storage.modifier.js'
+  }
+  {
+    'match': '(?<!\\.)\\b(let|var)(?!\\s*:)\\b'
+    'name': 'storage.type.var.js'
   }
   {
     'begin': '(?<!\\.)\\b(const)(?!\\s*:)\\b'
     'beginCaptures':
       '1':
         'name': 'storage.modifier.js'
-    'end': '(=|\\bof\\b|\\bin\\b)|(;)|(?<!,)\\n'
+    'end': '(\\bof\\b|\\bin\\b)|(;)|(=)|(?<!,)\\n'
     'endCaptures':
       '1':
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.$1.js'
       '2':
         'name': 'punctuation.terminator.statement.js'
+      '3':
+        'name': 'keyword.operator.assignment.js'
     'patterns': [
       {
         'match': '([$_a-zA-Z][$_a-zA-Z0-9]*)\\s*(:)\\s*([$_a-zA-Z][$_a-zA-Z0-9]*)?'
         'captures':
           '2':
-            'name': 'keyword.operator.js'
+            'name': 'keyword.operator.assignment.js'
           '3':
             'name': 'constant.other.js'
       }
@@ -472,7 +837,7 @@
       }
       {
         'match': '\\.\\.\\.'
-        'name': 'keyword.operator.js'
+        'name': 'keyword.operator.spread.js'
       }
       {
         'match': ','
@@ -483,7 +848,7 @@
         'name': 'meta.brace.round.js'
       }
       {
-        'match': '\\{|\\}'
+        'match': '{|}'
         'name': 'meta.brace.curly.js'
       }
       {
@@ -496,11 +861,15 @@
     ]
   }
   {
-    'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?',
+    'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?|(?<=\\?)(?:\\s*)(yield)(?=\\s*:)',
     'captures':
       '1':
         'name': 'keyword.control.js'
       '2':
+        'name': 'storage.modifier.js'
+      '3':
+        'name': 'keyword.control.js'
+      '4':
         'name': 'storage.modifier.js'
     'name': 'meta.control.yield.js'
   }
@@ -514,74 +883,82 @@
   }
   {
     'match': '(?<!\\.)\\b(delete|in|of|instanceof|new|typeof|void)(?!\\s*:)\\b'
-    'name': 'keyword.operator.js'
+    'name': 'keyword.operator.$1.js'
   }
   {
-    'match': '(?<!\\.)\\btrue(?!\\s*:)\\b'
-    'name': 'constant.language.boolean.true.js'
+    'match': '\\.\\.\\.'
+    'name': 'keyword.operator.spread.js'
   }
   {
-    'match': '(?<!\\.)\\bfalse(?!\\s*:)\\b'
-    'name': 'constant.language.boolean.false.js'
+    'match': '(?<!\\.)\\b(true|false)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(true|false)(?=\\s*:)'
+    'captures':
+      '1':
+        'name': 'constant.language.boolean.$1.js'
+      '2':
+        'name': 'constant.language.boolean.$2.js'
   }
   {
-    'match': '(?<!\\.)\\bnull(?!\\s*:)\\b'
-    'name': 'constant.language.null.js'
+    'match': '(?<!\\.)\\b(null)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(null)(?=\\s*:)'
+    'captures':
+      '1':
+        'name': 'constant.language.null.js'
+      '2':
+        'name': 'constant.language.null.js'
   }
   {
-    'match': '(?<!\\.)\\b([A-Z][A-Z0-9_]+)(?!\\s*:)\\b'
-    'name': 'constant.other.js'
+    'match': '(?<!\\.)\\b([A-Z][A-Z0-9_]+)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)([A-Z][A-Z0-9_]+)(?=\\s*:)'
+    'captures':
+      '1':
+        'name': 'constant.other.js'
+      '2':
+        'name': 'constant.other.js'
   }
   {
-    'match': '(?<!\\.)\\b(super|this)(?!\\s*:)\\b'
-    'name': 'variable.language.js'
+    'match': '(?<!\\.)\\b(debugger)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(debugger)(?=\\s*:)'
+    'captures':
+      '1':
+        'name': 'keyword.other.js'
+      '2':
+        'name': 'keyword.other.js'
   }
   {
-    'match': '(?<!\\.)\\b(debugger)(?!\\s*:)\\b'
-    'name': 'keyword.other.js'
-  }
-  {
-    'match': '(?<!\\$)\\b(Anchor|Applet|Area|Array|Boolean|Button|Checkbox|Date|document|event|FileUpload|Form|Frame|Function|Hidden|History|Image|JavaArray|JavaClass|JavaObject|JavaPackage|java|Layer|Link|Location|Math|MimeType|Number|navigator|netscape|Object|Option|Packages|Password|Plugin|Radio|RegExp|Reset|Select|String|Style|Submit|screen|sun|Text|Textarea|window|XMLHttpRequest)\\b'
+    'match': '(?<!\\$)\\b(Anchor|Applet|Area|Array|Boolean|Button|Checkbox|Date|document|event|FileUpload|Form|Frame|Function|Hidden|History|Image|JavaArray|JavaClass|JavaObject|JavaPackage|java|Layer|Link|Location|Map|Math|MimeType|Number|navigator|netscape|Object|Option|Packages|Password|Plugin|Radio|RegExp|Reset|Select|Set|String|Style|Submit|Symbol|screen|sun|Text|Textarea|WeakMap|WeakSet|window|XMLHttpRequest)\\b'
     'name': 'support.class.js'
   }
   {
-    'match': '\\b(shift|showModelessDialog|showModalDialog|showHelp|scroll|scrollX|scrollByPages|scrollByLines|scrollY|scrollTo|stop|strike|sin|sizeToContent|sidebar|signText|sort|sup|sub|substr|substring|splice|split|send|set(Milliseconds|Seconds|Minutes|Hours|Month|Year|FullYear|Date|UTC(Milliseconds|Seconds|Minutes|Hours|Month|FullYear|Date)|Time|Hotkeys|Cursor|Timeout|Interval|ZOptions|Active|Resizable|RequestHeader)|search|sqrt|slice|savePreferences|small|home|handleEvent|navigate|char|charCodeAt|charAt|cos|concat|contextual|confirm|compile|ceil|clear|clearTimeout|clearInterval|captureEvents|call|createStyleSheet|createPopup|createEventObject|to(GMTString|UTCString|String|Source|UpperCase|LowerCase|LocaleString)|test|tan|taint|taintEnabled|isNaN|isFinite|indexOf|italics|disableExternalCapture|dump|detachEvent|unshift|untaint|unescape|unwatch|updateCommands|join|javaEnabled|pop|pow|push|plugins.refresh|paddings|parse|parseInt|parseFloat|print|prompt|preference|escape|enableExternalCapture|eval|elementFromPoint|exp|exec|execScript|execCommand|valueOf|UTC|queryCommandState|queryCommandIndeterm|queryCommandEnabled|queryCommandValue|find|file|fileModifiedDate|fileSize|fileCreatedDate|fileUpdatedDate|fixed|fontsize|fontcolor|forward|floor|fromCharCode|watch|link|load|log|lastIndexOf|asin|anchor|acos|attachEvent|atob|atan|atan2|apply|alert|abs|abort|round|routeEvents|resize|resizeBy|resizeTo|recalc|returnValue|replace|reverse|reload|releaseCapture|releaseEvents|random|go|get(Milliseconds|Seconds|Minutes|Hours|Month|Day|Year|FullYear|Time|Date|TimezoneOffset|UTC(Milliseconds|Seconds|Minutes|Hours|Day|Month|FullYear|Date)|Attention|Selection|ResponseHeader|AllResponseHeaders)|min|moveBy|moveBelow|moveTo|moveToAbsolute|moveAbove|mergeAttributes|match|margins|max|btoa|big|bold|borderWidths|blink|back)\\b(?=\\()'
-    'name': 'support.function.js'
+    'match': '(\\.)(systemLanguage|scripts|scrollbars|screenX|screenY|screenTop|screenLeft|style|styleSheets|status|statusText|statusbar|siblingBelow|siblingAbove|source|suffixes|security|securityPolicy|selection|self|history|host|hostname|hash|hasFocus|XMLDocument|XSLDocument|next|namespaces|namespaceURI|nameProp|MIN_VALUE|MAX_VALUE|characterSet|constructor|controllers|cookieEnabled|colorDepth|components|complete|current|cpuClass|clip|clipBoardData|clientInformation|closed|classes|callee|caller|crypto|toolbar|top|textTransform|textIndent|textDecoration|textAlign|tags|SQRT1_2|SQRT2|innerHeight|innerWidth|input|ids|ignoreCase|zIndex|oscpu|onreadystatechange|onLine|outerHeight|outerWidth|opsProfile|opener|offscreenBuffering|NEGATIVE_INFINITY|display|dialogHeight|dialogTop|dialogWidth|dialogLeft|dialogArguments|directories|description|defaultStatus|defaultChecked|defaultCharset|defaultView|userProfile|userLanguage|userAgent|uniqueID|undefined|updateInterval|_content|pixelDepth|port|personalbar|pkcs11|plugins|platform|pathname|paddingRight|paddingBottom|paddingTop|paddingLeft|parent|parentWindow|parentLayer|pageX|pageXOffset|pageY|pageYOffset|protocol|prototype|product|productSub|prompter|previous|prefix|encoding|enabledPlugin|external|expando|embeds|visiblity|vendor|vendorSub|vLinkcolor|URLUnencoded|PI|POSITIVE_INFINITY|filename|fontSize|fontFamily|fontWeight|formName|frames|frameElement|fgColor|E|whiteSpace|listStyleType|lineHeight|linkColor|location|locationbar|localName|lowsrc|length|left|leftContext|lastModified|lastMatch|lastIndex|lastParen|layers|layerX|language|appMinorVersion|appName|appCodeName|appCore|appVersion|availHeight|availTop|availWidth|availLeft|all|arity|arguments|aLinkcolor|above|right|rightContext|responseXML|responeText|readyState|global|x|y|z|mimeTypes|multiline|menubar|marginRight|marginBottom|marginTop|marginLeft|LN10|LN2|LOG10E|LOG2E|bottom|border(Width|RightWidth|BottomWidth|Style|Color|TopWidth|LeftWidth)|bufferDepth|below|backgroundColor|backgroundImage)\\b'
+    'captures':
+      '1':
+        'name': 'meta.delimiter.property.period.js'
+      '2':
+        'name': 'support.constant.js'
   }
   {
-    'match': '\\b(substringData|submit|splitText|setNamedItem|setAttribute|setAttributeNode|select|hasChildNodes|hasFeature|namedItem|click|close|cloneNode|createComment|createCDATASection|createCaption|createTHead|createTextNode|createTFoot|createDocumentFragment|createProcessingInstruction|createEntityReference|createElement|createAttribute|tabIndex|insertRow|insertBefore|insertCell|insertData|item|open|deleteRow|deleteCell|deleteCaption|deleteTHead|deleteTFoot|deleteData|focus|write|writeln|add|appendChild|appendData|reset|replaceChild|replaceData|move|moveNamedItem|moveChild|moveAttribute|moveAttributeNode|getNamedItem|getElementsByName|getElementsByTagName|getElementById|getAttribute|getAttributeNode|blur)\\b(?=\\\()'
-    'name': 'support.function.dom.js'
-  }
-  {
-    'match': '(?<=\\.)(systemLanguage|scripts|scrollbars|screenX|screenY|screenTop|screenLeft|style|styleSheets|status|statusText|statusbar|siblingBelow|siblingAbove|source|suffixes|security|securityPolicy|selection|self|history|host|hostname|hash|hasFocus|XMLDocument|XSLDocument|next|namespaces|namespaceURI|nameProp|MIN_VALUE|MAX_VALUE|characterSet|constructor|controllers|cookieEnabled|colorDepth|components|complete|current|cpuClass|clip|clipBoardData|clientInformation|closed|classes|callee|caller|crypto|toolbar|top|textTransform|textIndent|textDecoration|textAlign|tags|SQRT1_2|SQRT2|innerHeight|innerWidth|input|ids|ignoreCase|zIndex|oscpu|onreadystatechange|onLine|outerHeight|outerWidth|opsProfile|opener|offscreenBuffering|NEGATIVE_INFINITY|display|dialogHeight|dialogTop|dialogWidth|dialogLeft|dialogArguments|directories|description|defaultStatus|defaultChecked|defaultCharset|defaultView|userProfile|userLanguage|userAgent|uniqueID|undefined|updateInterval|_content|pixelDepth|port|personalbar|pkcs11|plugins|platform|pathname|paddingRight|paddingBottom|paddingTop|paddingLeft|parent|parentWindow|parentLayer|pageX|pageXOffset|pageY|pageYOffset|protocol|prototype|product|productSub|prompter|previous|prefix|encoding|enabledPlugin|external|expando|embeds|visiblity|vendor|vendorSub|vLinkcolor|URLUnencoded|PI|POSITIVE_INFINITY|filename|fontSize|fontFamily|fontWeight|formName|frames|frameElement|fgColor|E|whiteSpace|listStyleType|lineHeight|linkColor|location|locationbar|localName|lowsrc|length|left|leftContext|lastModified|lastMatch|lastIndex|lastParen|layers|layerX|language|appMinorVersion|appName|appCodeName|appCore|appVersion|availHeight|availTop|availWidth|availLeft|all|arity|arguments|aLinkcolor|above|right|rightContext|responseXML|responeText|readyState|global|x|y|z|mimeTypes|multiline|menubar|marginRight|marginBottom|marginTop|marginLeft|LN10|LN2|LOG10E|LOG2E|bottom|border(Width|RightWidth|BottomWidth|Style|Color|TopWidth|LeftWidth)|bufferDepth|below|backgroundColor|backgroundImage)\\b'
-    'name': 'support.constant.js'
-  }
-  {
-    'match': '(?<=\\.)(shape|systemId|scheme|scope|scrolling|standby|start|size|summary|specified|sectionRowIndex|selected|selectedIndex|hspace|httpEquiv|htmlFor|height|headers|href|hreflang|noResize|notations|notationName|noShade|noHref|nodeName|nodeType|nodeValue|noWrap|nextSibling|name|ch|childNodes|chOff|checked|charset|cite|content|cookie|cords|code|codeBase|codeType|cols|colSpan|color|compact|cells|cellSpacing|cellPadding|clear|className|caption|type|tBodies|title|tHead|text|target|tagName|tFoot|isMap|index|id|implementation|images|options|ownerDocument|object|disabled|dir|doctype|documentElement|docmain|declare|defer|defaultSelected|defaultChecked|defaultValue|dateTime|data|useMap|publicId|parentNode|profile|profileend|prompt|previousDibling|enctype|entities|event|elements|vspace|version|value|valueType|vLink|vAlign|URL|firstChild|form|forms|face|frame|frameBorder|width|link|links|longDesc|lowSrc|lastChild|lang|label|anchors|accessKey|accept|acceptCharset|action|attributes|applets|alt|align|archive|areas|axis|aLink|abbr|rows|rowSpan|rowIndex|rules|rev|referrer|rel|readOnly|multiple|method|media|marginHeight|marginWidth|maxLength|body|border|background|bgColor)\\b'
-    'name': 'support.constant.dom.js'
+    'match': '(\\.)(shape|systemId|scheme|scope|scrolling|standby|start|size|summary|specified|sectionRowIndex|selected|selectedIndex|hspace|httpEquiv|htmlFor|height|headers|href|hreflang|noResize|notations|notationName|noShade|noHref|nodeName|nodeType|nodeValue|noWrap|nextSibling|name|ch|childNodes|chOff|checked|charset|cite|content|cookie|cords|code|codeBase|codeType|cols|colSpan|color|compact|cells|cellSpacing|cellPadding|clear|className|caption|type|tBodies|title|tHead|text|target|tagName|tFoot|isMap|index|id|implementation|images|options|ownerDocument|object|disabled|dir|doctype|documentElement|docmain|declare|defer|defaultSelected|defaultChecked|defaultValue|dateTime|data|useMap|publicId|parentNode|profile|profileend|prompt|previousDibling|enctype|entities|event|elements|vspace|version|value|valueType|vLink|vAlign|URL|firstChild|form|forms|face|frame|frameBorder|width|link|links|longDesc|lowSrc|lastChild|lang|label|anchors|accessKey|accept|acceptCharset|action|attributes|applets|alt|align|archive|areas|axis|aLink|abbr|rows|rowSpan|rowIndex|rules|rev|referrer|rel|readOnly|multiple|method|media|marginHeight|marginWidth|maxLength|body|border|background|bgColor)\\b'
+    'captures':
+      '1':
+        'name': 'meta.delimiter.property.period.js'
+      '2':
+        'name': 'support.constant.dom.js'
   }
   {
     'match': '\\b(ELEMENT_NODE|ATTRIBUTE_NODE|TEXT_NODE|CDATA_SECTION_NODE|ENTITY_REFERENCE_NODE|ENTITY_NODE|PROCESSING_INSTRUCTION_NODE|COMMENT_NODE|DOCUMENT_NODE|DOCUMENT_TYPE_NODE|DOCUMENT_FRAGMENT_NODE|NOTATION_NODE|INDEX_SIZE_ERR|DOMSTRING_SIZE_ERR|HIERARCHY_REQUEST_ERR|WRONG_DOCUMENT_ERR|INVALID_CHARACTER_ERR|NO_DATA_ALLOWED_ERR|NO_MODIFICATION_ALLOWED_ERR|NOT_FOUND_ERR|NOT_SUPPORTED_ERR|INUSE_ATTRIBUTE_ERR)\\b'
     'name': 'support.constant.dom.js'
   }
   {
-    'match': '\\bon(Rowsinserted|Rowsdelete|Rowenter|Rowexit|Resize|Resizestart|Resizeend|Reset|Readystatechange|Mouseout|Mouseover|Mousedown|Mouseup|Mousemove|Before(cut|deactivate|unload|update|paste|print|editfocus|activate)|Blur|Scrolltop|Submit|Select|Selectstart|Selectionchange|Hover|Help|Change|Contextmenu|Controlselect|Cut|Cellchange|Clock|Close|Deactivate|Datasetchanged|Datasetcomplete|Dataavailable|Drop|Drag|Dragstart|Dragover|Dragdrop|Dragenter|Dragend|Dragleave|Dblclick|Unload|Paste|Propertychange|Error|Errorupdate|Keydown|Keyup|Keypress|Focus|Load|Activate|Afterupdate|Afterprint|Abort)\\b'
-    'name': 'support.function.event-handler.js'
-  }
-  {
-    'match': '(?<!\\.)\\b(require)(?!\\s*:)\\b'
-    'name': 'support.function.js'
-  }
-  {
-    'match': '(?<!\\.)\\b(module|exports|__filename|__dirname|global|process)(?!\\s*:)\\b'
-    'name': 'support.variable.js'
+    'match': '(?<!\\.)\\b(module|exports|__filename|__dirname|global|process)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(module|exports|__filename|__dirname|global|process)(?=\\s*:)'
+    'captures':
+      '1':
+        'name': 'support.variable.js'
+      '2':
+        'name': 'support.variable.js'
   }
   {
     'match': '\\b(Infinity|NaN|undefined)\\b'
     'name': 'constant.language.js'
   }
   {
-    'begin': '(?<=[\\[=(:+,!]|^|return|&&|\\|\\|)\\s*(/)(?![/*+{}?])(?=.*/)'
+    'begin': '(?<=[\\[=(?:+,!]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+{}?])(?=.*/)'
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.string.begin.js'
@@ -597,9 +974,26 @@
     ]
   }
   {
-    'match': '!=|!==|<=|>=|<<=|>>=|>>>=|\\*=|(?<!\\()/=|%=|\\+=|\\-=|&=|\\^=|!|%|&|\\*|/|\\-\\-|\\-|\\+\\+|\\+|~|===|==|=|<>|<|>|!|&&|\\|\\||\\?|\\:|\\^'
-    'comment': 'match 2-character operator first'
-    'name': 'keyword.operator.js'
+    'include': '#operators'
+  }
+  {
+    'include': '#method_calls'
+  }
+  {
+    'include': '#function_calls'
+  }
+  {
+    'include': '#numbers'
+  }
+  {
+    'include': '#object_variable'
+  }
+  {
+    'include': '#properties'
+  }
+  {
+    'match': '(?<!\\$)\\b[0-9]+[\\w$]*'
+    'name': 'invalid.illegal.identifier.js'
   }
   {
     'match': '\\;'
@@ -620,15 +1014,37 @@
       '2':
         'name': 'punctuation.section.scope.end.js'
     'comment': 'Allows the special return snippet to fire.'
-    'match': '(\\{)(\\})'
+    'match': '({)(})'
   }
   {
-    'match': '\\{|\\}'
-    'name': 'meta.brace.curly.js'
+    'begin': '{'
+    'beginCaptures':
+      '0':
+        'name': 'meta.brace.curly.js'
+    'end': '}'
+    'endCaptures':
+      '0':
+        'name': 'meta.brace.curly.js'
+    'patterns': [
+      {
+        'include': '$self'
+      }
+    ]
   }
   {
-    'match': '\\(|\\)'
-    'name': 'meta.brace.round.js'
+    'begin': '\\('
+    'beginCaptures':
+      '0':
+        'name': 'meta.brace.round.js'
+    'end': '\\)'
+    'endCaptures':
+      '0':
+        'name': 'meta.brace.round.js'
+    'patterns': [
+      {
+        'include': '$self'
+      }
+    ]
   }
   {
     'match': '\\[|\\]'
@@ -643,8 +1059,88 @@
   'numbers':
     'patterns': [
       {
-        'match': '\\b((0(x|X)[0-9a-fA-F]+)|(0(b|B)[01]+)|(0(o|O)[0-7]+)|([0-9]+(\\.[0-9]+)?)((e|E)[+-]?[0-9]+)?)\\b'
-        'name': 'constant.numeric.js'
+        'match': '\\b(?<!\\$)0(x|X)[0-9a-fA-F]+\\b(?!\\$)'
+        'name': 'constant.numeric.hex.js'
+      }
+      {
+        'match': '\\b(?<!\\$)0(b|B)[01]+\\b(?!\\$)'
+        'name': 'constant.numeric.binary.js'
+      }
+      {
+        'match': '\\b(?<!\\$)0(o|O)?[0-7]+\\b(?!\\$)'
+        'name': 'constant.numeric.octal.js'
+      }
+      {
+        'match': '''(?x)
+          (?<!\\$)(?:
+            (?:\\b[0-9]+(\\.)[0-9]+[eE][+-]?[0-9]+\\b)| # 1.1E+3
+            (?:\\b[0-9]+(\\.)[eE][+-]?[0-9]+\\b)|       # 1.E+3
+            (?:\\B(\\.)[0-9]+[eE][+-]?[0-9]+\\b)|       # .1E+3
+            (?:\\b[0-9]+[eE][+-]?[0-9]+\\b)|            # 1E+3
+            (?:\\b[0-9]+(\\.)[0-9]+\\b)|                # 1.1
+            (?:\\b[0-9]+(\\.)\\B)|                      # 1.
+            (?:\\B(\\.)[0-9]+\\b)|                      # .1
+            (?:\\b[0-9]+\\b(?!\\.))                     # 1
+          )(?!\\$)
+        '''
+        'captures':
+          '0':
+            'name': 'constant.numeric.decimal.js'
+          '1':
+            'name': 'meta.delimiter.decimal.period.js'
+          '2':
+            'name': 'meta.delimiter.decimal.period.js'
+          '3':
+            'name': 'meta.delimiter.decimal.period.js'
+          '4':
+            'name': 'meta.delimiter.decimal.period.js'
+          '5':
+            'name': 'meta.delimiter.decimal.period.js'
+          '6':
+            'name': 'meta.delimiter.decimal.period.js'
+      }
+    ]
+  'operators':
+    'patterns': [
+      {
+        'match': '%=|\\+=|-=|\\*=|(?<!\\()/='
+        'name': 'keyword.operator.assignment.compound.js'
+      }
+      {
+        'match': '&=|\\^=|<<=|>>=|>>>=|\\|='
+        'name': 'keyword.operator.assignment.compound.bitwise.js'
+      }
+      {
+        'match': '!==|!=|<=|>=|===|==|<|>'
+        'name': 'keyword.operator.comparison.js'
+      }
+      {
+        'match': '&&|!|\\|\\|'
+        'name': 'keyword.operator.logical.js'
+      }
+      {
+        'match': '&|\\||\\^|~'
+        'name': 'keyword.operator.bitwise.js'
+      }
+      {
+        'match': '\\?|:'
+        'name': 'keyword.operator.js'
+      }
+      {
+        'match': '='
+        'name': 'keyword.operator.assignment.js'
+      }
+      {
+        'match': '--'
+        'name': 'keyword.operator.decrement.js'
+      }
+      {
+        'match': '\\+\\+'
+        'name': 'keyword.operator.increment.js'
+      }
+      {
+        'match': '%|\\*|/|-|\\+'
+        'name': 'keyword.operator.js'
       }
     ]
   'strings':
@@ -692,6 +1188,56 @@
         ]
       }
       {
+        'begin': '((\\w+)?(html|HTML|Html))\\s*(`)'
+        'beginCaptures':
+          '1':
+            'name': 'entity.name.function.js'
+          '4':
+            'name': 'punctuation.definition.string.begin.js'
+        'end': '`'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.js'
+        'name': 'string.quoted.template.html.js'
+        'patterns': [
+          {
+            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
+            'name': 'constant.character.escape.js'
+          }
+          {
+            'include': '#interpolated_js'
+          }
+          {
+            'include': 'text.html.basic'
+          }
+        ]
+      }
+      {
+        'begin': '((\\w+)?(css|CSS|Css))\\s*(`)'
+        'beginCaptures':
+          '1':
+            'name': 'entity.name.function.js'
+          '4':
+            'name': 'punctuation.definition.string.begin.js'
+        'end': '`'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.js'
+        'name': 'string.quoted.template.css.js'
+        'patterns': [
+          {
+            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
+            'name': 'constant.character.escape.js'
+          }
+          {
+            'include': '#interpolated_js'
+          }
+          {
+            'include': 'source.css'
+          }
+        ]
+      }
+      {
         'begin': '`'
         'beginCaptures':
           '0':
@@ -712,68 +1258,263 @@
         ]
       }
     ]
-  'methods':
+  'function_params':
     'patterns': [
       {
-        'name': 'meta.method.js'
-        'comment': 'match regular function like: function myFunc(arg) { … }'
-
-        'begin': '\\b((?!(?:break|case|catch|continue|do|else|finally|for|function|if|export|import|package|return|switch|throw|try|while|with)[\\s\\(])(?:[a-zA-Z_$][a-zA-Z_$0-9]*))\\s*(\\()(?=(?:[^\\(\\)]*)?\\)\\s*\\{)'
+        'begin': '\\('
         'beginCaptures':
-          '1':
-            'name': 'entity.name.function.js'
-          '2':
-            'name': 'punctuation.definition.parameters.begin.js'
-
+          '0':
+            'name': 'punctuation.definition.parameters.begin.bracket.round.js'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.end.bracket.round.js'
+        'name': 'meta.parameters.js'
         'patterns': [
           {
-            'include': '#function-params'
+            'match': '(\\.\\.\\.)([a-zA-Z_$][\\w$]*)'
+            'captures':
+              '1':
+                'name': 'keyword.operator.spread.js'
+              '2':
+                'name': 'variable.parameter.rest.function.js'
           }
           {
-            'include': '#strings'
+            'include': '$self'
+          }
+          {
+            'match': '[a-zA-Z_$][\\w$]*'
+            'name': 'variable.parameter.function.js'
           }
         ]
-
-        'end': '(\\))'
-        'endCaptures':
-          '1':
-            'name': 'punctuation.definition.parameters.end.js'
       }
     ]
-  'function-params':
+  'function_body':
     'patterns': [
       {
-        'include': '#numbers'
+        'begin': '{'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.function.body.begin.bracket.curly.js'
+        'end': '}'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.function.body.end.bracket.curly.js'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+    ]
+  'function_innards':
+    'patterns': [
+      {
+        'match': '(?:\\b(async)\\b\\s*)?\\b(function)\\b(?:\\s*(\\*))?'
+        'captures':
+          '1':
+            'name': 'storage.modifier.async.js'
+          '2':
+            'name': 'storage.type.function.js'
+          '3':
+            'name': 'storage.modifier.generator.js'
       }
       {
-        'include': '#strings'
+        'match': '[a-zA-Z_$][\\w$]*(?=\\s*\\()'
+        'name': 'entity.name.function.js'
       }
       {
-        'match': '\\(|\\)'
-        'name': 'meta.brace.round.js'
-      }
-      {
-        'match': '\\[|\\]'
-        'name': 'meta.brace.square.js'
-      }
-      {
-        'match': '\\{|\\}'
-        'name': 'meta.brace.curly.js'
-      }
-      {
-        'match': ','
-        'name': 'meta.object.delimiter.js'
-      }
-      {
-        'match': '='
-        'name': 'keyword.operator.js'
+        'include': '#function_params'
       }
       {
         'include': '#comments'
       }
+    ]
+  'arrow_function_innards':
+    'patterns': [
       {
-        'match': '[a-zA-Z_$][a-zA-Z_$0-9]*'
-        'name': 'variable.parameter.function.js'
+        'match': '=>'
+        'name': 'storage.type.function.arrow.js'
+      }
+      {
+        'include': '#function_params'
+      }
+      {
+        'match': '([a-zA-Z_$][\\w$]*)(?=\\s*=>)'
+        'captures':
+          '0':
+            'name': 'meta.parameters.js'
+          '1':
+            'name': 'variable.parameter.function.js'
+      }
+      {
+        'match': '(\\d[\\w$]*)'
+        'captures':
+          '0':
+            'name': 'meta.parameters.js'
+          '1':
+            'name': 'invalid.illegal.identifier.js'
+      }
+    ]
+  'arguments':
+    'patterns': [
+      {
+        'begin': '\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.arguments.begin.bracket.round.js'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.arguments.end.bracket.round.js'
+        'name': 'meta.arguments.js'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+    ]
+  'method_calls':
+    'patterns': [
+      {
+        # .methodCall(arg1, "arg2", [...])
+        'begin': '(\\.)\\s*([\\w$]+)\\s*(?=\\()'
+        'beginCaptures':
+          '1':
+            'name': 'meta.delimiter.method.period.js'
+          '2':
+            'patterns': [
+              {
+                'match': '''(?x)
+                  \\bon(Rowsinserted|Rowsdelete|Rowenter|Rowexit|Resize|Resizestart|Resizeend|Reset|
+                  Readystatechange|Mouseout|Mouseover|Mousedown|Mouseup|Mousemove|
+                  Before(cut|deactivate|unload|update|paste|print|editfocus|activate)|
+                  Blur|Scrolltop|Submit|Select|Selectstart|Selectionchange|Hover|Help|
+                  Change|Contextmenu|Controlselect|Cut|Cellchange|Clock|Close|Deactivate|
+                  Datasetchanged|Datasetcomplete|Dataavailable|Drop|Drag|Dragstart|Dragover|
+                  Dragdrop|Dragenter|Dragend|Dragleave|Dblclick|Unload|Paste|Propertychange|Error|
+                  Errorupdate|Keydown|Keyup|Keypress|Focus|Load|Activate|Afterupdate|Afterprint|Abort)\\b
+                '''
+                'name': 'support.function.event-handler.js'
+              }
+              {
+                'match': '''(?x)
+                  \\b(shift|showModelessDialog|showModalDialog|showHelp|scroll|scrollX|scrollByPages|
+                  scrollByLines|scrollY|scrollTo|stop|strike|sin|sizeToContent|sidebar|signText|sort|
+                  sup|sub|substr|substring|splice|split|send|set(Milliseconds|Seconds|Minutes|Hours|
+                  Month|Year|FullYear|Date|UTC(Milliseconds|Seconds|Minutes|Hours|Month|FullYear|Date)|
+                  Time|Hotkeys|Cursor|ZOptions|Active|Resizable|RequestHeader)|search|sqrt|slice|
+                  savePreferences|small|home|handleEvent|navigate|char|charCodeAt|charAt|cos|concat|
+                  contextual|confirm|compile|ceil|clear|captureEvents|call|createStyleSheet|createPopup|
+                  createEventObject|to(GMTString|UTCString|String|Source|UpperCase|LowerCase|LocaleString)|
+                  test|tan|taint|taintEnabled|indexOf|italics|disableExternalCapture|dump|detachEvent|unshift|
+                  untaint|unwatch|updateCommands|join|javaEnabled|pop|pow|push|plugins.refresh|paddings|parse|
+                  print|prompt|preference|enableExternalCapture|elementFromPoint|exp|exec|execScript|
+                  execCommand|valueOf|UTC|queryCommandState|queryCommandIndeterm|queryCommandEnabled|
+                  queryCommandValue|find|file|fileModifiedDate|fileSize|fileCreatedDate|fileUpdatedDate|
+                  fixed|fontsize|fontcolor|forward|floor|fromCharCode|watch|link|load|log|lastIndexOf|
+                  asin|anchor|acos|attachEvent|atob|atan|atan2|apply|alert|abs|abort|round|routeEvents|
+                  resize|resizeBy|resizeTo|recalc|returnValue|replace|reverse|reload|releaseCapture|
+                  releaseEvents|random|go|get(Milliseconds|Seconds|Minutes|Hours|Month|Day|Year|FullYear|
+                  Time|Date|TimezoneOffset|UTC(Milliseconds|Seconds|Minutes|Hours|Day|Month|FullYear|Date)|
+                  Attention|Selection|ResponseHeader|AllResponseHeaders)|min|moveBy|moveBelow|moveTo|
+                  moveToAbsolute|moveAbove|mergeAttributes|match|margins|max|btoa|big|bold|borderWidths|blink|back)\\b
+                '''
+                'name': 'support.function.js'
+              }
+              {
+                'match': '''(?x)
+                  \\b(substringData|submit|splitText|setNamedItem|setAttribute|setAttributeNode|select|
+                  hasChildNodes|hasFeature|namedItem|click|close|cloneNode|createComment|createCDATASection|
+                  createCaption|createTHead|createTextNode|createTFoot|createDocumentFragment|
+                  createProcessingInstruction|createEntityReference|createElement|createAttribute|
+                  tabIndex|insertRow|insertBefore|insertCell|insertData|item|open|deleteRow|deleteCell|
+                  deleteCaption|deleteTHead|deleteTFoot|deleteData|focus|write|writeln|add|appendChild|
+                  appendData|reset|replaceChild|replaceData|move|moveNamedItem|moveChild|moveAttribute|
+                  moveAttributeNode|getNamedItem|getElementsByName|getElementsByTagName|getElementById|
+                  getAttribute|getAttributeNode|blur)\\b
+                '''
+                'name': 'support.function.dom.js'
+              }
+              {
+                'match': "[a-zA-Z_$][\\w$]*"
+                'name': 'entity.name.function.js'
+              }
+              {
+                'match': '\\d[\\w$]*'
+                'name': 'invalid.illegal.identifier.js'
+              }
+            ]
+        'end': '(?<=\\))'
+        'name': 'meta.method-call.js'
+        'patterns': [
+          {
+            'include': '#arguments'
+          }
+        ]
+      }
+    ]
+  'function_calls':
+    'patterns': [
+      {
+        # functionCall(arg1, "arg2", [...])
+        'begin': '([\\w$]+)\\s*(?=\\()'
+        'beginCaptures':
+          '1':
+            'patterns': [
+              {
+                'match': '''(?x)
+                  \\b(isNaN|isFinite|eval|uneval|parseInt|parseFloat|decodeURI|
+                  decodeURIComponent|encodeURI|encodeURIComponent|escape|unescape|
+                  require|set(Interval|Timeout)|clear(Interval|Timeout))\\b
+                '''
+                'name': 'support.function.js'
+              }
+              {
+                'match': "[a-zA-Z_$][\\w$]*"
+                'name': 'entity.name.function.js'
+              }
+              {
+                'match': '\\d[\\w$]*'
+                'name': 'invalid.illegal.identifier.js'
+              }
+            ]
+        'end': '(?<=\\))'
+        'name': 'meta.function-call.js'
+        'patterns': [
+          {
+            'include': '#arguments'
+          }
+        ]
+      }
+    ]
+  'object_variable':
+    'patterns': [
+      {
+        'comment': '`obj` in `obj.prop`, `obj.methodCall()`'
+        'match': '(?:([a-zA-Z_$][\\w$]*)|(\\d\\w*))(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
+        'captures':
+          '1':
+            'name': 'variable.other.object.js'
+          '2':
+            'name': 'invalid.illegal.identifier.js'
+      }
+    ]
+  'properties':
+    'patterns': [
+      {
+        'comment': '`prop` in `obj.prop`, `func().prop`'
+        'match': '(\\.)\\s*(?:([0-9]+[\\w$]*)|([A-Z][A-Z0-9_$]*\\b\\$*)|(\\$*[a-zA-Z_$][\\w$]*))'
+        'captures':
+          '1':
+            'name': 'meta.delimiter.property.period.js'
+          '2':
+            'name': 'invalid.illegal.identifier.js'
+          '3':
+            'name': 'constant.other.property.js'
+          '4':
+            'name': 'variable.other.property.js'
       }
     ]
   'interpolated_js':
@@ -787,6 +1528,21 @@
         'name': 'source.js.embedded.source'
         'patterns': [
           {
+            'begin': '{'
+            'beginCaptures':
+              '0':
+                'name': 'meta.brace.curly.js'
+            'end': '}'
+            'endCaptures':
+              '0':
+                'name': 'meta.brace.curly.js'
+            'patterns': [
+              {
+                'include': '$self'
+              }
+            ]
+          }
+          {
             'include': '$self'
           }
         ]
@@ -797,6 +1553,18 @@
       {
         'match': '(?<!\\w)@(abstract|access|alias|augments|author|async|attribute|arg|argument|beta|borrows|bubbes|callback|class|classdesc|config|const|constant|constructs|constructor|copyright|chainable|default|defaultvalue|deprecated|desc|description|enum|emits|event|example|exports|external|extends|extension|extensionfor|extension_for|for|file|fileoverview|fires|final|function|global|host|ignore|implements|inheritdoc|inner|instance|interface|kind|lends|license|listens|main|member|memberof|method|mixex|mixin(?:s|)|module|name|namespace|override|overview|param|private|prop|property|protected|readonly|readOnly|requires|required|return|returns|see|since|static|summary|submodule|this|throws|todo|tutorial|type|typedef|var|variation|version|virtual|uses|writeOnce)\\b'
         'name': 'storage.type.class.jsdoc'
+      }
+      {
+        'match': '({\\b(?:[a-zA-Z_$][a-zA-Z_$0-9]*)\\b})\\s\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b\\s*((?:(?!\\*\\/).)*)'
+        'captures':
+            0:
+              'name': 'other.meta.jsdoc'
+            1:
+              'name': 'entity.name.type.instance.jsdoc'
+            2:
+              'name': 'variable.other.jsdoc'
+            3:
+              'name': 'other.description.jsdoc'
       }
     ]
   'comments':
