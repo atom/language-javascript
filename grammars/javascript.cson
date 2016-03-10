@@ -2,6 +2,7 @@
 'fileTypes': [
   'js'
   '_js'
+  'jsx'
   'es'
   'es6'
   'gs'
