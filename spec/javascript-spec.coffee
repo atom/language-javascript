@@ -589,43 +589,6 @@ describe "Javascript grammar", ->
       expect(tokens[7]).toEqual value: '</b>', scopes: ['source.js', 'string.quoted.template.html.js']
       expect(tokens[8]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.html.js', 'punctuation.definition.string.end.js']
 
-  describe "ES6 tagged CSS string templates", ->
-    it "tokenizes them as strings", ->
-      {tokens} = grammar.tokenizeLine('css`.highlight { border: ${borderSize}; }`')
-      expect(tokens[0]).toEqual value: 'css', scopes: [ 'source.js', 'string.quoted.template.css.js', 'entity.name.function.js' ]
-      expect(tokens[1]).toEqual value: '`', scopes: [ 'source.js', 'string.quoted.template.css.js', 'punctuation.definition.string.begin.js' ]
-      expect(tokens[2]).toEqual value: '.highlight { border: ', scopes: ['source.js', 'string.quoted.template.css.js']
-      expect(tokens[3]).toEqual value: '${', scopes: ['source.js', 'string.quoted.template.css.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
-      expect(tokens[4]).toEqual value: 'borderSize', scopes: ['source.js', 'string.quoted.template.css.js', 'source.js.embedded.source']
-      expect(tokens[5]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.css.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
-      expect(tokens[6]).toEqual value: '; }', scopes: ['source.js', 'string.quoted.template.css.js']
-      expect(tokens[7]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.css.js', 'punctuation.definition.string.end.js']
-
-  describe "ES6 tagged CSS string templates with expanded function name", ->
-    it "tokenizes them as strings", ->
-      {tokens} = grammar.tokenizeLine('escapeCSS`.highlight { border: ${borderSize}; }`')
-      expect(tokens[0]).toEqual value: 'escapeCSS', scopes: [ 'source.js', 'string.quoted.template.css.js', 'entity.name.function.js' ]
-      expect(tokens[1]).toEqual value: '`', scopes: [ 'source.js', 'string.quoted.template.css.js', 'punctuation.definition.string.begin.js' ]
-      expect(tokens[2]).toEqual value: '.highlight { border: ', scopes: ['source.js', 'string.quoted.template.css.js']
-      expect(tokens[3]).toEqual value: '${', scopes: ['source.js', 'string.quoted.template.css.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
-      expect(tokens[4]).toEqual value: 'borderSize', scopes: ['source.js', 'string.quoted.template.css.js', 'source.js.embedded.source']
-      expect(tokens[5]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.css.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
-      expect(tokens[6]).toEqual value: '; }', scopes: ['source.js', 'string.quoted.template.css.js']
-      expect(tokens[7]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.css.js', 'punctuation.definition.string.end.js']
-
-  describe "ES6 tagged CSS string templates with expanded function name and white space", ->
-    it "tokenizes them as strings", ->
-      {tokens} = grammar.tokenizeLine('escapeCSS   `.highlight { border: ${borderSize}; }`')
-      expect(tokens[0]).toEqual value: 'escapeCSS', scopes: [ 'source.js', 'string.quoted.template.css.js', 'entity.name.function.js' ]
-      expect(tokens[1]).toEqual value: '   ', scopes: [ 'source.js', 'string.quoted.template.css.js' ]
-      expect(tokens[2]).toEqual value: '`', scopes: [ 'source.js', 'string.quoted.template.css.js', 'punctuation.definition.string.begin.js' ]
-      expect(tokens[3]).toEqual value: '.highlight { border: ', scopes: ['source.js', 'string.quoted.template.css.js']
-      expect(tokens[4]).toEqual value: '${', scopes: ['source.js', 'string.quoted.template.css.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
-      expect(tokens[5]).toEqual value: 'borderSize', scopes: ['source.js', 'string.quoted.template.css.js', 'source.js.embedded.source']
-      expect(tokens[6]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.css.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
-      expect(tokens[7]).toEqual value: '; }', scopes: ['source.js', 'string.quoted.template.css.js']
-      expect(tokens[8]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.css.js', 'punctuation.definition.string.end.js']
-
   describe "ES6 tagged Relay.QL string templates", ->
     it "tokenizes them as strings", ->
       {tokens} = grammar.tokenizeLine('Relay.QL`fragment on Foo { id }`')
