@@ -1435,17 +1435,23 @@ describe "Javascript grammar", ->
         expect(tokens[14]).toEqual value: delim, scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', scope, 'punctuation.definition.string.end.js']
         expect(tokens[15]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
 
-  describe "decorators and annotations", ->
-    it "tokenizes decorators", ->
-      {tokens} = grammar.tokenizeLine('@thisIsADecorator(true)')
-      expect(tokens[0]).toEqual value: '@thisIsADecorator', scopes: ['source.js', 'meta.function.decorator.js', 'entity.name.function.decorator.js']
-      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.function.decorator.js', 'punctuation.definition.arguments.begin.js']
-      expect(tokens[2]).toEqual value: 'true', scopes: ['source.js', 'meta.function.decorator.js', 'meta.function.decorator.arguments.js', 'variable.parameter.function.js']
-      expect(tokens[3]).toEqual value: ')', scopes: ['source.js', 'meta.function.decorator.js', 'punctuation.definition.arguments.end.js']
+  describe "decorators", ->
+    it "tokenizes decorators with arguments", ->
+      {tokens} = grammar.tokenizeLine('@deprecate("nope", true)')
+      expect(tokens[0]).toEqual value: '@', scopes: ['source.js', 'meta.function.decorator.js', 'punctuation.definition.decorator.js']
+      expect(tokens[1]).toEqual value: 'deprecate', scopes: ['source.js', 'meta.function.decorator.js', 'entity.name.function.decorator.js']
+      expect(tokens[2]).toEqual value: '(', scopes: ['source.js', 'meta.function.decorator.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
+      expect(tokens[3]).toEqual value: '"', scopes: ['source.js', 'meta.function.decorator.js', 'meta.arguments.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[4]).toEqual value: 'nope', scopes: ['source.js', 'meta.function.decorator.js', 'meta.arguments.js', 'string.quoted.double.js']
+      expect(tokens[5]).toEqual value: '"', scopes: ['source.js', 'meta.function.decorator.js', 'meta.arguments.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
+      expect(tokens[6]).toEqual value: ',', scopes: ['source.js', 'meta.function.decorator.js', 'meta.arguments.js', 'meta.delimiter.object.comma.js']
+      expect(tokens[8]).toEqual value: 'true', scopes: ['source.js', 'meta.function.decorator.js', 'meta.arguments.js', 'constant.language.boolean.true.js']
+      expect(tokens[9]).toEqual value: ')', scopes: ['source.js', 'meta.function.decorator.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
 
-    it "tokenizes annotations", ->
-      {tokens} = grammar.tokenizeLine('@thisIsAnAnnotation')
-      expect(tokens[0]).toEqual value: '@thisIsAnAnnotation', scopes: ['source.js', 'meta.function.annotation.js', 'entity.name.function.annotation.js']
+    it "tokenizes decorators with no arguments", ->
+      {tokens} = grammar.tokenizeLine('@deprecate')
+      expect(tokens[0]).toEqual value: '@', scopes: ['source.js', 'meta.function.decorator.js', 'punctuation.definition.decorator.js']
+      expect(tokens[1]).toEqual value: 'deprecate', scopes: ['source.js', 'meta.function.decorator.js', 'entity.name.function.decorator.js']
 
   describe "comments", ->
     it "tokenizes /* */ comments", ->
