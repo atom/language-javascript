@@ -607,38 +607,38 @@ describe "Javascript grammar", ->
     it "tokenizes class", ->
       {tokens} = grammar.tokenizeLine('class MyClass')
       expect(tokens[0]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
-      expect(tokens[2]).toEqual value: 'MyClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+      expect(tokens[2]).toEqual value: 'MyClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.class.js']
 
       {tokens} = grammar.tokenizeLine('class $abc$')
-      expect(tokens[2]).toEqual value: '$abc$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+      expect(tokens[2]).toEqual value: '$abc$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.class.js']
 
       {tokens} = grammar.tokenizeLine('class $$')
-      expect(tokens[2]).toEqual value: '$$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+      expect(tokens[2]).toEqual value: '$$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.class.js']
 
     it "tokenizes class...extends", ->
       {tokens} = grammar.tokenizeLine('class MyClass extends SomeClass')
       expect(tokens[0]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
-      expect(tokens[2]).toEqual value: 'MyClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+      expect(tokens[2]).toEqual value: 'MyClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.class.js']
       expect(tokens[4]).toEqual value: 'extends', scopes: ['source.js', 'meta.class.js', 'storage.modifier.js']
-      expect(tokens[6]).toEqual value: 'SomeClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+      expect(tokens[6]).toEqual value: 'SomeClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.class.js']
 
       {tokens} = grammar.tokenizeLine('class MyClass extends $abc$')
-      expect(tokens[6]).toEqual value: '$abc$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+      expect(tokens[6]).toEqual value: '$abc$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.class.js']
 
       {tokens} = grammar.tokenizeLine('class MyClass extends $$')
-      expect(tokens[6]).toEqual value: '$$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+      expect(tokens[6]).toEqual value: '$$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.class.js']
 
     it "tokenizes anonymous class", ->
       {tokens} = grammar.tokenizeLine('class extends SomeClass')
       expect(tokens[0]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
       expect(tokens[2]).toEqual value: 'extends', scopes: ['source.js', 'meta.class.js', 'storage.modifier.js']
-      expect(tokens[4]).toEqual value: 'SomeClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+      expect(tokens[4]).toEqual value: 'SomeClass', scopes: ['source.js', 'meta.class.js', 'entity.name.type.class.js']
 
       {tokens} = grammar.tokenizeLine('class extends $abc$')
-      expect(tokens[4]).toEqual value: '$abc$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+      expect(tokens[4]).toEqual value: '$abc$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.class.js']
 
       {tokens} = grammar.tokenizeLine('class extends $$')
-      expect(tokens[4]).toEqual value: '$$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+      expect(tokens[4]).toEqual value: '$$', scopes: ['source.js', 'meta.class.js', 'entity.name.type.class.js']
 
     it "tokenizes constructors", ->
       {tokens} = grammar.tokenizeLine('constructor(p1, p2)')
@@ -768,7 +768,7 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('export class Foo {}')
       expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
       expect(tokens[2]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
-      expect(tokens[4]).toEqual value: 'Foo', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+      expect(tokens[4]).toEqual value: 'Foo', scopes: ['source.js', 'meta.class.js', 'entity.name.type.class.js']
 
     it "tokenizes existing variable export", ->
       {tokens} = grammar.tokenizeLine('export { bar };')
@@ -868,7 +868,7 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
       expect(tokens[2]).toEqual value: 'default', scopes: ['source.js', 'meta.export.js', 'variable.language.default.js']
       expect(tokens[4]).toEqual value: 'class', scopes: ['source.js', 'meta.class.js', 'storage.type.class.js']
-      expect(tokens[6]).toEqual value: 'Foo', scopes: ['source.js', 'meta.class.js', 'entity.name.type.js']
+      expect(tokens[6]).toEqual value: 'Foo', scopes: ['source.js', 'meta.class.js', 'entity.name.type.class.js']
 
     it "tokenizes re-export", ->
       {tokens} = grammar.tokenizeLine('export { name } from "module-name";')
