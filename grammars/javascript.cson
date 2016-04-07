@@ -724,6 +724,41 @@
     ]
   }
   {
+    # SIMD object & data types
+    'begin': '\\bSIMD\\b'
+    'beginCaptures':
+      '0':
+        'name': 'entity.name.type.object.simd.js'
+    'end': '(?!\\G)'
+    'patterns': [
+      {
+        # SIMD.Float32x4(0, 1, 2, 3)
+        'begin': '\\s*(\\.)\\s*(Float32x4|Int32x4|Int16x8|Int8x16|Uint32x4|Uint16x8|Uint8x16|Bool32x4|Bool16x8|Bool8x16)\\s*(?=\\()'
+        'beginCaptures':
+          '1':
+            'name': 'meta.delimiter.method.period.js'
+          '2':
+            'name': 'support.class.js'
+        'end': '(?<=\\))'
+        'name': 'meta.method-call.js'
+        'patterns': [
+          {
+            'include': '#arguments'
+          }
+        ]
+      }
+      {
+        # SIMD.Int16x8.extractLane(5)
+        'match': '\\s*(\\.)\\s*(Float32x4|Int32x4|Int16x8|Int8x16|Uint32x4|Uint16x8|Uint8x16|Bool32x4|Bool16x8|Bool8x16)\\b'
+        'captures':
+          '1':
+            'name': 'meta.delimiter.property.period.js'
+          '2':
+            'name': 'support.class.js'
+      }
+    ]
+  }
+  {
     'include': '#strings'
   }
   {

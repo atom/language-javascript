@@ -1552,6 +1552,28 @@ describe "Javascript grammar", ->
       expect(tokens[5]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
       expect(tokens[6]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
 
+  describe "simd", ->
+    it "tokenizes the simd object", ->
+      {tokens} = grammar.tokenizeLine('SIMD')
+      expect(tokens[0]).toEqual value: 'SIMD', scopes: ['source.js', 'entity.name.type.object.simd.js']
+
+    it "tokenizes simd data types", ->
+      {tokens} = grammar.tokenizeLine('SIMD.Float32x4()')
+      expect(tokens[0]).toEqual value: 'SIMD', scopes: ['source.js', 'entity.name.type.object.simd.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
+      expect(tokens[2]).toEqual value: 'Float32x4', scopes: ['source.js', 'meta.method-call.js', 'support.class.js']
+      expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
+      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
+
+      {tokens} = grammar.tokenizeLine('SIMD.Int16x8.extractLane()')
+      expect(tokens[0]).toEqual value: 'SIMD', scopes: ['source.js', 'entity.name.type.object.simd.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
+      expect(tokens[2]).toEqual value: 'Int16x8', scopes: ['source.js', 'support.class.js']
+      expect(tokens[3]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
+      expect(tokens[4]).toEqual value: 'extractLane', scopes: ['source.js', 'meta.method-call.js', 'entity.name.function.js']
+      expect(tokens[5]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
+      expect(tokens[6]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
+
   describe "indentation", ->
     editor = null
 
