@@ -1552,6 +1552,24 @@ describe "Javascript grammar", ->
       expect(tokens[5]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
       expect(tokens[6]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
 
+  describe "math", ->
+    it "tokenizes the math object", ->
+      {tokens} = grammar.tokenizeLine('Math')
+      expect(tokens[0]).toEqual value: 'Math', scopes: ['source.js', 'support.class.js']
+
+    it "tokenizes math support functions/properties", ->
+      {tokens} = grammar.tokenizeLine('Math.random()')
+      expect(tokens[0]).toEqual value: 'Math', scopes: ['source.js', 'support.class.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
+      expect(tokens[2]).toEqual value: 'random', scopes: ['source.js', 'meta.method-call.js', 'support.function.math.js']
+      expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
+      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
+
+      {tokens} = grammar.tokenizeLine('Math.PI')
+      expect(tokens[0]).toEqual value: 'Math', scopes: ['source.js', 'support.class.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
+      expect(tokens[2]).toEqual value: 'PI', scopes: ['source.js', 'support.constant.property.math.js']
+
   describe "indentation", ->
     editor = null
 
