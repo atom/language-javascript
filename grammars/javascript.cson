@@ -709,11 +709,6 @@
     'end': '(?!\\G)'
     'patterns': [
       {
-        # Match only console. When used as an object directly
-        # For eg. foo(console)
-        'match': '\\s*(?!\\.)'
-      }
-      {
         'begin': '\\s*(\\.)\\s*(assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)\\s*(?=\\()'
         'beginCaptures':
           '1':
@@ -727,6 +722,11 @@
             'include': '#arguments'
           }
         ]
+      }
+      {
+        # Match only console. When used as an object directly
+        # For eg. foo(console)
+        'match': '\\s*(?!\\.)'
       }
     ]
   }
