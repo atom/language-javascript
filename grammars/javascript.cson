@@ -702,7 +702,7 @@
   {
     # console
     # console.log(arg1, "arg2", [...])
-    'begin': '\\bconsole\\b(?!\\$)'
+    'begin': '(?<![\\w$])console(?![\\w$]|\\s*:)'
     'beginCaptures':
       '0':
         'name': 'entity.name.type.object.console.js'
@@ -727,7 +727,7 @@
   }
   {
     # Math
-    'begin': '\\bMath\\b'
+    'begin': '(?<![\\w$])Math(?![\\w$]|\\s*:)'
     'beginCaptures':
       '0':
         'name': 'support.class.js'
@@ -902,7 +902,7 @@
         'name': 'keyword.other.js'
   }
   {
-    'match': '(?<!\\$)\\b(Anchor|Applet|Area|Array|Boolean|Button|Checkbox|Date|document|event|FileUpload|Form|Frame|Function|Hidden|History|Image|JavaArray|JavaClass|JavaObject|JavaPackage|java|Layer|Link|Location|Map|Math|MimeType|Number|navigator|netscape|Object|Option|Packages|Password|Plugin|Radio|RegExp|Reset|Select|Set|String|Style|Submit|Symbol|screen|sun|Text|Textarea|WeakMap|WeakSet|window|XMLHttpRequest)\\b'
+    'match': '(?<!\\$)\\b(Anchor|Applet|Area|Array|Boolean|Button|Checkbox|Date|document|event|FileUpload|Form|Frame|Function|Hidden|History|Image|JavaArray|JavaClass|JavaObject|JavaPackage|java|Layer|Link|Location|Map|MimeType|Number|navigator|netscape|Object|Option|Packages|Password|Plugin|Radio|RegExp|Reset|Select|Set|String|Style|Submit|Symbol|screen|sun|Text|Textarea|WeakMap|WeakSet|window|XMLHttpRequest)\\b'
     'name': 'support.class.js'
   }
   {
