@@ -702,11 +702,11 @@
   {
     # console
     # console.log(arg1, "arg2", [...])
-    'begin': '\\bconsole\\b'
+    'begin': '\\bconsole\\b(?!\\$)'
     'beginCaptures':
       '0':
         'name': 'entity.name.type.object.console.js'
-    'end': '(?!\\G)'
+    'end': '(?=(?!\\s*\\.)\\S)'
     'patterns': [
       {
         'begin': '\\s*(\\.)\\s*(assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)\\s*(?=\\()'
@@ -731,7 +731,7 @@
     'beginCaptures':
       '0':
         'name': 'support.class.js'
-    'end': '(?!\\G)'
+    'end': '(?=(?!\\s*\\.)\\S)'
     'patterns': [
       {
         # Math.random()
