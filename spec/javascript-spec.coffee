@@ -603,6 +603,14 @@ describe "Javascript grammar", ->
       expect(tokens[7]).toEqual value: '; }', scopes: ['source.js', 'string.quoted.template.css.js']
       expect(tokens[8]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.css.js', 'punctuation.definition.string.end.js']
 
+  describe "ES6 tagged Relay.QL string templates", ->
+    it "tokenizes them as strings", ->
+      {tokens} = grammar.tokenizeLine('Relay.QL`fragment on Foo { id }`')
+      expect(tokens[0]).toEqual value: 'Relay.QL', scopes: [ 'source.js', 'string.quoted.template.graphql.js', 'entity.name.function.js' ]
+      expect(tokens[1]).toEqual value: '`', scopes: [ 'source.js', 'string.quoted.template.graphql.js', 'punctuation.definition.string.begin.js' ]
+      expect(tokens[2]).toEqual value: 'fragment on Foo { id }', scopes: ['source.js', 'string.quoted.template.graphql.js']
+      expect(tokens[3]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.graphql.js', 'punctuation.definition.string.end.js']
+
   describe "ES6 class", ->
     it "tokenizes class", ->
       {tokens} = grammar.tokenizeLine('class MyClass')
