@@ -319,7 +319,7 @@
       }
       {
         'begin': '\\G'
-        'end': '(?<=\\))'
+        'end': '(?!\\G)(?<=\\))'
         'name': 'meta.function.js'
         'patterns': [
           {

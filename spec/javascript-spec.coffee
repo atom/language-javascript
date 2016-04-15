@@ -981,6 +981,11 @@ describe "Javascript grammar", ->
       expect(tokens[2]).toEqual value: 'register', scopes: ['source.js', 'meta.function.js', 'entity.name.function.js']
       expect(tokens[6]).toEqual value: 'function', scopes: ['source.js', 'meta.function.js', 'storage.type.function.js']
 
+      {tokens} = grammar.tokenizeLine('document.getElementById("foo").onclick = function(')
+      expect(tokens[8]).toEqual value: '.', scopes: ['source.js', 'meta.function.js', 'meta.delimiter.method.period.js']
+      expect(tokens[9]).toEqual value: 'onclick', scopes: ['source.js', 'meta.function.js', 'entity.name.function.js']
+      expect(tokens[13]).toEqual value: 'function', scopes: ['source.js', 'meta.function.js', 'storage.type.function.js']
+
     it "tokenizes ES6 method definitions", ->
       {tokens} = grammar.tokenizeLine('f(a, b) {}')
       expect(tokens[0]).toEqual value: 'f', scopes: ['source.js', 'meta.function.method.definition.js', 'entity.name.function.js']
