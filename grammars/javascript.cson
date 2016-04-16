@@ -792,7 +792,7 @@
     'beginCaptures':
       '1':
         'name': 'storage.modifier.js'
-    'end': '(\\bof\\b|\\bin\\b)|(;)|(=)|(?<!,)\\n'
+    'end': '(\\bof\\b|\\bin\\b)|(;)|(=)|(?<![,{])\\n'
     'endCaptures':
       '1':
         'name': 'keyword.operator.$1.js'
