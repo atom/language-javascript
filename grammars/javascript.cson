@@ -681,13 +681,13 @@
       '2':
         'name': 'storage.modifier.js'
       '3':
-        'name': 'entity.name.type.js'
+        'name': 'entity.name.type.class.js'
       '4':
-        'name': 'entity.name.type.js'
+        'name': 'entity.name.type.class.js'
       '5':
         'name': 'storage.modifier.js'
       '6':
-        'name': 'entity.name.type.js'
+        'name': 'entity.name.type.class.js'
     'name': 'meta.class.js'
   }
   {
