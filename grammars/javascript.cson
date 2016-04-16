@@ -706,10 +706,17 @@
     'beginCaptures':
       '0':
         'name': 'entity.name.type.object.console.js'
-    'end': '(?=(?!\\s*\\.)\\S)'
+    'end': '''(?x)
+      (?=
+        (?! \\s*(\\.)\\s*
+          (assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)
+          \\s*\\(
+        ) \\S
+      )
+    '''
     'patterns': [
       {
-        'begin': '\\s*(\\.)\\s*(assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)\\s*(?=\\()'
+        'begin': '\\s*(\\.)\\s*(\\w+)\\s*(?=\\()'
         'beginCaptures':
           '1':
             'name': 'meta.delimiter.method.period.js'
@@ -730,12 +737,21 @@
     'begin': '(?<![\\w$])Math(?![\\w$]|\\s*:)'
     'beginCaptures':
       '0':
-        'name': 'support.class.js'
-    'end': '(?=(?!\\s*\\.)\\S)'
+        'name': 'support.class.math.js'
+    'end': '''(?x)
+      (?=
+        (?! \\s*\\.\\s* (
+          ((abs|acos|acosh|asin|asinh|atan|atan2|atanh|cbrt|ceil|clz32|cos|cosh|exp|
+          expm1|floor|fround|hypot|imul|log|log10|log1p|log2|max|min|pow|random|
+          round|sign|sin|sinh|sqrt|tan|tanh|trunc)\\s*\\(
+          ) | (E|LN10|LN2|LOG10E|LOG2E|PI|SQRT1_2|SQRT2)(?!\\s*\\())
+        ) \\S
+      )
+    '''
     'patterns': [
       {
         # Math.random()
-        'begin': '\\s*(\\.)\\s*(abs|acos|acosh|asin|asinh|atan|atan2|atanh|cbrt|ceil|clz32|cos|cosh|exp|expm1|floor|fround|hypot|imul|log|log10|log1p|log2|max|min|pow|random|round|sign|sin|sinh|sqrt|tan|tanh|trunc)\\s*(?=\\()'
+        'begin': '\\s*(\\.)\\s*(\\w+)\\s*(?=\\()'
         'beginCaptures':
           '1':
             'name': 'meta.delimiter.method.period.js'
@@ -751,7 +767,7 @@
       }
       {
         # Math.PI
-        'match': '\\s*(\\.)\\s*(E|LN10|LN2|LOG10E|LOG2E|PI|SQRT1_2|SQRT2)\\b'
+        'match': '\\s*(\\.)\\s*(\\w+)\\b'
         'captures':
           '1':
             'name': 'meta.delimiter.property.period.js'
