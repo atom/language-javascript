@@ -386,6 +386,9 @@ describe "Javascript grammar", ->
       expect(tokens[7]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.decimal.js']
       expect(tokens[8]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
+      {tokens} = grammar.tokenizeLine('OBJ.prop')
+      expect(tokens[0]).toEqual value: 'OBJ', scopes: ['source.js', 'constant.other.object.js']
+
     it "tokenizes variables declared using `const` as constants", ->
       {tokens} = grammar.tokenizeLine('const myCoolVar = 42;')
       expect(tokens[0]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
@@ -1381,6 +1384,11 @@ describe "Javascript grammar", ->
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
       expect(tokens[2]).toEqual value: 'property', scopes: ['source.js', 'variable.other.property.js']
 
+      {tokens} = grammar.tokenizeLine('obj.property.property')
+      expect(tokens[0]).toEqual value: 'obj', scopes: ['source.js', 'variable.other.object.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
+      expect(tokens[2]).toEqual value: 'property', scopes: ['source.js', 'variable.other.object.property.js']
+
       {tokens} = grammar.tokenizeLine('obj.Property')
       expect(tokens[0]).toEqual value: 'obj', scopes: ['source.js', 'variable.other.object.js']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
@@ -1407,6 +1415,11 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'obj', scopes: ['source.js', 'variable.other.object.js']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
       expect(tokens[2]).toEqual value: 'MY_CONSTANT', scopes: ['source.js', 'constant.other.property.js']
+
+      {tokens} = grammar.tokenizeLine('obj.MY_CONSTANT.prop')
+      expect(tokens[0]).toEqual value: 'obj', scopes: ['source.js', 'variable.other.object.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
+      expect(tokens[2]).toEqual value: 'MY_CONSTANT', scopes: ['source.js', 'constant.other.object.property.js']
 
       {tokens} = grammar.tokenizeLine('a.C')
       expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'variable.other.object.js']
