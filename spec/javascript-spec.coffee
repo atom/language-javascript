@@ -1580,6 +1580,9 @@ describe "Javascript grammar", ->
       expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
       expect(tokens[5]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
+      {tokens} = grammar.tokenizeLine('console .foo();')
+      expect(tokens[3]).toEqual value: 'foo', scopes: ['source.js', 'meta.method-call.js', 'entity.name.function.js']
+
   describe "math", ->
     it "tokenizes the math object", ->
       {tokens} = grammar.tokenizeLine('Math;')
