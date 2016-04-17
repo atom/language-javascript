@@ -1278,7 +1278,7 @@ describe "Javascript grammar", ->
 
       {tokens} = grammar.tokenizeLine('a.123illegal')
       expect(tokens[0]).toEqual value: 'a', scopes: ['source.js']
-      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
       expect(tokens[2]).toEqual value: '123illegal', scopes: ['source.js', 'invalid.illegal.identifier.js']
 
     it "tokenizes constant properties", ->

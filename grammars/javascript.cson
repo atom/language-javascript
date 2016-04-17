@@ -1356,6 +1356,15 @@
           '2':
             'name': 'variable.other.property.js'
       }
+      {
+        # 123illegal in obj.123illegal, func().123illegal
+        'match': '(\\.)\\s*([0-9][\\w$]*)'
+        'captures':
+          '1':
+            'name': 'meta.delimiter.property.period.js'
+          '2':
+            'name': 'invalid.illegal.identifier.js'
+      }
     ]
   'interpolated_js':
     'patterns': [
