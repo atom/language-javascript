@@ -1556,12 +1556,13 @@ describe "Javascript grammar", ->
       expect(tokens[1]).not.toEqual value: 'console', scopes: ['source.js', 'entity.name.type.object.console.js']
 
     it "tokenizes console support functions", ->
-      {tokens} = grammar.tokenizeLine('console.log()')
+      {tokens} = grammar.tokenizeLine('console.log().log()')
       expect(tokens[0]).toEqual value: 'console', scopes: ['source.js', 'entity.name.type.object.console.js']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
       expect(tokens[2]).toEqual value: 'log', scopes: ['source.js', 'meta.method-call.js', 'support.function.console.js']
       expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
       expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
+      expect(tokens[6]).not.toEqual value: 'log', scopes: ['source.js', 'meta.method-call.js', 'support.function.console.js']
 
       lines = grammar.tokenizeLines '''
         console
