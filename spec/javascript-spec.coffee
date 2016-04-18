@@ -1254,6 +1254,12 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('$$()')
       expect(tokens[0]).toEqual value: '$$', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
 
+      {tokens} = grammar.tokenizeLine('ABC()')
+      expect(tokens[0]).toEqual value: 'ABC', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
+
+      {tokens} = grammar.tokenizeLine('$ABC$()')
+      expect(tokens[0]).toEqual value: '$ABC$', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
+
     it "tokenizes function calls when they are arguments", ->
       {tokens} = grammar.tokenizeLine('a(b(c))')
       expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
