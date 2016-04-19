@@ -1503,6 +1503,19 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: '//', scopes: ['source.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
       expect(tokens[1]).toEqual value: ' comment', scopes: ['source.js', 'comment.line.double-slash.js']
 
+    it "tokenizes HTML-style comments", ->
+      {tokens} = grammar.tokenizeLine('<!-- var x -->')
+      expect(tokens[0]).toEqual value: '<!--', scopes: ['source.js', 'comment.html.js', 'punctuation.definition.comment.html.js']
+      expect(tokens[2]).toEqual value: 'var', scopes: ['source.js', 'storage.type.var.js']
+      expect(tokens[4]).toEqual value: '-->', scopes: ['source.js', 'comment.html.js', 'punctuation.definition.comment.html.js']
+
+    it "prioritizes HTML-style comments when paired with regular line comments", ->
+      {tokens} = grammar.tokenizeLine('//comment --> var x')
+      expect(tokens[0]).toEqual value: '//', scopes: ['source.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
+      expect(tokens[1]).toEqual value: 'comment ', scopes: ['source.js', 'comment.line.double-slash.js']
+      expect(tokens[2]).toEqual value: '-->', scopes: ['source.js', 'comment.html.js', 'punctuation.definition.comment.html.js']
+      expect(tokens[4]).toEqual value: 'var', scopes: ['source.js', 'storage.type.var.js']
+
     it "tokenizes comments inside constant definitions", ->
       {tokens} = grammar.tokenizeLine('const a, // comment')
       expect(tokens[0]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
