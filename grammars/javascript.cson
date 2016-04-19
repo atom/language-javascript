@@ -689,7 +689,7 @@
     'name': 'meta.class.js'
   }
   {
-    'begin': '^\\s*(@)\\s*([A-Za-z_$][A-Za-z0-9_$]*)'
+    'begin': '^\\s*(@)\\s*([A-Za-z_$][\\w$]*)'
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.decorator.js'
