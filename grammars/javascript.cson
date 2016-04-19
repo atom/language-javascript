@@ -416,6 +416,32 @@
     ]
   }
   {
+    'begin': '(?=\\b(constructor)\\s*)'
+    'end': '(?<=})'
+    'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#function_body'
+      }
+      {
+        'begin': '\\G'
+        'end': '(?<=\\))'
+        'name': 'meta.function.js'
+        'patterns': [
+          {
+            'match': '\\b(constructor)\\s*'
+            'name': 'entity.name.function.constructor.js'
+          }
+          {
+            'include': '#function_innards'
+          }
+        ]
+      }
+    ]
+  }
+  {
     # ES6 method definitions: foo() {}
     'begin': '''(?x)
       (?=
@@ -650,18 +676,6 @@
         'name': 'meta.function.arrow.js'
       '1':
         'name': 'storage.type.function.arrow.js'
-  }
-  {
-    'begin': '\\b(constructor)\\s*(?=\\()'
-    'beginCaptures':
-      '1':
-        'name': 'entity.name.function.constructor.js'
-    'end': '(?<=\\})'
-    'patterns': [
-      {
-        'include': '#function_params'
-      }
-    ]
   }
   {
     'match': '''(?x)
