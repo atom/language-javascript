@@ -804,6 +804,15 @@
     'include': '#comments'
   }
   {
+    'captures':
+      '0':
+        'name': 'punctuation.definition.comment.html.js'
+      '2':
+        'name': 'punctuation.definition.comment.html.js'
+    'match': '(<!--|-->)'
+    'name': 'comment.block.html.js'
+  }
+  {
     'match': '(?<!\\.)\\b(class|enum|function|interface)(?!\\s*:)\\b'
     'name': 'storage.type.js'
   }
@@ -1620,7 +1629,7 @@
             'include': '#docblock'
           }
         ]
-        'end': '\\*/|(?=</script>)' # Unfortunately, we don't know when we're embedded, so this is as good as it gets
+        'end': '\\*/'
         'name': 'comment.block.documentation.js'
       }
       {
@@ -1628,7 +1637,7 @@
         'captures':
           '0':
             'name': 'punctuation.definition.comment.js'
-        'end': '\\*/|(?=</script>)' # Unfortunately, we don't know when we're embedded, so this is as good as it gets
+        'end': '\\*/'
         'name': 'comment.block.js'
       }
       {
@@ -1643,42 +1652,8 @@
             'beginCaptures':
               '0':
                 'name': 'punctuation.definition.comment.js'
-            'end': '$|(?=</script>)' # Unfortunately, we don't know when we're embedded, so this is as good as it gets
+            'end': '\\n'
             'name': 'comment.line.double-slash.js'
-          }
-        ]
-      }
-      {
-        'begin': '(^[ \\t]+)?(?=<!--)'
-        'beginCaptures':
-          '1':
-            'name': 'punctuation.whitespace.comment.leading.js'
-        'end': '(?!\\G)'
-        'patterns': [
-          {
-            'begin': '<!--'
-            'beginCaptures':
-              '0':
-                'name': 'punctuation.definition.comment.html.js'
-            'end': '$|(?=</script>)' # Unfortunately, we don't know when we're embedded, so this is as good as it gets
-            'name': 'comment.line.html.js'
-          }
-        ]
-      }
-      {
-        'begin': '(^[ \\t]+)?(?=-->)'
-        'beginCaptures':
-          '1':
-            'name': 'punctuation.whitespace.comment.leading.js'
-        'end': '(?!\\G)'
-        'patterns': [
-          {
-            'begin': '-->'
-            'beginCaptures':
-              '0':
-                'name': 'punctuation.definition.comment.html.js'
-            'end': '$|(?=</script>)' # Unfortunately, we don't know when we're embedded, so this is as good as it gets
-            'name': 'comment.line.html.js'
           }
         ]
       }
