@@ -1563,6 +1563,39 @@ describe "Javascript grammar", ->
       expect(tokens[7]).toEqual value: ', p2 ', scopes: ['source.js', 'meta.function.js', 'meta.parameters.js', 'comment.block.js']
       expect(tokens[8]).toEqual value: '*/', scopes: ['source.js', 'meta.function.js', 'meta.parameters.js', 'comment.block.js', 'punctuation.definition.comment.js']
 
+    it "tokenizes HTML-style comments correctly", ->
+      {tokens} = grammar.tokenizeLine '<!-- comment'
+      expect(tokens[0]).toEqual value: '<!--', scopes: ['source.js', 'comment.line.html.js', 'punctuation.definition.comment.html.js']
+      expect(tokens[1]).toEqual value: ' comment', scopes: ['source.js', 'comment.line.html.js']
+
+      {tokens} = grammar.tokenizeLine '--> comment'
+      expect(tokens[0]).toEqual value: '-->', scopes: ['source.js', 'comment.line.html.js', 'punctuation.definition.comment.html.js']
+      expect(tokens[1]).toEqual value: ' comment', scopes: ['source.js', 'comment.line.html.js']
+
+    it "stops comments when a </script> tag is encountered", ->
+      # HTML doesn't count comments if they're followed by a </script> tag.  Unfortunately we have
+      # no idea if we're embedded or not, so we err on the side of caution and always assume that we are :/
+
+      {tokens} = grammar.tokenizeLine '/* </script>'
+      expect(tokens[0]).toEqual value: '/*', scopes: ['source.js', 'comment.block.js', 'punctuation.definition.comment.js']
+      expect(tokens[1]).not.toEqual value: ' </script>', scopes: ['source.js', 'comment.block.js']
+
+      {tokens} = grammar.tokenizeLine '/** </script>'
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[1]).not.toEqual value: ' </script>', scopes: ['source.js', 'comment.block.documentation.js']
+
+      {tokens} = grammar.tokenizeLine '// </script>'
+      expect(tokens[0]).toEqual value: '//', scopes: ['source.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
+      expect(tokens[1]).not.toEqual value: ' </script>', scopes: ['source.js', 'comment.line.double-slash.js']
+
+      {tokens} = grammar.tokenizeLine '<!-- </script>'
+      expect(tokens[0]).toEqual value: '<!--', scopes: ['source.js', 'comment.line.html.js', 'punctuation.definition.comment.html.js']
+      expect(tokens[1]).not.toEqual value: ' </script>', scopes: ['source.js', 'comment.line.html.js']
+
+      {tokens} = grammar.tokenizeLine '--> </script>'
+      expect(tokens[0]).toEqual value: '-->', scopes: ['source.js', 'comment.line.html.js', 'punctuation.definition.comment.html.js']
+      expect(tokens[1]).not.toEqual value: ' </script>', scopes: ['source.js', 'comment.line.html.js']
+
   describe "console", ->
     it "tokenizes the console keyword", ->
       {tokens} = grammar.tokenizeLine('console;')
