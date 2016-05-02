@@ -275,7 +275,7 @@
     'name': 'meta.export.js'
   }
   {
-    'match': '(?<!\\.)\\b(super|this)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(super|this)(?=\\s*:)'
+    'match': '(?<!\\.)\\b(super|this|arguments)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(super|this|arguments)(?=\\s*:)'
     'captures':
       '1':
         'name': 'variable.language.js'
@@ -695,13 +695,13 @@
       '2':
         'name': 'storage.modifier.js'
       '3':
-        'name': 'entity.name.type.class.js'
+        'name': 'entity.other.inherited-class.js'
       '4':
         'name': 'entity.name.type.class.js'
       '5':
         'name': 'storage.modifier.js'
       '6':
-        'name': 'entity.name.type.class.js'
+        'name': 'entity.other.inherited-class.js'
     'name': 'meta.class.js'
   }
   {
