@@ -34,10 +34,10 @@
     'body': 'for (${1:variable} of ${2:iterable}) {\n\t$3\n}'
   'Function':
     'prefix': 'fun'
-    'body': 'function ${1:functionName}($2) {\n\t$0\n}'
+    'body': '${1:functionName}($2) => {\n\t$0\n}'
   'Anonymous Function':
     'prefix': 'f'
-    'body': 'function ($1) {\n\t$2\n}'
+    'body': '($1) => {\n\t$2\n}'
   'Generator':
     'prefix': 'gen',
     'body': 'function* ${1:functionName}($2) {\n\t$0\n}'
@@ -79,13 +79,13 @@
     'body': 'console.log(require(\'util\').inspect($0, { depth: null }));'
   'new Promise':
     'prefix': 'prom'
-    'body': 'new Promise(function(resolve, reject) {\n\t$1\n});$0'
+    'body': 'new Promise((resolve, reject) => {\n\t$1\n});$0'
   'setInterval function':
     'prefix': 'interval'
-    'body': 'setInterval(${2:function () {\n\t$3\n\\}}, ${1:10});'
+    'body': 'setInterval(${2:() => {\n\t$3\n\\}}, ${1:10});'
   'setTimeout function':
     'prefix': 'timeout'
-    'body': 'setTimeout(${2:function () {\n\t$3\n\\}}, ${1:10});'
+    'body': 'setTimeout(${2:() => {\n\t$3\n\\}}, ${1:10});'
   'switch':
     'prefix': 'switch'
     'body': 'switch (${1:expression}) {\n\tcase ${2:expression}:\n\t\t$4\n\t\tbreak;$5\n\tdefault:\n\t\t$3\n}'
@@ -109,7 +109,7 @@
     'body': 'class ${1:ClassName} {\n\tconstructor($2) {\n\t\t$3\n\t}\n}'
   'export function':
     'prefix': 'expfun'
-    'body': 'exports.${1:functionName} = function ($2) {\n\t${3:// body...}\n};'
+    'body': 'exports.${1:functionName} = ($2) => {\n\t${3:// body...}\n};'
   'export module':
     'prefix': 'expmod'
     'body': 'module.exports = ${1:name};'
