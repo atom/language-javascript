@@ -804,15 +804,6 @@
     'include': '#comments'
   }
   {
-    'captures':
-      '0':
-        'name': 'punctuation.definition.comment.html.js'
-      '2':
-        'name': 'punctuation.definition.comment.html.js'
-    'match': '(<!--|-->)'
-    'name': 'comment.block.html.js'
-  }
-  {
     'match': '(?<!\\.)\\b(class|enum|function|interface)(?!\\s*:)\\b'
     'name': 'storage.type.js'
   }
@@ -1652,9 +1643,16 @@
             'beginCaptures':
               '0':
                 'name': 'punctuation.definition.comment.js'
-            'end': '\\n'
+            'end': '\\n|(?=-->)'
             'name': 'comment.line.double-slash.js'
           }
         ]
+      }
+      {
+        'match': '<!--|-->'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.comment.html.js'
+        'name': 'comment.html.js'
       }
     ]
