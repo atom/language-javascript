@@ -67,16 +67,16 @@
     'body': '(function() {\n\t${1:\'use strict\';\n}\t$2\n}());'
   'log':
     'prefix': 'log'
-    'body': 'console.log($1);$0'
+    'body': 'log($1);$0'
   'warn':
     'prefix': 'warn'
-    'body': 'console.warn($1);$0'
+    'body': 'warn($1);$0'
   'error':
     'prefix': 'error'
-    'body': 'console.error($1);$0'
+    'body': 'error($1);$0'
   'inspect':
     'prefix': 'inspect'
-    'body': 'console.log(require(\'util\').inspect($0, { depth: null }));'
+    'body': 'log(require(\'util\').inspect($0, { depth: null }));'
   'new Promise':
     'prefix': 'prom'
     'body': 'new Promise(function(resolve, reject) {\n\t$1\n});$0'
