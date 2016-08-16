@@ -1442,7 +1442,7 @@
                 'match': '''(?x)
                   \\b(acceptNode|add|addEventListener|addTextTrack|adoptNode|after|animate|append|
                   appendChild|appendData|before|blur|canPlayType|captureStream|
-                  caretPositionFromPoint|caretRangeFromPoint|checkValidity|clear|clear|click|
+                  caretPositionFromPoint|caretRangeFromPoint|checkValidity|clear|click|
                   cloneContents|cloneNode|cloneRange|close|closest|collapse|
                   compareBoundaryPoints|compareDocumentPosition|comparePoint|contains|
                   convertPointFromNode|convertQuadFromNode|convertRectFromNode|createAttribute|
