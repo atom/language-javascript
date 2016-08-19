@@ -86,6 +86,12 @@ describe "Javascript grammar", ->
           expect(tokens[4]).toEqual value: ' ', scopes: ['source.js']
           expect(tokens[5]).toEqual value: keyword, scopes: ['source.js', scope]
 
+        it "tokenises `#{keyword}` in case statements", ->
+          {tokens} = grammar.tokenizeLine("case #{keyword}:")
+          expect(tokens[0]).toEqual value: 'case', scopes: ['source.js', 'keyword.control.js']
+          expect(tokens[2]).toEqual value: keyword, scopes: ['source.js', scope]
+          expect(tokens[3]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
+
   describe "built-in globals", ->
     it "tokenizes built-in classes", ->
       {tokens} = grammar.tokenizeLine('window')

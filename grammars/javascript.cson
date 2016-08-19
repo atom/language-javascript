@@ -275,11 +275,19 @@
     'name': 'meta.export.js'
   }
   {
-    'match': '(?<!\\.)\\b(super|this|arguments)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(super|this|arguments)(?=\\s*:)'
+    'match': '''(?x)
+      (?<!\\.)\\b(super|this|arguments)(?!\\s*:)\\b
+      |
+      (?<=\\?)\\s*(super|this|arguments)(?=\\s*:)
+      |
+      (?<=[\\s}:;]case|^case)\\s+(super|this|arguments)(?=\\s*:)
+    '''
     'captures':
       '1':
         'name': 'variable.language.js'
       '2':
+        'name': 'variable.language.js'
+      '3':
         'name': 'variable.language.js'
   }
   {
@@ -907,27 +915,51 @@
     'name': 'keyword.operator.spread.js'
   }
   {
-    'match': '(?<!\\.)\\b(true|false)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(true|false)(?=\\s*:)'
+    'match': '''(?x)
+      (?<!\\.)\\b(true|false)(?!\\s*:)\\b
+      |
+      (?<=\\?)\\s*(true|false)(?=\\s*:)
+      |
+      (?<=[\\s}:;]case|^case)\\s+(true|false)(?=\\s*:)
+    '''
     'captures':
       '1':
         'name': 'constant.language.boolean.$1.js'
       '2':
         'name': 'constant.language.boolean.$2.js'
+      '3':
+        'name': 'constant.language.boolean.$3.js'
   }
   {
-    'match': '(?<!\\.)\\b(null)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(null)(?=\\s*:)'
+    'match': '''(?x)
+      (?<!\\.)\\b(null)(?!\\s*:)\\b
+      |
+      (?<=\\?)\\s*(null)(?=\\s*:)
+      |
+      (?<=[\\s}:;]case|^case)\\s+(null)(?=\\s*:)
+    '''
     'captures':
       '1':
         'name': 'constant.language.null.js'
       '2':
         'name': 'constant.language.null.js'
+      '3':
+        'name': 'constant.language.null.js'
   }
   {
-    'match': '(?<!\\.)\\b(debugger)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(debugger)(?=\\s*:)'
+    'match': '''(?x)
+      (?<!\\.)\\b(debugger)(?!\\s*:)\\b
+      |
+      (?<=\\?)\\s*(debugger)(?=\\s*:)
+      |
+      (?<=[\\s}:;]case|^case)\\s+(debugger)(?=\\s*:)
+    '''
     'captures':
       '1':
         'name': 'keyword.other.js'
       '2':
+        'name': 'keyword.other.js'
+      '3':
         'name': 'keyword.other.js'
   }
   {
@@ -955,11 +987,19 @@
     'name': 'support.constant.dom.js'
   }
   {
-    'match': '(?<!\\.)\\b(module|exports|__filename|__dirname|global|process)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(module|exports|__filename|__dirname|global|process)(?=\\s*:)'
+    'match': '''(?x)
+      (?<!\\.)\\b(module|exports|__filename|__dirname|global|process)(?!\\s*:)\\b
+      |
+      (?<=\\?)\\s*(module|exports|__filename|__dirname|global|process)(?=\\s*:)
+      |
+      (?<=[\\s}:;]case|^case)\\s+(module|exports|__filename|__dirname|global|process)(?=\\s*:)
+    '''
     'captures':
       '1':
         'name': 'support.variable.js'
       '2':
+        'name': 'support.variable.js'
+      '3':
         'name': 'support.variable.js'
   }
   {
