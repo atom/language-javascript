@@ -1214,8 +1214,7 @@
         'name': 'string.quoted.single.js'
         'patterns': [
           {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
-            'name': 'constant.character.escape.js'
+            'include': '#string_escapes'
           }
           {
             'match': "[^']*[^\\n\\r'\\\\]$"
@@ -1235,8 +1234,7 @@
         'name': 'string.quoted.double.js'
         'patterns': [
           {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)'
-            'name': 'constant.character.escape.js'
+            'include': '#string_escapes'
           }
           {
             'match': '[^"]*[^\\n\\r"\\\\]$'
@@ -1258,8 +1256,7 @@
         'name': 'string.quoted.template.html.js'
         'patterns': [
           {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
-            'name': 'constant.character.escape.js'
+            'include': '#string_escapes'
           }
           {
             'include': '#interpolated_js'
@@ -1283,8 +1280,7 @@
         'name': 'string.quoted.template.graphql.js'
         'patterns': [
           {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
-            'name': 'constant.character.escape.js'
+            'include': '#string_escapes'
           }
           {
             'include': '#interpolated_js'
@@ -1306,13 +1302,32 @@
         'name': 'string.quoted.template.js'
         'patterns': [
           {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
-            'name': 'constant.character.escape.js'
+            'include': '#string_escapes'
           }
           {
             'include': '#interpolated_js'
           }
         ]
+      }
+    ]
+  'string_escapes':
+    'patterns': [
+      {
+        'match': '\\\\u(?![A-Fa-f0-9]{4}|\\{[A-Fa-f0-9]+\\})[^\'"]*'
+        'name': 'invalid.illegal.identifier.js'
+      }
+      {
+        'match': '\\\\u(?:[A-Fa-f0-9]{4}|(\\{)[A-Fa-f0-9]+(\\}))'
+        'name': 'constant.character.escape.js'
+        'captures':
+          '1':
+            'name': 'punctuation.section.scope.begin.js'
+          '2':
+            'name': 'punctuation.section.scope.end.js'
+      }
+      {
+        'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
+        'name': 'constant.character.escape.js'
       }
     ]
   'function_params':
