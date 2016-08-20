@@ -1317,12 +1317,20 @@
         'name': 'invalid.illegal.identifier.js'
       }
       {
-        'match': '\\\\u(?:[A-Fa-f0-9]{4}|(\\{)[A-Fa-f0-9]+(\\}))'
+        'match': '\\\\u(?:[A-Fa-f0-9]{4}|(\\{)([A-Fa-f0-9]+)(\\}))'
         'name': 'constant.character.escape.js'
         'captures':
           '1':
             'name': 'punctuation.section.scope.begin.js'
           '2':
+            'patterns': [
+              {
+                # Max codepoint: \u{10FFFF}
+                'match': '[A-Fa-f\\d]{7,}|(?!10)[A-Fa-f\\d]{6}'
+                'name': 'invalid.illegal.identifier.js'
+              }
+            ]
+          '3':
             'name': 'punctuation.section.scope.end.js'
       }
       {
