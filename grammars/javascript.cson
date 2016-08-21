@@ -424,7 +424,7 @@
     ]
   }
   {
-    'begin': '(?=\\b(constructor)\\s*)'
+    'begin': '(?=\\bconstructor\\b\\s*)'
     'end': '(?<=})'
     'patterns': [
       {

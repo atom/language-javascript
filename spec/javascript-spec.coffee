@@ -1049,6 +1049,9 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: ')', scopes: ['source.js', 'meta.function.js', 'meta.parameters.js', 'punctuation.definition.parameters.end.bracket.round.js']
       expect(tokens[10]).toEqual value: 'this', scopes: ['source.js', 'variable.language.js']
 
+      {tokens} = grammar.tokenizeLine('constructorABC: {}')
+      expect(tokens[0]).not.toEqual value: 'constructor', scopes: ['source.js', 'meta.function.js', 'entity.name.function.constructor.js']
+
     it "tokenizes named function expressions", ->
       {tokens} = grammar.tokenizeLine('var func = function foo(){}')
       expect(tokens[0]).toEqual value: 'var', scopes: ['source.js', 'storage.type.var.js']
