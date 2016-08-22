@@ -899,10 +899,6 @@
     'name': 'keyword.control.js'
   }
   {
-    'match': '(?<!\\.)\\b(default)\\b'
-    'name': 'keyword.control.js'
-  }
-  {
     'include': '#switch_statement'
   }
   {
