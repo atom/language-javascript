@@ -95,10 +95,10 @@ describe "Javascript grammar", ->
   describe "built-in globals", ->
     it "tokenizes built-in classes", ->
       {tokens} = grammar.tokenizeLine('window')
-      expect(tokens[0]).toEqual value: 'window', scopes: ['source.js', 'support.class.js']
+      expect(tokens[0]).toEqual value: 'window', scopes: ['source.js', 'support.variable.dom.js']
 
       {tokens} = grammar.tokenizeLine('window.name')
-      expect(tokens[0]).toEqual value: 'window', scopes: ['source.js', 'support.class.js']
+      expect(tokens[0]).toEqual value: 'window', scopes: ['source.js', 'support.variable.dom.js']
 
       {tokens} = grammar.tokenizeLine('$window')
       expect(tokens[0]).toEqual value: '$window', scopes: ['source.js']
@@ -515,12 +515,12 @@ describe "Javascript grammar", ->
       expect(tokens[4]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.assignment.js']
 
     it "tokenizes support constants", ->
-      {tokens} = grammar.tokenizeLine('awesome = cool.systemLanguage;')
+      {tokens} = grammar.tokenizeLine('awesome = cool.EPSILON;')
       expect(tokens[0]).toEqual value: 'awesome ', scopes: ['source.js']
       expect(tokens[1]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.assignment.js']
       expect(tokens[3]).toEqual value: 'cool', scopes: ['source.js', 'variable.other.object.js']
       expect(tokens[4]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
-      expect(tokens[5]).toEqual value: 'systemLanguage', scopes: ['source.js', 'support.constant.js']
+      expect(tokens[5]).toEqual value: 'EPSILON', scopes: ['source.js', 'support.constant.js']
       expect(tokens[6]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
     it "does not tokenize constants when they are object keys", ->
