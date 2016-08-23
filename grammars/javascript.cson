@@ -279,20 +279,8 @@
     ]
   }
   {
-    'match': '''(?x)
-      (?<!\\.)\\b(super|this|arguments)(?!\\s*:)\\b
-      |
-      (?<=\\?)\\s*(super|this|arguments)(?=\\s*:)
-      |
-      (?<=[\\s}:;]case|^case)\\s+(super|this|arguments)(?=\\s*:)
-    '''
-    'captures':
-      '1':
-        'name': 'variable.language.js'
-      '2':
-        'name': 'variable.language.js'
-      '3':
-        'name': 'variable.language.js'
+    'match': '(?<!\\.)\\b(super|this|arguments)(?!\\s*:)\\b'
+    'name': 'variable.language.js'
   }
   {
     # [async] function [name](params)
@@ -890,25 +878,20 @@
     ]
   }
   {
-    'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?|(?<=\\?)(?:\\s*)(yield)(?=\\s*:)',
+    'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?',
     'captures':
       '1':
         'name': 'keyword.control.js'
       '2':
         'name': 'storage.modifier.js'
-      '3':
-        'name': 'keyword.control.js'
-      '4':
-        'name': 'storage.modifier.js'
     'name': 'meta.control.yield.js'
   }
   {
-    'match': '(?<!\\.)\\b(await|break|case|catch|continue|do|else|finally|for|if|import|package|return|switch|throw|try|while|with)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(await|break|catch|continue|do|else|finally|for|if|import|package|return|throw|try|while|with)(?!\\s*:)\\b'
     'name': 'keyword.control.js'
   }
   {
-    'match': '(?<!\\.)\\b(default)\\b'
-    'name': 'keyword.control.js'
+    'include': '#switch_statement'
   }
   {
     'match': '(?<!\\.)\\b(delete|in|of|instanceof|new|typeof|void)(?!\\s*:)\\b'
@@ -919,52 +902,16 @@
     'name': 'keyword.operator.spread.js'
   }
   {
-    'match': '''(?x)
-      (?<!\\.)\\b(true|false)(?!\\s*:)\\b
-      |
-      (?<=\\?)\\s*(true|false)(?=\\s*:)
-      |
-      (?<=[\\s}:;]case|^case)\\s+(true|false)(?=\\s*:)
-    '''
-    'captures':
-      '1':
-        'name': 'constant.language.boolean.$1.js'
-      '2':
-        'name': 'constant.language.boolean.$2.js'
-      '3':
-        'name': 'constant.language.boolean.$3.js'
+    'match': '(?<!\\.)\\b(true|false)(?!\\s*:)\\b'
+    'name': 'constant.language.boolean.$1.js'
   }
   {
-    'match': '''(?x)
-      (?<!\\.)\\b(null)(?!\\s*:)\\b
-      |
-      (?<=\\?)\\s*(null)(?=\\s*:)
-      |
-      (?<=[\\s}:;]case|^case)\\s+(null)(?=\\s*:)
-    '''
-    'captures':
-      '1':
-        'name': 'constant.language.null.js'
-      '2':
-        'name': 'constant.language.null.js'
-      '3':
-        'name': 'constant.language.null.js'
+    'match': '(?<!\\.)\\b(null)(?!\\s*:)\\b'
+    'name': 'constant.language.null.js'
   }
   {
-    'match': '''(?x)
-      (?<!\\.)\\b(debugger)(?!\\s*:)\\b
-      |
-      (?<=\\?)\\s*(debugger)(?=\\s*:)
-      |
-      (?<=[\\s}:;]case|^case)\\s+(debugger)(?=\\s*:)
-    '''
-    'captures':
-      '1':
-        'name': 'keyword.other.js'
-      '2':
-        'name': 'keyword.other.js'
-      '3':
-        'name': 'keyword.other.js'
+    'match': '(?<!\\.)\\b(debugger)(?!\\s*:)\\b'
+    'name': 'keyword.other.debugger.js'
   }
   {
     'match': '''(?x) (?<!\\$) \\b
@@ -1036,20 +983,8 @@
     'name': 'support.constant.dom.js'
   }
   {
-    'match': '''(?x)
-      (?<!\\.)\\b(module|exports|__filename|__dirname|global|process)(?!\\s*:)\\b
-      |
-      (?<=\\?)\\s*(module|exports|__filename|__dirname|global|process)(?=\\s*:)
-      |
-      (?<=[\\s}:;]case|^case)\\s+(module|exports|__filename|__dirname|global|process)(?=\\s*:)
-    '''
-    'captures':
-      '1':
-        'name': 'support.variable.js'
-      '2':
-        'name': 'support.variable.js'
-      '3':
-        'name': 'support.variable.js'
+    'match': '(?<!\\.)\\b(module|exports|__filename|__dirname|global|process)(?!\\s*:)\\b'
+    'name': 'support.variable.js'
   }
   {
     'match': '\\b(Infinity|NaN|undefined)\\b'
@@ -1072,6 +1007,24 @@
     ]
   }
   {
+    'begin': '\\?'
+    'beginCaptures':
+      '0':
+        'name': 'keyword.operator.ternary.js'
+    'end': ':'
+    'endCaptures':
+      '0':
+        'name': 'keyword.operator.ternary.js'
+    'patterns': [
+      {
+        'include': '#prevent_object_keys_matching'
+      }
+      {
+        'include': '$self'
+      }
+    ]
+  }
+  {
     'include': '#operators'
   }
   {
@@ -1090,12 +1043,8 @@
     'include': '#properties'
   }
   {
-    'match': '(?<!\\.)\\b([A-Z][A-Z0-9_]+)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)([A-Z][A-Z0-9_]+)(?=\\s*:)'
-    'captures':
-      '1':
-        'name': 'constant.other.js'
-      '2':
-        'name': 'constant.other.js'
+    'match': '(?<!\\.)\\b[A-Z][A-Z0-9_]+(?!\\s*:)\\b'
+    'name': 'constant.other.js'
   }
   {
     'match': '(?<!\\$)\\b[0-9]+[\\w$]*'
@@ -1229,11 +1178,7 @@
         'name': 'keyword.operator.bitwise.js'
       }
       {
-        'match': '\\?|:'
-        'name': 'keyword.operator.js'
-      }
-      {
-        'match': '='
+        'match': '=|:'
         'name': 'keyword.operator.assignment.js'
       }
       {
@@ -1814,5 +1759,87 @@
             'name': 'comment.line.double-slash.js'
           }
         ]
+      }
+    ]
+  'switch_statement':
+    'patterns': [
+      {
+        # switch(expression) {...}
+        'begin': '\\bswitch\\b'
+        'beginCaptures':
+          '0':
+            'name': 'keyword.control.switch.js'
+        'end': '}'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.section.switch-block.end.bracket.curly.js'
+        'name': 'meta.switch-statement.js'
+        'patterns': [
+          {
+            'begin': '\\('
+            'beginCaptures':
+              '0':
+                'name': 'punctuation.definition.switch-expression.begin.bracket.round.js'
+            'end': '\\)'
+            'endCaptures':
+              '0':
+                'name': 'punctuation.definition.switch-expression.end.bracket.round.js'
+            'patterns': [
+              'include': '$self'
+            ]
+          }
+          {
+            'begin': '{'
+            'beginCaptures':
+              '0':
+                'name': 'punctuation.definition.section.switch-block.begin.bracket.curly.js'
+            'end': '(?=})'
+            'patterns': [
+              {
+                'begin': '\\bcase\\b'
+                'beginCaptures':
+                  '0':
+                    'name': 'keyword.control.case.js'
+                'end': ':'
+                'endCaptures':
+                  '0':
+                    'name': 'punctuation.definition.section.case-statement.js'
+                'patterns': [
+                  {
+                    'include': '#prevent_object_keys_matching'
+                  }
+                  {
+                    'include': '$self'
+                  }
+                ]
+              }
+              {
+                'match': '(?:^\\s*)?\\b(default)\\b\\s*(:)'
+                'captures':
+                  '1':
+                    'name': 'keyword.control.default.js'
+                  '2':
+                    'name': 'punctuation.definition.section.case-statement.js'
+              }
+              {
+                'include': '$self'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  'prevent_object_keys_matching':
+    'patterns': [
+      {
+        # e.g. don't treat null as an object key in
+        # ? null :
+        # case null:
+        'match': '(\\w+)(?=\\s*:)'
+        'captures':
+          '1':
+            'patterns': [
+              'include': '$self'
+            ]
       }
     ]

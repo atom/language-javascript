@@ -55,42 +55,17 @@ describe "Javascript grammar", ->
         expect(lines[2][1]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.end.js']
 
   describe "keywords", ->
-    it "tokenizes with as a keyword", ->
-      {tokens} = grammar.tokenizeLine('with')
-      expect(tokens[0]).toEqual value: 'with', scopes: ['source.js', 'keyword.control.js']
+    keywords = ['await', 'break', 'catch', 'continue', 'do']
 
-    map =
-      super: 'variable.language.js'
-      this: 'variable.language.js'
-      null: 'constant.language.null.js'
-      true: 'constant.language.boolean.true.js'
-      false: 'constant.language.boolean.false.js'
-      debugger: 'keyword.other.js'
-      exports: 'support.variable.js'
-      __filename: 'support.variable.js'
+    for keyword in keywords
+      it "tokenizes the #{keyword} keyword", ->
+        {tokens} = grammar.tokenizeLine(keyword)
+        expect(tokens[0]).toEqual value: keyword, scopes: ['source.js', 'keyword.control.js']
 
-    for keyword, scope of map
-      do (keyword, scope) ->
-        it "does not tokenize `#{keyword}` when it is an object key", ->
-          {tokens} = grammar.tokenizeLine("#{keyword}: 1")
-          expect(tokens[0]).toEqual value: keyword, scopes: ['source.js']
-          expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
-
-        it "tokenizes `#{keyword}` in the middle of ternary expressions", ->
-          {tokens} = grammar.tokenizeLine("a ? #{keyword} : b")
-          expect(tokens[2]).toEqual value: ' ', scopes: ['source.js']
-          expect(tokens[3]).toEqual value: keyword, scopes: ['source.js', scope]
-
-        it "tokenizes `#{keyword}` at the end of ternary expressions", ->
-          {tokens} = grammar.tokenizeLine("a ? b : #{keyword}")
-          expect(tokens[4]).toEqual value: ' ', scopes: ['source.js']
-          expect(tokens[5]).toEqual value: keyword, scopes: ['source.js', scope]
-
-        it "tokenises `#{keyword}` in case statements", ->
-          {tokens} = grammar.tokenizeLine("case #{keyword}:")
-          expect(tokens[0]).toEqual value: 'case', scopes: ['source.js', 'keyword.control.js']
-          expect(tokens[2]).toEqual value: keyword, scopes: ['source.js', scope]
-          expect(tokens[3]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
+    it "tokenizes the debugger statement", ->
+      {tokens} = grammar.tokenizeLine("debugger;")
+      expect(tokens[0]).toEqual value: "debugger", scopes: ['source.js', 'keyword.other.debugger.js']
+      expect(tokens[1]).toEqual value: ";", scopes: ['source.js', 'punctuation.terminator.statement.js']
 
   describe "built-in globals", ->
     it "tokenizes built-in classes", ->
@@ -159,21 +134,6 @@ describe "Javascript grammar", ->
       expect(tokens[5]).toEqual value: 'test', scopes: ['source.js', 'string.regexp.js']
       expect(tokens[6]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
       expect(tokens[7]).toEqual value: ']', scopes: ['source.js', 'meta.brace.square.js']
-
-    it "tokenizes regular expressions inside ternary expressions", ->
-      {tokens} = grammar.tokenizeLine('a ? /b/ : /c/')
-      expect(tokens[ 0]).toEqual value: 'a ', scopes: ['source.js']
-      expect(tokens[ 1]).toEqual value: '?', scopes: ['source.js', 'keyword.operator.js']
-      expect(tokens[ 2]).toEqual value: ' ', scopes: ['source.js', 'string.regexp.js']
-      expect(tokens[ 3]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
-      expect(tokens[ 4]).toEqual value: 'b', scopes: ['source.js', 'string.regexp.js']
-      expect(tokens[ 5]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
-      expect(tokens[ 6]).toEqual value: ' ', scopes: ['source.js']
-      expect(tokens[ 7]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
-      expect(tokens[ 8]).toEqual value: ' ', scopes: ['source.js', 'string.regexp.js']
-      expect(tokens[ 9]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
-      expect(tokens[10]).toEqual value: 'c', scopes: ['source.js', 'string.regexp.js']
-      expect(tokens[11]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
 
     it "tokenizes regular expressions inside arrow function expressions", ->
       {tokens} = grammar.tokenizeLine('getRegex = () => /^helloworld$/;')
@@ -282,15 +242,6 @@ describe "Javascript grammar", ->
         {tokens} = grammar.tokenizeLine('i--')
         expect(tokens[0]).toEqual value: 'i', scopes: ['source.js']
         expect(tokens[1]).toEqual value: '--', scopes: ['source.js', 'keyword.operator.decrement.js']
-
-    describe "conditional ternary", ->
-      it "tokenizes them", ->
-        {tokens} = grammar.tokenizeLine('test ? expr1 : expr2')
-        expect(tokens[0]).toEqual value: 'test ', scopes: ['source.js']
-        expect(tokens[1]).toEqual value: '?', scopes: ['source.js', 'keyword.operator.js']
-        expect(tokens[2]).toEqual value: ' expr1 ', scopes: ['source.js']
-        expect(tokens[3]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
-        expect(tokens[4]).toEqual value: ' expr2', scopes: ['source.js']
 
     describe "logical", ->
       operators = ["&&", "||", "!"]
@@ -523,18 +474,13 @@ describe "Javascript grammar", ->
       expect(tokens[5]).toEqual value: 'systemLanguage', scopes: ['source.js', 'support.constant.js']
       expect(tokens[6]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
-    it "does not tokenize constants when they are object keys", ->
-      {tokens} = grammar.tokenizeLine('FOO: 1')
-      expect(tokens[0]).toEqual value: 'FOO', scopes: ['source.js']
-      expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
-
     it "tokenizes constants in the middle of ternary expressions", ->
       {tokens} = grammar.tokenizeLine('a ? FOO : b')
       expect(tokens[3]).toEqual value: 'FOO', scopes: ['source.js', 'constant.other.js']
 
     it "tokenizes constants at the end of ternary expressions", ->
       {tokens} = grammar.tokenizeLine('a ? b : FOO')
-      expect(tokens[5]).toEqual value: 'FOO', scopes: ['source.js', 'constant.other.js']
+      expect(tokens[7]).toEqual value: 'FOO', scopes: ['source.js', 'constant.other.js']
 
   describe "ES6 string templates", ->
     it "tokenizes them as strings", ->
@@ -823,7 +769,7 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
       expect(tokens[7]).toEqual value: "prop", scopes: ['source.js', 'string.quoted.single.js']
       expect(tokens[8]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
-      expect(tokens[9]).toEqual value: ":", scopes: ['source.js', 'keyword.operator.js']
+      expect(tokens[9]).toEqual value: ":", scopes: ['source.js', 'keyword.operator.assignment.js']
       expect(tokens[11]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
       expect(tokens[12]).toEqual value: "value", scopes: ['source.js', 'string.quoted.single.js']
       expect(tokens[13]).toEqual value: "'", scopes: ['source.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
@@ -907,24 +853,6 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('yield * next')
       expect(tokens[0]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
       expect(tokens[2]).toEqual value: '*', scopes: ['source.js', 'meta.control.yield.js', 'storage.modifier.js']
-
-    it "does not tokenize yield when it is an object key", ->
-      {tokens} = grammar.tokenizeLine('yield: 1')
-      expect(tokens[0]).toEqual value: 'yield', scopes: ['source.js']
-      expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.js']
-
-    it "tokenizes yield in the middle of ternary expressions", ->
-      {tokens} = grammar.tokenizeLine('a ? yield : b')
-      expect(tokens[3]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
-
-    it "tokenizes yield at the end of ternary expressions", ->
-      {tokens} = grammar.tokenizeLine('a ? b : yield')
-      expect(tokens[5]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
-
-  describe "default: in a switch statement", ->
-    it "tokenizes it as a keyword", ->
-      {tokens} = grammar.tokenizeLine('default: ')
-      expect(tokens[0]).toEqual value: 'default', scopes: ['source.js', 'keyword.control.js']
 
   describe "functions", ->
     it "tokenizes regular function declarations", ->
@@ -1256,7 +1184,7 @@ describe "Javascript grammar", ->
       expect(tokens[8]).toEqual value: ',', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'meta.delimiter.object.comma.js']
       expect(tokens[10]).toEqual value: '{', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'meta.brace.curly.js']
       expect(tokens[11]).toEqual value: 'a', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js']
-      expect(tokens[12]).toEqual value: ':', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'keyword.operator.js']
+      expect(tokens[12]).toEqual value: ':', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'keyword.operator.assignment.js']
       expect(tokens[14]).toEqual value: '123', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'constant.numeric.decimal.js']
       expect(tokens[15]).toEqual value: '}', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'meta.brace.curly.js']
       expect(tokens[16]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
@@ -1752,6 +1680,150 @@ describe "Javascript grammar", ->
       expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
       expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
       expect(tokens[5]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+
+  describe "object literals", ->
+    keywords = ['super', 'this', 'null', 'true', 'false', 'debugger', 'exports', '__filename']
+
+    for keyword in keywords
+      it "tokenizes the #{keyword} keyword when it is an object key", ->
+        {tokens} = grammar.tokenizeLine("#{keyword}: 1")
+        expect(tokens[0]).toEqual value: keyword, scopes: ['source.js']
+        expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.assignment.js']
+
+    it "tokenizes object keys", ->
+      {tokens} = grammar.tokenizeLine('foo: 1')
+      expect(tokens[0]).toEqual value: 'foo', scopes: ['source.js']
+      expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.assignment.js']
+
+      {tokens} = grammar.tokenizeLine('$abc$: 1')
+      expect(tokens[0]).toEqual value: '$abc$', scopes: ['source.js']
+      expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.assignment.js']
+
+      {tokens} = grammar.tokenizeLine('0abc: 1')
+      expect(tokens[0]).toEqual value: '0abc', scopes: ['source.js', 'invalid.illegal.identifier.js']
+      expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.assignment.js']
+
+      {tokens} = grammar.tokenizeLine('"key": 1')
+      expect(tokens[0]).toEqual value: '"', scopes: ['source.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[1]).toEqual value: 'key', scopes: ['source.js', 'string.quoted.double.js']
+      expect(tokens[2]).toEqual value: '"', scopes: ['source.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
+      expect(tokens[3]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.assignment.js']
+
+    it "tokenizes numbers when they are object keys", ->
+      {tokens} = grammar.tokenizeLine('123: 1')
+      expect(tokens[0]).toEqual value: '123', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.assignment.js']
+
+    it "tokenizes constants when they are object keys", ->
+      {tokens} = grammar.tokenizeLine('FOO: 1')
+      expect(tokens[0]).toEqual value: 'FOO', scopes: ['source.js']
+      expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.assignment.js']
+
+  describe "ternary expressions", ->
+    map =
+      FOO: 'constant.other.js'
+      super: 'variable.language.js'
+      this: 'variable.language.js'
+      null: 'constant.language.null.js'
+      true: 'constant.language.boolean.true.js'
+      false: 'constant.language.boolean.false.js'
+      exports: 'support.variable.js'
+      __filename: 'support.variable.js'
+
+    for keyword, scope of map
+      do (keyword, scope) ->
+        it "tokenizes `#{keyword}` in the middle of ternary expressions", ->
+          {tokens} = grammar.tokenizeLine("a ? #{keyword} : b")
+          expect(tokens[3]).toEqual value: keyword, scopes: ['source.js', scope]
+
+        it "tokenizes `#{keyword}` at the end of ternary expressions", ->
+          {tokens} = grammar.tokenizeLine("a ? b : #{keyword}")
+          expect(tokens[7]).toEqual value: keyword, scopes: ['source.js', scope]
+
+    it "tokenizes yield at the end of ternary expressions", ->
+      {tokens} = grammar.tokenizeLine('a ? b : yield')
+      expect(tokens[7]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
+
+    it "tokenizes yield in the middle of ternary expressions", ->
+      {tokens} = grammar.tokenizeLine('a ? yield : b')
+      expect(tokens[3]).toEqual value: 'yield', scopes: ['source.js', 'meta.control.yield.js', 'keyword.control.js']
+
+    it "tokenizes regular expressions inside ternary expressions", ->
+      {tokens} = grammar.tokenizeLine('a ? /b/ : /c/')
+      expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
+      expect(tokens[1]).toEqual value: '?', scopes: ['source.js', 'keyword.operator.ternary.js']
+      expect(tokens[2]).toEqual value: ' ', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[3]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[4]).toEqual value: 'b', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[5]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+      expect(tokens[6]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[7]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.ternary.js']
+      expect(tokens[8]).toEqual value: ' ', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[9]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[10]).toEqual value: 'c', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[11]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+
+    it "tokenizes object literals in the middle of ternary expressions", ->
+      {tokens} = grammar.tokenizeLine('a ? {key: value} : b')
+      expect(tokens[1]).toEqual value: '?', scopes: ['source.js', 'keyword.operator.ternary.js']
+      expect(tokens[9]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.ternary.js']
+
+    it "tokenizes arrow functions inside ternary expressions", ->
+      {tokens} = grammar.tokenizeLine('result = condition ? something : (a, b) => a + b')
+      expect(tokens[3]).toEqual value: '?', scopes: ['source.js', 'keyword.operator.ternary.js']
+      expect(tokens[7]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.ternary.js']
+      expect(tokens[16]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.function.arrow.js']
+
+      {tokens} = grammar.tokenizeLine('result = condition ? (a, b) => a + b : something')
+      expect(tokens[3]).toEqual value: '?', scopes: ['source.js', 'keyword.operator.ternary.js']
+      expect(tokens[12]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.js', 'storage.type.function.arrow.js']
+      expect(tokens[18]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.ternary.js']
+
+  describe "switch statements", ->
+    it "tokenizes the switch keyword", ->
+      {tokens} = grammar.tokenizeLine('switch(){}')
+      expect(tokens[0]).toEqual value: 'switch', scopes: ['source.js', 'meta.switch-statement.js', 'keyword.control.switch.js']
+
+    it "tokenizes switch expression", ->
+      {tokens} = grammar.tokenizeLine('switch(foo + bar){}')
+      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'meta.switch-statement.js', 'punctuation.definition.switch-expression.begin.bracket.round.js']
+      expect(tokens[2]).toEqual value: 'foo ', scopes: ['source.js', 'meta.switch-statement.js']
+      expect(tokens[3]).toEqual value: '+', scopes: ['source.js', 'meta.switch-statement.js', 'keyword.operator.js']
+      expect(tokens[4]).toEqual value: ' bar', scopes: ['source.js', 'meta.switch-statement.js']
+      expect(tokens[5]).toEqual value: ')', scopes: ['source.js', 'meta.switch-statement.js', 'punctuation.definition.switch-expression.end.bracket.round.js']
+
+    it "tokenizes switch block", ->
+      lines = grammar.tokenizeLines '''
+        switch (foo())
+        {
+          case abc:
+          case 1+1:
+            2+2
+            break;
+          case null:
+          default:
+        }
+      '''
+      expect(lines[1][0]).toEqual value: '{', scopes: ['source.js', 'meta.switch-statement.js', 'punctuation.definition.section.switch-block.begin.bracket.curly.js']
+      expect(lines[2][1]).toEqual value: 'case', scopes: ['source.js', 'meta.switch-statement.js', 'keyword.control.case.js']
+      expect(lines[2][3]).toEqual value: 'abc', scopes: ['source.js', 'meta.switch-statement.js']
+      expect(lines[2][4]).toEqual value: ':', scopes: ['source.js', 'meta.switch-statement.js', 'punctuation.definition.section.case-statement.js']
+      expect(lines[3][1]).toEqual value: 'case', scopes: ['source.js', 'meta.switch-statement.js', 'keyword.control.case.js']
+      expect(lines[3][3]).toEqual value: '1', scopes: ['source.js', 'meta.switch-statement.js', 'constant.numeric.decimal.js']
+      expect(lines[3][4]).toEqual value: '+', scopes: ['source.js', 'meta.switch-statement.js', 'keyword.operator.js']
+      expect(lines[3][5]).toEqual value: '1', scopes: ['source.js', 'meta.switch-statement.js', 'constant.numeric.decimal.js']
+      expect(lines[3][6]).toEqual value: ':', scopes: ['source.js', 'meta.switch-statement.js', 'punctuation.definition.section.case-statement.js']
+      expect(lines[4][1]).toEqual value: '2', scopes: ['source.js', 'meta.switch-statement.js', 'constant.numeric.decimal.js']
+      expect(lines[4][2]).toEqual value: '+', scopes: ['source.js', 'meta.switch-statement.js', 'keyword.operator.js']
+      expect(lines[4][3]).toEqual value: '2', scopes: ['source.js', 'meta.switch-statement.js', 'constant.numeric.decimal.js']
+      expect(lines[5][1]).toEqual value: 'break', scopes: ['source.js', 'meta.switch-statement.js', 'keyword.control.js']
+      expect(lines[5][2]).toEqual value: ';', scopes: ['source.js', 'meta.switch-statement.js', 'punctuation.terminator.statement.js']
+      expect(lines[6][1]).toEqual value: 'case', scopes: ['source.js', 'meta.switch-statement.js', 'keyword.control.case.js']
+      expect(lines[6][3]).toEqual value: 'null', scopes: ['source.js', 'meta.switch-statement.js', 'constant.language.null.js']
+      expect(lines[6][4]).toEqual value: ':', scopes: ['source.js', 'meta.switch-statement.js', 'punctuation.definition.section.case-statement.js']
+      expect(lines[7][1]).toEqual value: 'default', scopes: ['source.js', 'meta.switch-statement.js', 'keyword.control.default.js']
+      expect(lines[7][2]).toEqual value: ':', scopes: ['source.js', 'meta.switch-statement.js', 'punctuation.definition.section.case-statement.js']
+      expect(lines[8][0]).toEqual value: '}', scopes: ['source.js', 'meta.switch-statement.js', 'punctuation.definition.section.switch-block.end.bracket.curly.js']
 
   describe "indentation", ->
     editor = null
