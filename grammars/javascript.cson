@@ -1677,16 +1677,38 @@
         'name': 'storage.type.class.jsdoc'
       }
       {
-        'match': '({(?:\\*|(?:\\?|\\!|\\.{3})?[a-zA-Z_$][\\w$]*(?:\\.[a-zA-Z_$][\\w$]*)*(?:\\[\\])?=?)})\\s+(\\[(?:[a-zA-Z_$]+(?:=[\\w][\\s\\w$]*)?)\\]|(?:[a-zA-Z_$][\\w$]*(?:\\.[a-zA-Z_$][\\w$]*)*))\\s*((?:(?!\\*\\/).)*)'
+        'match': '''(?x)
+          ({(?:\\*|(?:\\?|\\!|\\.{3})?[a-zA-Z_$][\\w$]*(?:\\.[a-zA-Z_$][\\w$]*)*(?:\\[\\])?=?)})
+          \\s+
+          (\\[(?:[a-zA-Z_$]+(?:=[\\w][\\s\\w$]*)?)\\]|(?:[a-zA-Z_$][\\w$]*(?:\\.[a-zA-Z_$][\\w$]*)*))
+          \\s+
+          ((?:(?!\\*\\/).)*)
+        '''
         'captures':
-            0:
-              'name': 'other.meta.jsdoc'
-            1:
-              'name': 'entity.name.type.instance.jsdoc'
-            2:
-              'name': 'variable.other.jsdoc'
-            3:
-              'name': 'other.description.jsdoc'
+          '0':
+            'name': 'other.meta.jsdoc'
+          '1':
+            'name': 'entity.name.type.instance.jsdoc'
+          '2':
+            'name': 'variable.other.jsdoc'
+          '3':
+            'name': 'other.description.jsdoc'
+      }
+      {
+        'match': '''(?x)
+          (?:(?<=@returns)|(?<=@return))
+          \\s+
+          ({(?:\\*|(?:\\?|\\!|\\.{3})?[a-zA-Z_$][\\w$]*(?:\\.[a-zA-Z_$][\\w$]*)*(?:\\[\\])?=?)})
+          \\s+
+          ((?:(?!\\*\\/).)*)
+        '''
+        'captures':
+          '0':
+            'name': 'other.meta.jsdoc'
+          '1':
+            'name': 'entity.name.type.instance.jsdoc'
+          '2':
+            'name': 'other.description.jsdoc'
       }
     ]
   'comments':
