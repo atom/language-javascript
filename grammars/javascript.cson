@@ -705,6 +705,21 @@
     'name': 'meta.class.js'
   }
   {
+    'begin': '^\\s*(@)\\s*([A-Za-z_$][\\w$]*)'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.definition.decorator.js'
+      '2':
+        'name': 'entity.name.function.decorator.js'
+    'end': '(?<=\\))|$'
+    'name': 'meta.function.decorator.js'
+    'patterns': [
+      {
+        'include': '#arguments'
+      }
+    ]
+  }
+  {
     'captures':
       '1':
         'name': 'keyword.operator.new.js'
