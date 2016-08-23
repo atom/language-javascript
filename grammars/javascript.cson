@@ -275,16 +275,8 @@
     'name': 'meta.export.js'
   }
   {
-    'match': '''(?x)
-      (?<!\\.)\\b(super|this|arguments)(?!\\s*:)\\b
-      |
-      (?<=\\?)\\s*(super|this|arguments)(?=\\s*:)
-    '''
-    'captures':
-      '1':
-        'name': 'variable.language.js'
-      '2':
-        'name': 'variable.language.js'
+    'match': '(?<!\\.)\\b(super|this|arguments)(?!\\s*:)\\b'
+    'name': 'variable.language.js'
   }
   {
     # [async] function [name](params)
@@ -882,15 +874,11 @@
     ]
   }
   {
-    'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?|(?<=\\?)(?:\\s*)(yield)(?=\\s*:)',
+    'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?',
     'captures':
       '1':
         'name': 'keyword.control.js'
       '2':
-        'name': 'storage.modifier.js'
-      '3':
-        'name': 'keyword.control.js'
-      '4':
         'name': 'storage.modifier.js'
     'name': 'meta.control.yield.js'
   }
@@ -910,42 +898,16 @@
     'name': 'keyword.operator.spread.js'
   }
   {
-    'match': '''(?x)
-      (?<!\\.)\\b(true|false)(?!\\s*:)\\b
-      |
-      (?<=\\?)\\s*(true|false)(?=\\s*:)
-    '''
-    'captures':
-      '1':
-        'name': 'constant.language.boolean.$1.js'
-      '2':
-        'name': 'constant.language.boolean.$2.js'
+    'match': '(?<!\\.)\\b(true|false)(?!\\s*:)\\b'
+    'name': 'constant.language.boolean.$1.js'
   }
   {
-    'match': '''(?x)
-      (?<!\\.)\\b(null)(?!\\s*:)\\b
-      |
-      (?<=\\?)\\s*(null)(?=\\s*:)
-    '''
-    'captures':
-      '1':
-        'name': 'constant.language.null.js'
-      '2':
-        'name': 'constant.language.null.js'
+    'match': '(?<!\\.)\\b(null)(?!\\s*:)\\b'
+    'name': 'constant.language.null.js'
   }
   {
-    'match': '''(?x)
-      (?<!\\.)\\b(debugger)(?!\\s*:)\\b
-      |
-      (?<=\\?)\\s*(debugger)(?=\\s*:)
-    '''
-    'captures':
-      '1':
-        'name': 'keyword.other.js'
-      '2':
-        'name': 'keyword.other.js'
-      '3':
-        'name': 'keyword.other.js'
+    'match': '(?<!\\.)\\b(debugger)(?!\\s*:)\\b'
+    'name': 'keyword.other.js'
   }
   {
     'match': '(?<!\\$)\\b(Anchor|Applet|Area|Array|Boolean|Button|Checkbox|Date|document|event|FileUpload|Form|Frame|Function|Hidden|History|Image|JavaArray|JavaClass|JavaObject|JavaPackage|java|Layer|Link|Location|Map|MimeType|Number|navigator|netscape|Object|Option|Packages|Password|Plugin|performance|Radio|RegExp|Reset|Select|Set|String|Style|Submit|Symbol|screen|sun|Text|Textarea|WeakMap|WeakSet|window|XMLHttpRequest)\\b'
@@ -972,16 +934,8 @@
     'name': 'support.constant.dom.js'
   }
   {
-    'match': '''(?x)
-      (?<!\\.)\\b(module|exports|__filename|__dirname|global|process)(?!\\s*:)\\b
-      |
-      (?<=\\?)\\s*(module|exports|__filename|__dirname|global|process)(?=\\s*:)
-    '''
-    'captures':
-      '1':
-        'name': 'support.variable.js'
-      '2':
-        'name': 'support.variable.js'
+    'match': '(?<!\\.)\\b(module|exports|__filename|__dirname|global|process)(?!\\s*:)\\b'
+    'name': 'support.variable.js'
   }
   {
     'match': '\\b(Infinity|NaN|undefined)\\b'
@@ -1045,12 +999,8 @@
     'include': '#properties'
   }
   {
-    'match': '(?<!\\.)\\b([A-Z][A-Z0-9_]+)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)([A-Z][A-Z0-9_]+)(?=\\s*:)'
-    'captures':
-      '1':
-        'name': 'constant.other.js'
-      '2':
-        'name': 'constant.other.js'
+    'match': '(?<!\\.)\\b[A-Z][A-Z0-9_]+(?!\\s*:)\\b'
+    'name': 'constant.other.js'
   }
   {
     'match': '(?<!\\$)\\b[0-9]+[\\w$]*'
