@@ -977,7 +977,7 @@
     'name': 'support.class.js'
   }
   {
-    'match': '''(?x) (\\.)
+    'match': '''(?x) (\\.) \\s*
       (MAX_VALUE|MIN_VALUE|NEGATIVE_INFINITY|POSITIVE_INFINITY|URLUnencoded|X[MS]LDocument|[xyz]|_content|aLinkcolor
       |above|all|appCodeName|appCore|appMinorVersion|appName|appVersion|arguments|arity|availHeight|availLeft|availTop
       |availWidth|backgroundColor|backgroundImage|below|borderBottomWidth|borderColor|borderLeftWidth|borderRightWidth
@@ -1005,7 +1005,7 @@
         'name': 'support.constant.js'
   }
   {
-    'match': '''(?x) (\\.)
+    'match': '''(?x) (\\.) \\s*
       (abbr|accept|acceptCharset|accessKey|action|align|aLink|alt|anchors|applets|archive|areas|attributes|axis|background
       |bgColor|body|border|caption|cells|cellPadding|cellSpacing|ch|charset|checked|childNodes|chOff|cite|className|clear
       |code|codeBase|codeType|color|cols|colSpan|compact|content|cookie|cords|data|dateTime|declare|defaultChecked
