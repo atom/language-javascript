@@ -280,7 +280,7 @@
   }
   {
     'match': '''(?x)
-      (?<!\\.)\\b(super|this|arguments)(?!\\s*:)\\b
+      (?<!\\.)\\b(?<!\\$)(super|this|arguments)(?!\\s*:|\\$)\\b
       |
       (?<=\\?)\\s*(super|this|arguments)(?=\\s*:)
       |

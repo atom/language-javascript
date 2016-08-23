@@ -1199,6 +1199,12 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('this.obj.prototype = new El()')
       expect(tokens[0]).toEqual value: 'this', scopes: ['source.js', 'variable.language.js']
 
+      {tokens} = grammar.tokenizeLine('$this')
+      expect(tokens[0].value).toEqual '$this'
+
+      {tokens} = grammar.tokenizeLine('this$')
+      expect(tokens[0].value).toEqual 'this$'
+
     it "tokenizes 'super'", ->
       {tokens} = grammar.tokenizeLine('super')
       expect(tokens[0]).toEqual value: 'super', scopes: ['source.js', 'variable.language.js']
