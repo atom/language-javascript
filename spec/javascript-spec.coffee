@@ -55,6 +55,10 @@ describe "Javascript grammar", ->
         expect(lines[2][1]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.end.js']
 
     describe "Unicode escape sequences", ->
+      bracketScopes = [
+        'punctuation.definition.unicode-escape.begin.bracket.curly.js',
+        'punctuation.definition.unicode-escape.end.bracket.curly.js'
+      ]
       delimsByScope =
         "string.quoted.double.js": '"'
         "string.quoted.single.js": "'"
@@ -79,15 +83,15 @@ describe "Javascript grammar", ->
           {tokens} = grammar.tokenizeLine(quote + '\\u{2000}' + quote)
           expect(tokens[0]).toEqual value: quote,   scopes: ['source.js', scope, 'punctuation.definition.string.begin.js']
           expect(tokens[1]).toEqual value: '\\u',   scopes: ['source.js', scope, 'constant.character.escape.js']
-          expect(tokens[2]).toEqual value: '{',     scopes: ['source.js', scope, 'constant.character.escape.js', 'punctuation.section.scope.begin.js']
+          expect(tokens[2]).toEqual value: '{',     scopes: ['source.js', scope, 'constant.character.escape.js', bracketScopes[0]]
           expect(tokens[3]).toEqual value: '2000',  scopes: ['source.js', scope, 'constant.character.escape.js']
-          expect(tokens[4]).toEqual value: '}',     scopes: ['source.js', scope, 'constant.character.escape.js', 'punctuation.section.scope.end.js']
+          expect(tokens[4]).toEqual value: '}',     scopes: ['source.js', scope, 'constant.character.escape.js', bracketScopes[1]]
           expect(tokens[5]).toEqual value: quote,   scopes: ['source.js', scope, 'punctuation.definition.string.end.js']
 
       it "highlights sequences with invalid syntax", ->
         for invalid in ['\\u', '\\u{2000', '\\u{G}']
           {tokens} = grammar.tokenizeLine('"' + invalid + '"')
-          expect(tokens[1]).toEqual value: invalid, scopes: ['source.js', 'string.quoted.double.js', 'invalid.illegal.identifier.js']
+          expect(tokens[1]).toEqual value: invalid, scopes: ['source.js', 'string.quoted.double.js', 'invalid.illegal.unicode-escape.js']
 
       it "highlights sequences with invalid codepoints", ->
         maxCodepoint = 0x10FFFF
@@ -95,12 +99,12 @@ describe "Javascript grammar", ->
           pointStr = codepoint.toString(16).toUpperCase().replace(/^0x/, "")
           {tokens} = grammar.tokenizeLine('"\\u{' + pointStr + '}"')
           pointScopes = ['source.js', 'string.quoted.double.js', 'constant.character.escape.js']
-          if codepoint > maxCodepoint then pointScopes.push 'invalid.illegal.identifier.js'
+          if codepoint > maxCodepoint then pointScopes.push 'invalid.illegal.unicode-escape.js'
           expect(tokens[0]).toEqual value: '"',      scopes: ['source.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
           expect(tokens[1]).toEqual value: '\\u',    scopes: ['source.js', 'string.quoted.double.js', 'constant.character.escape.js']
-          expect(tokens[2]).toEqual value: '{',      scopes: ['source.js', 'string.quoted.double.js', 'constant.character.escape.js', 'punctuation.section.scope.begin.js']
+          expect(tokens[2]).toEqual value: '{',      scopes: ['source.js', 'string.quoted.double.js', 'constant.character.escape.js', bracketScopes[0]]
           expect(tokens[3]).toEqual value: pointStr, scopes: pointScopes
-          expect(tokens[4]).toEqual value: '}',      scopes: ['source.js', 'string.quoted.double.js', 'constant.character.escape.js', 'punctuation.section.scope.end.js']
+          expect(tokens[4]).toEqual value: '}',      scopes: ['source.js', 'string.quoted.double.js', 'constant.character.escape.js', bracketScopes[1]]
           expect(tokens[5]).toEqual value: '"',      scopes: ['source.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
 
   describe "keywords", ->
