@@ -20,14 +20,16 @@
 'name': 'JavaScript'
 'patterns': [
   {
-    'comment': 'ES6 import'
+    # ES6 import
     'begin': '(?<!\\.)\\b(import)(?!\\s*:)\\b'
     'beginCaptures':
       '1':
         'name': 'keyword.control.js'
+    'end': '(?=;|$)'
+    'name': 'meta.import.js'
     'patterns': [
       {
-        'comment': '{ member1 , member2 as alias2 , [...] }'
+        # { member1 , member2 as alias2 , [...] }
         'begin': '\\{'
         'beginCaptures':
           0:
@@ -38,7 +40,14 @@
             'name': 'punctuation.definition.modules.end.js'
         'patterns': [
           {
-            'comment': '(default|name) as alias'
+            # (default|name) as alias
+            'match': '''(?x)
+              (?: \\b(default)\\b | \\b([a-zA-Z_$][\\w$]*)\\b)
+              \\s*
+              (\\b as \\b)
+              \\s*
+              (?: (\\b default \\b | \\*) | \\b([a-zA-Z_$][\\w$]*)\\b)
+            '''
             'captures':
               '1':
                 'name': 'variable.language.default.js'
@@ -50,13 +59,6 @@
                 'name': 'invalid.illegal.js'
               '5':
                 'name': 'variable.other.module-alias.js'
-            'match': '(?x)
-              (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-              \\s*
-              (\\b as \\b)
-              \\s*
-              (?: (\\b default \\b | \\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-            '
           }
           {
             'match': ','
@@ -66,13 +68,20 @@
             'include': '#comments'
           }
           {
-            'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+            'match': '\\b([a-zA-Z_$][\\w$]*)\\b'
             'name': 'variable.other.module.js'
           }
         ]
       }
       {
-        'comment': '(default|*|name) as alias'
+        # (default|*|name) as alias
+        'match': '''(?x)
+          (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][\\w$]*)\\b)
+          \\s*
+          (\\b as \\b)
+          \\s*
+          (?: (\\b default \\b | \\*) | \\b([a-zA-Z_$][\\w$]*)\\b)
+        '''
         'captures':
           '1':
             'name': 'variable.language.default.js'
@@ -86,13 +95,6 @@
             'name': 'invalid.illegal.js'
           '6':
             'name': 'variable.other.module-alias.js'
-        'match': '(?x)
-          (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-          \\s*
-          (\\b as \\b)
-          \\s*
-          (?: (\\b default \\b | \\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-        '
       }
       {
         'match': '\\*'
@@ -113,7 +115,7 @@
         'name': 'keyword.control.js'
       }
       {
-        'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b(?=.*\\bfrom\\b)'
+        'match': '\\b([a-zA-Z_$][\\w$]*)\\b(?=.*\\bfrom\\b)'
         'name': 'variable.other.module.js'
       }
       {
@@ -121,12 +123,14 @@
         'name': 'meta.delimiter.object.comma.js'
       }
     ]
-    'end': '(?=;|$)'
-    'name': 'meta.import.js'
   }
   {
-    'comment': 'ES6 export: `export default (variable|class|function, etc.)`'
-    'match': '(?x) \\b(export)\\b \\s* \\b(default)\\b (?:\\s*) \\b((?!\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b)[a-zA-Z_$][a-zA-Z_$0-9]*)?\\b'
+    # ES6 export: export default (variable|class|function, etc.)
+    'match': '''(?x)
+      \\b(export)\\b\\s*
+      \\b(default)\\b\\s*
+      \\b((?!\\b(?:function|class|let|var|const)\\b)[a-zA-Z_$][\\w$]*)?\\b
+    '''
     'captures':
       '0':
         'name': 'meta.export.js'
@@ -138,17 +142,19 @@
         'name': 'variable.other.module.js'
   }
   {
-    'comment': 'ES6 export, re-export: `export {member as alias, [...]} [from ...]`'
+    # ES6 export, re-export: export {member as alias, [...]} [from ...]
     'begin': '(?<!\\.)\\b(export)(?!\\s*:)\\b'
     'beginCaptures':
       '1':
         'name': 'keyword.control.js'
+    'end': '(?=;|\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b|$)'
+    'name': 'meta.export.js'
     'patterns': [
       {
         'include': '#numbers'
       }
       {
-        'comment': '`{ member1 , member2 as alias2 , [...] }` inside re-export'
+        # { member1 , member2 as alias2 , [...] } inside re-export
         'begin': '\\{(?=.*\\bfrom\\b)'
         'beginCaptures':
           0:
@@ -159,7 +165,14 @@
             'name': 'punctuation.definition.modules.end.js'
         'patterns': [
           {
-            'comment': '(default|name) as alias'
+            # (default|name) as alias
+            'match': '''(?x)
+              (?: \\b(default)\\b | \\b([a-zA-Z_$][\\w$]*)\\b)
+              \\s*
+              (\\b as \\b)
+              \\s*
+              (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][\\w$]*)\\b)
+            '''
             'captures':
               '1':
                 'name': 'variable.language.default.js'
@@ -173,13 +186,6 @@
                 'name': 'invalid.illegal.js'
               '6':
                 'name': 'variable.other.module-alias.js'
-            'match': '(?x)
-              (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-              \\s*
-              (\\b as \\b)
-              \\s*
-              (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-            '
           }
           {
             'match': ','
@@ -189,13 +195,13 @@
             'include': '#comments'
           }
           {
-            'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+            'match': '\\b([a-zA-Z_$][\\w$]*)\\b'
             'name': 'variable.other.module.js'
           }
         ]
       }
       {
-        'comment': '{ member1 , member2 as alias2 , [...] }'
+        # { member1 , member2 as alias2 , [...] }
         'begin': '(?![a-zA-Z_$0-9])\\{'
         'beginCaptures':
           0:
@@ -206,7 +212,7 @@
             'name': 'punctuation.definition.modules.end.js'
         'patterns': [
           {
-            'comment': 'name as (default|alias)'
+            # name as (default|alias)
             'captures':
               '1':
                 'name': 'invalid.illegal.js'
@@ -220,13 +226,13 @@
                 'name': 'invalid.illegal.js'
               '6':
                 'name': 'variable.other.module-alias.js'
-            'match': '(?x)
-              (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+            'match': '''(?x)
+              (?: \\b(default)\\b | \\b([a-zA-Z_$][\\w$]*)\\b)
               \\s*
               (\\b as \\b)
               \\s*
-              (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-            '
+              (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][\\w$]*)\\b)
+            '''
           }
           {
             'include': '#comments'
@@ -236,7 +242,7 @@
             'name': 'meta.delimiter.object.comma.js'
           }
           {
-            'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+            'match': '\\b([a-zA-Z_$][\\w$]*)\\b'
             'name': 'variable.other.module.js'
           }
         ]
@@ -260,7 +266,7 @@
         'name': 'keyword.control.js'
       }
       {
-        'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+        'match': '\\b([a-zA-Z_$][\\w$]*)\\b'
         'name': 'variable.other.module.js'
       }
       {
@@ -271,8 +277,6 @@
         'include': '#operators'
       }
     ]
-    'end': '(?=;|\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b|$)'
-    'name': 'meta.export.js'
   }
   {
     'match': '''(?x)
@@ -424,7 +428,7 @@
     ]
   }
   {
-    'begin': '(?=\\b(constructor)\\s*)'
+    'begin': '(?=\\bconstructor\\b\\s*)'
     'end': '(?<=})'
     'patterns': [
       {
@@ -812,12 +816,12 @@
     'include': '#comments'
   }
   {
+    'match': '(<!--|-->)'
     'captures':
       '0':
         'name': 'punctuation.definition.comment.html.js'
       '2':
         'name': 'punctuation.definition.comment.html.js'
-    'match': '(<!--|-->)'
     'name': 'comment.block.html.js'
   }
   {
@@ -963,11 +967,37 @@
         'name': 'keyword.other.js'
   }
   {
-    'match': '(?<!\\$)\\b(Anchor|Applet|Area|Array|Boolean|Button|Checkbox|Date|document|event|FileUpload|Form|Frame|Function|Hidden|History|Image|JavaArray|JavaClass|JavaObject|JavaPackage|java|Layer|Link|Location|Map|MimeType|Number|navigator|netscape|Object|Option|Packages|Password|Plugin|performance|Radio|RegExp|Reset|Select|Set|String|Style|Submit|Symbol|screen|sun|Text|Textarea|WeakMap|WeakSet|window|XMLHttpRequest)\\b'
+    'match': '''(?x) (?<!\\$) \\b
+      (Anchor|Applet|Area|Array|Boolean|Button|Checkbox|Date|document|event|FileUpload|Form|Frame|Function|Hidden
+      |History|Image|JavaArray|JavaClass|JavaObject|JavaPackage|java|Layer|Link|Location|Map|MimeType|Number
+      |navigator|netscape|Object|Option|Packages|Password|Plugin|performance|Radio|RegExp|Reset|Select|Set|String
+      |Style|Submit|Symbol|screen|sun|Text|Textarea|WeakMap|WeakSet|window|XMLHttpRequest)
+      \\b
+    '''
     'name': 'support.class.js'
   }
   {
-    'match': '(\\.)(systemLanguage|scripts|scrollbars|screenX|screenY|screenTop|screenLeft|style|styleSheets|status|statusText|statusbar|siblingBelow|siblingAbove|source|suffixes|security|securityPolicy|selection|self|history|host|hostname|hash|hasFocus|XMLDocument|XSLDocument|next|namespaces|namespaceURI|nameProp|MIN_VALUE|MAX_VALUE|characterSet|constructor|controllers|cookieEnabled|colorDepth|components|complete|current|cpuClass|clip|clipBoardData|clientInformation|closed|classes|callee|caller|crypto|toolbar|top|textTransform|textIndent|textDecoration|textAlign|tags|innerHeight|innerWidth|input|ids|ignoreCase|zIndex|oscpu|onreadystatechange|onLine|outerHeight|outerWidth|opsProfile|opener|offscreenBuffering|NEGATIVE_INFINITY|display|dialogHeight|dialogTop|dialogWidth|dialogLeft|dialogArguments|directories|description|defaultStatus|defaultChecked|defaultCharset|defaultView|userProfile|userLanguage|userAgent|uniqueID|undefined|updateInterval|_content|pixelDepth|port|personalbar|pkcs11|plugins|platform|pathname|paddingRight|paddingBottom|paddingTop|paddingLeft|parent|parentWindow|parentLayer|pageX|pageXOffset|pageY|pageYOffset|protocol|prototype|product|productSub|prompter|previous|prefix|encoding|enabledPlugin|external|expando|embeds|visiblity|vendor|vendorSub|vLinkcolor|URLUnencoded|POSITIVE_INFINITY|filename|fontSize|fontFamily|fontWeight|formName|frames|frameElement|fgColor|whiteSpace|listStyleType|lineHeight|linkColor|location|locationbar|localName|lowsrc|length|left|leftContext|lastModified|lastMatch|lastIndex|lastParen|layers|layerX|language|appMinorVersion|appName|appCodeName|appCore|appVersion|availHeight|availTop|availWidth|availLeft|all|arity|arguments|aLinkcolor|above|right|rightContext|responseXML|responeText|readyState|global|x|y|z|mimeTypes|multiline|menubar|marginRight|marginBottom|marginTop|marginLeft|bottom|border(Width|RightWidth|BottomWidth|Style|Color|TopWidth|LeftWidth)|bufferDepth|below|backgroundColor|backgroundImage)\\b'
+    'match': '''(?x) (\\.)
+      (MAX_VALUE|MIN_VALUE|NEGATIVE_INFINITY|POSITIVE_INFINITY|URLUnencoded|X[MS]LDocument|[xyz]|_content|aLinkcolor
+      |above|all|appCodeName|appCore|appMinorVersion|appName|appVersion|arguments|arity|availHeight|availLeft|availTop
+      |availWidth|backgroundColor|backgroundImage|below|borderBottomWidth|borderColor|borderLeftWidth|borderRightWidth
+      |borderStyle|borderTopWidth|borderWidth|bottom|bufferDepth|callee|caller|characterSet|classes|clientInformation
+      |clip|clipBoardData|closed|colorDepth|complete|components|constructor|controllers|cookieEnabled|cpuClass|crypto
+      |current|defaultCharset|defaultChecked|defaultStatus|defaultView|description|dialogArguments|dialogHeight
+      |dialogLeft|dialogTop|dialogWidth|directories|display|embeds|enabledPlugin|encoding|expando|external|fgColor
+      |filename|fontFamily|fontSize|fontWeight|formName|frameElement|frames|global|hasFocus|hash|history|host|hostname
+      |ids|ignoreCase|innerHeight|innerWidth|input|language|lastIndex|lastMatch|lastModified|lastParen|layer[sXY]|left
+      |leftContext|length|lineHeight|linkColor|listStyleType|localName|location|locationbar|lowsrc|marginBottom|marginLeft
+      |marginRight|marginTop|menubar|mimeTypes|multiline|nameProp|namespaceURI|namespaces|next|offscreenBuffering|onLine
+      |onreadystatechange|opener|opsProfile|oscpu|outerHeight|outerWidth|paddingBottom|paddingLeft|paddingRight|paddingTop
+      |page[XY]|page[XY]Offset|parent|parentLayer|parentWindow|pathname|personalbar|pixelDepth|pkcs11|platform|plugins
+      |port|prefix|previous|product|productSub|prompter|protocol|prototype|readyState|responeText|responseXML|right
+      |rightContext|screenLeft|screenTop|screen[XY]|scripts|scrollbars|security|securityPolicy|selection|self|siblingAbove
+      |siblingBelow|source|status|statusText|statusbar|style|styleSheets|suffixes|systemLanguage|tags|textAlign
+      |textDecoration|textIndent|textTransform|toolbar|top|undefined|uniqueID|updateInterval|userAgent|userLanguage
+      |userProfile|vLinkcolor|vendor|vendorSub|visibility|whiteSpace|zIndex)
+      \\b
+    '''
     'captures':
       '1':
         'name': 'meta.delimiter.property.period.js'
@@ -975,7 +1005,20 @@
         'name': 'support.constant.js'
   }
   {
-    'match': '(\\.)(shape|systemId|scheme|scope|scrolling|standby|start|size|summary|specified|sectionRowIndex|selected|selectedIndex|hspace|httpEquiv|htmlFor|height|headers|href|hreflang|noResize|notations|notationName|noShade|noHref|nodeName|nodeType|nodeValue|noWrap|nextSibling|name|ch|childNodes|chOff|checked|charset|cite|content|cookie|cords|code|codeBase|codeType|cols|colSpan|color|compact|cells|cellSpacing|cellPadding|clear|className|caption|type|tBodies|title|tHead|text|target|tagName|tFoot|isMap|index|id|implementation|images|options|ownerDocument|object|disabled|dir|doctype|documentElement|docmain|declare|defer|defaultSelected|defaultChecked|defaultValue|dateTime|data|useMap|publicId|parentNode|profile|profileend|prompt|previousDibling|enctype|entities|event|elements|vspace|version|value|valueType|vLink|vAlign|URL|firstChild|form|forms|face|frame|frameBorder|width|link|links|longDesc|lowSrc|lastChild|lang|label|anchors|accessKey|accept|acceptCharset|action|attributes|applets|alt|align|archive|areas|axis|aLink|abbr|rows|rowSpan|rowIndex|rules|rev|referrer|rel|readOnly|multiple|method|media|marginHeight|marginWidth|maxLength|body|border|background|bgColor)\\b'
+    'match': '''(?x) (\\.)
+      (abbr|accept|acceptCharset|accessKey|action|align|aLink|alt|anchors|applets|archive|areas|attributes|axis|background
+      |bgColor|body|border|caption|cells|cellPadding|cellSpacing|ch|charset|checked|childNodes|chOff|cite|className|clear
+      |code|codeBase|codeType|color|cols|colSpan|compact|content|cookie|cords|data|dateTime|declare|defaultChecked
+      |defaultSelected|defaultValue|defer|dir|disabled|docmain|doctype|documentElement|elements|enctype|entities|event
+      |face|firstChild|form|forms|frame|frameBorder|headers|height|href|hreflang|hspace|htmlFor|httpEquiv|id|images
+      |implementation|index|isMap|label|lang|lastChild|link|links|longDesc|lowSrc|marginHeight|marginWidth|maxLength
+      |media|method|multiple|name|nextSibling|nodeName|nodeType|nodeValue|noHref|noResize|noShade|notationName|notations
+      |noWrap|object|options|ownerDocument|parentNode|previousDibling|profile|profileend|prompt|publicId|readOnly|referrer
+      |rel|rev|rowIndex|rows|rowSpan|rules|scheme|scope|scrolling|sectionRowIndex|selected|selectedIndex|shape|size|specified
+      |standby|start|summary|systemId|tagName|target|tBodies|text|tFoot|tHead|title|type|URL|useMap|vAlign|value|valueType
+      |version|vLink|vspace|width)
+      \\b
+    '''
     'captures':
       '1':
         'name': 'meta.delimiter.property.period.js'
@@ -983,7 +1026,13 @@
         'name': 'support.constant.dom.js'
   }
   {
-    'match': '\\b(ELEMENT_NODE|ATTRIBUTE_NODE|TEXT_NODE|CDATA_SECTION_NODE|ENTITY_REFERENCE_NODE|ENTITY_NODE|PROCESSING_INSTRUCTION_NODE|COMMENT_NODE|DOCUMENT_NODE|DOCUMENT_TYPE_NODE|DOCUMENT_FRAGMENT_NODE|NOTATION_NODE|INDEX_SIZE_ERR|DOMSTRING_SIZE_ERR|HIERARCHY_REQUEST_ERR|WRONG_DOCUMENT_ERR|INVALID_CHARACTER_ERR|NO_DATA_ALLOWED_ERR|NO_MODIFICATION_ALLOWED_ERR|NOT_FOUND_ERR|NOT_SUPPORTED_ERR|INUSE_ATTRIBUTE_ERR)\\b'
+    'match': '''(?x) \\b
+      (ATTRIBUTE_NODE|CDATA_SECTION_NODE|COMMENT_NODE|DOCUMENT_FRAGMENT_NODE|DOCUMENT_NODE|DOCUMENT_TYPE_NODE
+      |DOMSTRING_SIZE_ERR|ELEMENT_NODE|ENTITY_NODE|ENTITY_REFERENCE_NODE|HIERARCHY_REQUEST_ERR|INDEX_SIZE_ERR
+      |INUSE_ATTRIBUTE_ERR|INVALID_CHARACTER_ERR|NO_DATA_ALLOWED_ERR|NO_MODIFICATION_ALLOWED_ERR|NOT_FOUND_ERR
+      |NOT_SUPPORTED_ERR|NOTATION_NODE|PROCESSING_INSTRUCTION_NODE|TEXT_NODE|WRONG_DOCUMENT_ERR)
+      \\b
+    '''
     'name': 'support.constant.dom.js'
   }
   {
@@ -1065,13 +1114,13 @@
     'name': 'meta.delimiter.method.period.js'
   }
   {
+    # Allows the special return snippet to fire.
+    'match': '({)(})'
     'captures':
       '1':
         'name': 'punctuation.section.scope.begin.js'
       '2':
         'name': 'punctuation.section.scope.end.js'
-    'comment': 'Allows the special return snippet to fire.'
-    'match': '({)(})'
   }
   {
     'begin': '{'
@@ -1696,43 +1745,80 @@
   'docblock':
     'patterns': [
       {
-        'match': '(?<!\\w)@(abstract|access|alias|arg|argument|async|attribute|augments|author|beta|borrows|bubbes|callback|chainable|class|classdesc|code|config|const|constant|constructor|constructs|copyright|default|defaultvalue|define|deprecated|desc|description|dict|emits|enum|event|example|exports?|extends|extension|extension_for|extensionfor|external|file|fileoverview|final|fires|for|function|global|host|ignore|implements|inherit[Dd]oc|inner|instance|interface|kind|lends|license|listens|main|member|memberof|method|mixex|mixins?|module|name|namespace|nocollapse|nosideeffects|override|overview|package|param|preserve|private|prop|property|protected|public|read[Oo]nly|record|require[ds]|returns?|see|since|static|struct|submodule|summary|template|this|throws|todo|tutorial|type|typedef|unrestricted|uses|var|variation|version|virtual|writeOnce)\\b'
+        'match': '''(?x) (?<!\\w)@
+          (abstract|access|alias|arg|argument|async|attribute|augments|author|beta|borrows|bubbes|callback|chainable|class
+          |classdesc|code|config|const|constant|constructor|constructs|copyright|default|defaultvalue|define|deprecated|desc
+          |description|dict|emits|enum|event|example|exports?|extends|extension|extension_for|extensionfor|external|file
+          |fileoverview|final|fires|for|function|global|host|ignore|implements|inherit[Dd]oc|inner|instance|interface|kind
+          |lends|license|listens|main|member|memberof|method|mixex|mixins?|module|name|namespace|nocollapse|nosideeffects
+          |override|overview|package|param|preserve|private|prop|property|protected|public|read[Oo]nly|record|require[ds]
+          |returns?|see|since|static|struct|submodule|summary|template|this|throws|todo|tutorial|type|typedef|unrestricted
+          |uses|var|variation|version|virtual|writeOnce)\\b
+        '''
         'name': 'storage.type.class.jsdoc'
       }
       {
-        'match': '({(?:\\*|(?:\\?|\\!|\\.{3})?[a-zA-Z_$][\\w$]*(?:\\.[a-zA-Z_$][\\w$]*)*(?:\\[\\])?=?)})\\s+(\\[(?:[a-zA-Z_$]+(?:=[\\w][\\s\\w$]*)?)\\]|(?:[a-zA-Z_$][\\w$]*(?:\\.[a-zA-Z_$][\\w$]*)*))\\s*((?:(?!\\*\\/).)*)'
+        'match': '''(?x)
+          ({(?:\\*|(?:\\?|\\!|\\.{3})?[a-zA-Z_$][\\w$]*(?:\\.[a-zA-Z_$][\\w$]*)*(?:\\[\\])?=?)})
+          \\s+
+          (\\[(?:[a-zA-Z_$]+(?:=[\\w][\\s\\w$]*)?)\\]|(?:[a-zA-Z_$][\\w$]*(?:\\.[a-zA-Z_$][\\w$]*)*))
+          \\s+
+          ((?:(?!\\*\\/).)*)
+        '''
         'captures':
-            0:
-              'name': 'other.meta.jsdoc'
-            1:
-              'name': 'entity.name.type.instance.jsdoc'
-            2:
-              'name': 'variable.other.jsdoc'
-            3:
-              'name': 'other.description.jsdoc'
+          '0':
+            'name': 'other.meta.jsdoc'
+          '1':
+            'name': 'entity.name.type.instance.jsdoc'
+          '2':
+            'name': 'variable.other.jsdoc'
+          '3':
+            'name': 'other.description.jsdoc'
+      }
+      {
+        'match': '''(?x)
+          (?:(?<=@returns)|(?<=@return))
+          \\s+
+          ({(?:\\*|(?:\\?|\\!|\\.{3})?[a-zA-Z_$][\\w$]*(?:\\.[a-zA-Z_$][\\w$]*)*(?:\\[\\])?=?)})
+          \\s+
+          ((?:(?!\\*\\/).)*)
+        '''
+        'captures':
+          '0':
+            'name': 'other.meta.jsdoc'
+          '1':
+            'name': 'entity.name.type.instance.jsdoc'
+          '2':
+            'name': 'other.description.jsdoc'
       }
     ]
   'comments':
     'patterns': [
       {
         'begin': '/\\*\\*(?!/)'
-        'captures':
+        'beginCaptures':
           '0':
             'name': 'punctuation.definition.comment.js'
+        'end': '\\*/'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.js'
+        'name': 'comment.block.documentation.js'
         'patterns': [
           {
             'include': '#docblock'
           }
         ]
-        'end': '\\*/'
-        'name': 'comment.block.documentation.js'
       }
       {
         'begin': '/\\*'
-        'captures':
+        'beginCaptures':
           '0':
             'name': 'punctuation.definition.comment.js'
         'end': '\\*/'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.js'
         'name': 'comment.block.js'
       }
       {
