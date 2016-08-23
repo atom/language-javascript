@@ -395,6 +395,12 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('OBJ.prop')
       expect(tokens[0]).toEqual value: 'OBJ', scopes: ['source.js', 'constant.other.object.js']
 
+    it "tokenises constants with dollar signs", ->
+      constants = ['CON$TANT', 'ABC$', 'ABC$D', '$_ALL', 'ALL_$', 'ANGULAR$$$$$$$$$$$']
+      for constant in constants
+        {tokens} = grammar.tokenizeLine(constant)
+        expect(tokens[0]).toEqual value: constant, scopes: ['source.js', 'constant.other.js']
+
     it "tokenizes variables declared using `const` as constants", ->
       {tokens} = grammar.tokenizeLine('const myCoolVar = 42;')
       expect(tokens[0]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
