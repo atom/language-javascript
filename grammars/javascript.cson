@@ -279,7 +279,7 @@
     ]
   }
   {
-    'match': '(?<!\\.)\\b(super|this|arguments)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(?<!\\$)(super|this|arguments)(?!\\s*:|\\$)\\b'
     'name': 'variable.language.js'
   }
   {
@@ -1120,7 +1120,7 @@
     'include': '#properties'
   }
   {
-    'match': '(?<!\\.)\\b[A-Z][A-Z0-9_]+(?!\\s*:)\\b'
+    'match': '((?<!\\.|[\\w$])(?![_\\$]+[^A-Z0-9_$])\\$*\\b(?:[A-Z_$][A-Z0-9_$]*)\\b\\$*)(?!\\s*:)'
     'name': 'constant.other.js'
   }
   {
