@@ -1094,6 +1094,23 @@ describe "Javascript grammar", ->
       expect(tokens[7]).toEqual value: 'foo', scopes: ['source.js', 'meta.function.json.js', 'entity.name.function.js']
       expect(tokens[8]).toEqual value: '(', scopes: ['source.js', 'meta.function.json.js', 'meta.parameters.js', 'punctuation.definition.parameters.begin.bracket.round.js']
 
+      {tokens} = grammar.tokenizeLine('function : a => a')
+      expect(tokens[0]).toEqual value: 'function', scopes: ['source.js', 'meta.function.arrow.json.js', 'entity.name.function.js']
+      expect(tokens[2]).toEqual value: ':', scopes: ['source.js', 'meta.function.arrow.json.js', 'keyword.operator.assignment.js']
+      expect(tokens[4]).toEqual value: 'a', scopes: ['source.js', 'meta.function.arrow.json.js', 'meta.parameters.js', 'variable.parameter.function.js']
+      expect(tokens[6]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.json.js', 'storage.type.function.arrow.js']
+      expect(tokens[7]).toEqual value: ' a', scopes: ['source.js']
+
+      {tokens} = grammar.tokenizeLine('"func": a => a')
+      expect(tokens[1]).toEqual value: 'func', scopes: ['source.js', 'meta.function.arrow.json.js', 'string.quoted.double.js', 'entity.name.function.js']
+      expect(tokens[3]).toEqual value: ':', scopes: ['source.js', 'meta.function.arrow.json.js', 'keyword.operator.assignment.js']
+      expect(tokens[5]).toEqual value: 'a', scopes: ['source.js', 'meta.function.arrow.json.js', 'meta.parameters.js', 'variable.parameter.function.js']
+      expect(tokens[7]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.json.js', 'storage.type.function.arrow.js']
+      expect(tokens[8]).toEqual value: ' a', scopes: ['source.js']
+
+      {tokens} = grammar.tokenizeLine('"func" : a => a')
+      expect(tokens[8]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.json.js', 'storage.type.function.arrow.js']
+
     it "tokenizes generator functions", ->
       {tokens} = grammar.tokenizeLine('function* foo(){}')
       expect(tokens[0]).toEqual value: 'function', scopes: ['source.js', 'meta.function.js', 'storage.type.function.js']

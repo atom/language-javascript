@@ -285,7 +285,7 @@
   {
     # [async] function [name](params)
     # function* name(params) – generator function declaration
-    'begin': '(?=(\\basync\\b\\s*)?\\bfunction\\b)'
+    'begin': '(?=(\\basync\\b\\s*)?\\bfunction\\b(?!\\s*:))'
     'end': '(?<=})'
     'patterns': [
       {
@@ -579,7 +579,7 @@
       (?<=})|
       ((?!
         \\s*{|
-        \\G[\\w$]+:|
+        \\G[\\w$]+\\s*:|
         \\s*/\\*|\\s*//
       )(?=\\s*\\S))
     '''
