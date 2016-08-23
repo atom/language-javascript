@@ -64,7 +64,7 @@ describe "Javascript grammar", ->
 
     it "tokenizes the debugger statement", ->
       {tokens} = grammar.tokenizeLine("debugger;")
-      expect(tokens[0]).toEqual value: "debugger", scopes: ['source.js', 'keyword.other.js']
+      expect(tokens[0]).toEqual value: "debugger", scopes: ['source.js', 'keyword.other.debugger.js']
       expect(tokens[1]).toEqual value: ";", scopes: ['source.js', 'punctuation.terminator.statement.js']
 
   describe "built-in globals", ->

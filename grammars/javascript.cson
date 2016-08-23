@@ -907,7 +907,7 @@
   }
   {
     'match': '(?<!\\.)\\b(debugger)(?!\\s*:)\\b'
-    'name': 'keyword.other.js'
+    'name': 'keyword.other.debugger.js'
   }
   {
     'match': '(?<!\\$)\\b(Anchor|Applet|Area|Array|Boolean|Button|Checkbox|Date|document|event|FileUpload|Form|Frame|Function|Hidden|History|Image|JavaArray|JavaClass|JavaObject|JavaPackage|java|Layer|Link|Location|Map|MimeType|Number|navigator|netscape|Object|Option|Packages|Password|Plugin|performance|Radio|RegExp|Reset|Select|Set|String|Style|Submit|Symbol|screen|sun|Text|Textarea|WeakMap|WeakSet|window|XMLHttpRequest)\\b'
