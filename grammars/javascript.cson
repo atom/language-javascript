@@ -968,12 +968,7 @@
         'name': 'keyword.operator.ternary.js'
     'patterns': [
       {
-        'match': '(\\w+)(?=\\s*:)'
-        'captures':
-          '1':
-            'patterns': [
-              'include': '$self'
-            ]
+        'include': '#prevent_object_keys_matching'
       }
       {
         'include': '$self'
@@ -1725,12 +1720,7 @@
                     'name': 'punctuation.definition.section.case-statement.js'
                 'patterns': [
                   {
-                    'match': '(\\w+)(?=\\s*:)'
-                    'captures':
-                      '1':
-                        'patterns': [
-                          'include': '$self'
-                        ]
+                    'include': '#prevent_object_keys_matching'
                   }
                   {
                     'include': '$self'
@@ -1751,5 +1741,19 @@
             ]
           }
         ]
+      }
+    ]
+  'prevent_object_keys_matching':
+    'patterns': [
+      {
+        # e.g. don't treat null as an object key in
+        # ? null :
+        # case null:
+        'match': '(\\w+)(?=\\s*:)'
+        'captures':
+          '1':
+            'patterns': [
+              'include': '$self'
+            ]
       }
     ]
