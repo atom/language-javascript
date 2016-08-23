@@ -54,6 +54,55 @@ describe "Javascript grammar", ->
         expect(lines[2][0]).toEqual value: 'line3', scopes: ['source.js', scope]
         expect(lines[2][1]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.end.js']
 
+    describe "Unicode escape sequences", ->
+      delimsByScope =
+        "string.quoted.double.js": '"'
+        "string.quoted.single.js": "'"
+
+      it "tokenises 2-digit sequences", ->
+        for scope, quote of delimsByScope
+          {tokens} = grammar.tokenizeLine(quote + '\\x2011' + quote)
+          expect(tokens[0]).toEqual value: quote,   scopes: ['source.js', scope, 'punctuation.definition.string.begin.js']
+          expect(tokens[1]).toEqual value: '\\x20', scopes: ['source.js', scope, 'constant.character.escape.js']
+          expect(tokens[2]).toEqual value: '11',    scopes: ['source.js', scope]
+          expect(tokens[3]).toEqual value: quote,   scopes: ['source.js', scope, 'punctuation.definition.string.end.js']
+
+      it "tokenises 4-digit sequences", ->
+        for scope, quote of delimsByScope
+          {tokens} = grammar.tokenizeLine(quote + '\\u2011' + quote)
+          expect(tokens[0]).toEqual value: quote,     scopes: ['source.js', scope, 'punctuation.definition.string.begin.js']
+          expect(tokens[1]).toEqual value: '\\u2011', scopes: ['source.js', scope, 'constant.character.escape.js']
+          expect(tokens[2]).toEqual value: quote,     scopes: ['source.js', scope, 'punctuation.definition.string.end.js']
+
+      it "tokenises variable-length sequences", ->
+        for scope, quote of delimsByScope
+          {tokens} = grammar.tokenizeLine(quote + '\\u{2000}' + quote)
+          expect(tokens[0]).toEqual value: quote,   scopes: ['source.js', scope, 'punctuation.definition.string.begin.js']
+          expect(tokens[1]).toEqual value: '\\u',   scopes: ['source.js', scope, 'constant.character.escape.js']
+          expect(tokens[2]).toEqual value: '{',     scopes: ['source.js', scope, 'constant.character.escape.js', 'punctuation.section.scope.begin.js']
+          expect(tokens[3]).toEqual value: '2000',  scopes: ['source.js', scope, 'constant.character.escape.js']
+          expect(tokens[4]).toEqual value: '}',     scopes: ['source.js', scope, 'constant.character.escape.js', 'punctuation.section.scope.end.js']
+          expect(tokens[5]).toEqual value: quote,   scopes: ['source.js', scope, 'punctuation.definition.string.end.js']
+
+      it "highlights sequences with invalid syntax", ->
+        for invalid in ['\\u', '\\u{2000', '\\u{G}']
+          {tokens} = grammar.tokenizeLine('"' + invalid + '"')
+          expect(tokens[1]).toEqual value: invalid, scopes: ['source.js', 'string.quoted.double.js', 'invalid.illegal.identifier.js']
+
+      it "highlights sequences with invalid codepoints", ->
+        maxCodepoint = 0x10FFFF
+        for codepoint in [0x5000, 0x11FFFF, 0x1000000, maxCodepoint]
+          pointStr = codepoint.toString(16).toUpperCase().replace(/^0x/, "")
+          {tokens} = grammar.tokenizeLine('"\\u{' + pointStr + '}"')
+          pointScopes = ['source.js', 'string.quoted.double.js', 'constant.character.escape.js']
+          if codepoint > maxCodepoint then pointScopes.push 'invalid.illegal.identifier.js'
+          expect(tokens[0]).toEqual value: '"',      scopes: ['source.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
+          expect(tokens[1]).toEqual value: '\\u',    scopes: ['source.js', 'string.quoted.double.js', 'constant.character.escape.js']
+          expect(tokens[2]).toEqual value: '{',      scopes: ['source.js', 'string.quoted.double.js', 'constant.character.escape.js', 'punctuation.section.scope.begin.js']
+          expect(tokens[3]).toEqual value: pointStr, scopes: pointScopes
+          expect(tokens[4]).toEqual value: '}',      scopes: ['source.js', 'string.quoted.double.js', 'constant.character.escape.js', 'punctuation.section.scope.end.js']
+          expect(tokens[5]).toEqual value: '"',      scopes: ['source.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
+
   describe "keywords", ->
     it "tokenizes with as a keyword", ->
       {tokens} = grammar.tokenizeLine('with')
