@@ -156,22 +156,20 @@ describe "Javascript grammar", ->
       expect(tokens[2]).toEqual value: '$something', scopes: ['source.js', 'meta.class.instance.constructor.js', 'entity.name.type.instance.js']
 
       {tokens} = grammar.tokenizeLine('var instance = new obj.ct.Cla$s();')
-      expect(tokens).toEqual [
-        {value: 'var', scopes: ['source.js', 'storage.type.var.js']}
-        {value: ' instance ', scopes: ['source.js']}
-        {value: '=', scopes: ['source.js', 'keyword.operator.assignment.js']}
-        {value: ' ', scopes: ['source.js']}
-        {value: 'new', scopes: ['source.js', 'meta.class.instance.constructor.js', 'keyword.operator.new.js']}
-        {value: ' ', scopes: ['source.js', 'meta.class.instance.constructor.js']}
-        {value: 'obj', scopes: ['source.js', 'meta.class.instance.constructor.js', 'entity.name.type.instance.js']}
-        {value: '.', scopes: ['source.js', 'meta.class.instance.constructor.js', 'entity.name.type.instance.js', 'meta.delimiter.property.period.js']}
-        {value: 'ct', scopes: ['source.js', 'meta.class.instance.constructor.js', 'entity.name.type.instance.js']}
-        {value: '.', scopes: ['source.js', 'meta.class.instance.constructor.js', 'entity.name.type.instance.js', 'meta.delimiter.property.period.js']}
-        {value: 'Cla$s', scopes: ['source.js', 'meta.class.instance.constructor.js', 'entity.name.type.instance.js']}
-        {value: '(', scopes: ['source.js', 'meta.brace.round.js']}
-        {value: ')', scopes: ['source.js', 'meta.brace.round.js']}
-        {value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']}
-      ]
+      expect(tokens[0]).toEqual value: 'var', scopes: ['source.js', 'storage.type.var.js']
+      expect(tokens[1]).toEqual value: ' instance ', scopes: ['source.js']
+      expect(tokens[2]).toEqual value: '=', scopes: ['source.js', 'keyword.operator.assignment.js']
+      expect(tokens[3]).toEqual value: ' ', scopes: ['source.js']
+      expect(tokens[4]).toEqual value: 'new', scopes: ['source.js', 'meta.class.instance.constructor.js', 'keyword.operator.new.js']
+      expect(tokens[5]).toEqual value: ' ', scopes: ['source.js', 'meta.class.instance.constructor.js']
+      expect(tokens[6]).toEqual value: 'obj', scopes: ['source.js', 'meta.class.instance.constructor.js', 'entity.name.type.instance.js']
+      expect(tokens[7]).toEqual value: '.', scopes: ['source.js', 'meta.class.instance.constructor.js', 'entity.name.type.instance.js', 'meta.delimiter.property.period.js']
+      expect(tokens[8]).toEqual value: 'ct', scopes: ['source.js', 'meta.class.instance.constructor.js', 'entity.name.type.instance.js']
+      expect(tokens[9]).toEqual value: '.', scopes: ['source.js', 'meta.class.instance.constructor.js', 'entity.name.type.instance.js', 'meta.delimiter.property.period.js']
+      expect(tokens[10]).toEqual value: 'Cla$s', scopes: ['source.js', 'meta.class.instance.constructor.js', 'entity.name.type.instance.js']
+      expect(tokens[11]).toEqual value: '(', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[12]).toEqual value: ')', scopes: ['source.js', 'meta.brace.round.js']
+      expect(tokens[13]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
   describe "regular expressions", ->
     it "tokenizes regular expressions", ->
@@ -1221,10 +1219,10 @@ describe "Javascript grammar", ->
       expect(tokens[0]).toEqual value: 'this', scopes: ['source.js', 'variable.language.js']
 
       {tokens} = grammar.tokenizeLine('$this')
-      expect(tokens[0].value).toEqual '$this'
+      expect(tokens[0]).toEqual value: '$this', scopes: ['source.js']
 
       {tokens} = grammar.tokenizeLine('this$')
-      expect(tokens[0].value).toEqual 'this$'
+      expect(tokens[0]).toEqual value: 'this$', scopes: ['source.js']
 
     it "tokenizes 'super'", ->
       {tokens} = grammar.tokenizeLine('super')
