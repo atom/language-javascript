@@ -1544,6 +1544,9 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('/** @returns {object} */')
       expect(tokens[4]).toEqual value: '{object}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
 
+      {tokens} = grammar.tokenizeLine('/** @returns {(Something)} */')
+      expect(tokens[4]).toEqual value: '{(Something)}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
+
     it "tokenizes // comments", ->
       {tokens} = grammar.tokenizeLine('// comment')
       expect(tokens[0]).toEqual value: '//', scopes: ['source.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
