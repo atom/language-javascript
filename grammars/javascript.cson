@@ -1794,29 +1794,31 @@
             )?
 
             (?:
-              \\(                                        # {(string|number)} type union, mulitple types with parenthesis
+              \\(                                        # Opening bracket of multiple types with parenthesis {(string|number)}
                 [a-zA-Z_$]+
                 (?:
                   [\\w$]* |
                   <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
                 )
                 (?:
-                  [\\.|][a-zA-Z_$]+
+                  [\\.|]                                 # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                  [a-zA-Z_$]+
                   (?:
                     [\\w$]* |
                     <[\\w$]+(?:,\\s+[\\w$]+)*>           # {Array<string>} or {Object<string, number>} type application
                   )
                 )*
-              \\) |                                      # {string|number} type union, multiple types without parenthesis
+              \\) |
               [a-zA-Z_$]+
               (?:
                 [\\w$]* |
                 <[\\w$]+(?:,\\s+[\\w$]+)*>               # {Array<string>} or {Object<string, number>} type application
               )
               (?:
-                [\\.|][a-zA-Z_$]+
+                [\\.|]                                   # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                [a-zA-Z_$]+
                 (?:
-                  [\\w$]* |
+                  [\\w$]* |                              # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
                   <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
                 )
               )*
@@ -1863,29 +1865,31 @@
             )?
 
             (?:
-              \\(                                        # {(string|number)} type union, mulitple types with parenthesis
+              \\(                                        # Opening bracket of multiple types with parenthesis {(string|number)}
                 [a-zA-Z_$]+
                 (?:
                   [\\w$]* |
                   <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
                 )
                 (?:
-                  [\\.|][a-zA-Z_$]+
+                  [\\.|]                                 # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                  [a-zA-Z_$]+
                   (?:
                     [\\w$]* |
                     <[\\w$]+(?:,\\s+[\\w$]+)*>           # {Array<string>} or {Object<string, number>} type application
                   )
                 )*
-              \\) |                                      # {string|number} type union, multiple types without parenthesis
+              \\) |
               [a-zA-Z_$]+
               (?:
                 [\\w$]* |
                 <[\\w$]+(?:,\\s+[\\w$]+)*>               # {Array<string>} or {Object<string, number>} type application
               )
               (?:
-                [\\.|][a-zA-Z_$]+
+                [\\.|]                                   # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                [a-zA-Z_$]+
                 (?:
-                  [\\w$]* |
+                  [\\w$]* |                              # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
                   <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
                 )
               )*
