@@ -1784,36 +1784,61 @@
           (?:(?<=@param)|(?<=@type))
           \\s+
           ({(?:
-            \\* |
-            \\? |
-            (?:\\?|\\!|\\.{3})?
+            \\* |                                        # {*} any type
+            \\? |                                        # {?} unknown type
+
+            (?:                                          # Check for a prefix
+              \\? |                                      # {?string} nullable type
+              !   |                                      # {!string} non-nullable type
+              \\.{3}                                     # {...string} variable number of parameters
+            )?
+
             (?:
-              \\(
+              \\(                                        # {(string|number)} type union, mulitple types with parenthesis
                 [a-zA-Z_$]+
-                (?:[\\w$]*|\\<[\\w$]+(?:\\,\\s+[\\w$]+)*\\>)
+                (?:
+                  [\\w$]* |
+                  <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
+                )
                 (?:
                   [\\.|][a-zA-Z_$]+
-                  (?:[\\w$]*|\\<[\\w$]+(?:\\,\\s+[\\w$]+)*\\>)
+                  (?:
+                    [\\w$]* |
+                    <[\\w$]+(?:,\\s+[\\w$]+)*>           # {Array<string>} or {Object<string, number>} type application
+                  )
                 )*
-              \\) |
+              \\) |                                      # {string|number} type union, multiple types without parenthesis
               [a-zA-Z_$]+
-              (?:[\\w$]*|\\<[\\w$]+(?:\\,\\s+[\\w$]+)*\\>)
+              (?:
+                [\\w$]* |
+                <[\\w$]+(?:,\\s+[\\w$]+)*>               # {Array<string>} or {Object<string, number>} type application
+              )
               (?:
                 [\\.|][a-zA-Z_$]+
-                (?:[\\w$]*|\\<[\\w$]+(?:\\,\\s+[\\w$]+)*\\>)
+                (?:
+                  [\\w$]* |
+                  <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
+                )
               )*
             )
-            (?:\\[\\])?=?
+                                                         # Check for suffix
+            (?:\\[\\])?                                  # {string[]} type application, an array of strings
+            =?                                           # {string=} optional parameter
           )})
           \\s+
           (
-            \\[
+            \\[                                          # [foo] optional parameter
               (?:[a-zA-Z_$]+(?:=[\\w][\\s\\w$]*)?)
             \\] |
-            (?:[a-zA-Z_$][\\w$]*(?:\\.[a-zA-Z_$][\\w$]*)*)?
+            (?:
+              [a-zA-Z_$][\\w$]*
+              (?:
+                \\.[a-zA-Z_$][\\w$]*                     # Foo.Bar namespaced parameter
+              )*
+            )?
           )
           \\s+
-          ((?:(?!\\*\\/).)*)
+          ((?:(?!\\*\\/).)*)                             # The type description
         '''
         'captures':
           '0':
@@ -1828,29 +1853,49 @@
       {
         'match': '''(?x)
           ({(?:
-            \\* |
-            \\? |
-            (?:\\?|\\!|\\.{3})?
+            \\* |                                        # {*} any type
+            \\? |                                        # {?} unknown type
+
+            (?:                                          # Check for a prefix
+              \\? |                                      # {?string} nullable type
+              !   |                                      # {!string} non-nullable type
+              \\.{3}                                     # {...string} variable number of parameters
+            )?
+
             (?:
-              \\(
+              \\(                                        # {(string|number)} type union, mulitple types with parenthesis
                 [a-zA-Z_$]+
-                (?:[\\w$]*|\\<[\\w$]+(?:\\,\\s+[\\w$]+)*\\>)
+                (?:
+                  [\\w$]* |
+                  <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
+                )
                 (?:
                   [\\.|][a-zA-Z_$]+
-                  (?:[\\w$]*|\\<[\\w$]+(?:\\,\\s+[\\w$]+)*\\>)
+                  (?:
+                    [\\w$]* |
+                    <[\\w$]+(?:,\\s+[\\w$]+)*>           # {Array<string>} or {Object<string, number>} type application
+                  )
                 )*
-              \\) |
+              \\) |                                      # {string|number} type union, multiple types without parenthesis
               [a-zA-Z_$]+
-              (?:[\\w$]*|\\<[\\w$]+(?:\\,\\s+[\\w$]+)*\\>)
+              (?:
+                [\\w$]* |
+                <[\\w$]+(?:,\\s+[\\w$]+)*>               # {Array<string>} or {Object<string, number>} type application
+              )
               (?:
                 [\\.|][a-zA-Z_$]+
-                (?:[\\w$]*|\\<[\\w$]+(?:\\,\\s+[\\w$]+)*\\>)
+                (?:
+                  [\\w$]* |
+                  <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
+                )
               )*
             )
-            (?:\\[\\])?=?
+                                                         # Check for suffix
+            (?:\\[\\])?                                  # {string[]} type application, an array of strings
+            =?                                           # {string=} optional parameter
           )})
           \\s+
-          ((?:(?!\\*\\/).)*)
+          ((?:(?!\\*\\/).)*)                             # The type description
         '''
         'captures':
           '0':
