@@ -1818,7 +1818,7 @@
                 [\\.|]                                   # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
                 [a-zA-Z_$]+
                 (?:
-                  [\\w$]* |                              # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                  [\\w$]* |
                   <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
                 )
               )*
@@ -1889,7 +1889,7 @@
                 [\\.|]                                   # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
                 [a-zA-Z_$]+
                 (?:
-                  [\\w$]* |                              # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                  [\\w$]* |
                   <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
                 )
               )*
