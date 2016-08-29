@@ -2081,3 +2081,27 @@ describe "Javascript grammar", ->
           j
         );
       """
+
+  describe "Modelines", ->
+    beforeEach ->
+      atom.project.setPaths [__dirname + "/fixtures"]
+
+    it "can recognise Emacs modelines", ->
+      waitsForPromise ->
+        promises = for i in [1..6]
+          atom.workspace.open "emacs-#{i}"
+        Promise.all promises
+
+      runs ->
+        for editor in atom.workspace.getTextEditors()
+          expect(editor.getGrammar().scopeName).toBe("source.js")
+
+    it "can recognise Vim modelines", ->
+      waitsForPromise ->
+        promises = for i in [1..6]
+          atom.workspace.open "vim-#{i}"
+        Promise.all promises
+
+      runs ->
+        for editor in atom.workspace.getTextEditors()
+          expect(editor.getGrammar().scopeName).toBe("source.js")
