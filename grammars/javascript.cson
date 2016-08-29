@@ -16,7 +16,19 @@
   'xsjs'
   'xsjslib'
 ]
-'firstLineMatch': '^#!.*\\b(node|iojs|JavaScript)'
+'firstLineMatch': '''(?x)
+  # Hashbang
+  ^\\#!.*\\b(?:node|iojs|JavaScript)
+  |
+  # Modeline
+  (?i:
+    # Emacs
+    -\\*-[^*]*(?:mode:\\s*)?\\b(?:js|javascript)(?:\\s*;.*?)?\\s*-\\*-
+    |
+    # Vim
+    (?:vim?|ex):\\s*(?:set?.*\\s)?(?:syntax|filetype|ft)=(javascript)\\s?(?:.*:)?
+  )
+'''
 'name': 'JavaScript'
 'patterns': [
   {
