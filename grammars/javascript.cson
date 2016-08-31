@@ -1830,6 +1830,7 @@
           \\s+
           (
             \\[                                          # [foo] optional parameter
+              \\s*
               (?:
                 [a-zA-Z_$][\\w$]*
                 (?:
@@ -1837,10 +1838,12 @@
                   [a-zA-Z_$][\\w$]*
                 )*
                 (?:
+                  \\s*
                   =                                      # [foo=bar] Default parameter value
                   [\\s\\w$]*
                 )?
               )
+              \\s*
             \\] |
             (?:
               [a-zA-Z_$][\\w$]*
