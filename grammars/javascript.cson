@@ -1830,7 +1830,17 @@
           \\s+
           (
             \\[                                          # [foo] optional parameter
-              (?:[a-zA-Z_$]+(?:=[\\w][\\s\\w$]*)?)
+              (?:
+                [a-zA-Z_$][\\w$]*
+                (?:
+                  \\.                                    # Foo.Bar namespaced parameter
+                  [a-zA-Z_$][\\w$]*
+                )*
+                (?:
+                  =                                      # [foo=bar] Default parameter value
+                  [\\s\\w$]*
+                )?
+              )
             \\] |
             (?:
               [a-zA-Z_$][\\w$]*
