@@ -1840,7 +1840,8 @@
                 (?:
                   \\s*
                   =                                      # [foo=bar] Default parameter value
-                  [\\s\\w$]*
+                  \\s*
+                  [\\w$\\s]*
                 )?
               )
               \\s*
