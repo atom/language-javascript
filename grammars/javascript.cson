@@ -1834,6 +1834,7 @@
               (?:
                 [a-zA-Z_$][\\w$]*
                 (?:
+                  (?:\\[\\])?                            # Foo[].bar properties within an array
                   \\.                                    # Foo.Bar namespaced parameter
                   [a-zA-Z_$][\\w$]*
                 )*
@@ -1849,7 +1850,9 @@
             (?:
               [a-zA-Z_$][\\w$]*
               (?:
-                \\.[a-zA-Z_$][\\w$]*                     # Foo.Bar namespaced parameter
+                (?:\\[\\])?                              # Foo[].bar properties within an array
+                \\.                                      # Foo.Bar namespaced parameter
+                [a-zA-Z_$][\\w$]*
               )*
             )?
           )
