@@ -1797,21 +1797,30 @@
               \\(                                        # Opening bracket of multiple types with parenthesis {(string|number)}
                 [a-zA-Z_$]+
                 (?:
-                  [\\w$]* |
+                  (?:
+                    [\\w$]*
+                    (?:\\[\\])?                          # {(string[]|number)} type application, an array of strings or a number
+                  ) |
                   <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
                 )
                 (?:
                   [\\.|]                                 # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
                   [a-zA-Z_$]+
                   (?:
-                    [\\w$]* |
+                    (?:
+                      [\\w$]*
+                      (?:\\[\\])?                        # {(string|number[])} type application, a string or an array of numbers
+                    ) |
                     <[\\w$]+(?:,\\s+[\\w$]+)*>           # {Array<string>} or {Object<string, number>} type application
                   )
                 )*
               \\) |
               [a-zA-Z_$]+
               (?:
-                [\\w$]* |
+                (?:
+                  [\\w$]*
+                  (?:\\[\\])?                            # {string[]|number} type application, an array of strings or a number
+                ) |
                 <[\\w$]+(?:,\\s+[\\w$]+)*>               # {Array<string>} or {Object<string, number>} type application
               )
               (?:
