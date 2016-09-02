@@ -1801,7 +1801,7 @@
                   <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
                 )
                 (?:
-                  [\\.|]                                 # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                  [\\.|~]                                # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
                   [a-zA-Z_$]+
                   (?:
                     [\\w$]* |
@@ -1815,7 +1815,7 @@
                 <[\\w$]+(?:,\\s+[\\w$]+)*>               # {Array<string>} or {Object<string, number>} type application
               )
               (?:
-                [\\.|]                                   # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                [\\.|~]                                  # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
                 [a-zA-Z_$]+
                 (?:
                   [\\w$]* |
@@ -1886,7 +1886,7 @@
                   <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
                 )
                 (?:
-                  [\\.|]                                 # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                  [\\.|~]                                # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
                   [a-zA-Z_$]+
                   (?:
                     [\\w$]* |
@@ -1900,7 +1900,7 @@
                 <[\\w$]+(?:,\\s+[\\w$]+)*>               # {Array<string>} or {Object<string, number>} type application
               )
               (?:
-                [\\.|]                                   # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                [\\.|~]                                  # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
                 [a-zA-Z_$]+
                 (?:
                   [\\w$]* |
