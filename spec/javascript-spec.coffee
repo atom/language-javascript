@@ -643,6 +643,14 @@ describe "Javascript grammar", ->
       expect(tokens[5]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.graphql.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
       expect(tokens[6]).toEqual value: ' }', scopes: ['source.js', 'string.quoted.template.graphql.js']
       expect(tokens[7]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.graphql.js', 'punctuation.definition.string.end.js']
+      
+  describe "ES6 tagged gql string templates", ->
+    it "tokenizes them as strings", ->
+      {tokens} = grammar.tokenizeLine('gql`fragment on Foo { id }`')
+      expect(tokens[0]).toEqual value: 'gql', scopes: [ 'source.js', 'string.quoted.template.graphql.js', 'entity.name.function.js' ]
+      expect(tokens[1]).toEqual value: '`', scopes: [ 'source.js', 'string.quoted.template.graphql.js', 'punctuation.definition.string.begin.js' ]
+      expect(tokens[2]).toEqual value: 'fragment on Foo { id }', scopes: ['source.js', 'string.quoted.template.graphql.js']
+      expect(tokens[3]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.graphql.js', 'punctuation.definition.string.end.js']
 
   describe "ES6 class", ->
     it "tokenizes class", ->
