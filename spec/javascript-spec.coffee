@@ -2155,25 +2155,26 @@ describe "Javascript grammar", ->
       """
 
   describe "Modelines", ->
-    beforeEach ->
-      atom.project.setPaths [__dirname + "/fixtures"]
-
     it "can recognise Emacs modelines", ->
-      waitsForPromise ->
-        promises = for i in [1..6]
-          atom.workspace.open "emacs-#{i}"
-        Promise.all promises
-
-      runs ->
-        for editor in atom.workspace.getTextEditors()
-          expect(editor.getGrammar().scopeName).toBe("source.js")
+      modelines = """
+        /* -*-js-*- */
+        // -*- JS -*-
+        /* -*- mode:js -*- */
+        // -*- font:bar;mode:JavaScript -*-
+        " -*-foo:bar;mode:JavaScript;bar:foo-*- ";
+        "-*- font:x;foo : bar ; mode : javaScript ; bar : foo ; foooooo:baaaaar;fo:ba-*-";
+      """
+      for line in modelines.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).not.toBeNull()
 
     it "can recognise Vim modelines", ->
-      waitsForPromise ->
-        promises = for i in [1..6]
-          atom.workspace.open "vim-#{i}"
-        Promise.all promises
-
-      runs ->
-        for editor in atom.workspace.getTextEditors()
-          expect(editor.getGrammar().scopeName).toBe("source.js")
+      modelines = """
+        // vim: set ft=javascript:
+        // vim: set filetype=JavaScript:
+        /* vim: ft=javascript */
+        // vim: syntax=javascript
+        /* vim: se syntax=javascript: */
+        /* ex: syntax=javascript */
+      """
+      for line in modelines.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).not.toBeNull()
