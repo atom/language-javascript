@@ -10,7 +10,7 @@
   'regex-character-class':
     'patterns': [
       {
-        'match': '\\\\[wWsSdD]|\\.'
+        'match': '\\\\[wWsSdDtrnvf]|\\.'
         'name': 'constant.character.character-class.regexp'
       }
       {

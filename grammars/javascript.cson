@@ -1809,25 +1809,34 @@
               \\(                                        # Opening bracket of multiple types with parenthesis {(string|number)}
                 [a-zA-Z_$]+
                 (?:
-                  [\\w$]* |
+                  (?:
+                    [\\w$]*
+                    (?:\\[\\])?                          # {(string[]|number)} type application, an array of strings or a number
+                  ) |
                   <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
                 )
                 (?:
-                  [\\.|]                                 # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                  [\\.|~]                                # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
                   [a-zA-Z_$]+
                   (?:
-                    [\\w$]* |
+                    (?:
+                      [\\w$]*
+                      (?:\\[\\])?                        # {(string|number[])} type application, a string or an array of numbers
+                    ) |
                     <[\\w$]+(?:,\\s+[\\w$]+)*>           # {Array<string>} or {Object<string, number>} type application
                   )
                 )*
               \\) |
               [a-zA-Z_$]+
               (?:
-                [\\w$]* |
+                (?:
+                  [\\w$]*
+                  (?:\\[\\])?                            # {string[]|number} type application, an array of strings or a number
+                ) |
                 <[\\w$]+(?:,\\s+[\\w$]+)*>               # {Array<string>} or {Object<string, number>} type application
               )
               (?:
-                [\\.|]                                   # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                [\\.|~]                                  # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
                 [a-zA-Z_$]+
                 (?:
                   [\\w$]* |
@@ -1842,12 +1851,29 @@
           \\s+
           (
             \\[                                          # [foo] optional parameter
-              (?:[a-zA-Z_$]+(?:=[\\w][\\s\\w$]*)?)
+              \\s*
+              (?:
+                [a-zA-Z_$][\\w$]*
+                (?:
+                  (?:\\[\\])?                            # Foo[].bar properties within an array
+                  \\.                                    # Foo.Bar namespaced parameter
+                  [a-zA-Z_$][\\w$]*
+                )*
+                (?:
+                  \\s*
+                  =                                      # [foo=bar] Default parameter value
+                  \\s*
+                  [\\w$\\s]*
+                )?
+              )
+              \\s*
             \\] |
             (?:
               [a-zA-Z_$][\\w$]*
               (?:
-                \\.[a-zA-Z_$][\\w$]*                     # Foo.Bar namespaced parameter
+                (?:\\[\\])?                              # Foo[].bar properties within an array
+                \\.                                      # Foo.Bar namespaced parameter
+                [a-zA-Z_$][\\w$]*
               )*
             )?
           )
@@ -1884,7 +1910,7 @@
                   <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
                 )
                 (?:
-                  [\\.|]                                 # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                  [\\.|~]                                # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
                   [a-zA-Z_$]+
                   (?:
                     [\\w$]* |
@@ -1898,7 +1924,7 @@
                 <[\\w$]+(?:,\\s+[\\w$]+)*>               # {Array<string>} or {Object<string, number>} type application
               )
               (?:
-                [\\.|]                                   # Check for . namespaced types {Foo.bar} or | for multiple types {string|number}
+                [\\.|~]                                  # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
                 [a-zA-Z_$]+
                 (?:
                   [\\w$]* |
