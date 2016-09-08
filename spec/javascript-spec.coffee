@@ -2154,27 +2154,113 @@ describe "Javascript grammar", ->
         );
       """
 
-  describe "Modelines", ->
-    it "can recognise Emacs modelines", ->
-      modelines = """
-        /* -*-js-*- */
-        // -*- JS -*-
-        /* -*- mode:js -*- */
-        // -*- font:bar;mode:JavaScript -*-
-        " -*-foo:bar;mode:JavaScript;bar:foo-*- ";
-        "-*- font:x;foo : bar ; mode : javaScript ; bar : foo ; foooooo:baaaaar;fo:ba-*-";
+  describe "firstLineMatch", ->
+    it "recognises interpreter directives", ->
+      valid = """
+        #!/usr/sbin/node foo
+        #!/usr/bin/iojs foo=bar/
+        #!/usr/sbin/node
+        #!/usr/sbin/node foo bar baz
+        #!/usr/bin/node perl
+        #!/usr/bin/node bin/perl
+        #!/usr/bin/node
+        #!/bin/node
+        #!/usr/bin/node --script=usr/bin
+        #! /usr/bin/env A=003 B=149 C=150 D=xzd E=base64 F=tar G=gz H=head I=tail node
+        #!\t/usr/bin/env --foo=bar node --quu=quux
+        #! /usr/bin/node
+        #!/usr/bin/env node
       """
-      for line in modelines.split /\n/
+      for line in valid.split /\n/
         expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).not.toBeNull()
 
-    it "can recognise Vim modelines", ->
-      modelines = """
-        // vim: set ft=javascript:
-        // vim: set filetype=JavaScript:
-        /* vim: ft=javascript */
-        // vim: syntax=javascript
-        /* vim: se syntax=javascript: */
-        /* ex: syntax=javascript */
+      invalid = """
+        \x20#!/usr/sbin/node
+        \t#!/usr/sbin/node
+        #!/usr/bin/env-node/node-env/
+        #!/usr/bin/env-node
+        #! /usr/binnode
+        #!\t/usr/bin/env --node=bar
       """
-      for line in modelines.split /\n/
+      for line in invalid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).toBeNull()
+
+    it "recognises Emacs modelines", ->
+      valid = """
+        #-*-js-*-
+        #-*-mode:js-*-
+        /* -*-js-*- */
+        // -*- JavaScript -*-
+        /* -*- mode:js -*- */
+        // -*- font:bar;mode:JS -*-
+        // -*- font:bar;mode:JavaScript;foo:bar; -*-
+        // -*-font:mode;mode:JS-*-
+        " -*-foo:bar;mode:JS;bar:foo-*- ";
+        " -*-font-mode:foo;mode:JavaScript;foo-bar:quux-*-"
+        "-*-font:x;foo:bar; mode : js;bar:foo;foooooo:baaaaar;fo:ba;-*-";
+        "-*- font:x;foo : bar ; mode : jS ; bar : foo ; foooooo:baaaaar;fo:ba-*-";
+      """
+      for line in valid.split /\n/
         expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).not.toBeNull()
+
+      invalid = """
+        /* --*js-*- */
+        /* -*-- js -*-
+        /* -*- -- js -*-
+        /* -*- javascripts -;- -*-
+        // -*- iJS -*-
+        // -*- js-stuff -*-
+        /* -*- model:js -*-
+        /* -*- indent-mode:js -*-
+        // -*- font:mode;JS -*-
+        // -*- mode: -*- JS
+        // -*- mode: grok-with-js -*-
+        // -*-font:mode;mode:js--*-
+      """
+      for line in invalid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).toBeNull()
+
+    it "recognises Vim modelines", ->
+      valid = """
+        vim: se filetype=javascript:
+        # vim: se ft=javascript:
+        # vim: set ft=javascript:
+        # vim: set filetype=JavaScript:
+        # vim: ft=javascript
+        # vim: syntax=jAvaScRIPT
+        # vim: se syntax=JAVASCRIPT:
+        # ex: syntax=javascript
+        # vim:ft=javascript
+        # vim600: ft=javascript
+        # vim>600: set ft=javascript:
+        # vi:noai:sw=3 ts=6 ft=javascript
+        # vi::::::::::noai:::::::::::: ft=javascript
+        # vim:ts=4:sts=4:sw=4:noexpandtab:ft=javascript
+        # vi:: noai : : : : sw   =3 ts   =6 ft  =javascript
+        # vim: ts=4: pi sts=4: ft=javascript: noexpandtab: sw=4:
+        # vim: ts=4 sts=4: ft=javascript noexpandtab:
+        # vim:noexpandtab sts=4 ft=javascript ts=4
+        # vim:noexpandtab:ft=javascript
+        # vim:ts=4:sts=4 ft=javascript:noexpandtab:\x20
+        # vim:noexpandtab titlestring=hi\|there\\\\ ft=javascript ts=4
+      """
+      for line in valid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).not.toBeNull()
+
+      invalid = """
+        ex: se filetype=javascript:
+        _vi: se filetype=javascript:
+         vi: se filetype=javascript
+        # vim set ft=javascripts
+        # vim: soft=javascript
+        # vim: hairy-syntax=javascript:
+        # vim set ft=javascript:
+        # vim: setft=javascript:
+        # vim: se ft=javascript backupdir=tmp
+        # vim: set ft=javascript set cmdheight=1
+        # vim:noexpandtab sts:4 ft:javascript ts:4
+        # vim:noexpandtab titlestring=hi\\|there\\ ft=javascript ts=4
+        # vim:noexpandtab titlestring=hi\\|there\\\\\\ ft=javascript ts=4
+      """
+      for line in invalid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).toBeNull()

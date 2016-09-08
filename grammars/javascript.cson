@@ -18,15 +18,21 @@
 ]
 'firstLineMatch': '''(?x)
   # Hashbang
-  ^\\#!.*\\b(?:node|iojs|JavaScript)
+  ^\\#!.*(?:\\s|\\/|(?<=!)\\b)
+    (?:node|iojs|JavaScript)
+  (?:$|\\s)
   |
   # Modeline
   (?i:
     # Emacs
-    -\\*-[^*]*(?:mode:\\s*)?\\b(?:js|javascript)(?:\\s*;.*?)?\\s*-\\*-
+    -\\*-(?:(?:(?!mode\\s*:)[^:;]+:[^:;]+;)*\\s*mode\\s*:)?\\s*
+      (?:js|javascript)
+    \\s*(?:;[^:;]+:[^:;]+?)*;?\\s*-\\*-
     |
     # Vim
-    (?:vim?|ex):\\s*(?:set?.*\\s)?(?:syntax|filetype|ft)=(javascript)\\s?(?:.*:)?
+    (?:(?:\\s|^)vi(?:m[<=>]?\\d+|m)?|\\sex)(?=:(?=\\s*set?\\s[^\\n:]+:)|:(?!\\s*set?\\s))(?:(?:\\s|\\s*:\\s*)\\w*(?:\\s*=(?:[^\\n\\\\\\s]|\\\\.)*)?)*[\\s:](?:filetype|ft|syntax)\\s*=
+      javascript
+    (?=\\s|:|$)
   )
 '''
 'name': 'JavaScript'
