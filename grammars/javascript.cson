@@ -16,7 +16,25 @@
   'xsjs'
   'xsjslib'
 ]
-'firstLineMatch': '^#!.*\\b(node|iojs|JavaScript)'
+'firstLineMatch': '''(?x)
+  # Hashbang
+  ^\\#!.*(?:\\s|\\/|(?<=!)\\b)
+    (?:node|iojs|JavaScript)
+  (?:$|\\s)
+  |
+  # Modeline
+  (?i:
+    # Emacs
+    -\\*-(?:(?:(?!mode\\s*:)[^:;]+:[^:;]+;)*\\s*mode\\s*:)?\\s*
+      (?:js|javascript)
+    \\s*(?:;[^:;]+:[^:;]+?)*;?\\s*-\\*-
+    |
+    # Vim
+    (?:(?:\\s|^)vi(?:m[<=>]?\\d+|m)?|\\sex)(?=:(?=\\s*set?\\s[^\\n:]+:)|:(?!\\s*set?\\s))(?:(?:\\s|\\s*:\\s*)\\w*(?:\\s*=(?:[^\\n\\\\\\s]|\\\\.)*)?)*[\\s:](?:filetype|ft|syntax)\\s*=
+      javascript
+    (?=\\s|:|$)
+  )
+'''
 'name': 'JavaScript'
 'patterns': [
   {
