@@ -178,6 +178,10 @@ describe "Javascript grammar", ->
       expect(tokens[1]).toEqual value: 'test', scopes: ['source.js', 'string.regexp.js']
       expect(tokens[2]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
 
+      {tokens} = grammar.tokenizeLine('/{"}/')
+      expect(tokens[0]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[2]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+
       {tokens} = grammar.tokenizeLine('foo + /test/')
       expect(tokens[0]).toEqual value: 'foo ', scopes: ['source.js']
       expect(tokens[1]).toEqual value: '+', scopes: ['source.js', 'keyword.operator.js']
