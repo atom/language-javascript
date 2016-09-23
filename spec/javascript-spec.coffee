@@ -2199,6 +2199,7 @@ describe "Javascript grammar", ->
         // -*- font:bar;mode:JS -*-
         // -*- font:bar;mode:JavaScript;foo:bar; -*-
         // -*-font:mode;mode:JS-*-
+        // -*- foo:bar mode: js bar:baz -*-
         " -*-foo:bar;mode:JS;bar:foo-*- ";
         " -*-font-mode:foo;mode:JavaScript;foo-bar:quux-*-"
         "-*-font:x;foo:bar; mode : js;bar:foo;foooooo:baaaaar;fo:ba;-*-";
@@ -2213,6 +2214,7 @@ describe "Javascript grammar", ->
         /* -*- -- js -*-
         /* -*- javascripts -;- -*-
         // -*- iJS -*-
+        // -*- JS; -*-
         // -*- js-stuff -*-
         /* -*- model:js -*-
         /* -*- indent-mode:js -*-
