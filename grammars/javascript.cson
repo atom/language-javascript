@@ -1821,7 +1821,7 @@
                   [\\w$]*
                   (?:\\[\\])?                            # {string[]|number} type application, an array of strings or a number
                 ) |
-                \\.?<[\\w$]+(?:,\\s+[\\w$]+)*>           # {Array.<string>} or {Object.<string, number>} type application (optional .)
+                \\.?<[\\w$]+(?:,\\s+[\\w$]+)*>           # {Array<string>} or {Object<string, number>} type application (optional .)
               )
               (?:
                 [\\.|~]                                  # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
