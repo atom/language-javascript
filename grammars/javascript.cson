@@ -16,18 +16,38 @@
   'xsjs'
   'xsjslib'
 ]
-'firstLineMatch': '^#!.*\\b(node|iojs|JavaScript)'
+'firstLineMatch': '''(?x)
+  # Hashbang
+  ^\\#!.*(?:\\s|\\/|(?<=!)\\b)
+    (?:node|iojs|JavaScript)
+  (?:$|\\s)
+  |
+  # Modeline
+  (?i:
+    # Emacs
+    -\\*-(?:\\s*(?=[^:;\\s]+\\s*-\\*-)|(?:.*?[;\\s]|(?<=-\\*-))mode\\s*:\\s*)
+      (?:js|javascript)
+    (?=[\\s;]|(?<![-*])-\\*-).*?-\\*-
+    |
+    # Vim
+    (?:(?:\\s|^)vi(?:m[<=>]?\\d+|m)?|\\sex)(?=:(?=\\s*set?\\s[^\\n:]+:)|:(?!\\s*set?\\s))(?:(?:\\s|\\s*:\\s*)\\w*(?:\\s*=(?:[^\\n\\\\\\s]|\\\\.)*)?)*[\\s:](?:filetype|ft|syntax)\\s*=
+      javascript
+    (?=\\s|:|$)
+  )
+'''
 'name': 'JavaScript'
 'patterns': [
   {
-    'comment': 'ES6 import'
+    # ES6 import
     'begin': '(?<!\\.)\\b(import)(?!\\s*:)\\b'
     'beginCaptures':
       '1':
         'name': 'keyword.control.js'
+    'end': '(?=;|$)'
+    'name': 'meta.import.js'
     'patterns': [
       {
-        'comment': '{ member1 , member2 as alias2 , [...] }'
+        # { member1 , member2 as alias2 , [...] }
         'begin': '\\{'
         'beginCaptures':
           0:
@@ -38,7 +58,14 @@
             'name': 'punctuation.definition.modules.end.js'
         'patterns': [
           {
-            'comment': '(default|name) as alias'
+            # (default|name) as alias
+            'match': '''(?x)
+              (?: \\b(default)\\b | \\b([a-zA-Z_$][\\w$]*)\\b)
+              \\s*
+              (\\b as \\b)
+              \\s*
+              (?: (\\b default \\b | \\*) | \\b([a-zA-Z_$][\\w$]*)\\b)
+            '''
             'captures':
               '1':
                 'name': 'variable.language.default.js'
@@ -50,13 +77,6 @@
                 'name': 'invalid.illegal.js'
               '5':
                 'name': 'variable.other.module-alias.js'
-            'match': '(?x)
-              (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-              \\s*
-              (\\b as \\b)
-              \\s*
-              (?: (\\b default \\b | \\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-            '
           }
           {
             'match': ','
@@ -66,13 +86,20 @@
             'include': '#comments'
           }
           {
-            'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+            'match': '\\b([a-zA-Z_$][\\w$]*)\\b'
             'name': 'variable.other.module.js'
           }
         ]
       }
       {
-        'comment': '(default|*|name) as alias'
+        # (default|*|name) as alias
+        'match': '''(?x)
+          (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][\\w$]*)\\b)
+          \\s*
+          (\\b as \\b)
+          \\s*
+          (?: (\\b default \\b | \\*) | \\b([a-zA-Z_$][\\w$]*)\\b)
+        '''
         'captures':
           '1':
             'name': 'variable.language.default.js'
@@ -86,13 +113,6 @@
             'name': 'invalid.illegal.js'
           '6':
             'name': 'variable.other.module-alias.js'
-        'match': '(?x)
-          (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-          \\s*
-          (\\b as \\b)
-          \\s*
-          (?: (\\b default \\b | \\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-        '
       }
       {
         'match': '\\*'
@@ -113,7 +133,7 @@
         'name': 'keyword.control.js'
       }
       {
-        'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b(?=.*\\bfrom\\b)'
+        'match': '\\b([a-zA-Z_$][\\w$]*)\\b(?=.*\\bfrom\\b)'
         'name': 'variable.other.module.js'
       }
       {
@@ -121,12 +141,14 @@
         'name': 'meta.delimiter.object.comma.js'
       }
     ]
-    'end': '(?=;|$)'
-    'name': 'meta.import.js'
   }
   {
-    'comment': 'ES6 export: `export default (variable|class|function, etc.)`'
-    'match': '(?x) \\b(export)\\b \\s* \\b(default)\\b (?:\\s*) \\b((?!\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b)[a-zA-Z_$][a-zA-Z_$0-9]*)?\\b'
+    # ES6 export: export default (variable|class|function, etc.)
+    'match': '''(?x)
+      \\b(export)\\b\\s*
+      \\b(default)\\b\\s*
+      \\b((?!\\b(?:function|class|let|var|const)\\b)[a-zA-Z_$][\\w$]*)?\\b
+    '''
     'captures':
       '0':
         'name': 'meta.export.js'
@@ -138,17 +160,19 @@
         'name': 'variable.other.module.js'
   }
   {
-    'comment': 'ES6 export, re-export: `export {member as alias, [...]} [from ...]`'
+    # ES6 export, re-export: export {member as alias, [...]} [from ...]
     'begin': '(?<!\\.)\\b(export)(?!\\s*:)\\b'
     'beginCaptures':
       '1':
         'name': 'keyword.control.js'
+    'end': '(?=;|\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b|$)'
+    'name': 'meta.export.js'
     'patterns': [
       {
         'include': '#numbers'
       }
       {
-        'comment': '`{ member1 , member2 as alias2 , [...] }` inside re-export'
+        # { member1 , member2 as alias2 , [...] } inside re-export
         'begin': '\\{(?=.*\\bfrom\\b)'
         'beginCaptures':
           0:
@@ -159,7 +183,14 @@
             'name': 'punctuation.definition.modules.end.js'
         'patterns': [
           {
-            'comment': '(default|name) as alias'
+            # (default|name) as alias
+            'match': '''(?x)
+              (?: \\b(default)\\b | \\b([a-zA-Z_$][\\w$]*)\\b)
+              \\s*
+              (\\b as \\b)
+              \\s*
+              (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][\\w$]*)\\b)
+            '''
             'captures':
               '1':
                 'name': 'variable.language.default.js'
@@ -173,13 +204,6 @@
                 'name': 'invalid.illegal.js'
               '6':
                 'name': 'variable.other.module-alias.js'
-            'match': '(?x)
-              (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-              \\s*
-              (\\b as \\b)
-              \\s*
-              (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-            '
           }
           {
             'match': ','
@@ -189,13 +213,13 @@
             'include': '#comments'
           }
           {
-            'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+            'match': '\\b([a-zA-Z_$][\\w$]*)\\b'
             'name': 'variable.other.module.js'
           }
         ]
       }
       {
-        'comment': '{ member1 , member2 as alias2 , [...] }'
+        # { member1 , member2 as alias2 , [...] }
         'begin': '(?![a-zA-Z_$0-9])\\{'
         'beginCaptures':
           0:
@@ -206,7 +230,7 @@
             'name': 'punctuation.definition.modules.end.js'
         'patterns': [
           {
-            'comment': 'name as (default|alias)'
+            # name as (default|alias)
             'captures':
               '1':
                 'name': 'invalid.illegal.js'
@@ -220,13 +244,13 @@
                 'name': 'invalid.illegal.js'
               '6':
                 'name': 'variable.other.module-alias.js'
-            'match': '(?x)
-              (?: \\b(default)\\b | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
+            'match': '''(?x)
+              (?: \\b(default)\\b | \\b([a-zA-Z_$][\\w$]*)\\b)
               \\s*
               (\\b as \\b)
               \\s*
-              (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b)
-            '
+              (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][\\w$]*)\\b)
+            '''
           }
           {
             'include': '#comments'
@@ -236,7 +260,7 @@
             'name': 'meta.delimiter.object.comma.js'
           }
           {
-            'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+            'match': '\\b([a-zA-Z_$][\\w$]*)\\b'
             'name': 'variable.other.module.js'
           }
         ]
@@ -260,7 +284,7 @@
         'name': 'keyword.control.js'
       }
       {
-        'match': '\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b'
+        'match': '\\b([a-zA-Z_$][\\w$]*)\\b'
         'name': 'variable.other.module.js'
       }
       {
@@ -271,21 +295,15 @@
         'include': '#operators'
       }
     ]
-    'end': '(?=;|\\bfunction\\b|\\bclass\\b|\\blet\\b|\\bvar\\b|\\bconst\\b|$)'
-    'name': 'meta.export.js'
   }
   {
-    'match': '(?<!\\.)\\b(super|this)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(super|this)(?=\\s*:)'
-    'captures':
-      '1':
-        'name': 'variable.language.js'
-      '2':
-        'name': 'variable.language.js'
+    'match': '(?<!\\.)\\b(?<!\\$)(super|this|arguments)(?!\\s*:|\\$)\\b'
+    'name': 'variable.language.js'
   }
   {
     # [async] function [name](params)
     # function* name(params) – generator function declaration
-    'begin': '(?=(\\basync\\b\\s*)?\\bfunction\\b)'
+    'begin': '(?=(\\basync\\b\\s*)?\\bfunction\\b(?!\\s*:))'
     'end': '(?<=})'
     'patterns': [
       {
@@ -416,7 +434,7 @@
     ]
   }
   {
-    'begin': '(?=\\b(constructor)\\s*)'
+    'begin': '(?=\\bconstructor\\b\\s*)'
     'end': '(?<=})'
     'patterns': [
       {
@@ -579,7 +597,7 @@
       (?<=})|
       ((?!
         \\s*{|
-        \\G[\\w$]+:|
+        \\G[\\w$]+\\s*:|
         \\s*/\\*|\\s*//
       )(?=\\s*\\S))
     '''
@@ -695,23 +713,29 @@
       '2':
         'name': 'storage.modifier.js'
       '3':
-        'name': 'entity.name.type.class.js'
+        'name': 'entity.other.inherited-class.js'
       '4':
         'name': 'entity.name.type.class.js'
       '5':
         'name': 'storage.modifier.js'
       '6':
-        'name': 'entity.name.type.class.js'
+        'name': 'entity.other.inherited-class.js'
     'name': 'meta.class.js'
   }
   {
+    'match': '(new)\\s+([\\w$]+[\\w.$]*)'
+    'name': 'meta.class.instance.constructor.js'
     'captures':
       '1':
         'name': 'keyword.operator.new.js'
       '2':
         'name': 'entity.name.type.instance.js'
-    'match': '(new)\\s+(\\$?\\w+(?:\\.\\w*)?)'
-    'name': 'meta.class.instance.constructor'
+        'patterns': [
+          {
+            'match': '\\.'
+            'name': 'meta.delimiter.property.period.js'
+          }
+        ]
   }
   {
     # console
@@ -869,25 +893,20 @@
     ]
   }
   {
-    'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?|(?<=\\?)(?:\\s*)(yield)(?=\\s*:)',
+    'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?',
     'captures':
       '1':
         'name': 'keyword.control.js'
       '2':
         'name': 'storage.modifier.js'
-      '3':
-        'name': 'keyword.control.js'
-      '4':
-        'name': 'storage.modifier.js'
     'name': 'meta.control.yield.js'
   }
   {
-    'match': '(?<!\\.)\\b(await|break|case|catch|continue|do|else|finally|for|if|import|from|package|return|switch|throw|try|while|with)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(await|break|catch|continue|do|else|finally|for|if|import|package|return|throw|try|while|with)(?!\\s*:)\\b'
     'name': 'keyword.control.js'
   }
   {
-    'match': '(?<!\\.)\\b(default)\\b'
-    'name': 'keyword.control.js'
+    'include': '#switch_statement'
   }
   {
     'match': '(?<!\\.)\\b(delete|in|of|instanceof|new|typeof|void)(?!\\s*:)\\b'
@@ -898,67 +917,167 @@
     'name': 'keyword.operator.spread.js'
   }
   {
-    'match': '(?<!\\.)\\b(true|false)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(true|false)(?=\\s*:)'
-    'captures':
-      '1':
-        'name': 'constant.language.boolean.$1.js'
-      '2':
-        'name': 'constant.language.boolean.$2.js'
+    'match': '(?<!\\.)\\b(true|false)(?!\\s*:)\\b'
+    'name': 'constant.language.boolean.$1.js'
   }
   {
-    'match': '(?<!\\.)\\b(null)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(null)(?=\\s*:)'
-    'captures':
-      '1':
-        'name': 'constant.language.null.js'
-      '2':
-        'name': 'constant.language.null.js'
+    'match': '(?<!\\.)\\b(null)(?!\\s*:)\\b'
+    'name': 'constant.language.null.js'
   }
   {
-    'match': '(?<!\\.)\\b(debugger)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(debugger)(?=\\s*:)'
-    'captures':
-      '1':
-        'name': 'keyword.other.js'
-      '2':
-        'name': 'keyword.other.js'
+    'match': '(?<!\\.)\\b(debugger)(?!\\s*:)\\b'
+    'name': 'keyword.other.debugger.js'
   }
   {
-    'match': '(?<!\\$)\\b(Anchor|Applet|Area|Array|Boolean|Button|Checkbox|Date|document|event|FileUpload|Form|Frame|Function|Hidden|History|Image|JavaArray|JavaClass|JavaObject|JavaPackage|java|Layer|Link|Location|Map|MimeType|Number|navigator|netscape|Object|Option|Packages|Password|Plugin|performance|Radio|RegExp|Reset|Select|Set|String|Style|Submit|Symbol|screen|sun|Text|Textarea|WeakMap|WeakSet|window|XMLHttpRequest)\\b'
+    'match': '''(?x) (?<!\\$) \\b
+      (Array|ArrayBuffer|Atomics|Boolean|DataView|Date|Error|EvalError|Float32Array|Float64Array|Function|Generator
+      |GeneratorFunction|Int16Array|Int32Array|Int8Array|InternalError|Intl|JSON|Map|Number|Object|Promise|Proxy
+      |RangeError|ReferenceError|Reflect|RegExp|Set|SharedArrayBuffer|SIMD|String|Symbol|SyntaxError|TypeError
+      |Uint16Array|Uint32Array|Uint8Array|Uint8ClampedArray|URIError|WeakMap|WeakSet)
+      \\b
+    '''
     'name': 'support.class.js'
   }
   {
-    'match': '(\\.)(systemLanguage|scripts|scrollbars|screenX|screenY|screenTop|screenLeft|style|styleSheets|status|statusText|statusbar|siblingBelow|siblingAbove|source|suffixes|security|securityPolicy|selection|self|history|host|hostname|hash|hasFocus|XMLDocument|XSLDocument|next|namespaces|namespaceURI|nameProp|MIN_VALUE|MAX_VALUE|characterSet|constructor|controllers|cookieEnabled|colorDepth|components|complete|current|cpuClass|clip|clipBoardData|clientInformation|closed|classes|callee|caller|crypto|toolbar|top|textTransform|textIndent|textDecoration|textAlign|tags|innerHeight|innerWidth|input|ids|ignoreCase|zIndex|oscpu|onreadystatechange|onLine|outerHeight|outerWidth|opsProfile|opener|offscreenBuffering|NEGATIVE_INFINITY|display|dialogHeight|dialogTop|dialogWidth|dialogLeft|dialogArguments|directories|description|defaultStatus|defaultChecked|defaultCharset|defaultView|userProfile|userLanguage|userAgent|uniqueID|undefined|updateInterval|_content|pixelDepth|port|personalbar|pkcs11|plugins|platform|pathname|paddingRight|paddingBottom|paddingTop|paddingLeft|parent|parentWindow|parentLayer|pageX|pageXOffset|pageY|pageYOffset|protocol|prototype|product|productSub|prompter|previous|prefix|encoding|enabledPlugin|external|expando|embeds|visiblity|vendor|vendorSub|vLinkcolor|URLUnencoded|POSITIVE_INFINITY|filename|fontSize|fontFamily|fontWeight|formName|frames|frameElement|fgColor|whiteSpace|listStyleType|lineHeight|linkColor|location|locationbar|localName|lowsrc|length|left|leftContext|lastModified|lastMatch|lastIndex|lastParen|layers|layerX|language|appMinorVersion|appName|appCodeName|appCore|appVersion|availHeight|availTop|availWidth|availLeft|all|arity|arguments|aLinkcolor|above|right|rightContext|responseXML|responeText|readyState|global|x|y|z|mimeTypes|multiline|menubar|marginRight|marginBottom|marginTop|marginLeft|bottom|border(Width|RightWidth|BottomWidth|Style|Color|TopWidth|LeftWidth)|bufferDepth|below|backgroundColor|backgroundImage)\\b'
+    'match': '''(?x) (\\.) \\s* (?:
+        (constructor|length|prototype) |
+        (EPSILON|MAX_SAFE_INTEGER|MAX_VALUE|MIN_SAFE_INTEGER|MIN_VALUE|NEGATIVE_INFINITY|POSITIVE_INFINITY)
+      )\\b
+    '''
     'captures':
       '1':
         'name': 'meta.delimiter.property.period.js'
       '2':
+        'name': 'support.variable.property.js'
+      '3':
         'name': 'support.constant.js'
   }
   {
-    'match': '(\\.)(shape|systemId|scheme|scope|scrolling|standby|start|size|summary|specified|sectionRowIndex|selected|selectedIndex|hspace|httpEquiv|htmlFor|height|headers|href|hreflang|noResize|notations|notationName|noShade|noHref|nodeName|nodeType|nodeValue|noWrap|nextSibling|name|ch|childNodes|chOff|checked|charset|cite|content|cookie|cords|code|codeBase|codeType|cols|colSpan|color|compact|cells|cellSpacing|cellPadding|clear|className|caption|type|tBodies|title|tHead|text|target|tagName|tFoot|isMap|index|id|implementation|images|options|ownerDocument|object|disabled|dir|doctype|documentElement|docmain|declare|defer|defaultSelected|defaultChecked|defaultValue|dateTime|data|useMap|publicId|parentNode|profile|profileend|prompt|previousDibling|enctype|entities|event|elements|vspace|version|value|valueType|vLink|vAlign|URL|firstChild|form|forms|face|frame|frameBorder|width|link|links|longDesc|lowSrc|lastChild|lang|label|anchors|accessKey|accept|acceptCharset|action|attributes|applets|alt|align|archive|areas|axis|aLink|abbr|rows|rowSpan|rowIndex|rules|rev|referrer|rel|readOnly|multiple|method|media|marginHeight|marginWidth|maxLength|body|border|background|bgColor)\\b'
+    'match': '''(?x) (?<!\\$) \\b (?:
+      (document|event|navigator|performance|screen|window)
+      |
+      (AnalyserNode|ArrayBufferView|Attr|AudioBuffer|AudioBufferSourceNode|AudioContext|AudioDestinationNode|AudioListener
+      |AudioNode|AudioParam|BatteryManager|BeforeUnloadEvent|BiquadFilterNode|Blob|BufferSource|ByteString|CSS|CSSConditionRule
+      |CSSCounterStyleRule|CSSGroupingRule|CSSMatrix|CSSMediaRule|CSSPageRule|CSSPrimitiveValue|CSSRule|CSSRuleList|CSSStyleDeclaration
+      |CSSStyleRule|CSSStyleSheet|CSSSupportsRule|CSSValue|CSSValueList|CanvasGradient|CanvasImageSource|CanvasPattern
+      |CanvasRenderingContext2D|ChannelMergerNode|ChannelSplitterNode|CharacterData|ChromeWorker|CloseEvent|Comment|CompositionEvent
+      |Console|ConvolverNode|Coordinates|Credential|CredentialsContainer|Crypto|CryptoKey|CustomEvent|DOMError|DOMException
+      |DOMHighResTimeStamp|DOMImplementation|DOMString|DOMStringList|DOMStringMap|DOMTimeStamp|DOMTokenList|DataTransfer
+      |DataTransferItem|DataTransferItemList|DedicatedWorkerGlobalScope|DelayNode|DeviceProximityEvent|DirectoryEntry
+      |DirectoryEntrySync|DirectoryReader|DirectoryReaderSync|Document|DocumentFragment|DocumentTouch|DocumentType|DragEvent
+      |DynamicsCompressorNode|Element|Entry|EntrySync|ErrorEvent|Event|EventListener|EventSource|EventTarget|FederatedCredential
+      |FetchEvent|File|FileEntry|FileEntrySync|FileException|FileList|FileReader|FileReaderSync|FileSystem|FileSystemSync
+      |FontFace|FormData|GainNode|Gamepad|GamepadButton|GamepadEvent|Geolocation|GlobalEventHandlers|HTMLAnchorElement
+      |HTMLAreaElement|HTMLAudioElement|HTMLBRElement|HTMLBaseElement|HTMLBodyElement|HTMLButtonElement|HTMLCanvasElement
+      |HTMLCollection|HTMLContentElement|HTMLDListElement|HTMLDataElement|HTMLDataListElement|HTMLDialogElement|HTMLDivElement
+      |HTMLDocument|HTMLElement|HTMLEmbedElement|HTMLFieldSetElement|HTMLFontElement|HTMLFormControlsCollection|HTMLFormElement
+      |HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLIFrameElement|HTMLImageElement|HTMLInputElement
+      |HTMLKeygenElement|HTMLLIElement|HTMLLabelElement|HTMLLegendElement|HTMLLinkElement|HTMLMapElement|HTMLMediaElement
+      |HTMLMetaElement|HTMLMeterElement|HTMLModElement|HTMLOListElement|HTMLObjectElement|HTMLOptGroupElement|HTMLOptionElement
+      |HTMLOptionsCollection|HTMLOutputElement|HTMLParagraphElement|HTMLParamElement|HTMLPreElement|HTMLProgressElement
+      |HTMLQuoteElement|HTMLScriptElement|HTMLSelectElement|HTMLShadowElement|HTMLSourceElement|HTMLSpanElement|HTMLStyleElement
+      |HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableElement|HTMLTableHeaderCellElement
+      |HTMLTableRowElement|HTMLTableSectionElement|HTMLTextAreaElement|HTMLTimeElement|HTMLTitleElement|HTMLTrackElement
+      |HTMLUListElement|HTMLUnknownElement|HTMLVideoElement|HashChangeEvent|History|IDBCursor|IDBCursorWithValue|IDBDatabase
+      |IDBEnvironment|IDBFactory|IDBIndex|IDBKeyRange|IDBMutableFile|IDBObjectStore|IDBOpenDBRequest|IDBRequest|IDBTransaction
+      |IDBVersionChangeEvent|IIRFilterNode|IdentityManager|ImageBitmap|ImageBitmapFactories|ImageData|Index|InputDeviceCapabilities
+      |InputEvent|InstallEvent|InstallTrigger|KeyboardEvent|LinkStyle|LocalFileSystem|LocalFileSystemSync|Location|MIDIAccess
+      |MIDIConnectionEvent|MIDIInput|MIDIInputMap|MIDIOutputMap|MediaElementAudioSourceNode|MediaError|MediaKeyMessageEvent
+      |MediaKeySession|MediaKeyStatusMap|MediaKeySystemAccess|MediaKeySystemConfiguration|MediaKeys|MediaRecorder|MediaStream
+      |MediaStreamAudioDestinationNode|MediaStreamAudioSourceNode|MessageChannel|MessageEvent|MessagePort|MouseEvent
+      |MutationObserver|MutationRecord|NamedNodeMap|Navigator|NavigatorConcurrentHardware|NavigatorGeolocation|NavigatorID
+      |NavigatorLanguage|NavigatorOnLine|Node|NodeFilter|NodeIterator|NodeList|NonDocumentTypeChildNode|Notification
+      |OfflineAudioCompletionEvent|OfflineAudioContext|OscillatorNode|PageTransitionEvent|PannerNode|ParentNode|PasswordCredential
+      |Path2D|PaymentAddress|PaymentRequest|PaymentResponse|Performance|PerformanceEntry|PerformanceFrameTiming|PerformanceMark
+      |PerformanceMeasure|PerformanceNavigation|PerformanceNavigationTiming|PerformanceObserver|PerformanceObserverEntryList
+      |PerformanceResourceTiming|PerformanceTiming|PeriodicSyncEvent|PeriodicWave|Plugin|Point|PointerEvent|PopStateEvent
+      |PortCollection|Position|PositionError|PositionOptions|PresentationConnectionClosedEvent|PresentationConnectionList
+      |PresentationReceiver|ProcessingInstruction|ProgressEvent|PromiseRejectionEvent|PushEvent|PushRegistrationManager
+      |RTCCertificate|RTCConfiguration|RTCPeerConnection|RTCSessionDescriptionCallback|RTCStatsReport|RadioNodeList|RandomSource
+      |Range|ReadableByteStream|RenderingContext|SVGAElement|SVGAngle|SVGAnimateColorElement|SVGAnimateElement|SVGAnimateMotionElement
+      |SVGAnimateTransformElement|SVGAnimatedAngle|SVGAnimatedBoolean|SVGAnimatedEnumeration|SVGAnimatedInteger|SVGAnimatedLength
+      |SVGAnimatedLengthList|SVGAnimatedNumber|SVGAnimatedNumberList|SVGAnimatedPoints|SVGAnimatedPreserveAspectRatio
+      |SVGAnimatedRect|SVGAnimatedString|SVGAnimatedTransformList|SVGAnimationElement|SVGCircleElement|SVGClipPathElement
+      |SVGCursorElement|SVGDefsElement|SVGDescElement|SVGElement|SVGEllipseElement|SVGEvent|SVGFilterElement|SVGFontElement
+      |SVGFontFaceElement|SVGFontFaceFormatElement|SVGFontFaceNameElement|SVGFontFaceSrcElement|SVGFontFaceUriElement
+      |SVGForeignObjectElement|SVGGElement|SVGGlyphElement|SVGGradientElement|SVGHKernElement|SVGImageElement|SVGLength
+      |SVGLengthList|SVGLineElement|SVGLinearGradientElement|SVGMPathElement|SVGMaskElement|SVGMatrix|SVGMissingGlyphElement
+      |SVGNumber|SVGNumberList|SVGPathElement|SVGPatternElement|SVGPoint|SVGPolygonElement|SVGPolylineElement|SVGPreserveAspectRatio
+      |SVGRadialGradientElement|SVGRect|SVGRectElement|SVGSVGElement|SVGScriptElement|SVGSetElement|SVGStopElement|SVGStringList
+      |SVGStylable|SVGStyleElement|SVGSwitchElement|SVGSymbolElement|SVGTRefElement|SVGTSpanElement|SVGTests|SVGTextElement
+      |SVGTextPositioningElement|SVGTitleElement|SVGTransform|SVGTransformList|SVGTransformable|SVGUseElement|SVGVKernElement
+      |SVGViewElement|ServiceWorker|ServiceWorkerContainer|ServiceWorkerGlobalScope|ServiceWorkerRegistration|ServiceWorkerState
+      |ShadowRoot|SharedWorker|SharedWorkerGlobalScope|SourceBufferList|StereoPannerNode|Storage|StorageEvent|StyleSheet
+      |StyleSheetList|SubtleCrypto|SyncEvent|Text|TextMetrics|TimeEvent|TimeRanges|Touch|TouchEvent|TouchList|Transferable
+      |TreeWalker|UIEvent|USVString|VRDisplayCapabilities|ValidityState|WaveShaperNode|WebGL|WebGLActiveInfo|WebGLBuffer
+      |WebGLContextEvent|WebGLFramebuffer|WebGLProgram|WebGLRenderbuffer|WebGLRenderingContext|WebGLShader|WebGLShaderPrecisionFormat
+      |WebGLTexture|WebGLTimerQueryEXT|WebGLTransformFeedback|WebGLUniformLocation|WebGLVertexArrayObject|WebGLVertexArrayObjectOES
+      |WebSocket|WebSockets|WebVTT|WheelEvent|Window|WindowBase64|WindowEventHandlers|WindowTimers|Worker|WorkerGlobalScope
+      |WorkerLocation|WorkerNavigator|XMLHttpRequest|XMLHttpRequestEventTarget|XMLSerializer|XPathExpression|XPathResult
+      |XSLTProcessor)
+    )\\b
+    '''
+    'captures':
+      '1':
+        'name': 'support.variable.dom.js'
+      '2':
+        'name': 'support.class.dom.js'
+  }
+  {
+    'match': '''(?x) (\\.) \\s*
+      (?:
+        (ATTRIBUTE_NODE|CDATA_SECTION_NODE|COMMENT_NODE|DOCUMENT_FRAGMENT_NODE|DOCUMENT_NODE|DOCUMENT_TYPE_NODE
+        |DOMSTRING_SIZE_ERR|ELEMENT_NODE|ENTITY_NODE|ENTITY_REFERENCE_NODE|HIERARCHY_REQUEST_ERR|INDEX_SIZE_ERR
+        |INUSE_ATTRIBUTE_ERR|INVALID_CHARACTER_ERR|NO_DATA_ALLOWED_ERR|NO_MODIFICATION_ALLOWED_ERR|NOT_FOUND_ERR
+        |NOT_SUPPORTED_ERR|NOTATION_NODE|PROCESSING_INSTRUCTION_NODE|TEXT_NODE|WRONG_DOCUMENT_ERR)
+        |
+        (_content|[xyz]|abbr|above|accept|acceptCharset|accessKey|action|align|[av]Link(?:color)?|all|alt|anchors|appCodeName
+        |appCore|applets|appMinorVersion|appName|appVersion|archive|areas|arguments|attributes|availHeight|availLeft|availTop
+        |availWidth|axis|background|backgroundColor|backgroundImage|below|bgColor|body|border|borderBottomWidth|borderColor
+        |borderLeftWidth|borderRightWidth|borderStyle|borderTopWidth|borderWidth|bottom|bufferDepth|callee|caller|caption
+        |cellPadding|cells|cellSpacing|ch|characterSet|charset|checked|childNodes|chOff|cite|classes|className|clear
+        |clientInformation|clip|clipBoardData|closed|code|codeBase|codeType|color|colorDepth|cols|colSpan|compact|complete
+        |components|content|controllers|cookie|cookieEnabled|cords|cpuClass|crypto|current|data|dateTime|declare|defaultCharset
+        |defaultChecked|defaultSelected|defaultStatus|defaultValue|defaultView|defer|description|dialogArguments|dialogHeight
+        |dialogLeft|dialogTop|dialogWidth|dir|directories|disabled|display|docmain|doctype|documentElement|elements|embeds
+        |enabledPlugin|encoding|enctype|entities|event|expando|external|face|fgColor|filename|firstChild|fontFamily|fontSize
+        |fontWeight|form|formName|forms|frame|frameBorder|frameElement|frames|hasFocus|hash|headers|height|history|host
+        |hostname|href|hreflang|hspace|htmlFor|httpEquiv|id|ids|ignoreCase|images|implementation|index|innerHeight|innerWidth
+        |input|isMap|label|lang|language|lastChild|lastIndex|lastMatch|lastModified|lastParen|layer[sXY]|left|leftContext
+        |lineHeight|link|linkColor|links|listStyleType|localName|location|locationbar|longDesc|lowsrc|lowSrc|marginBottom
+        |marginHeight|marginLeft|marginRight|marginTop|marginWidth|maxLength|media|menubar|method|mimeTypes|multiline|multiple
+        |name|nameProp|namespaces|namespaceURI|next|nextSibling|nodeName|nodeType|nodeValue|noHref|noResize|noShade|notationName
+        |notations|noWrap|object|offscreenBuffering|onLine|onreadystatechange|opener|opsProfile|options|oscpu|outerHeight
+        |outerWidth|ownerDocument|paddingBottom|paddingLeft|paddingRight|paddingTop|page[XY]|page[XY]Offset|parent|parentLayer
+        |parentNode|parentWindow|pathname|personalbar|pixelDepth|pkcs11|platform|plugins|port|prefix|previous|previousDibling
+        |product|productSub|profile|profileend|prompt|prompter|protocol|publicId|readOnly|readyState|referrer|rel|responseText
+        |responseXML|rev|right|rightContext|rowIndex|rows|rowSpan|rules|scheme|scope|screen[XY]|screenLeft|screenTop|scripts
+        |scrollbars|scrolling|sectionRowIndex|security|securityPolicy|selected|selectedIndex|selection|self|shape|siblingAbove
+        |siblingBelow|size|source|specified|standby|start|status|statusbar|statusText|style|styleSheets|suffixes|summary
+        |systemId|systemLanguage|tagName|tags|target|tBodies|text|textAlign|textDecoration|textIndent|textTransform|tFoot|tHead
+        |title|toolbar|top|type|undefined|uniqueID|updateInterval|URL|URLUnencoded|useMap|userAgent|userLanguage|userProfile
+        |vAlign|value|valueType|vendor|vendorSub|version|visibility|vspace|whiteSpace|width|X[MS]LDocument|zIndex)
+      )
+      \\b
+    '''
     'captures':
       '1':
         'name': 'meta.delimiter.property.period.js'
       '2':
         'name': 'support.constant.dom.js'
+      '3':
+        'name': 'support.variable.property.dom.js'
   }
   {
-    'match': '\\b(ELEMENT_NODE|ATTRIBUTE_NODE|TEXT_NODE|CDATA_SECTION_NODE|ENTITY_REFERENCE_NODE|ENTITY_NODE|PROCESSING_INSTRUCTION_NODE|COMMENT_NODE|DOCUMENT_NODE|DOCUMENT_TYPE_NODE|DOCUMENT_FRAGMENT_NODE|NOTATION_NODE|INDEX_SIZE_ERR|DOMSTRING_SIZE_ERR|HIERARCHY_REQUEST_ERR|WRONG_DOCUMENT_ERR|INVALID_CHARACTER_ERR|NO_DATA_ALLOWED_ERR|NO_MODIFICATION_ALLOWED_ERR|NOT_FOUND_ERR|NOT_SUPPORTED_ERR|INUSE_ATTRIBUTE_ERR)\\b'
-    'name': 'support.constant.dom.js'
-  }
-  {
-    'match': '(?<!\\.)\\b(module|exports|__filename|__dirname|global|process)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)(module|exports|__filename|__dirname|global|process)(?=\\s*:)'
-    'captures':
-      '1':
-        'name': 'support.variable.js'
-      '2':
-        'name': 'support.variable.js'
+    'match': '(?<!\\.)\\b(module|exports|__filename|__dirname|global|process)(?!\\s*:)\\b'
+    'name': 'support.variable.js'
   }
   {
     'match': '\\b(Infinity|NaN|undefined)\\b'
     'name': 'constant.language.js'
   }
   {
-    'begin': '(?<=[\\[=(?:+,!]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+{}?])(?=.*/)'
+    'begin': '(?<=[\\[=(?:+,!]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])(?=.*/)'
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.string.begin.js'
@@ -970,6 +1089,24 @@
     'patterns': [
       {
         'include': 'source.js.regexp'
+      }
+    ]
+  }
+  {
+    'begin': '\\?'
+    'beginCaptures':
+      '0':
+        'name': 'keyword.operator.ternary.js'
+    'end': ':'
+    'endCaptures':
+      '0':
+        'name': 'keyword.operator.ternary.js'
+    'patterns': [
+      {
+        'include': '#prevent_object_keys_matching'
+      }
+      {
+        'include': '$self'
       }
     ]
   }
@@ -992,12 +1129,8 @@
     'include': '#properties'
   }
   {
-    'match': '(?<!\\.)\\b([A-Z][A-Z0-9_]+)(?!\\s*:)\\b|(?<=\\?)(?:\\s*)([A-Z][A-Z0-9_]+)(?=\\s*:)'
-    'captures':
-      '1':
-        'name': 'constant.other.js'
-      '2':
-        'name': 'constant.other.js'
+    'match': '((?<!\\.|[\\w$])(?![_\\$]+[^A-Z0-9_$])\\$*\\b(?:[A-Z_$][A-Z0-9_$]*)\\b\\$*)(?!\\s*:)'
+    'name': 'constant.other.js'
   }
   {
     'match': '(?<!\\$)\\b[0-9]+[\\w$]*'
@@ -1016,13 +1149,13 @@
     'name': 'meta.delimiter.method.period.js'
   }
   {
+    # Allows the special return snippet to fire.
+    'match': '({)(})'
     'captures':
       '1':
         'name': 'punctuation.section.scope.begin.js'
       '2':
         'name': 'punctuation.section.scope.end.js'
-    'comment': 'Allows the special return snippet to fire.'
-    'match': '({)(})'
   }
   {
     'begin': '{'
@@ -1131,11 +1264,7 @@
         'name': 'keyword.operator.bitwise.js'
       }
       {
-        'match': '\\?|:'
-        'name': 'keyword.operator.js'
-      }
-      {
-        'match': '='
+        'match': '=|:'
         'name': 'keyword.operator.assignment.js'
       }
       {
@@ -1165,8 +1294,7 @@
         'name': 'string.quoted.single.js'
         'patterns': [
           {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
-            'name': 'constant.character.escape.js'
+            'include': '#string_escapes'
           }
           {
             'match': "[^']*[^\\n\\r'\\\\]$"
@@ -1186,8 +1314,7 @@
         'name': 'string.quoted.double.js'
         'patterns': [
           {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)'
-            'name': 'constant.character.escape.js'
+            'include': '#string_escapes'
           }
           {
             'match': '[^"]*[^\\n\\r"\\\\]$'
@@ -1209,8 +1336,7 @@
         'name': 'string.quoted.template.html.js'
         'patterns': [
           {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
-            'name': 'constant.character.escape.js'
+            'include': '#string_escapes'
           }
           {
             'include': '#interpolated_js'
@@ -1234,8 +1360,7 @@
         'name': 'string.quoted.template.graphql.js'
         'patterns': [
           {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
-            'name': 'constant.character.escape.js'
+            'include': '#string_escapes'
           }
           {
             'include': '#interpolated_js'
@@ -1257,13 +1382,40 @@
         'name': 'string.quoted.template.js'
         'patterns': [
           {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
-            'name': 'constant.character.escape.js'
+            'include': '#string_escapes'
           }
           {
             'include': '#interpolated_js'
           }
         ]
+      }
+    ]
+  'string_escapes':
+    'patterns': [
+      {
+        'match': '\\\\u(?![A-Fa-f0-9]{4}|{[A-Fa-f0-9]+})[^\'"]*'
+        'name': 'invalid.illegal.unicode-escape.js'
+      }
+      {
+        'match': '\\\\u(?:[A-Fa-f0-9]{4}|({)([A-Fa-f0-9]+)(}))'
+        'name': 'constant.character.escape.js'
+        'captures':
+          '1':
+            'name': 'punctuation.definition.unicode-escape.begin.bracket.curly.js'
+          '2':
+            'patterns': [
+              {
+                # Max codepoint: \u{10FFFF}
+                'match': '[A-Fa-f\\d]{7,}|(?!10)[A-Fa-f\\d]{6}'
+                'name': 'invalid.illegal.unicode-escape.js'
+              }
+            ]
+          '3':
+            'name': 'punctuation.definition.unicode-escape.end.bracket.curly.js'
+      }
+      {
+        'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
+        'name': 'constant.character.escape.js'
       }
     ]
   'function_params':
@@ -1418,13 +1570,11 @@
                   createEventObject|to(GMTString|UTCString|String|Source|UpperCase|LowerCase|LocaleString)|
                   test|taint|taintEnabled|indexOf|italics|disableExternalCapture|dump|detachEvent|unshift|
                   untaint|unwatch|updateCommands|join|javaEnabled|pop|push|plugins.refresh|paddings|parse|
-                  print|prompt|preference|enableExternalCapture|elementFromPoint|exec|execScript|
-                  execCommand|valueOf|UTC|queryCommandState|queryCommandIndeterm|queryCommandEnabled|
-                  queryCommandValue|find|file|fileModifiedDate|fileSize|fileCreatedDate|fileUpdatedDate|
-                  fixed|fontsize|fontcolor|forward|fromCharCode|watch|link|load|lastIndexOf|
-                  anchor|attachEvent|atob|apply|alert|abort|routeEvents|
-                  resize|resizeBy|resizeTo|recalc|returnValue|replace|reverse|reload|releaseCapture|
-                  releaseEvents|go|get(Milliseconds|Seconds|Minutes|Hours|Month|Day|Year|FullYear|
+                  print|prompt|preference|enableExternalCapture|exec|execScript|valueOf|UTC|find|file|
+                  fileModifiedDate|fileSize|fileCreatedDate|fileUpdatedDate|fixed|fontsize|fontcolor|
+                  forward|fromCharCode|watch|link|load|lastIndexOf|anchor|attachEvent|atob|apply|alert|
+                  abort|routeEvents|resize|resizeBy|resizeTo|recalc|returnValue|replace|reverse|reload|
+                  releaseCapture|releaseEvents|go|get(Milliseconds|Seconds|Minutes|Hours|Month|Day|Year|FullYear|
                   Time|Date|TimezoneOffset|UTC(Milliseconds|Seconds|Minutes|Hours|Day|Month|FullYear|Date)|
                   Attention|Selection|ResponseHeader|AllResponseHeaders)|moveBy|moveBelow|moveTo|
                   moveToAbsolute|moveAbove|mergeAttributes|match|margins|btoa|big|bold|borderWidths|blink|back)\\b
@@ -1433,15 +1583,49 @@
               }
               {
                 'match': '''(?x)
-                  \\b(substringData|submit|splitText|setNamedItem|setAttribute|setAttributeNode|select|
-                  hasChildNodes|hasFeature|namedItem|click|close|cloneNode|createComment|createCDATASection|
-                  createCaption|createTHead|createTextNode|createTFoot|createDocumentFragment|
-                  createProcessingInstruction|createEntityReference|createElement|createAttribute|
-                  tabIndex|insertRow|insertBefore|insertCell|insertData|item|open|deleteRow|deleteCell|
-                  deleteCaption|deleteTHead|deleteTFoot|deleteData|focus|write|writeln|add|appendChild|
-                  appendData|reset|replaceChild|replaceData|move|moveNamedItem|moveChild|moveAttribute|
-                  moveAttributeNode|getNamedItem|getElementsByName|getElementsByTagName|getElementById|
-                  getAttribute|getAttributeNode|blur)\\b
+                  \\b(acceptNode|add|addEventListener|addTextTrack|adoptNode|after|animate|append|
+                  appendChild|appendData|before|blur|canPlayType|captureStream|
+                  caretPositionFromPoint|caretRangeFromPoint|checkValidity|clear|click|
+                  cloneContents|cloneNode|cloneRange|close|closest|collapse|
+                  compareBoundaryPoints|compareDocumentPosition|comparePoint|contains|
+                  convertPointFromNode|convertQuadFromNode|convertRectFromNode|createAttribute|
+                  createAttributeNS|createCaption|createCDATASection|createComment|
+                  createContextualFragment|createDocument|createDocumentFragment|
+                  createDocumentType|createElement|createElementNS|createEntityReference|
+                  createEvent|createExpression|createHTMLDocument|createNodeIterator|
+                  createNSResolver|createProcessingInstruction|createRange|createShadowRoot|
+                  createTBody|createTextNode|createTFoot|createTHead|createTreeWalker|delete|
+                  deleteCaption|deleteCell|deleteContents|deleteData|deleteRow|deleteTFoot|
+                  deleteTHead|detach|disconnect|dispatchEvent|elementFromPoint|elementsFromPoint|
+                  enableStyleSheetsForSet|entries|evaluate|execCommand|exitFullscreen|
+                  exitPointerLock|expand|extractContents|fastSeek|firstChild|focus|forEach|get|
+                  getAll|getAnimations|getAttribute|getAttributeNames|getAttributeNode|
+                  getAttributeNodeNS|getAttributeNS|getBoundingClientRect|getBoxQuads|
+                  getClientRects|getContext|getDestinationInsertionPoints|getElementById|
+                  getElementsByClassName|getElementsByName|getElementsByTagName|
+                  getElementsByTagNameNS|getItem|getNamedItem|getSelection|getStartDate|
+                  getVideoPlaybackQuality|has|hasAttribute|hasAttributeNS|hasAttributes|
+                  hasChildNodes|hasFeature|hasFocus|importNode|initEvent|insertAdjacentElement|
+                  insertAdjacentHTML|insertAdjacentText|insertBefore|insertCell|insertData|
+                  insertNode|insertRow|intersectsNode|isDefaultNamespace|isEqualNode|
+                  isPointInRange|isSameNode|item|key|keys|lastChild|load|lookupNamespaceURI|
+                  lookupPrefix|matches|move|moveAttribute|moveAttributeNode|moveChild|
+                  moveNamedItem|namedItem|nextNode|nextSibling|normalize|observe|open|
+                  parentNode|pause|play|postMessage|prepend|preventDefault|previousNode|
+                  previousSibling|probablySupportsContext|queryCommandEnabled|
+                  queryCommandIndeterm|queryCommandState|queryCommandSupported|queryCommandValue|
+                  querySelector|querySelectorAll|registerContentHandler|registerElement|
+                  registerProtocolHandler|releaseCapture|releaseEvents|remove|removeAttribute|
+                  removeAttributeNode|removeAttributeNS|removeChild|removeEventListener|
+                  removeItem|replace|replaceChild|replaceData|replaceWith|reportValidity|
+                  requestFullscreen|requestPointerLock|reset|scroll|scrollBy|scrollIntoView|
+                  scrollTo|seekToNextFrame|select|selectNode|selectNodeContents|set|setAttribute|
+                  setAttributeNode|setAttributeNodeNS|setAttributeNS|setCapture|
+                  setCustomValidity|setEnd|setEndAfter|setEndBefore|setItem|setNamedItem|
+                  setRangeText|setSelectionRange|setSinkId|setStart|setStartAfter|setStartBefore|
+                  slice|splitText|stepDown|stepUp|stopImmediatePropagation|stopPropagation|
+                  submit|substringData|supports|surroundContents|takeRecords|terminate|toBlob|
+                  toDataURL|toggle|toString|values|write|writeln)\\b
                 '''
                 'name': 'support.function.dom.js'
               }
@@ -1592,29 +1776,187 @@
   'docblock':
     'patterns': [
       {
-        'match': '(?<!\\w)@(abstract|access|alias|augments|author|async|attribute|arg|argument|beta|borrows|bubbes|callback|class|classdesc|config|const|constant|constructs|constructor|copyright|chainable|default|defaultvalue|deprecated|desc|description|enum|emits|event|example|exports|external|extends|extension|extensionfor|extension_for|for|file|fileoverview|fires|final|function|global|host|ignore|implements|inheritdoc|inner|instance|interface|kind|lends|license|listens|main|member|memberof|method|mixex|mixin(?:s|)|module|name|namespace|override|overview|param|private|prop|property|protected|readonly|readOnly|requires|required|return|returns|see|since|static|summary|submodule|this|throws|todo|tutorial|type|typedef|var|variation|version|virtual|uses|writeOnce)\\b'
+        'match': '''(?x) (?<!\\w)@
+          (abstract|access|alias|arg|argument|async|attribute|augments|author|beta|borrows|bubbes|callback|chainable|class
+          |classdesc|code|config|const|constant|constructor|constructs|copyright|default|defaultvalue|define|deprecated|desc
+          |description|dict|emits|enum|event|example|exports?|extends|extension|extension_for|extensionfor|external|file
+          |fileoverview|final|fires|for|function|global|host|ignore|implements|inherit[Dd]oc|inner|instance|interface|kind
+          |lends|license|listens|main|member|memberof|method|mixex|mixins?|module|name|namespace|nocollapse|nosideeffects
+          |override|overview|package|param|preserve|private|prop|property|protected|public|read[Oo]nly|record|require[ds]
+          |returns?|see|since|static|struct|submodule|summary|template|this|throws|todo|tutorial|type|typedef|unrestricted
+          |uses|var|variation|version|virtual|writeOnce)\\b
+        '''
         'name': 'storage.type.class.jsdoc'
       }
       {
-        'match': '({\\b(?:[a-zA-Z_$][a-zA-Z_$0-9]*)\\b})\\s\\b([a-zA-Z_$][a-zA-Z_$0-9]*)\\b\\s*((?:(?!\\*\\/).)*)'
+        'match': '''(?x)
+          (?:(?<=@param)|(?<=@type))
+          \\s+
+          ({(?:
+            \\* |                                        # {*} any type
+            \\? |                                        # {?} unknown type
+
+            (?:                                          # Check for a prefix
+              \\? |                                      # {?string} nullable type
+              !   |                                      # {!string} non-nullable type
+              \\.{3}                                     # {...string} variable number of parameters
+            )?
+
+            (?:
+              \\(                                        # Opening bracket of multiple types with parenthesis {(string|number)}
+                [a-zA-Z_$]+
+                (?:
+                  (?:
+                    [\\w$]*
+                    (?:\\[\\])?                          # {(string[]|number)} type application, an array of strings or a number
+                  ) |
+                  <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
+                )
+                (?:
+                  [\\.|~]                                # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
+                  [a-zA-Z_$]+
+                  (?:
+                    (?:
+                      [\\w$]*
+                      (?:\\[\\])?                        # {(string|number[])} type application, a string or an array of numbers
+                    ) |
+                    <[\\w$]+(?:,\\s+[\\w$]+)*>           # {Array<string>} or {Object<string, number>} type application
+                  )
+                )*
+              \\) |
+              [a-zA-Z_$]+
+              (?:
+                (?:
+                  [\\w$]*
+                  (?:\\[\\])?                            # {string[]|number} type application, an array of strings or a number
+                ) |
+                <[\\w$]+(?:,\\s+[\\w$]+)*>               # {Array<string>} or {Object<string, number>} type application
+              )
+              (?:
+                [\\.|~]                                  # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
+                [a-zA-Z_$]+
+                (?:
+                  [\\w$]* |
+                  <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
+                )
+              )*
+            )
+                                                         # Check for suffix
+            (?:\\[\\])?                                  # {string[]} type application, an array of strings
+            =?                                           # {string=} optional parameter
+          )})
+          \\s+
+          (
+            \\[                                          # [foo] optional parameter
+              \\s*
+              (?:
+                [a-zA-Z_$][\\w$]*
+                (?:
+                  (?:\\[\\])?                            # Foo[].bar properties within an array
+                  \\.                                    # Foo.Bar namespaced parameter
+                  [a-zA-Z_$][\\w$]*
+                )*
+                (?:
+                  \\s*
+                  =                                      # [foo=bar] Default parameter value
+                  \\s*
+                  [\\w$\\s]*
+                )?
+              )
+              \\s*
+            \\] |
+            (?:
+              [a-zA-Z_$][\\w$]*
+              (?:
+                (?:\\[\\])?                              # Foo[].bar properties within an array
+                \\.                                      # Foo.Bar namespaced parameter
+                [a-zA-Z_$][\\w$]*
+              )*
+            )?
+          )
+          \\s+
+          ((?:(?!\\*\\/).)*)                             # The type description
+        '''
         'captures':
-            0:
-              'name': 'other.meta.jsdoc'
-            1:
-              'name': 'entity.name.type.instance.jsdoc'
-            2:
-              'name': 'variable.other.jsdoc'
-            3:
-              'name': 'other.description.jsdoc'
+          '0':
+            'name': 'other.meta.jsdoc'
+          '1':
+            'name': 'entity.name.type.instance.jsdoc'
+          '2':
+            'name': 'variable.other.jsdoc'
+          '3':
+            'name': 'other.description.jsdoc'
+      }
+      {
+        'match': '''(?x)
+          ({(?:
+            \\* |                                        # {*} any type
+            \\? |                                        # {?} unknown type
+
+            (?:                                          # Check for a prefix
+              \\? |                                      # {?string} nullable type
+              !   |                                      # {!string} non-nullable type
+              \\.{3}                                     # {...string} variable number of parameters
+            )?
+
+            (?:
+              \\(                                        # Opening bracket of multiple types with parenthesis {(string|number)}
+                [a-zA-Z_$]+
+                (?:
+                  [\\w$]* |
+                  <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
+                )
+                (?:
+                  [\\.|~]                                # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
+                  [a-zA-Z_$]+
+                  (?:
+                    [\\w$]* |
+                    <[\\w$]+(?:,\\s+[\\w$]+)*>           # {Array<string>} or {Object<string, number>} type application
+                  )
+                )*
+              \\) |
+              [a-zA-Z_$]+
+              (?:
+                [\\w$]* |
+                <[\\w$]+(?:,\\s+[\\w$]+)*>               # {Array<string>} or {Object<string, number>} type application
+              )
+              (?:
+                [\\.|~]                                  # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
+                [a-zA-Z_$]+
+                (?:
+                  [\\w$]* |
+                  <[\\w$]+(?:,\\s+[\\w$]+)*>             # {Array<string>} or {Object<string, number>} type application
+                )
+              )*
+            )
+                                                         # Check for suffix
+            (?:\\[\\])?                                  # {string[]} type application, an array of strings
+            =?                                           # {string=} optional parameter
+          )})
+          \\s+
+          ((?:(?!\\*\\/).)*)                             # The type description
+        '''
+        'captures':
+          '0':
+            'name': 'other.meta.jsdoc'
+          '1':
+            'name': 'entity.name.type.instance.jsdoc'
+          '2':
+            'name': 'other.description.jsdoc'
       }
     ]
   'comments':
     'patterns': [
       {
         'begin': '/\\*\\*(?!/)'
-        'captures':
+        'beginCaptures':
           '0':
             'name': 'punctuation.definition.comment.js'
+        'end': '\\*/'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.js'
+        'name': 'comment.block.documentation.js'
         'patterns': [
           {
             'include': '#docblock'
@@ -1625,10 +1967,14 @@
       }
       {
         'begin': '/\\*'
-        'captures':
+        'beginCaptures':
           '0':
             'name': 'punctuation.definition.comment.js'
         'end': '\\*/|(?=</script>)' # Unfortunately, we don't know when we're embedded, so this is as good as it gets
+        'end': '\\*/'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.js'
         'name': 'comment.block.js'
       }
       {
@@ -1681,5 +2027,87 @@
             'name': 'comment.line.html.js'
           }
         ]
+      }
+    ]
+  'switch_statement':
+    'patterns': [
+      {
+        # switch(expression) {...}
+        'begin': '\\bswitch\\b'
+        'beginCaptures':
+          '0':
+            'name': 'keyword.control.switch.js'
+        'end': '}'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.section.switch-block.end.bracket.curly.js'
+        'name': 'meta.switch-statement.js'
+        'patterns': [
+          {
+            'begin': '\\('
+            'beginCaptures':
+              '0':
+                'name': 'punctuation.definition.switch-expression.begin.bracket.round.js'
+            'end': '\\)'
+            'endCaptures':
+              '0':
+                'name': 'punctuation.definition.switch-expression.end.bracket.round.js'
+            'patterns': [
+              'include': '$self'
+            ]
+          }
+          {
+            'begin': '{'
+            'beginCaptures':
+              '0':
+                'name': 'punctuation.definition.section.switch-block.begin.bracket.curly.js'
+            'end': '(?=})'
+            'patterns': [
+              {
+                'begin': '\\bcase\\b'
+                'beginCaptures':
+                  '0':
+                    'name': 'keyword.control.case.js'
+                'end': ':'
+                'endCaptures':
+                  '0':
+                    'name': 'punctuation.definition.section.case-statement.js'
+                'patterns': [
+                  {
+                    'include': '#prevent_object_keys_matching'
+                  }
+                  {
+                    'include': '$self'
+                  }
+                ]
+              }
+              {
+                'match': '(?:^\\s*)?\\b(default)\\b\\s*(:)'
+                'captures':
+                  '1':
+                    'name': 'keyword.control.default.js'
+                  '2':
+                    'name': 'punctuation.definition.section.case-statement.js'
+              }
+              {
+                'include': '$self'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  'prevent_object_keys_matching':
+    'patterns': [
+      {
+        # e.g. don't treat null as an object key in
+        # ? null :
+        # case null:
+        'match': '(\\w+)(?=\\s*:)'
+        'captures':
+          '1':
+            'patterns': [
+              'include': '$self'
+            ]
       }
     ]
