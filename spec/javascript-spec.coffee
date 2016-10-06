@@ -1851,6 +1851,19 @@ describe "Javascript grammar", ->
       expect(tokens[7]).toEqual value: ', p2 ', scopes: ['source.js', 'meta.function.js', 'meta.parameters.js', 'comment.block.js']
       expect(tokens[8]).toEqual value: '*/', scopes: ['source.js', 'meta.function.js', 'meta.parameters.js', 'comment.block.js', 'punctuation.definition.comment.js']
 
+    it "tokenizes deprecated HTML-style comments correctly", ->
+      {tokens} = grammar.tokenizeLine('<!-- test')
+      expect(tokens[0]).toEqual value: '<!--', scopes: ['source.js', 'comment.line.deprecated.html.js', 'punctuation.definition.comment.html.js']
+      expect(tokens[1]).toEqual value: ' test', scopes: ['source.js', 'comment.line.deprecated.html.js']
+
+      {tokens} = grammar.tokenizeLine('--> test')
+      expect(tokens[0]).toEqual value: '-->', scopes: ['source.js', 'comment.line.deprecated.html.js', 'punctuation.definition.comment.html.js']
+      expect(tokens[1]).toEqual value: ' test', scopes: ['source.js', 'comment.line.deprecated.html.js']
+
+      {tokens} = grammar.tokenizeLine('<!-- test --> console.log()')
+      expect(tokens[0]).toEqual value: '<!--', scopes: ['source.js', 'comment.line.deprecated.html.js', 'punctuation.definition.comment.html.js']
+      expect(tokens[1]).toEqual value: ' test --> console.log()', scopes: ['source.js', 'comment.line.deprecated.html.js']
+
   describe "console", ->
     it "tokenizes the console keyword", ->
       {tokens} = grammar.tokenizeLine('console;')
