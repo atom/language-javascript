@@ -1,4 +1,5 @@
 'scopeName': 'source.js'
+'name': 'JavaScript'
 'fileTypes': [
   'js'
   '_js'
@@ -35,7 +36,6 @@
     (?=\\s|:|$)
   )
 '''
-'name': 'JavaScript'
 'patterns': [
   {
     # ES6 import
@@ -826,15 +826,6 @@
   }
   {
     'include': '#comments'
-  }
-  {
-    'match': '(<!--|-->)'
-    'captures':
-      '0':
-        'name': 'punctuation.definition.comment.html.js'
-      '2':
-        'name': 'punctuation.definition.comment.html.js'
-    'name': 'comment.block.html.js'
   }
   {
     'match': '(?<!\\.)\\b(class|enum|function|interface)(?!\\s*:)\\b'
@@ -1999,6 +1990,14 @@
             'name': 'comment.line.double-slash.js'
           }
         ]
+      }
+      {
+        'begin': '<!--|-->'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.html.js'
+        'end': '$'
+        'name': 'comment.line.deprecated.html.js'
       }
     ]
   'switch_statement':

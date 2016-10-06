@@ -1,0 +1,30 @@
+'scopeName': 'source.js.embedded.html'
+'name': 'Embedded JavaScript'
+'injectionSelector': 'L:source.js.embedded.html'
+'patterns': [
+  {
+    'begin': '(^[ \\t]+)?(?=//)'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.whitespace.comment.leading.js'
+    'end': '(?!\\G)'
+    'patterns': [
+      {
+        'begin': '//'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.js'
+        'end': '(?=</script>)|\\n'
+        'name': 'comment.line.double-slash.js'
+      }
+    ]
+  }
+  {
+    'begin': '<!--|-->'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.comment.html.js'
+    'end': '(?=</script>)|$'
+    'name': 'comment.line.deprecated.html.js'
+  }
+]
