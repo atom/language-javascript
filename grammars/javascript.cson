@@ -1884,6 +1884,7 @@
             )?
           )
           \\s+
+          (?:-\\s+)?                                     # optional hyphen before the description
           ((?:(?!\\*\\/).)*)                             # The type description
         '''
         'captures':
@@ -1943,6 +1944,7 @@
             =?                                           # {string=} optional parameter
           )})
           \\s+
+          (?:-\\s+)?                                     # optional hyphen before the description
           ((?:(?!\\*\\/).)*)                             # The type description
         '''
         'captures':
