@@ -1799,7 +1799,7 @@
       }
       {
         'match': '''(?x)
-          (?:(?<=@param)|(?<=@type))
+          (?:(?<=@param)|(?<=@arg)|(?<=@argument)|(?<=@type))
           \\s+
           ({(?:
             \\* |                                        # {*} any type
