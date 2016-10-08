@@ -1261,6 +1261,10 @@
         'name': 'keyword.operator.assignment.compound.bitwise.js'
       }
       {
+        'match': '<<|>>>|>>'
+        'name': 'keyword.operator.bitwise.shift.js'
+      }
+      {
         'match': '!==|!=|<=|>=|===|==|<|>'
         'name': 'keyword.operator.comparison.js'
       }
