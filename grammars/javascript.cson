@@ -1360,6 +1360,30 @@
         ]
       }
       {
+        'begin': '(?<=innerHTML)\\s*(=)\\s*(`)'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.assignment.js'
+          '2':
+            'name': 'punctuation.definition.string.begin.js'
+        'end': '`'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.js'
+        'name': 'string.quoted.template.html.js'
+        'patterns': [
+          {
+            'include': '#string_escapes'
+          }
+          {
+            'include': '#interpolated_js'
+          }
+          {
+            'include': 'text.html.basic'
+          }
+        ]
+      }
+      {
         'begin': '(Relay\\.QL)\\s*(`)'
         'beginCaptures':
           '1':
