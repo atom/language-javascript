@@ -5,6 +5,6 @@
   {
     # Break out as soon as a </script> tag is encountered,
     # even if it's in a string or comment
-    'match': '(?=</script>)'
+    'match': '(?=</(?i:script)\\s*>)'
   }
 ]
