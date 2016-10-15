@@ -48,11 +48,11 @@
     'patterns': [
       {
         # { member1 , member2 as alias2 , [...] }
-        'begin': '\\{'
+        'begin': '{'
         'beginCaptures':
           0:
             'name': 'punctuation.definition.modules.begin.js'
-        'end': '\\}'
+        'end': '}'
         'endCaptures':
           0:
             'name': 'punctuation.definition.modules.end.js'
@@ -173,11 +173,11 @@
       }
       {
         # { member1 , member2 as alias2 , [...] } inside re-export
-        'begin': '\\{(?=.*\\bfrom\\b)'
+        'begin': '{(?=.*\\bfrom\\b)'
         'beginCaptures':
           0:
             'name': 'punctuation.definition.modules.begin.js'
-        'end': '\\}'
+        'end': '}'
         'endCaptures':
           0:
             'name': 'punctuation.definition.modules.end.js'
@@ -220,11 +220,11 @@
       }
       {
         # { member1 , member2 as alias2 , [...] }
-        'begin': '(?![a-zA-Z_$0-9])\\{'
+        'begin': '(?![a-zA-Z_$0-9]){'
         'beginCaptures':
           0:
             'name': 'punctuation.definition.modules.begin.js'
-        'end': '\\}'
+        'end': '}'
         'endCaptures':
           0:
             'name': 'punctuation.definition.modules.end.js'
@@ -471,7 +471,7 @@
         \\b[a-zA-Z_$][\\w$]*
         \\s*\\(\\s*
            (("[^"]*")|(\\'[^\\']*\\')|((?!"|\\'|\\(|\\)).))*
-        \\)\\s*\\{
+        \\)\\s*{
       )
     '''
     'end': '(?<=})'
@@ -1758,11 +1758,11 @@
   'interpolated_js':
     'patterns': [
       {
-        'begin': '\\$\\{'
+        'begin': '\\${'
         'captures':
           '0':
             'name': 'punctuation.section.embedded.js'
-        'end': '\\}'
+        'end': '}'
         'name': 'source.js.embedded.source'
         'patterns': [
           {
@@ -1814,7 +1814,7 @@
                 \\s+
                 [^\\s|}]+        # Namepath/URL
                 [\\s|]           # Whitespace or bar delimiting description
-                [^\\}]*
+                [^}]*
               }
             )
           )?
@@ -1836,7 +1836,7 @@
 
               (?:                # Optional link text following link target
                 [\\s|]           # Bar or space separating target and text
-                [^\\}]*          # Actual text
+                [^}]*            # Actual text
               )?
             }
           )
