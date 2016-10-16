@@ -1360,7 +1360,7 @@
         ]
       }
       {
-        'begin': '(?<=innerHTML)\\s*(=)\\s*(`)'
+        'begin': '(?<=innerHTML)\\s*(\\+?=)\\s*(`)'
         'beginCaptures':
           '1':
             'name': 'keyword.operator.assignment.js'
