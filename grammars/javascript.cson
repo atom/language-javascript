@@ -1793,11 +1793,11 @@
           (abstract|access|alias|arg|argument|async|attribute|augments|author|beta|borrows|bubbes|callback|chainable|class
           |classdesc|code|config|const|constant|constructor|constructs|copyright|default|defaultvalue|define|deprecated|desc
           |description|dict|emits|enum|event|example|exports?|extends|extension|extension_for|extensionfor|external|file
-          |fileoverview|final|fires|for|function|global|host|ignore|implements|inherit[Dd]oc|inner|instance|interface|kind
-          |lends|license|listens|main|member|memberof|method|mixex|mixins?|module|name|namespace|nocollapse|nosideeffects
-          |override|overview|package|param|preserve|private|prop|property|protected|public|read[Oo]nly|record|require[ds]
-          |returns?|see|since|static|struct|submodule|summary|template|this|throws|todo|tutorial|type|typedef|unrestricted
-          |uses|var|variation|version|virtual|writeOnce)\\b
+          |fileoverview|final|fires|for|function|global|host|ignore|implements|implicitCast|inherit[Dd]oc|inner|instance
+          |interface|kind|lends|license|listens|main|member|memberof|method|mixex|mixins?|modifies|module|name|namespace
+          |noalias|nocollapse|nocompile|nosideeffects|override|overview|package|param|preserve|private|prop|property
+          |protected|public|read[Oo]nly|record|require[ds]|returns?|see|since|static|struct|submodule|summary|suppress
+          |template|this|throws|todo|tutorial|type|typedef|unrestricted|uses|var|variation|version|virtual|writeOnce)\\b
         '''
         'name': 'storage.type.class.jsdoc'
       }
