@@ -468,7 +468,10 @@
           import|package|return|switch|throw|try|while|with)
           [\\s\\(]
         )
-        (\\b(get|set)\\s+)?       # Property getter/setter: get foo(){}
+        (
+          \\b(get|set)            # Property getter/setter: get foo(){}
+          (?:\\s+|(?=\\[))        # Followed by whitespace or square bracket
+        )?
         (                         # Method name
           \\b[a-zA-Z_$][\\w$]*    # Fixed name
           |
@@ -519,7 +522,7 @@
             'name': 'meta.computed-key.js'
           }
           {
-            'match': '\\b(get|set)(?=\\s+[^\\s(]+\\s*\\()'
+            'match': '\\b(get|set)(?=\\s*\\[.+\\]\\s*\\(|\\s+[^\\s\\[(]+\\s*\\()'
             'name': 'keyword.operator.$1ter.js'
           }
           {

@@ -1071,7 +1071,7 @@ describe "Javascript grammar", ->
 
     it "tokenises ES6 methods with computed names", ->
       {tokens} = grammar.tokenizeLine('get [ foo ] () { }')
-      expect(tokens[0]).toEqual value: 'get', scopes: ['source.js', 'meta.function.method.definition.js', 'entity.name.function.js']
+      expect(tokens[0]).toEqual value: 'get', scopes: ['source.js', 'meta.function.method.definition.js', 'keyword.operator.getter.js']
       expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.brace.square.js']
       expect(tokens[4]).toEqual value: 'foo', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'variable.parameter.property.js']
       expect(tokens[6]).toEqual value: ']', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.brace.square.js']
@@ -1081,7 +1081,7 @@ describe "Javascript grammar", ->
       expect(tokens[13]).toEqual value: '}', scopes: ['source.js', 'punctuation.definition.function.body.end.bracket.curly.js']
 
       {tokens} = grammar.tokenizeLine('get [ "Win" + bar[2] + quaz() ](){ }')
-      expect(tokens[0]).toEqual value: 'get', scopes: ['source.js', 'meta.function.method.definition.js', 'entity.name.function.js']
+      expect(tokens[0]).toEqual value: 'get', scopes: ['source.js', 'meta.function.method.definition.js', 'keyword.operator.getter.js']
       expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.brace.square.js']
       expect(tokens[4]).toEqual value: '"', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
       expect(tokens[5]).toEqual value: 'Win', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.double.js']
@@ -1102,7 +1102,7 @@ describe "Javascript grammar", ->
       expect(tokens[26]).toEqual value: '}', scopes: ['source.js', 'punctuation.definition.function.body.end.bracket.curly.js']
 
       {tokens} = grammar.tokenizeLine('get [\'string\' [ quaz()[2 + 2]] + this + "ABC" ](){ },')
-      expect(tokens[0]).toEqual value: 'get', scopes: ['source.js', 'meta.function.method.definition.js', 'entity.name.function.js']
+      expect(tokens[0]).toEqual value: 'get', scopes: ['source.js', 'meta.function.method.definition.js', 'keyword.operator.getter.js']
       expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.brace.square.js']
       expect(tokens[3]).toEqual value: '\'', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
       expect(tokens[4]).toEqual value: 'string', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.single.js']
@@ -1131,7 +1131,7 @@ describe "Javascript grammar", ->
       expect(tokens[37]).toEqual value: ',', scopes: ['source.js', 'meta.delimiter.object.comma.js']
 
       {tokens} = grammar.tokenizeLine('set [\'string\' + ([ quaz()[2 + 2]]) + this + "ABC" ](k = 2){ }')
-      expect(tokens[0]).toEqual value: 'set', scopes: ['source.js', 'meta.function.method.definition.js', 'entity.name.function.js']
+      expect(tokens[0]).toEqual value: 'set', scopes: ['source.js', 'meta.function.method.definition.js', 'keyword.operator.setter.js']
       expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.brace.square.js']
       expect(tokens[3]).toEqual value: '\'', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
       expect(tokens[4]).toEqual value: 'string', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.single.js']
