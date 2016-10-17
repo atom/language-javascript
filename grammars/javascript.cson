@@ -486,7 +486,7 @@
              [^"()']              # Any non-bracket or non-quote
           )*
         \\)\\s*                   # End of arguments
-        \\{                       # Beginning of body
+        {                         # Beginning of body
       )
     '''
     'end': '(?<=})'
@@ -506,7 +506,7 @@
             'match': '(\\[)(.+)(\\])(?=\\s*\\()'
             'captures':
               '1':
-                'name': 'meta.brace.square.js'
+                'name': 'punctuation.definition.computed-key.begin.bracket.square.js'
               '2':
                 'patterns': [
                   {
@@ -518,7 +518,7 @@
                   }
                 ]
               '3':
-                'name': 'meta.brace.square.js'
+                'name': 'punctuation.definition.computed-key.end.bracket.square.js'
             'name': 'meta.computed-key.js'
           }
           {

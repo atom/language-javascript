@@ -1072,9 +1072,9 @@ describe "Javascript grammar", ->
     it "tokenises ES6 methods with computed names", ->
       {tokens} = grammar.tokenizeLine('get [ foo ] () { }')
       expect(tokens[0]).toEqual value: 'get', scopes: ['source.js', 'meta.function.method.definition.js', 'keyword.operator.getter.js']
-      expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.brace.square.js']
+      expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'punctuation.definition.computed-key.begin.bracket.square.js']
       expect(tokens[4]).toEqual value: 'foo', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'variable.parameter.property.js']
-      expect(tokens[6]).toEqual value: ']', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.brace.square.js']
+      expect(tokens[6]).toEqual value: ']', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'punctuation.definition.computed-key.end.bracket.square.js']
       expect(tokens[8]).toEqual value: '(', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.parameters.js', 'punctuation.definition.parameters.begin.bracket.round.js']
       expect(tokens[9]).toEqual value: ')', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.parameters.js', 'punctuation.definition.parameters.end.bracket.round.js']
       expect(tokens[11]).toEqual value: '{', scopes: ['source.js', 'punctuation.definition.function.body.begin.bracket.curly.js']
@@ -1082,7 +1082,7 @@ describe "Javascript grammar", ->
 
       {tokens} = grammar.tokenizeLine('get [ "Win" + bar[2] + quaz() ](){ }')
       expect(tokens[0]).toEqual value: 'get', scopes: ['source.js', 'meta.function.method.definition.js', 'keyword.operator.getter.js']
-      expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.brace.square.js']
+      expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'punctuation.definition.computed-key.begin.bracket.square.js']
       expect(tokens[4]).toEqual value: '"', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
       expect(tokens[5]).toEqual value: 'Win', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.double.js']
       expect(tokens[6]).toEqual value: '"', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
@@ -1095,7 +1095,7 @@ describe "Javascript grammar", ->
       expect(tokens[17]).toEqual value: 'quaz', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.function-call.js', 'entity.name.function.js']
       expect(tokens[18]).toEqual value: '(', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.function-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
       expect(tokens[19]).toEqual value: ')', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.function-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
-      expect(tokens[21]).toEqual value: ']', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.brace.square.js']
+      expect(tokens[21]).toEqual value: ']', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'punctuation.definition.computed-key.end.bracket.square.js']
       expect(tokens[22]).toEqual value: '(', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.parameters.js', 'punctuation.definition.parameters.begin.bracket.round.js']
       expect(tokens[23]).toEqual value: ')', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.parameters.js', 'punctuation.definition.parameters.end.bracket.round.js']
       expect(tokens[24]).toEqual value: '{', scopes: ['source.js', 'punctuation.definition.function.body.begin.bracket.curly.js']
@@ -1103,7 +1103,7 @@ describe "Javascript grammar", ->
 
       {tokens} = grammar.tokenizeLine('get [\'string\' [ quaz()[2 + 2]] + this + "ABC" ](){ },')
       expect(tokens[0]).toEqual value: 'get', scopes: ['source.js', 'meta.function.method.definition.js', 'keyword.operator.getter.js']
-      expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.brace.square.js']
+      expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'punctuation.definition.computed-key.begin.bracket.square.js']
       expect(tokens[3]).toEqual value: '\'', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
       expect(tokens[4]).toEqual value: 'string', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.single.js']
       expect(tokens[5]).toEqual value: '\'', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
@@ -1123,7 +1123,7 @@ describe "Javascript grammar", ->
       expect(tokens[27]).toEqual value: '"', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
       expect(tokens[28]).toEqual value: 'ABC', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.double.js']
       expect(tokens[29]).toEqual value: '"', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
-      expect(tokens[31]).toEqual value: ']', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.brace.square.js']
+      expect(tokens[31]).toEqual value: ']', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'punctuation.definition.computed-key.end.bracket.square.js']
       expect(tokens[32]).toEqual value: '(', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.parameters.js', 'punctuation.definition.parameters.begin.bracket.round.js']
       expect(tokens[33]).toEqual value: ')', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.parameters.js', 'punctuation.definition.parameters.end.bracket.round.js']
       expect(tokens[34]).toEqual value: '{', scopes: ['source.js', 'punctuation.definition.function.body.begin.bracket.curly.js']
@@ -1132,7 +1132,7 @@ describe "Javascript grammar", ->
 
       {tokens} = grammar.tokenizeLine('set [\'string\' + ([ quaz()[2 + 2]]) + this + "ABC" ](k = 2){ }')
       expect(tokens[0]).toEqual value: 'set', scopes: ['source.js', 'meta.function.method.definition.js', 'keyword.operator.setter.js']
-      expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.brace.square.js']
+      expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'punctuation.definition.computed-key.begin.bracket.square.js']
       expect(tokens[3]).toEqual value: '\'', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
       expect(tokens[4]).toEqual value: 'string', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.single.js']
       expect(tokens[5]).toEqual value: '\'', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
@@ -1155,7 +1155,7 @@ describe "Javascript grammar", ->
       expect(tokens[31]).toEqual value: '"', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
       expect(tokens[32]).toEqual value: 'ABC', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.double.js']
       expect(tokens[33]).toEqual value: '"', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
-      expect(tokens[35]).toEqual value: ']', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'meta.brace.square.js']
+      expect(tokens[35]).toEqual value: ']', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'punctuation.definition.computed-key.end.bracket.square.js']
       expect(tokens[36]).toEqual value: '(', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.parameters.js', 'punctuation.definition.parameters.begin.bracket.round.js']
       expect(tokens[37]).toEqual value: 'k', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.parameters.js', 'variable.parameter.function.js']
       expect(tokens[39]).toEqual value: '=', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.parameters.js', 'keyword.operator.assignment.js']
