@@ -468,10 +468,25 @@
           import|package|return|switch|throw|try|while|with)
           [\\s\\(]
         )
-        \\b[a-zA-Z_$][\\w$]*
-        \\s*\\(\\s*
-           (("[^"]*")|(\\'[^\\']*\\')|((?!"|\\'|\\(|\\)).))*
-        \\)\\s*{
+        (
+          \\b(get|set)            # Property getter/setter: get foo(){}
+          (?:\\s+|(?=\\[))        # Followed by whitespace or square bracket
+        )?
+        (                         # Method name
+          \\b[a-zA-Z_$][\\w$]*    # Fixed name
+          |
+          \\[                     # Computed property key
+            .*?[^\\[\\]\\s].*?    # Contains at least one non-brace character
+          \\]
+        )
+        \\s*\\(\\s*               # Start of arguments list
+          (
+            "[^"]*"  |            # Double-quoted string
+            '[^']*'  |            # Single-quoted string
+             [^"()']              # Any non-bracket or non-quote
+          )*
+        \\)\\s*                   # End of arguments
+        {                         # Beginning of body
       )
     '''
     'end': '(?<=})'
@@ -487,6 +502,29 @@
         'end': '(?<=\\))'
         'name': 'meta.function.method.definition.js'
         'patterns': [
+          {
+            'match': '(\\[)(.+)(\\])(?=\\s*\\()'
+            'captures':
+              '1':
+                'name': 'punctuation.definition.computed-key.begin.bracket.square.js'
+              '2':
+                'patterns': [
+                  {
+                    'include': '$self'
+                  }
+                  {
+                    'match': '[a-zA-Z_$][\\w$]*'
+                    'name': 'variable.parameter.property.js'
+                  }
+                ]
+              '3':
+                'name': 'punctuation.definition.computed-key.end.bracket.square.js'
+            'name': 'meta.computed-key.js'
+          }
+          {
+            'match': '\\b(get|set)(?=\\s*\\[.+\\]\\s*\\(|\\s+[^\\s\\[(]+\\s*\\()'
+            'name': 'keyword.operator.$1ter.js'
+          }
           {
             'match': '\\b([a-zA-Z_$][\\w$]*)'
             'name': 'entity.name.function.js'
