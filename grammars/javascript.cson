@@ -48,11 +48,11 @@
     'patterns': [
       {
         # { member1 , member2 as alias2 , [...] }
-        'begin': '\\{'
+        'begin': '{'
         'beginCaptures':
           0:
             'name': 'punctuation.definition.modules.begin.js'
-        'end': '\\}'
+        'end': '}'
         'endCaptures':
           0:
             'name': 'punctuation.definition.modules.end.js'
@@ -173,11 +173,11 @@
       }
       {
         # { member1 , member2 as alias2 , [...] } inside re-export
-        'begin': '\\{(?=.*\\bfrom\\b)'
+        'begin': '{(?=.*\\bfrom\\b)'
         'beginCaptures':
           0:
             'name': 'punctuation.definition.modules.begin.js'
-        'end': '\\}'
+        'end': '}'
         'endCaptures':
           0:
             'name': 'punctuation.definition.modules.end.js'
@@ -220,11 +220,11 @@
       }
       {
         # { member1 , member2 as alias2 , [...] }
-        'begin': '(?![a-zA-Z_$0-9])\\{'
+        'begin': '(?![a-zA-Z_$0-9]){'
         'beginCaptures':
           0:
             'name': 'punctuation.definition.modules.begin.js'
-        'end': '\\}'
+        'end': '}'
         'endCaptures':
           0:
             'name': 'punctuation.definition.modules.end.js'
@@ -1796,11 +1796,11 @@
   'interpolated_js':
     'patterns': [
       {
-        'begin': '\\$\\{'
+        'begin': '\\${'
         'captures':
           '0':
             'name': 'punctuation.section.embedded.js'
-        'end': '\\}'
+        'end': '}'
         'name': 'source.js.embedded.source'
         'patterns': [
           {
@@ -1835,9 +1835,60 @@
           |interface|kind|lends|license|listens|main|member|memberof|method|mixex|mixins?|modifies|module|name|namespace
           |noalias|nocollapse|nocompile|nosideeffects|override|overview|package|param|preserve|private|prop|property
           |protected|public|read[Oo]nly|record|require[ds]|returns?|see|since|static|struct|submodule|summary|suppress
-          |template|this|throws|todo|tutorial|type|typedef|unrestricted|uses|var|variation|version|virtual|writeOnce)\\b
+          |template|this|throws|todo|type|typedef|unrestricted|uses|var|variation|version|virtual|writeOnce)\\b
         '''
         'name': 'storage.type.class.jsdoc'
+      }
+      {
+        'match': '''(?x)
+          (
+            \\[
+              [^\\]]+            # Optional [link text] preceding {@link syntax}
+            \\]
+
+            (?!                  # Check to avoid highlighting two sets of link text
+              {
+                @\\w+            # Tagname
+                \\s+
+                [^\\s|}]+        # Namepath/URL
+                [\\s|]           # Whitespace or bar delimiting description
+                [^}]*
+              }
+            )
+          )?
+
+          (?:
+            {
+              (
+                @
+                (?: link         # Name of tag
+                  | linkcode
+                  | linkplain
+                  | tutorial
+                )
+              )
+              
+              \\s+
+
+              ([^\\s|}]+)        # Namepath or URL
+
+              (?:                # Optional link text following link target
+                [\\s|]           # Bar or space separating target and text
+                [^}]*            # Actual text
+              )?
+            }
+          )
+        '''
+        'captures':
+          '0':
+            'name': 'entity.name.type.instance.jsdoc'
+          '1':
+            'name': 'constant.other.description.jsdoc'
+          '2':
+            'name': 'storage.type.class.jsdoc'
+          '3':
+            'name': 'variable.other.description.jsdoc'
+        'name': 'other.meta.jsdoc'
       }
       {
         'match': '''(?x)
