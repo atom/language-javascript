@@ -2086,7 +2086,7 @@
         'end': '(?!\\G)'
         'patterns': [
           {
-            'begin': '//'
+            'begin': '(//|<!--)'
             'beginCaptures':
               '0':
                 'name': 'punctuation.definition.comment.js'
