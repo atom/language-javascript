@@ -612,6 +612,21 @@ describe "Javascript grammar", ->
       expect(tokens[6]).toEqual value: '</b>', scopes: ['source.js', 'string.quoted.template.html.js']
       expect(tokens[7]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.html.js', 'punctuation.definition.string.end.js']
 
+  describe "innerHTML attribute declarations with string template tags", ->
+    it "tokenizes them as strings", ->
+      {tokens} = grammar.tokenizeLine('text.innerHTML = `hey <b>${name}</b>`')
+      expect(tokens[0]).toEqual value: 'text', scopes: [ 'source.js', 'variable.other.object.js' ]
+      expect(tokens[1]).toEqual value: '.', scopes: [ 'source.js', 'meta.delimiter.property.period.js' ]
+      expect(tokens[2]).toEqual value: 'innerHTML', scopes: [ 'source.js', 'variable.other.property.js' ]
+      expect(tokens[3]).toEqual value: '=', scopes: [ 'source.js', 'keyword.operator.assignment.js' ]
+      expect(tokens[4]).toEqual value: '`', scopes: [ 'source.js', 'string.quoted.template.html.js', 'punctuation.definition.string.begin.js' ]
+      expect(tokens[5]).toEqual value: 'hey <b>', scopes: ['source.js', 'string.quoted.template.html.js']
+      expect(tokens[6]).toEqual value: '${', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
+      expect(tokens[7]).toEqual value: 'name', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source']
+      expect(tokens[8]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
+      expect(tokens[9]).toEqual value: '</b>', scopes: ['source.js', 'string.quoted.template.html.js']
+      expect(tokens[10]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.html.js', 'punctuation.definition.string.end.js']
+
   describe "ES6 tagged HTML string templates with expanded function name", ->
     it "tokenizes them as strings", ->
       {tokens} = grammar.tokenizeLine('escapeHTML`hey <b>${name}</b>`')
