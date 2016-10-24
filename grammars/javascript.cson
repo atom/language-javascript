@@ -1360,7 +1360,7 @@
         ]
       }
       {
-        'begin': '(?<=innerHTML\\s*(\\+?=)\\s*)(`)'
+        'begin': '(?<=innerHTML)\\s*(\\+?=)\\s*(`)'
         'beginCaptures':
           '1':
             'name': 'punctuation.definition.string.begin.js'
