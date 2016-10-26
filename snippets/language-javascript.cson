@@ -38,6 +38,9 @@
   'Anonymous Function':
     'prefix': 'f'
     'body': 'function ($1) {\n\t$2\n}'
+  'Arrow Function':
+    'prefix': 'af'
+    'body': '($1) => {\n\t$2\n}'
   'Generator':
     'prefix': 'gen',
     'body': 'function* ${1:functionName}($2) {\n\t$0\n}'
