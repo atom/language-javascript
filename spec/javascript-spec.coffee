@@ -1249,6 +1249,14 @@ describe "Javascript grammar", ->
       {tokens} = grammar.tokenizeLine('"func" : a => a')
       expect(tokens[8]).toEqual value: '=>', scopes: ['source.js', 'meta.function.arrow.json.js', 'storage.type.function.arrow.js']
 
+      {tokens} = grammar.tokenizeLine('import (x) { return "Yeah"; }')
+      expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.function.method.definition.js', 'entity.name.function.js']
+      expect(tokens[11]).toEqual value: 'Yeah', scopes: ['source.js', 'string.quoted.double.js']
+
+      {tokens} = grammar.tokenizeLine('export (x) { return "Nah"; }')
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.function.method.definition.js', 'entity.name.function.js']
+      expect(tokens[11]).toEqual value: 'Nah', scopes: ['source.js', 'string.quoted.double.js']
+
     it "tokenizes generator functions", ->
       {tokens} = grammar.tokenizeLine('function* foo(){}')
       expect(tokens[0]).toEqual value: 'function', scopes: ['source.js', 'meta.function.js', 'storage.type.function.js']

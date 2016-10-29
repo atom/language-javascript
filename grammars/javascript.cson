@@ -39,7 +39,7 @@
 'patterns': [
   {
     # ES6 import
-    'begin': '(?<!\\.)\\b(import)(?!\\s*:)\\b'
+    'begin': '(?<!\\.)\\b(import)(?!\\s*[:(])\\b'
     'beginCaptures':
       '1':
         'name': 'keyword.control.js'
@@ -161,7 +161,7 @@
   }
   {
     # ES6 export, re-export: export {member as alias, [...]} [from ...]
-    'begin': '(?<!\\.)\\b(export)(?!\\s*:)\\b'
+    'begin': '(?<!\\.)\\b(export)(?!\\s*[:(])\\b'
     'beginCaptures':
       '1':
         'name': 'keyword.control.js'
@@ -464,8 +464,8 @@
     'begin': '''(?x)
       (?=
         (?!
-          (break|case|catch|continue|do|else|finally|for|function|if|export|
-          import|package|return|switch|throw|try|while|with)
+          (break|case|catch|continue|do|else|finally|for|function|if|
+          package|return|switch|throw|try|while|with)
           [\\s\\(]
         )
         (
