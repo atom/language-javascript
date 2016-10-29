@@ -2200,7 +2200,7 @@ describe "Javascript grammar", ->
 
     it "tokenizes constants when they are object keys", ->
       {tokens} = grammar.tokenizeLine('FOO: 1')
-      expect(tokens[0]).toEqual value: 'FOO', scopes: ['source.js']
+      expect(tokens[0]).toEqual value: 'FOO', scopes: ['source.js', 'constant.other.js']
       expect(tokens[1]).toEqual value: ':', scopes: ['source.js', 'keyword.operator.assignment.js']
 
   describe "ternary expressions", ->
