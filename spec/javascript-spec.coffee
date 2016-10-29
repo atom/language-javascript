@@ -8,7 +8,7 @@ buildTextEditor = (params) ->
     TextEditor ?= require('atom').TextEditor
     new TextEditor(params)
 
-describe "Javascript grammar", ->
+describe "JavaScript grammar", ->
   grammar = null
 
   beforeEach ->
