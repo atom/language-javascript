@@ -1069,6 +1069,14 @@ describe "JavaScript grammar", ->
       expect(tokens[5]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
       expect(tokens[6]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
+      {tokens} = grammar.tokenizeLine('import (x) { return "Yeah"; }')
+      expect(tokens[0]).toEqual value: 'import', scopes: ['source.js', 'meta.function.method.definition.js', 'entity.name.function.js']
+      expect(tokens[11]).toEqual value: 'Yeah', scopes: ['source.js', 'string.quoted.double.js']
+
+      {tokens} = grammar.tokenizeLine('export (x) { return "Nah"; }')
+      expect(tokens[0]).toEqual value: 'export', scopes: ['source.js', 'meta.function.method.definition.js', 'entity.name.function.js']
+      expect(tokens[11]).toEqual value: 'Nah', scopes: ['source.js', 'string.quoted.double.js']
+
     it "tokenises ES6 methods with computed names", ->
       {tokens} = grammar.tokenizeLine('[ foo ] () { }')
       expect(tokens[0]).toEqual value: '[', scopes: ['source.js', 'meta.function.method.definition.js', 'meta.computed-key.js', 'punctuation.definition.computed-key.begin.bracket.square.js']
