@@ -1979,6 +1979,16 @@ describe "JavaScript grammar", ->
       expect(tokens[6]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'variable.other.jsdoc']
       expect(tokens[8]).toEqual value: 'this is the description ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
 
+      {tokens} = grammar.tokenizeLine('/** @param {function ()} variable this is the description */')
+      expect(tokens[4]).toEqual value: '{function ()}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
+      expect(tokens[6]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'variable.other.jsdoc']
+      expect(tokens[8]).toEqual value: 'this is the description ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
+
+      {tokens} = grammar.tokenizeLine('/** @param {function ( )} variable this is the description */')
+      expect(tokens[4]).toEqual value: '{function ( )}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
+      expect(tokens[6]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'variable.other.jsdoc']
+      expect(tokens[8]).toEqual value: 'this is the description ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
+
       {tokens} = grammar.tokenizeLine('/** @param {function(string)} variable this is the description */')
       expect(tokens[4]).toEqual value: '{function(string)}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
       expect(tokens[6]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'variable.other.jsdoc']
@@ -2011,6 +2021,14 @@ describe "JavaScript grammar", ->
 
       {tokens} = grammar.tokenizeLine('/** @return {function()} this is the description */')
       expect(tokens[4]).toEqual value: '{function()}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
+      expect(tokens[6]).toEqual value: 'this is the description ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
+
+      {tokens} = grammar.tokenizeLine('/** @return {function ()} this is the description */')
+      expect(tokens[4]).toEqual value: '{function ()}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
+      expect(tokens[6]).toEqual value: 'this is the description ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
+
+      {tokens} = grammar.tokenizeLine('/** @return {function ( )} this is the description */')
+      expect(tokens[4]).toEqual value: '{function ( )}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
       expect(tokens[6]).toEqual value: 'this is the description ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
 
       {tokens} = grammar.tokenizeLine('/** @return {function(string)} this is the description */')
