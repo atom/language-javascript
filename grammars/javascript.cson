@@ -1858,7 +1858,7 @@
                   | tutorial
                 )
               )
-              
+
               \\s+
 
               ([^\\s|}]+)        # Namepath or URL
@@ -1898,16 +1898,21 @@
 
               (?:
                 (?:
-                  function\\(                           # {function(string, number)} function type
+                  function                              # {function(string, number)} function type
+                  \\s*
+                  \\(
+                  \\s*
+                  (?:
+                    [a-zA-Z_$][\\w$]*
                     (?:
-                      \\s*
-                      [a-zA-Z_$]
-                      (?:\\s*,\\s*[\\w$])*
-                      \\s*
+                      \\s*,\\s*
+                      [a-zA-Z_$][\\w$]*
                     )*
+                  )?
+                  \\s*
                   \\)
-                )? |
-
+                )?
+                |
                 (?:
                   \\(                                   # Opening bracket of multiple types with parenthesis {(string|number)}
                     [a-zA-Z_$]+
@@ -2011,16 +2016,21 @@
 
               (?:
                 (?:
-                  function\\(                           # {function(string, number)} function type
+                  function                              # {function(string, number)} function type
+                  \\s*
+                  \\(
+                  \\s*
+                  (?:
+                    [a-zA-Z_$][\\w$]*
                     (?:
-                      \\s*
-                      [a-zA-Z_$]
-                      (?:\\s*,\\s*[\\w$])*
-                      \\s*
+                      \\s*,\\s*
+                      [a-zA-Z_$][\\w$]*
                     )*
+                  )?
+                  \\s*
                   \\)
-                )? |
-
+                )?
+                |
                 (?:
                   \\(                                   # Opening bracket of multiple types with parenthesis {(string|number)}
                     [a-zA-Z_$]+
