@@ -1911,8 +1911,12 @@
                   )?
                   \\s*
                   \\)
-                  (?:\\s*:\\s*[a-zA-Z_$]+\\s*)?         # {function(): string} function return type
-                )? |
+                  (?:                                   # {function(): string} function return type
+                    \\s*:\\s*
+                    [a-zA-Z_$][\\w$]*
+                  )?
+                )?
+                |
                 (?:
                   \\(                                   # Opening bracket of multiple types with parenthesis {(string|number)}
                     [a-zA-Z_$]+
@@ -2029,8 +2033,12 @@
                   )?
                   \\s*
                   \\)
-                  (?:\\s*:\\s*[a-zA-Z_$]+\\s*)?         # {function(): string} function return type
-                )? |
+                  (?:                                   # {function(): string} function return type
+                    \\s*:\\s*
+                    [a-zA-Z_$][\\w$]*
+                  )?
+                )?
+                |
                 (?:
                   \\(                                   # Opening bracket of multiple types with parenthesis {(string|number)}
                     [a-zA-Z_$]+
