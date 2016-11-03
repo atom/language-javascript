@@ -1364,8 +1364,6 @@
         'beginCaptures':
           '1':
             'name': 'keyword.operator.assignment.js'
-          '2':
-            'name': 'punctuation.definition.string.begin.js'
         'end': '(?<=`)'
         'endCaptures':
           '0':
