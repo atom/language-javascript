@@ -1934,17 +1934,45 @@
                 (?:
                   function                              # {function(string, number)} function type
                   \\s*
-                  \\(
-                  \\s*
                   (?:
-                    [a-zA-Z_$][\\w$]*
                     (?:
-                      \\s*,\\s*
-                      [a-zA-Z_$][\\w$]*
-                    )*
-                  )?
-                  \\s*
-                  \\)
+                      \\(
+                      \\s*
+                      \\.{3}[a-zA-Z_$][\\w$]+           # {function(...string)} variable number of parameters
+                      \\s*
+                      \\)
+                    )
+                    |
+                    (?:
+                      \\(
+                      \\s*
+                      (?:
+                        (?:
+                          \\? |                         # {function(?string)} nullable type
+                          !   |                         # {function(!string)} non-nullable type
+                        )?
+                        [a-zA-Z_$][\\w$]+
+                        (?:
+                          \\s*,\\s*
+                          (?:
+                            (?:
+                              (?:
+                                \\? |                   # {function(string, ?string)} nullable type
+                                !   |                   # {function(string, !string)} non-nullable type
+                              )?
+                              [a-zA-Z_$][\\w$]+
+                            )
+                            |
+                            (?:
+                              \\.{3}[a-zA-Z_$][\\w$]+   # {function(string, ...string)} variable number of parameters
+                            )
+                          )
+                        )*
+                      )*
+                      \\s*
+                      \\)
+                    )
+                  )
                   (?:                                   # {function(): string} function return type
                     \\s*:\\s*
                     [a-zA-Z_$][\\w$]*
@@ -2056,17 +2084,45 @@
                 (?:
                   function                              # {function(string, number)} function type
                   \\s*
-                  \\(
-                  \\s*
                   (?:
-                    [a-zA-Z_$][\\w$]*
                     (?:
-                      \\s*,\\s*
-                      [a-zA-Z_$][\\w$]*
-                    )*
-                  )?
-                  \\s*
-                  \\)
+                      \\(
+                      \\s*
+                      \\.{3}[a-zA-Z_$][\\w$]+           # {function(...string)} variable number of parameters
+                      \\s*
+                      \\)
+                    )
+                    |
+                    (?:
+                      \\(
+                      \\s*
+                      (?:
+                        (?:
+                          \\? |                         # {function(?string)} nullable type
+                          !   |                         # {function(!string)} non-nullable type
+                        )?
+                        [a-zA-Z_$][\\w$]+
+                        (?:
+                          \\s*,\\s*
+                          (?:
+                            (?:
+                              (?:
+                                \\? |                   # {function(string, ?string)} nullable type
+                                !   |                   # {function(string, !string)} non-nullable type
+                              )?
+                              [a-zA-Z_$][\\w$]+
+                            )
+                            |
+                            (?:
+                              \\.{3}[a-zA-Z_$][\\w$]+   # {function(string, ...string)} variable number of parameters
+                            )
+                          )
+                        )*
+                      )*
+                      \\s*
+                      \\)
+                    )
+                  )
                   (?:                                   # {function(): string} function return type
                     \\s*:\\s*
                     [a-zA-Z_$][\\w$]*
