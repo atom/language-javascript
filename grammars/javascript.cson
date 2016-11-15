@@ -1952,6 +1952,7 @@
                           !   |                         # {function(!string)} non-nullable type
                         )?
                         [a-zA-Z_$][\\w$]+
+                        (?:\\[\\])?                     # {function(string[])} type application, an array of strings
                         (?:
                           \\s*,\\s*
                           (?:
@@ -1961,6 +1962,7 @@
                                 !   |                   # {function(string, !string)} non-nullable type
                               )?
                               [a-zA-Z_$][\\w$]+
+                              (?:\\[\\])?               # {function(string[])} type application, an array of strings
                             )
                             |
                             (?:
@@ -1968,6 +1970,7 @@
                             )
                           )
                         )*
+                        =?                              # {function(string=)} optional parameter
                       )*
                       \\s*
                       \\)
@@ -2102,6 +2105,7 @@
                           !   |                         # {function(!string)} non-nullable type
                         )?
                         [a-zA-Z_$][\\w$]+
+                        (?:\\[\\])?                     # {function(string[])} type application, an array of strings
                         (?:
                           \\s*,\\s*
                           (?:
@@ -2111,6 +2115,7 @@
                                 !   |                   # {function(string, !string)} non-nullable type
                               )?
                               [a-zA-Z_$][\\w$]+
+                              (?:\\[\\])?               # {function(string[])} type application, an array of strings
                             )
                             |
                             (?:
@@ -2118,6 +2123,7 @@
                             )
                           )
                         )*
+                        =?                              # {function(string=)} optional parameter
                       )*
                       \\s*
                       \\)
