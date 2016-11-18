@@ -1936,46 +1936,53 @@
                   \\s*
                   (?:
                     (?:
-                      \\(
-                      \\s*
+                      \\(\\s*
                       \\.{3}[a-zA-Z_$][\\w$]+           # {function(...string)} variable number of parameters
-                      \\s*
-                      \\)
+                      \\s*\\)
                     )
                     |
                     (?:
-                      \\(
-                      \\s*
+                      \\(\\s*
                       (?:
+                        (?:\\?|!)?                      # {function(?string)} or function(!string)} nullable/non-nullable type
+                        [a-zA-Z_$][\\w$]+
+                        (?:\\[\\])?                     # {function(string[])} type application, an array of strings
                         (?:
                           (?:
-                            \\? |                       # {function(?string)} nullable type
-                            !                           # {function(!string)} non-nullable type
-                          )?
-                          [a-zA-Z_$][\\w$]+
-                          (?:\\[\\])?                   # {function(string[])} type application, an array of strings
-                          (?:
-                            \\s*,\\s*
                             (?:
-                              (?:
-                                (?:
-                                  \\? |                 # {function(string, ?string)} nullable type
-                                  !                     # {function(string, !string)} non-nullable type
-                                )?
-                                [a-zA-Z_$][\\w$]+
-                                (?:\\[\\])?             # {function(string[])} type application, an array of strings
-                              )
-                            )
-                          )*
-                          =?                            # {function(string=)} optional parameter
-                        )+
-                        (?:
-                          \\s*,\\s*
-                          \\.{3}[a-zA-Z_$][\\w$]+       # {function(string, ...string)} variable number of parameters
-                        )?
+                              \\s*,\\s*
+                              (?:\\?|!)?                # {function(?string)} or function(!string)} nullable/non-nullable type
+                              [a-zA-Z_$][\\w$]+
+                              (?:\\[\\])?               # {function(string[])} type application, an array of strings
+                            )*
+                            (?:
+                              \\s*,\\s*
+                              \\.{3}[a-zA-Z_$][\\w$]+   # {function(string, ...string)} variable number of parameters
+                            )?
+                          )
+                          |
+                          (?:
+                            =?                          # {function(string=)} optional parameter
+                            (?:
+                              (?<!=)                    # {function(string, string, number)} loop non-optional params
+                              \\s*,\\s*
+                              (?:\\?|!)?                # {function(?string)} or function(!string)} nullable/non-nullable type
+                              [a-zA-Z_$][\\w$]+
+                              (?:\\[\\])?               # {function(string[])} type application, an array of strings
+                              =?
+                            )*
+                            (?:
+                              (?<==)                    # {function(string, string=, number=)} loop optional params
+                              \\s*,\\s*
+                              (?:\\?|!)?                # {function(?string)} or function(!string)} nullable/non-nullable type
+                              [a-zA-Z_$][\\w$]+
+                              (?:\\[\\])?               # {function(string[])} type application, an array of strings
+                              =
+                            )*
+                          )
+                        )
                       )?
-                      \\s*
-                      \\)
+                      \\s*\\)
                     )
                   )
                   (?:                                   # {function(): string} function return type
@@ -2091,46 +2098,53 @@
                   \\s*
                   (?:
                     (?:
-                      \\(
-                      \\s*
+                      \\(\\s*
                       \\.{3}[a-zA-Z_$][\\w$]+           # {function(...string)} variable number of parameters
-                      \\s*
-                      \\)
+                      \\s*\\)
                     )
                     |
                     (?:
-                      \\(
-                      \\s*
+                      \\(\\s*
                       (?:
+                        (?:\\?|!)?                      # {function(?string)} or function(!string)} nullable/non-nullable type
+                        [a-zA-Z_$][\\w$]+
+                        (?:\\[\\])?                     # {function(string[])} type application, an array of strings
                         (?:
                           (?:
-                            \\? |                       # {function(?string)} nullable type
-                            !                           # {function(!string)} non-nullable type
-                          )?
-                          [a-zA-Z_$][\\w$]+
-                          (?:\\[\\])?                   # {function(string[])} type application, an array of strings
-                          (?:
-                            \\s*,\\s*
                             (?:
-                              (?:
-                                (?:
-                                  \\? |                 # {function(string, ?string)} nullable type
-                                  !                     # {function(string, !string)} non-nullable type
-                                )?
-                                [a-zA-Z_$][\\w$]+
-                                (?:\\[\\])?             # {function(string[])} type application, an array of strings
-                              )
-                            )
-                          )*
-                          =?                            # {function(string=)} optional parameter
-                        )+
-                        (?:
-                          \\s*,\\s*
-                          \\.{3}[a-zA-Z_$][\\w$]+       # {function(string, ...string)} variable number of parameters
-                        )?
+                              \\s*,\\s*
+                              (?:\\?|!)?                # {function(?string)} or function(!string)} nullable/non-nullable type
+                              [a-zA-Z_$][\\w$]+
+                              (?:\\[\\])?               # {function(string[])} type application, an array of strings
+                            )*
+                            (?:
+                              \\s*,\\s*
+                              \\.{3}[a-zA-Z_$][\\w$]+   # {function(string, ...string)} variable number of parameters
+                            )?
+                          )
+                          |
+                          (?:
+                            =?                          # {function(string=)} optional parameter
+                            (?:
+                              (?<!=)                    # {function(string, string, number)} loop non-optional params
+                              \\s*,\\s*
+                              (?:\\?|!)?                # {function(?string)} or function(!string)} nullable/non-nullable type
+                              [a-zA-Z_$][\\w$]+
+                              (?:\\[\\])?               # {function(string[])} type application, an array of strings
+                              =?
+                            )*
+                            (?:
+                              (?<==)                    # {function(string, string=, number=)} loop optional params
+                              \\s*,\\s*
+                              (?:\\?|!)?                # {function(?string)} or function(!string)} nullable/non-nullable type
+                              [a-zA-Z_$][\\w$]+
+                              (?:\\[\\])?               # {function(string[])} type application, an array of strings
+                              =
+                            )*
+                          )
+                        )
                       )?
-                      \\s*
-                      \\)
+                      \\s*\\)
                     )
                   )
                   (?:                                   # {function(): string} function return type
