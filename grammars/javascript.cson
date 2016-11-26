@@ -122,7 +122,7 @@
         'name': 'keyword.control.js'
       }
       {
-        'match': '\\b([a-zA-Z_$][\\w$]*)\\b(?=.*(?:$|\\bfrom\\b))'
+        'match': '\\b([a-zA-Z_$][\\w$]*)\\b'
         'name': 'variable.other.module.js'
       }
       {

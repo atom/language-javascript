@@ -761,13 +761,13 @@ describe "JavaScript grammar", ->
 
       lines = grammar.tokenizeLines """
         import
-          \\x20{2}
+          \\x20
           defaultMember
-          \\x20{2}
+          \\x20
           from
-          \\x20{2}
+          \\x20
           "module-name"
-          \\x20{2}
+          \\x20
           ;
       """
       expect(lines[0][0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
@@ -790,22 +790,22 @@ describe "JavaScript grammar", ->
 
       lines = grammar.tokenizeLines """
         import
-        \\t
+        \t
         {
-        \\t
+        \t
         default
-        \\t
+        \t
         as
-        \\t
+        \t
         defaultMember
-        \\t
+        \t
         } from "module-name";
       """
       expect(lines[0][0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
       expect(lines[2][0]).toEqual value: '{', scopes: ['source.js', 'meta.import.js', 'punctuation.definition.modules.begin.js']
       expect(lines[4][0]).toEqual value: 'default', scopes: ['source.js', 'meta.import.js', 'variable.language.default.js']
       expect(lines[6][0]).toEqual value: 'as', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
-      expect(lines[8][0]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js', 'variable.other.module.js']
+      expect(lines[8][0]).toEqual value: 'defaultMember', scopes: ['source.js', 'meta.import.js', 'variable.other.module-alias.js']
       expect(lines[10][0]).toEqual value: '}', scopes: ['source.js', 'meta.import.js', 'punctuation.definition.modules.end.js']
       expect(lines[10][2]).toEqual value: 'from', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
       expect(lines[10][4]).toEqual value: '"', scopes: ['source.js', 'meta.import.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
