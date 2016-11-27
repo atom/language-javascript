@@ -743,7 +743,7 @@ describe "JavaScript grammar", ->
 
       lines = grammar.tokenizeLines """
         import
-          \\x20{2}
+          \x20
           "module-name"
           ;
       """
@@ -761,13 +761,13 @@ describe "JavaScript grammar", ->
 
       lines = grammar.tokenizeLines """
         import
-          \\x20
+          \x20
           defaultMember
-          \\x20
+          \x20
           from
-          \\x20
+          \x20
           "module-name"
-          \\x20
+          \x20
           ;
       """
       expect(lines[0][0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
@@ -835,13 +835,13 @@ describe "JavaScript grammar", ->
       lines = grammar.tokenizeLines """
         import
         {
-        \\t
+        \t
           member
-        \\t
+        \t
         }
-        \\t
+        \t
           from
-        \\t
+        \t
         "module-name";
       """
       expect(lines[0][0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
