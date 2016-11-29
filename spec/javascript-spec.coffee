@@ -17,6 +17,8 @@ describe "JavaScript grammar", ->
 
     runs ->
       grammar = atom.grammars.grammarForScopeName("source.js")
+      console.log typeof grammer
+      console.dir grammer
 
   it "parses the grammar", ->
     expect(grammar).toBeTruthy()
