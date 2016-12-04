@@ -2051,6 +2051,11 @@
             'name': 'variable.other.jsdoc'
           '3':
             'name': 'other.description.jsdoc'
+            'patterns': [
+              {
+                'include': '#docblock'
+              }
+            ]
       }
       {
         'match': '''(?x)
@@ -2133,6 +2138,11 @@
             'name': 'entity.name.type.instance.jsdoc'
           '2':
             'name': 'other.description.jsdoc'
+            'patterns': [
+              {
+                'include': '#docblock'
+              }
+            ]
       }
     ]
   'comments':

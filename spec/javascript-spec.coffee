@@ -1856,6 +1856,34 @@ describe "JavaScript grammar", ->
       expect(tokens[6]).toEqual value: '[ variable = " default value " ]', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'variable.other.jsdoc']
       expect(tokens[8]).toEqual value: 'this is the description ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
 
+      {tokens} = grammar.tokenizeLine('/** @param {object} variable - this is a {@link linked} description */')
+      expect(tokens[6]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'variable.other.jsdoc']
+      expect(tokens[8]).toEqual value: 'this is a ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
+      expect(tokens[9]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
+      expect(tokens[10]).toEqual value: '@link', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc', 'storage.type.class.jsdoc']
+      expect(tokens[12]).toEqual value: 'linked', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc', 'variable.other.description.jsdoc']
+      expect(tokens[13]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
+      expect(tokens[14]).toEqual value: ' description ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
+
+      {tokens} = grammar.tokenizeLine('/** @param {object} variable - this is a {@link linked#description}. */')
+      expect(tokens[6]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'variable.other.jsdoc']
+      expect(tokens[8]).toEqual value: 'this is a ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
+      expect(tokens[9]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
+      expect(tokens[10]).toEqual value: '@link', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc', 'storage.type.class.jsdoc']
+      expect(tokens[12]).toEqual value: 'linked#description', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc', 'variable.other.description.jsdoc']
+      expect(tokens[13]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
+      expect(tokens[14]).toEqual value: '. ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
+
+      {tokens} = grammar.tokenizeLine('/** @param {object} variable - this is a [description with a]{@link example}. */')
+      expect(tokens[6]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'variable.other.jsdoc']
+      expect(tokens[8]).toEqual value: 'this is a ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
+      expect(tokens[9]).toEqual value: '[description with a]', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc', 'constant.other.description.jsdoc']
+      expect(tokens[10]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
+      expect(tokens[11]).toEqual value: '@link', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc', 'storage.type.class.jsdoc']
+      expect(tokens[13]).toEqual value: 'example', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc', 'variable.other.description.jsdoc']
+      expect(tokens[14]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
+      expect(tokens[15]).toEqual value: '. ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
+
       {tokens} = grammar.tokenizeLine('/** @param {object} parameter.property this is the description */')
       expect(tokens[4]).toEqual value: '{object}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
       expect(tokens[6]).toEqual value: 'parameter.property', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'variable.other.jsdoc']
