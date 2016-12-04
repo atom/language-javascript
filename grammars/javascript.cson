@@ -1307,7 +1307,7 @@
         'name': 'keyword.operator.comparison.js'
       }
       {
-        'match': '&&|!|\\|\\|'
+        'match': '&&|!!|!|\\|\\|'
         'name': 'keyword.operator.logical.js'
       }
       {
