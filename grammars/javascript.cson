@@ -39,11 +39,11 @@
 'patterns': [
   {
     # ES6 import
-    'begin': '(?<!\\.)\\b(import)(?!\\s*[:(])\\b'
+    'begin': '(?<!\\.)\\b(import)(?:\\s*$|(?!\\s*[:(])\\b)'
     'beginCaptures':
       '1':
         'name': 'keyword.control.js'
-    'end': '(?=;|$)'
+    'end': '(?=;)'
     'name': 'meta.import.js'
     'patterns': [
       {
@@ -58,32 +58,32 @@
             'name': 'punctuation.definition.modules.end.js'
         'patterns': [
           {
-            # (default|name) as alias
-            'match': '''(?x)
-              (?: \\b(default)\\b | \\b([a-zA-Z_$][\\w$]*)\\b)
-              \\s*
-              (\\b as \\b)
-              \\s*
-              (?: (\\b default \\b | \\*) | \\b([a-zA-Z_$][\\w$]*)\\b)
-            '''
-            'captures':
-              '1':
-                'name': 'variable.language.default.js'
-              '2':
-                'name': 'variable.other.module.js'
-              '3':
+            'match': '\\bdefault\\b'
+            'name': 'variable.language.default.js'
+          }
+          {
+            'include': '#comments'
+          }
+          {
+            'begin': '\\bas\\b'
+            'beginCaptures':
+              '0':
                 'name': 'keyword.control.js'
-              '4':
+            'end': '(?=[;}]|/\\*)|(?:(\\bdefault\\b|\\*)|([a-zA-Z_$][\\w$]*))'
+            'endCaptures':
+              '1':
                 'name': 'invalid.illegal.js'
-              '5':
+              '2':
                 'name': 'variable.other.module-alias.js'
+            'patterns': [
+              {
+                'include': '#comments'
+              }
+            ]
           }
           {
             'match': ','
             'name': 'meta.delimiter.object.comma.js'
-          }
-          {
-            'include': '#comments'
           }
           {
             'match': '\\b([a-zA-Z_$][\\w$]*)\\b'
@@ -92,35 +92,24 @@
         ]
       }
       {
-        # (default|*|name) as alias
-        'match': '''(?x)
-          (?: \\b(default)\\b | (\\*) | \\b([a-zA-Z_$][\\w$]*)\\b)
-          \\s*
-          (\\b as \\b)
-          \\s*
-          (?: (\\b default \\b | \\*) | \\b([a-zA-Z_$][\\w$]*)\\b)
-        '''
-        'captures':
-          '1':
-            'name': 'variable.language.default.js'
-          '2':
-            'name': 'variable.language.import-all.js'
-          '3':
-            'name': 'variable.other.module.js'
-          '4':
-            'name': 'keyword.control.js'
-          '5':
-            'name': 'invalid.illegal.js'
-          '6':
-            'name': 'variable.other.module-alias.js'
+        'match': '\\bdefault\\b'
+        'name': 'variable.language.default.js'
       }
       {
         'match': '\\*'
         'name': 'variable.language.import-all.js'
       }
       {
-        'match': '\\b(default)\\b'
-        'name': 'variable.language.default.js'
+        'begin': '\\bas\\b'
+        'beginCaptures':
+          '0':
+            'name': 'keyword.control.js'
+        'end': '(?=[;}]|/\\*)|(?:(\\bdefault\\b|\\*)|([a-zA-Z_$][\\w$]*))'
+        'endCaptures':
+          '1':
+            'name': 'invalid.illegal.js'
+          '2':
+            'name': 'variable.other.module-alias.js'
       }
       {
         'include': '#strings'
@@ -133,7 +122,7 @@
         'name': 'keyword.control.js'
       }
       {
-        'match': '\\b([a-zA-Z_$][\\w$]*)\\b(?=.*\\bfrom\\b)'
+        'match': '\\b([a-zA-Z_$][\\w$]*)\\b'
         'name': 'variable.other.module.js'
       }
       {
