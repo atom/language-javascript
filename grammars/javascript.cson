@@ -1926,6 +1926,7 @@
                 \\? |                                   # {?string} nullable type
                 !   |                                   # {!string} non-nullable type
                 \\.{3}                                  # {...string} variable number of parameters
+                [*?]?                                   # {...*) Variable number of mixed types
               )?
 
               (?:
@@ -2097,6 +2098,7 @@
                 \\? |                                   # {?string} nullable type
                 !   |                                   # {!string} non-nullable type
                 \\.{3}                                  # {...string} variable number of parameters
+                [*?]?                                   # {...*) Variable number of mixed types
               )?
 
               (?:
