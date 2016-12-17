@@ -2349,6 +2349,14 @@ describe "JavaScript grammar", ->
       {tokens} = grammar.tokenizeLine('/** @return {Some|Thing} Something to return */')
       expect(tokens[4]).toEqual value: '{Some|Thing}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
 
+      {tokens} = grammar.tokenizeLine('/** @return {(String[]|Number[])} Description */')
+      expect(tokens[4]).toEqual value: '{(String[]|Number[])}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
+      expect(tokens[6]).toEqual value: 'Description ', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'other.description.jsdoc']
+
+      {tokens} = grammar.tokenizeLine('/** @param {(Number|Number[])} Numbers */')
+      expect(tokens[4]).toEqual value: '{(Number|Number[])}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
+      expect(tokens[6]).toEqual value: 'Numbers', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'variable.other.jsdoc']
+
       {tokens} = grammar.tokenizeLine('/** @return {object} */')
       expect(tokens[4]).toEqual value: '{object}', scopes: ['source.js', 'comment.block.documentation.js', 'other.meta.jsdoc', 'entity.name.type.instance.jsdoc']
 

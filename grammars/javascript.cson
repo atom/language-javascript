@@ -2166,21 +2166,30 @@
                   \\(                                   # Opening bracket of multiple types with parenthesis {(string|number)}
                     [a-zA-Z_$]+
                     (?:
-                      [\\w$]* |
+                      (?:
+                        [\\w$]*
+                        (?:\\[\\])?                     # {(string[]|number)} type application, an array of strings or a number
+                      ) |
                       \\.?<[\\w$]+(?:,\\s+[\\w$]+)*>    # {Array<string>} or {Object<string, number>} type application (optional .)
                     )
                     (?:
                       [\\.|~]                           # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
                       [a-zA-Z_$]+
                       (?:
-                        [\\w$]* |
+                        (?:
+                          [\\w$]*
+                          (?:\\[\\])?                   # {(string|number[])} type application, a string or an array of numbers
+                        ) |
                         \\.?<[\\w$]+(?:,\\s+[\\w$]+)*>  # {Array<string>} or {Object<string, number>} type application (optional .)
                       )
                     )*
                   \\) |
                   [a-zA-Z_$]+
                   (?:
-                    [\\w$]* |
+                    (?:
+                      [\\w$]*
+                      (?:\\[\\])?                       # {(string|number[])} type application, a string or an array of numbers
+                    ) |
                     \\.?<[\\w$]+(?:,\\s+[\\w$]+)*>      # {Array<string>} or {Object<string, number>} type application (optional .)
                   )
                   (?:
