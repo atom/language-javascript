@@ -286,7 +286,7 @@
     ]
   }
   {
-    'match': '(?<!\\.)\\b(?<!\\$)(super|this|arguments)(?!\\s*:|\\$)\\b'
+    'match': '(?:(?<=\\.{3})|(?<!\\.)\\b)(?<!\\$)(super|this|arguments)(?!\\s*:|\\$)\\b'
     'name': 'variable.language.js'
   }
   {

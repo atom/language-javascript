@@ -305,6 +305,18 @@ describe "JavaScript grammar", ->
       expect(tokens[1]).toEqual value: '...', scopes: ['source.js', 'keyword.operator.spread.js']
       expect(tokens[2]).toEqual value: 'iterableObj', scopes: ['source.js']
 
+      {tokens} = grammar.tokenizeLine('...arguments')
+      expect(tokens[0]).toEqual value: '...', scopes: ['source.js', 'keyword.operator.spread.js']
+      expect(tokens[1]).toEqual value: 'arguments', scopes: ['source.js', 'variable.language.js']
+
+      {tokens} = grammar.tokenizeLine('...super')
+      expect(tokens[0]).toEqual value: '...', scopes: ['source.js', 'keyword.operator.spread.js']
+      expect(tokens[1]).toEqual value: 'super', scopes: ['source.js', 'variable.language.js']
+
+      {tokens} = grammar.tokenizeLine('...this')
+      expect(tokens[0]).toEqual value: '...', scopes: ['source.js', 'keyword.operator.spread.js']
+      expect(tokens[1]).toEqual value: 'this', scopes: ['source.js', 'variable.language.js']
+
     describe "increment, decrement", ->
       it "tokenizes increment", ->
         {tokens} = grammar.tokenizeLine('i++')
