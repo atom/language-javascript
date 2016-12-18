@@ -286,7 +286,7 @@
     ]
   }
   {
-    'match': '(?<!\\.)\\b(?<!\\$)(super|this|arguments)(?!\\s*:|\\$)\\b'
+    'match': '(?:(?<=\\.{3})|(?<!\\.)\\b)(?<!\\$)(super|this|arguments)(?!\\s*:|\\$)\\b'
     'name': 'variable.language.js'
   }
   {
@@ -1926,6 +1926,7 @@
                 \\? |                                   # {?string} nullable type
                 !   |                                   # {!string} non-nullable type
                 \\.{3}                                  # {...string} variable number of parameters
+                [*?]?                                   # {...*} Variable number of mixed types
               )?
 
               (?:
@@ -2052,7 +2053,9 @@
                   (?:
                     [\\w$\\s]* |                        # [foo=bar] Unquoted
                     "[^"]*"    |                        # [foo="bar"] Double-quoted
-                    '[^']*'                             # [foo='bar'] Single-quoted
+                    '[^']*'    |                        # [foo='bar'] Single-quoted
+                    {[^{}]*}   |                        # [foo={a:1}] Object literal
+                    \\[ [^\\[\\]]* \\]                  # [foo=[1,2]] Array literal
                   )
                 )?
               )
@@ -2097,6 +2100,7 @@
                 \\? |                                   # {?string} nullable type
                 !   |                                   # {!string} non-nullable type
                 \\.{3}                                  # {...string} variable number of parameters
+                [*?]?                                   # {...*} Variable number of mixed types
               )?
 
               (?:
@@ -2164,21 +2168,30 @@
                   \\(                                   # Opening bracket of multiple types with parenthesis {(string|number)}
                     [a-zA-Z_$]+
                     (?:
-                      [\\w$]* |
+                      (?:
+                        [\\w$]*
+                        (?:\\[\\])?                     # {(string[]|number)} type application, an array of strings or a number
+                      ) |
                       \\.?<[\\w$]+(?:,\\s+[\\w$]+)*>    # {Array<string>} or {Object<string, number>} type application (optional .)
                     )
                     (?:
                       [\\.|~]                           # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
                       [a-zA-Z_$]+
                       (?:
-                        [\\w$]* |
+                        (?:
+                          [\\w$]*
+                          (?:\\[\\])?                   # {(string|number[])} type application, a string or an array of numbers
+                        ) |
                         \\.?<[\\w$]+(?:,\\s+[\\w$]+)*>  # {Array<string>} or {Object<string, number>} type application (optional .)
                       )
                     )*
                   \\) |
                   [a-zA-Z_$]+
                   (?:
-                    [\\w$]* |
+                    (?:
+                      [\\w$]*
+                      (?:\\[\\])?                       # {(string|number[])} type application, a string or an array of numbers
+                    ) |
                     \\.?<[\\w$]+(?:,\\s+[\\w$]+)*>      # {Array<string>} or {Object<string, number>} type application (optional .)
                   )
                   (?:
