@@ -879,7 +879,7 @@
     'begin': '(?<!\\.)\\b(const)(?!\\s*:)\\b'
     'beginCaptures':
       '1':
-        'name': 'storage.modifier.js'
+        'name': 'storage.type.const.js'
     'end': '(\\bof\\b|\\bin\\b)|(;)|(=)|(?<![,{])\\n'
     'endCaptures':
       '1':
