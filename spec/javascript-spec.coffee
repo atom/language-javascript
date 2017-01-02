@@ -453,7 +453,7 @@ describe "JavaScript grammar", ->
 
     it "tokenizes variables declared using `const` as constants", ->
       {tokens} = grammar.tokenizeLine('const myCoolVar = 42;')
-      expect(tokens[0]).toEqual value: 'const', scopes: ['source.js', 'storage.modifier.js']
+      expect(tokens[0]).toEqual value: 'const', scopes: ['source.js', 'storage.type.const.js']
       expect(tokens[1]).toEqual value: ' ', scopes: ['source.js']
       expect(tokens[2]).toEqual value: 'myCoolVar', scopes: ['source.js', 'constant.other.js']
       expect(tokens[3]).toEqual value: ' ', scopes: ['source.js']
