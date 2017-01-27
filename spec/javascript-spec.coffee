@@ -833,6 +833,14 @@ describe "JavaScript grammar", ->
       expect(lines[2][2]).toEqual value: ' comment ', scopes: ['source.js', 'meta.import.js', 'comment.block.js']
       expect(lines[2][3]).toEqual value: '*/', scopes: ['source.js', 'meta.import.js', 'comment.block.js', 'punctuation.definition.comment.js']
 
+      # https://github.com/atom/language-javascript/issues/485
+      lines = grammar.tokenizeLines '''
+        import a from 'a'; //
+        import b from 'b';
+      '''
+      expect(lines[0][11]).toEqual value: '//', scopes: ['source.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
+      expect(lines[1][0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
+
   describe "ES6 export", ->
     it "tokenizes named export", ->
       {tokens} = grammar.tokenizeLine('export var x = 0;')
@@ -1715,6 +1723,14 @@ describe "JavaScript grammar", ->
         expect(tokens[15]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
 
   describe "comments", ->
+    it "tokenizes // comments", ->
+      {tokens} = grammar.tokenizeLine '//'
+      expect(tokens[0]).toEqual value: '//', scopes: ['source.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
+
+      {tokens} = grammar.tokenizeLine '// stuff'
+      expect(tokens[0]).toEqual value: '//', scopes: ['source.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
+      expect(tokens[1]).toEqual value: ' stuff', scopes: ['source.js', 'comment.line.double-slash.js']
+
     it "tokenizes /* */ comments", ->
       {tokens} = grammar.tokenizeLine('/**/')
       expect(tokens[0]).toEqual value: '/*', scopes: ['source.js', 'comment.block.js', 'punctuation.definition.comment.js']
