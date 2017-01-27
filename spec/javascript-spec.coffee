@@ -835,10 +835,10 @@ describe "JavaScript grammar", ->
 
       # https://github.com/atom/language-javascript/issues/485
       lines = grammar.tokenizeLines '''
-        import a from 'a'; //
-        import b from 'b';
+        import a from 'a' //
+        import b from 'b'
       '''
-      expect(lines[0][11]).toEqual value: '//', scopes: ['source.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
+      expect(lines[0][10]).toEqual value: '//', scopes: ['source.js', 'meta.import.js', 'comment.line.double-slash.js', 'punctuation.definition.comment.js']
       expect(lines[1][0]).toEqual value: 'import', scopes: ['source.js', 'meta.import.js', 'keyword.control.js']
 
   describe "ES6 export", ->
