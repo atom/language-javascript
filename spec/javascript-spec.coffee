@@ -707,6 +707,25 @@ describe "JavaScript grammar", ->
       expect(tokens[6]).toEqual value: ' }', scopes: ['source.js', 'string.quoted.template.graphql.js']
       expect(tokens[7]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.graphql.js', 'punctuation.definition.string.end.js']
 
+  describe "ES6 tagged SQL string templates", ->
+    it "tokenizes them as strings", ->
+      {tokens} = grammar.tokenizeLine('SQL`SELECT foo FROM bar WHERE id = :id`')
+      expect(tokens[0]).toEqual value: 'SQL', scopes: ['source.js', 'string.quoted.template.sql.js', 'entity.name.function.js']
+      expect(tokens[1]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.sql.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[2]).toEqual value: 'SELECT foo FROM bar WHERE id = :id', scopes: ['source.js', 'string.quoted.template.sql.js']
+      expect(tokens[3]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.sql.js', 'punctuation.definition.string.end.js']
+
+  describe "ES6 tagged SQL string templates with interpolation", ->
+    it "tokenizes them as strings", ->
+      {tokens} = grammar.tokenizeLine('SQL`SELECT foo FROM bar WHERE id = ${id}`')
+      expect(tokens[0]).toEqual value: 'SQL', scopes: ['source.js', 'string.quoted.template.sql.js', 'entity.name.function.js']
+      expect(tokens[1]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.sql.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[2]).toEqual value: 'SELECT foo FROM bar WHERE id = ', scopes: ['source.js', 'string.quoted.template.sql.js']
+      expect(tokens[3]).toEqual value: '${', scopes: ['source.js', 'string.quoted.template.sql.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
+      expect(tokens[4]).toEqual value: 'id', scopes: ['source.js', 'string.quoted.template.sql.js', 'source.js.embedded.source']
+      expect(tokens[5]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.sql.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
+      expect(tokens[6]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.sql.js', 'punctuation.definition.string.end.js']
+
   describe "ES6 class", ->
     it "tokenizes class", ->
       {tokens} = grammar.tokenizeLine('class MyClass')
