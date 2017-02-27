@@ -472,12 +472,12 @@
         (
           \\b(get|set)            # Property getter/setter: get foo(){}
           (?:\\s+|(?=\\[))        # Followed by whitespace or square bracket
-        )?
+        )?+
         (                         # Method name
           \\b[a-zA-Z_$][\\w$]*    # Fixed name
           |
           \\[                     # Computed property key
-            .*?[^\\[\\]\\s].*?    # Contains at least one non-brace character
+            [^\\[\\]]++           # Contains at least one non-brace character
           \\]
         )
         \\s*\\(\\s*               # Start of arguments list
