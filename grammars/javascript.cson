@@ -1891,8 +1891,8 @@
             'name': 'punctuation.section.begin.comment.js'
           '2':
             'name': 'punctuation.section.end.comment.js'
-          'match': '(/\\*)(\\*/)'
-          'name': 'comment.block.empty.js'
+        'match': '(/\\*)(\\*/)'
+        'name': 'comment.block.empty.js'
       }
       {
         'begin': '/\\*\\*'
