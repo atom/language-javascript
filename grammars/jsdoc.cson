@@ -456,15 +456,19 @@
         'name': 'invalid.illegal.type.jsdoc'
       }
       {
-        'begin': '\\G{'
+        'begin': '\\G({)'
         'beginCaptures':
           '0':
+            'name': 'entity.name.type.instance.jsdoc'
+          '1':
             'name': 'punctuation.definition.bracket.curly.begin.jsdoc'
-        'end': '}\\s*|(?=\\*/)'
+        'contentName': 'entity.name.type.instance.jsdoc'
+        'end': '((}))\\s*|(?=\\*/)'
         'endCaptures':
-          '0':
+          '1':
+            'name': 'entity.name.type.instance.jsdoc'
+          '2':
             'name': 'punctuation.definition.bracket.curly.end.jsdoc'
-        'name': 'entity.name.type.instance.jsdoc'
         'patterns': [
           {
             'include': '#brackets'
