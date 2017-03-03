@@ -452,7 +452,7 @@
     'patterns': [
       {
         # {unclosed
-        'match': '\\G{[^}]+$'
+        'match': '\\G{(?:[^}*]|\\*[^/}])+$'
         'name': 'invalid.illegal.type.jsdoc'
       }
       {
