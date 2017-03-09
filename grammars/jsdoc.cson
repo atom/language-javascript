@@ -41,19 +41,19 @@
       '3':
         'name': 'entity.name.type.instance.jsdoc'
       '4':
-        'name': 'punctuation.definition.begin.jsdoc'
+        'name': 'punctuation.definition.bracket.angle.begin.jsdoc'
       '5':
         'name': 'constant.other.email.link.underline.jsdoc'
       '6':
-        'name': 'punctuation.definition.end.jsdoc'
+        'name': 'punctuation.definition.bracket.angle.end.jsdoc'
   }
   {
     # @borrows <that namepath> as <this namepath>
     'match': '''(?x)
       ((@)borrows) \\s+
-      ((?:[^@\\s*/]|\\*[^/])++)   # <that namepath>
-      \\s++ (as) \\s++            # as
-      ((?:[^@\\s*/]|\\*[^/])++)   # <this namepath>
+      ((?:[^@\\s*/]|\\*[^/])+)    # <that namepath>
+      \\s++ (as) \\s+             # as
+      ((?:[^@\\s*/]|\\*[^/])+)    # <this namepath>
     '''
     'captures':
       '1':
@@ -150,13 +150,13 @@
         # URL
         (
           (?=https?://)
-          (?:[^\\s*]|\\*[/])+
+          (?:[^\\s*]|\\*[^/])+
         )
         |
         # JSDoc namepath
         (
           (?!https?://)
-          (?:[^@\\s*/]|\\*[^/])++
+          (?:[^@\\s*/]|\\*[^/])+
         )
       )
     '''
@@ -170,6 +170,12 @@
         'name': 'punctuation.definition.block.tag.jsdoc'
       '3':
         'name': 'variable.other.jsdoc'
+        'patterns': [
+          {
+            'match': ','
+            'name': 'punctuation.delimiter.object.comma.jsdoc'
+          }
+        ]
     'match': '''(?x)
       ((@)template)
       \\s+
@@ -232,8 +238,10 @@
     # -  @<tag> {type} identifier
     'begin': '((@)(?:arg|argument|const|constant|member|namespace|param|prop|property|var))\\s+(?={)'
     'beginCaptures':
-      '1': 'name': 'storage.type.class.jsdoc'
-      '2': 'name': 'punctuation.definition.block.tag.jsdoc'
+      '1':
+        'name': 'storage.type.class.jsdoc'
+      '2':
+        'name': 'punctuation.definition.block.tag.jsdoc'
     'end': '(?=\\s|\\*/|[^{}\\[\\]A-Za-z_$])'
     'patterns': [
       {
@@ -302,7 +310,7 @@
   {
     # Tags followed by a quoted arbitrary value
     # -  @<tag> "Quoted value"
-    'begin': '((@)(?:default(?:value)?|license|version))\\s+([\'"])'
+    'begin': '((@)(?:default(?:value)?|license|version))\\s+(([\'"]))'
     'beginCaptures':
       '1':
         'name': 'storage.type.class.jsdoc'
@@ -310,11 +318,15 @@
         'name': 'punctuation.definition.block.tag.jsdoc'
       '3':
         'name': 'variable.other.jsdoc'
+      '4':
+        'name': 'punctuation.definition.string.begin.jsdoc'
     'contentName': 'variable.other.jsdoc'
-    'end': '\\3|(?=$|\\*/)'
+    'end': '(\\3)|(?=$|\\*/)'
     'endCaptures':
       '0':
         'name': 'variable.other.jsdoc'
+      '1':
+        'name': 'punctuation.definition.string.end.jsdoc'
   }
   {
     # Tags followed by an arbitrary value
@@ -366,17 +378,19 @@
     'name': 'constant.other.description.jsdoc'
   }
   {
-    # {@link|tutorial …}
-    'begin': '({@)(?:link|linkcode|linkplain|tutorial)\\s*'
+    # {@link|@tutorial …}
+    'begin': '({)((@)(?:link(?:code|plain)?|tutorial))\\s*'
     'beginCaptures':
-      '0':
-        'name': 'storage.type.class.jsdoc'
       '1':
-        'name': 'punctuation.definition.inline.tag.begin.jsdoc'
+        'name': 'punctuation.definition.bracket.curly.begin.jsdoc'
+      '2':
+        'name': 'storage.type.class.jsdoc'
+      '3':
+        'name': 'punctuation.definition.inline.tag.jsdoc'
     'end': '}|(?=\\*/)'
     'endCaptures':
       '0':
-        'name': 'punctuation.definition.inline.tag.end.jsdoc'
+        'name': 'punctuation.definition.bracket.curly.end.jsdoc'
     'name': 'entity.name.type.instance.jsdoc'
     'patterns': [
       {
@@ -400,7 +414,6 @@
 ]
 
 'repository':
-
   # Balanced brackets (square or curly)
   'brackets':
     'patterns': [
@@ -423,7 +436,6 @@
         ]
       }
     ]
-
   # Balanced quotes
   'quotes':
     'patterns': [
@@ -446,7 +458,6 @@
         ]
       }
     ]
-
   # {type}
   'type':
     'patterns': [
