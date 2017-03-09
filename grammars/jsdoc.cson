@@ -265,6 +265,9 @@
                 'name': 'source.embedded.js'
                 'patterns': [
                   {
+                    'include': '#inline-tags'
+                  }
+                  {
                     'include': 'source.js'
                   }
                 ]
@@ -381,48 +384,7 @@
     'name': 'storage.type.class.jsdoc'
   }
   {
-    # Description preceding {@inline tag}
-    'captures':
-      '1':
-        'name': 'punctuation.definition.bracket.square.begin.jsdoc'
-      '2':
-        'name': 'punctuation.definition.bracket.square.end.jsdoc'
-    'match': '(\\[)[^\\]]+(\\])(?={@(?:link|linkcode|linkplain|tutorial))'
-    'name': 'constant.other.description.jsdoc'
-  }
-  {
-    # {@link|@tutorial …}
-    'begin': '({)((@)(?:link(?:code|plain)?|tutorial))\\s*'
-    'beginCaptures':
-      '1':
-        'name': 'punctuation.definition.bracket.curly.begin.jsdoc'
-      '2':
-        'name': 'storage.type.class.jsdoc'
-      '3':
-        'name': 'punctuation.definition.inline.tag.jsdoc'
-    'end': '}|(?=\\*/)'
-    'endCaptures':
-      '0':
-        'name': 'punctuation.definition.bracket.curly.end.jsdoc'
-    'name': 'entity.name.type.instance.jsdoc'
-    'patterns': [
-      {
-        'captures':
-          '1':
-            'name': 'variable.other.link.underline.jsdoc'
-          '2':
-            'name': 'punctuation.separator.pipe.jsdoc'
-        'match': '\\G((?=https?://)(?:[^|}\\s*]|\\*[/])+)(\\|)?'
-      }
-      {
-        'captures':
-          '1':
-            'name': 'variable.other.description.jsdoc'
-          '2':
-            'name': 'punctuation.separator.pipe.jsdoc'
-        'match': '\\G((?:[^{}@\\s|*]|\\*[^/])+)(\\|)?'
-      }
-    ]
+    'include': '#inline-tags'
   }
 ]
 
@@ -445,6 +407,53 @@
         'patterns': [
           {
             'include': '#brackets'
+          }
+        ]
+      }
+    ]
+  'inline-tags':
+    'patterns': [
+      {
+        # Description preceding {@inline tag}
+        'captures':
+          '1':
+            'name': 'punctuation.definition.bracket.square.begin.jsdoc'
+          '2':
+            'name': 'punctuation.definition.bracket.square.end.jsdoc'
+        'match': '(\\[)[^\\]]+(\\])(?={@(?:link|linkcode|linkplain|tutorial))'
+        'name': 'constant.other.description.jsdoc'
+      }
+      {
+        # {@link|@tutorial …}
+        'begin': '({)((@)(?:link(?:code|plain)?|tutorial))\\s*'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.bracket.curly.begin.jsdoc'
+          '2':
+            'name': 'storage.type.class.jsdoc'
+          '3':
+            'name': 'punctuation.definition.inline.tag.jsdoc'
+        'end': '}|(?=\\*/)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.bracket.curly.end.jsdoc'
+        'name': 'entity.name.type.instance.jsdoc'
+        'patterns': [
+          {
+            'captures':
+              '1':
+                'name': 'variable.other.link.underline.jsdoc'
+              '2':
+                'name': 'punctuation.separator.pipe.jsdoc'
+            'match': '\\G((?=https?://)(?:[^|}\\s*]|\\*[/])+)(\\|)?'
+          }
+          {
+            'captures':
+              '1':
+                'name': 'variable.other.description.jsdoc'
+              '2':
+                'name': 'punctuation.separator.pipe.jsdoc'
+            'match': '\\G((?:[^{}@\\s|*]|\\*[^/])+)(\\|)?'
           }
         ]
       }
