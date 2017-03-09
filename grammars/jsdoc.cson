@@ -257,6 +257,19 @@
         'end': '\\]|(?=\\*/)'
         'patterns': [
           {
+            'match': '(=)((?:[^\\]*]|\\*[^/])*)'
+            'captures':
+              '1':
+                'name': 'keyword.operator.assignment.jsdoc'
+              '2':
+                'name': 'source.embedded.js'
+                'patterns': [
+                  {
+                    'include': 'source.js'
+                  }
+                ]
+          }
+          {
             'include': '#brackets'
           }
           {
