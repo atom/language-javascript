@@ -24,12 +24,12 @@
       \\s+
       (
         [^@\\s<>*/]
-        (?:[^@<>*/]|\\*[^/])*+
+        (?:[^@<>*/]|\\*[^/])*
       )
       (?:
         \\s*
         (<)
-        ([^>\\s]++)
+        ([^>\\s]+)
         (>)
       )?
     '''
@@ -52,7 +52,7 @@
     'match': '''(?x)
       ((@)borrows) \\s+
       ((?:[^@\\s*/]|\\*[^/])+)    # <that namepath>
-      \\s++ (as) \\s+             # as
+      \\s+ (as) \\s+              # as
       ((?:[^@\\s*/]|\\*[^/])+)    # <this namepath>
     '''
     'captures':
@@ -104,7 +104,7 @@
       }
       {
         # Highlighted JavaScript example
-        'match': '[^\\s@*](?:[^*]|\\*[^/])*+'
+        'match': '[^\\s@*](?:[^*]|\\*[^/])*'
         'captures':
           '0':
             'name': 'source.embedded.js'
@@ -229,7 +229,7 @@
       }
       {
         'name': 'entity.name.type.instance.jsdoc'
-        'match': '(?:[^@\\s*/]|\\*[^/])++'
+        'match': '(?:[^@\\s*/]|\\*[^/])+'
       }
     ]
   }
