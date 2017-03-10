@@ -635,6 +635,43 @@ describe "JSDoc grammar", ->
         expect(tokens[16]).toEqual value: ' [] [] ', scopes: ['source.js', 'comment.block.documentation.js']
         expect(tokens[17]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.section.end.comment.js']
 
+      it "tokenises escape sequences inside strings", ->
+        {tokens} = grammar.tokenizeLine('/** @param {String} [key="a[\\"]z"] */')
+        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.section.begin.comment.js']
+        expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
+        expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
+        expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
+        expect(tokens[6]).toEqual value: 'String', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
+        expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
+        expect(tokens[9]).toEqual value: '[', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
+        expect(tokens[10]).toEqual value: 'key', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
+        expect(tokens[11]).toEqual value: '=', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'keyword.operator.assignment.jsdoc']
+        expect(tokens[12]).toEqual value: '"', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
+        expect(tokens[13]).toEqual value: 'a[', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.double.js']
+        expect(tokens[14]).toEqual value: '\\"', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.double.js', 'constant.character.escape.js']
+        expect(tokens[15]).toEqual value: ']z', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.double.js']
+        expect(tokens[16]).toEqual value: '"', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
+        expect(tokens[17]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
+        expect(tokens[19]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.section.end.comment.js']
+
+        {tokens} = grammar.tokenizeLine("/** @param {String} [key='a[\\']z'] */")
+        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.section.begin.comment.js']
+        expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
+        expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
+        expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
+        expect(tokens[6]).toEqual value: 'String', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
+        expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
+        expect(tokens[9]).toEqual value: '[', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
+        expect(tokens[10]).toEqual value: 'key', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
+        expect(tokens[11]).toEqual value: '=', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'keyword.operator.assignment.jsdoc']
+        expect(tokens[12]).toEqual value: '\'', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.single.js', 'punctuation.definition.string.begin.js']
+        expect(tokens[13]).toEqual value: 'a[', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.single.js']
+        expect(tokens[14]).toEqual value: '\\\'', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.single.js', 'constant.character.escape.js']
+        expect(tokens[15]).toEqual value: ']z', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.single.js']
+        expect(tokens[16]).toEqual value: '\'', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
+        expect(tokens[17]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
+        expect(tokens[19]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.section.end.comment.js']
+
     it "tokenises @param tags with accessor-style names", ->
       {tokens} = grammar.tokenizeLine('/** @param {object} parameter.property this is the description */')
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
