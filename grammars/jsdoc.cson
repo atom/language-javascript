@@ -252,28 +252,29 @@
         'name': 'variable.other.jsdoc'
       }
       {
-        'name': 'variable.other.jsdoc'
         'begin': '\\['
-        'end': '\\]|(?=\\*/)'
+        'beginCaptures':
+          '0':
+            'name': 'variable.other.jsdoc'
+        'contentName': 'variable.other.jsdoc'
+        'end': '(\\])((?:[^*\\s]|\\*[^\\s/])+)?|(?=\\*/)'
+        'endCaptures':
+          '1':
+            'name': 'variable.other.jsdoc'
+          '2':
+            'name': 'invalid.illegal.syntax.jsdoc'
         'patterns': [
           {
-            'match': '(=)((?:[^\\]*]|\\*[^/])*)'
-            'captures':
-              '1':
+            'begin': '='
+            'beginCaptures':
+              '0':
                 'name': 'keyword.operator.assignment.jsdoc'
-              '2':
-                'name': 'source.embedded.js'
-                'patterns': [
-                  {
-                    'include': '#inline-tags'
-                  }
-                  {
-                    'include': 'source.js'
-                  }
-                ]
-          }
-          {
-            'include': '#brackets'
+            'end': '(?=\\]|\\*/)'
+            'patterns': [
+              {
+                'include': '#default-value'
+              }
+            ]
           }
           {
             'include': '#quotes'
@@ -409,6 +410,49 @@
             'include': '#brackets'
           }
         ]
+      }
+    ]
+  # Default @param value, highlighted as JavaScript
+  'default-value':
+    'patterns': [
+      {
+        # Nested arrays matched to keep brackets balanced
+        'begin': '(\\[)'
+        'beginCaptures':
+          '0':
+            'name': 'source.embedded.js'
+          '1':
+            # NOTE: Should ideally be "punctuation.definition.bracket.square.begin.js"
+            # We're using the old/"incorrect" scope to ensure consistent highlighting.
+            'name': 'meta.brace.square.js'
+        'end': '(\\])|(?=\\*/)'
+        'endCaptures':
+          '0':
+            'name': 'source.embedded.js'
+          '1':
+            'name': 'meta.brace.square.js'
+        'patterns': [
+          {
+            'include': '#default-value'
+          }
+        ]
+      }
+      # Chunk of JS source (excluding nested arrays; see above). Note we "clamp" the
+      # imported highlighting within a fixed range to stop runaway problems with any
+      # begin/end patterns the JavaScript grammar matches.
+      {
+        'match': '(?:[^\\[\\]*]|\\*[^/])+'
+        'name': 'source.embedded.js'
+        'captures':
+          '0':
+            'patterns': [
+              {
+                'include': '#inline-tags'
+              }
+              {
+                'include': 'source.js'
+              }
+            ]
       }
     ]
   'inline-tags':
