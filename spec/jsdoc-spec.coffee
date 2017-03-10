@@ -635,6 +635,19 @@ describe "JSDoc grammar", ->
         expect(tokens[16]).toEqual value: ' [] [] ', scopes: ['source.js', 'comment.block.documentation.js']
         expect(tokens[17]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.section.end.comment.js']
 
+        {tokens} = grammar.tokenizeLine('/** @param {Object} [thing="{a: [], b: [0, 2], c: \'String\'}][Quoted Description] ["][Bad Description] [] */')
+        expect(tokens[14]).toEqual value: '"', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
+        expect(tokens[15]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
+        expect(tokens[16]).toEqual value: '[Bad', scopes: ['source.js', 'comment.block.documentation.js', 'invalid.illegal.syntax.jsdoc']
+        expect(tokens[17]).toEqual value: ' Description] [] ', scopes: ['source.js', 'comment.block.documentation.js']
+
+        {tokens} = grammar.tokenizeLine('/** @param {Object} [thing=\'{a: [], b: [0, 2], c: "String"}][Quoted Description] [\'][Bad_Unquoted Description] */')
+        expect(tokens[14]).toEqual value: "'", scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
+        expect(tokens[15]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
+        expect(tokens[16]).toEqual value: '[Bad_Unquoted', scopes: ['source.js', 'comment.block.documentation.js', 'invalid.illegal.syntax.jsdoc']
+        expect(tokens[17]).toEqual value: ' Description] ', scopes: ['source.js', 'comment.block.documentation.js']
+        expect(tokens[18]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.section.end.comment.js']
+
       it "tokenises escape sequences inside strings", ->
         {tokens} = grammar.tokenizeLine('/** @param {String} [key="a[\\"]z"] */')
         expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.section.begin.comment.js']
