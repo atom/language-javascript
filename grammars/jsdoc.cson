@@ -415,6 +415,52 @@
   # Default @param value, highlighted as JavaScript
   'default-value':
     'patterns': [
+      # Double-quoted string
+      {
+        'begin': '(")'
+        'beginCaptures':
+          '0':
+            'name': 'string.quoted.double.js'
+          '1':
+            'name': 'punctuation.definition.string.begin.js'
+        'contentName': 'string.quoted.double.js'
+        'end': '(")|(?=\\*/)'
+        'endCaptures':
+          '0':
+            'name': 'string.quoted.double.js'
+          '1':
+            'name': 'punctuation.definition.string.end.js'
+        'name': 'source.embedded.js'
+        'patterns': [
+          {
+            'match': '\\\\(?:[^*]|\\*(?!/))'
+            'name': 'constant.character.escape.js'
+          }
+        ]
+      }
+      # Single-quoted string
+      {
+        'begin': "(')"
+        'beginCaptures':
+          '0':
+            'name': 'string.quoted.single.js'
+          '1':
+            'name': 'punctuation.definition.string.begin.js'
+        'contentName': 'string.quoted.single.js'
+        'end': "(')|(?=\\*/)"
+        'endCaptures':
+          '0':
+            'name': 'string.quoted.single.js'
+          '1':
+            'name': 'punctuation.definition.string.end.js'
+        'name': 'source.embedded.js'
+        'patterns': [
+          {
+            'match': '\\\\(?:[^*]|\\*(?!/))'
+            'name': 'constant.character.escape.js'
+          }
+        ]
+      }
       {
         # Nested arrays matched to keep brackets balanced
         'begin': '(\\[)'
@@ -441,11 +487,16 @@
       # imported highlighting within a fixed range to stop runaway problems with any
       # begin/end patterns the JavaScript grammar matches.
       {
-        'match': '(?:[^\\[\\]*]|\\*[^/])+'
+        'match': '(?:[^"\'\\[\\]*]|\\*[^/])+'
         'name': 'source.embedded.js'
         'captures':
           '0':
             'patterns': [
+              # Unmatched } after a string literal: `"string"}`
+              {
+                'match': '}'
+                'name': 'meta.brace.curly.js'
+              }
               {
                 'include': '#inline-tags'
               }
