@@ -155,7 +155,15 @@
         |
         # JSDoc namepath
         (
-          (?!https?://)
+          (?!
+            # Avoid matching bare URIs (also acceptable as links)
+            https?://
+            |
+            # Avoid matching {@inline tags}; we match those below
+            (?:\\[[^\\[\\]]*\\])? # Possible description [preceding]{@tag}
+            {@(?:link|linkcode|linkplain|tutorial)\\b
+          )
+          # Matched namepath
           (?:[^@\\s*/]|\\*[^/])+
         )
       )
