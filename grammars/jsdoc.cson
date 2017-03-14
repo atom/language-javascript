@@ -11,7 +11,7 @@
       '3':
         'name': 'constant.language.access-type.jsdoc'
     'match': '''(?x)
-      ((@)access)
+      ((@)(?:access|api))
       \\s+
       (private|protected|public)
       \\b
@@ -377,16 +377,16 @@
       '1':
         'name': 'punctuation.definition.block.tag.jsdoc'
     'match': '''(?x) (@)
-      (?:abstract|access|alias|arg|argument|async|attribute|augments|author|beta|borrows|bubbles
+      (?:abstract|access|alias|api|arg|argument|async|attribute|augments|author|beta|borrows|bubbles
       |callback|chainable|class|classdesc|code|config|const|constant|constructor|constructs|copyright
       |default|defaultvalue|define|deprecated|desc|description|dict|emits|enum|event|example|exception
       |exports?|extends|extension(?:_?for)?|external|externs|file|fileoverview|final|fires|for|func
-      |function|global|host|ignore|implements|implicitCast|inherit[Dd]oc|inner|instance|interface|kind
-      |lends|license|listens|main|member|memberof!?|method|mixes|mixins?|modifies|module|name|namespace
-      |noalias|nocollapse|nocompile|nosideeffects|override|overview|package|param|preserve|private|prop
-      |property|protected|public|read[Oo]nly|record|require[ds]|returns?|see|since|static|struct|submodule
-      |summary|suppress|template|this|throws|todo|tutorial|type|typedef|unrestricted|uses|var|variation
-      |version|virtual|writeOnce)
+      |function|global|host|ignore|implements|implicitCast|inherit[Dd]oc|inner|instance|interface
+      |internal|kind|lends|license|listens|main|member|memberof!?|method|mixes|mixins?|modifies|module
+      |name|namespace|noalias|nocollapse|nocompile|nosideeffects|override|overview|package|param|preserve
+      |private|prop|property|protected|public|read[Oo]nly|record|require[ds]|returns?|see|since|static
+      |struct|submodule|summary|suppress|template|this|throws|todo|tutorial|type|typedef|unrestricted
+      |uses|var|variation|version|virtual|writeOnce)
       \\b
     '''
     'name': 'storage.type.class.jsdoc'
