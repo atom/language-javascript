@@ -79,12 +79,8 @@
         'name': 'punctuation.definition.block.tag.jsdoc'
     'patterns': [
       {
-        # Match to prevent leading asterisk being highlighted as JS
-        'match': '^\\s\\*\\s+'
-      }
-      {
         # Leading <caption>…</caption> before example
-        'begin': '\\G(<)caption(>)'
+        'begin': '(<)caption(>)'
         'beginCaptures':
           '0':
             'name': 'entity.name.tag.inline.jsdoc'
@@ -92,7 +88,6 @@
             'name': 'punctuation.definition.bracket.angle.begin.jsdoc'
           '2':
             'name': 'punctuation.definition.bracket.angle.end.jsdoc'
-        'contentName': 'constant.other.description.jsdoc'
         'end': '(</)caption(>)|(?=\\*/)'
         'endCaptures':
           '0':
@@ -101,18 +96,38 @@
             'name': 'punctuation.definition.bracket.angle.begin.jsdoc'
           '2':
             'name': 'punctuation.definition.bracket.angle.end.jsdoc'
+        'name': 'meta.caption.jsdoc'
+        'patterns': [
+          {
+            # Keep leading asterisks highlighted as comments in multiline captions
+            'match': '^\\s\\*\\s+'
+          }
+          {
+            # Highlight contents as embedded HTML
+            'match': '(?:[^<*]|\\*[^/]|<(?!/caption>))+'
+            'name': 'constant.other.description.jsdoc'
+            'captures':
+              '0':
+                'patterns': [
+                  {
+                    'include': 'text.html.basic'
+                  }
+                ]
+          }
+        ]
       }
       {
-        # Highlighted JavaScript example
-        'match': '[^\\s@*](?:[^*]|\\*[^/])*'
-        'captures':
-          '0':
-            'name': 'source.embedded.js'
-            'patterns': [
-              {
-                'include': 'source.js'
-              }
-            ]
+        # Make sure <caption> only matches once in each @example
+        'begin': '(?<=</caption>)'
+        'end': '(?=@|\\*/)'
+        'patterns': [
+          {
+            'include': '#example-js'
+          }
+        ]
+      }
+      {
+        'include': '#example-js'
       }
     ]
   }
@@ -508,6 +523,26 @@
               {
                 'include': '#inline-tags'
               }
+              {
+                'include': 'source.js'
+              }
+            ]
+      }
+    ]
+  # Highlighted JavaScript for @example tag
+  'example-js':
+    'patterns': [
+      {
+        # Match to prevent leading asterisk being highlighted as JS
+        'match': '^\\s\\*\\s+'
+      }
+      {
+        # "Clamped" line of JS source
+        'match': '[^\\s@*](?:[^*]|\\*[^/])+'
+        'captures':
+          '0':
+            'name': 'source.embedded.js'
+            'patterns': [
               {
                 'include': 'source.js'
               }
