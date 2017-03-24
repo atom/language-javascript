@@ -119,3 +119,6 @@
   'export module':
     'prefix': 'expmod'
     'body': 'module.exports = ${1:name};'
+  'return':
+    'prefix': 'ret'
+    'body': 'return $1;$0'
