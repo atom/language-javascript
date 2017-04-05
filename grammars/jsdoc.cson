@@ -276,16 +276,11 @@
       }
       {
         'begin': '\\['
-        'beginCaptures':
-          '0':
-            'name': 'variable.other.jsdoc'
-        'contentName': 'variable.other.jsdoc'
-        'end': '(\\])((?:[^*\\s]|\\*[^\\s/])+)?|(?=\\*/)'
+        'end': '\\]((?:[^*\\s]|\\*[^\\s/])+)?|(?=\\*/)'
         'endCaptures':
           '1':
-            'name': 'variable.other.jsdoc'
-          '2':
             'name': 'invalid.illegal.syntax.jsdoc'
+        'name': 'variable.other.jsdoc'
         'patterns': [
           {
             'begin': '='
