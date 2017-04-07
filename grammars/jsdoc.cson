@@ -433,45 +433,17 @@
   # Default @param value, highlighted as JavaScript
   'default-value':
     'patterns': [
-      # Double-quoted string
+      # Strings
       {
-        'begin': '(")'
+        'begin': '("|\')'
         'beginCaptures':
           '0':
-            'name': 'string.quoted.double.js'
-          '1':
             'name': 'punctuation.definition.string.begin.js'
-        'contentName': 'string.quoted.double.js'
-        'end': '(")|(?=\\*/)'
+        'end': '\\1|(?=\\*/)'
         'endCaptures':
           '0':
-            'name': 'string.quoted.double.js'
-          '1':
             'name': 'punctuation.definition.string.end.js'
-        'name': 'source.embedded.js'
-        'patterns': [
-          {
-            'match': '\\\\(?:[^*]|\\*(?!/))'
-            'name': 'constant.character.escape.js'
-          }
-        ]
-      }
-      # Single-quoted string
-      {
-        'begin': "(')"
-        'beginCaptures':
-          '0':
-            'name': 'string.quoted.single.js'
-          '1':
-            'name': 'punctuation.definition.string.begin.js'
-        'contentName': 'string.quoted.single.js'
-        'end': "(')|(?=\\*/)"
-        'endCaptures':
-          '0':
-            'name': 'string.quoted.single.js'
-          '1':
-            'name': 'punctuation.definition.string.end.js'
-        'name': 'source.embedded.js'
+        'name': 'string.quoted.js'
         'patterns': [
           {
             'match': '\\\\(?:[^*]|\\*(?!/))'
