@@ -16,6 +16,7 @@
   'sjs'
   'xsjs'
   'xsjslib'
+  'gradle'
 ]
 'firstLineMatch': '''(?x)
   # Hashbang
