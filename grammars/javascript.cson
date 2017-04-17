@@ -16,6 +16,7 @@
   'sjs'
   'xsjs'
   'xsjslib'
+  'jsx'
 ]
 'firstLineMatch': '''(?x)
   # Hashbang
