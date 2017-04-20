@@ -88,6 +88,7 @@
             'name': 'punctuation.definition.bracket.angle.begin.jsdoc'
           '2':
             'name': 'punctuation.definition.bracket.angle.end.jsdoc'
+        'contentName': 'constant.other.description.jsdoc'
         'end': '(</)caption(>)|(?=\\*/)'
         'endCaptures':
           '0':
@@ -97,24 +98,6 @@
           '2':
             'name': 'punctuation.definition.bracket.angle.end.jsdoc'
         'name': 'meta.caption.jsdoc'
-        'patterns': [
-          {
-            # Keep leading asterisks highlighted as comments in multiline captions
-            'match': '^\\s\\*\\s+'
-          }
-          {
-            # Highlight contents as embedded HTML
-            'match': '(?:[^<*]|\\*[^/]|<(?!/caption>))+'
-            'name': 'constant.other.description.jsdoc'
-            'captures':
-              '0':
-                'patterns': [
-                  {
-                    'include': 'text.html.basic'
-                  }
-                ]
-          }
-        ]
       }
       {
         # Make sure <caption> only matches once in each @example
