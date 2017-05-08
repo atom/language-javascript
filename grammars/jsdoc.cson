@@ -102,18 +102,6 @@
           '2':
             'name': 'punctuation.definition.bracket.angle.end.jsdoc'
       }
-      {
-        # Highlighted JavaScript example
-        'match': '[^\\s@*](?:[^*]|\\*[^/])*'
-        'captures':
-          '0':
-            'name': 'source.embedded.js'
-            'patterns': [
-              {
-                'include': 'source.js'
-              }
-            ]
-      }
     ]
   }
   {
@@ -262,29 +250,19 @@
       {
         'name': 'variable.other.jsdoc'
         'begin': '\\['
-        'end': '\\]|(?=\\*/)'
+        'end': '\\](?=\\s*([\\w-]|$|\\*/))|(?=\\*/)'
         'patterns': [
           {
-            'match': '(=)((?:[^\\]*]|\\*[^/])*)'
-            'captures':
-              '1':
+            'begin': '='
+            'beginCaptures':
+              '0':
                 'name': 'keyword.operator.assignment.jsdoc'
-              '2':
-                'name': 'source.embedded.js'
-                'patterns': [
-                  {
-                    'include': '#inline-tags'
-                  }
-                  {
-                    'include': 'source.js'
-                  }
-                ]
-          }
-          {
-            'include': '#brackets'
-          }
-          {
-            'include': '#quotes'
+            'end': '(?=(\\]\\s*([\\w-]|$|\\*/))|\\*/)'
+            'patterns': [
+              {
+                'include': '#inline-tags'
+              }
+            ]
           }
         ]
       }
@@ -462,28 +440,6 @@
               '2':
                 'name': 'punctuation.separator.pipe.jsdoc'
             'match': '\\G((?:[^{}@\\s|*]|\\*[^/])+)(\\|)?'
-          }
-        ]
-      }
-    ]
-  # Balanced quotes
-  'quotes':
-    'patterns': [
-      {
-        'begin': "'"
-        'end': "'|(?=\\*/)"
-        'patterns': [
-          {
-            'include': '#quotes'
-          }
-        ]
-      }
-      {
-        'begin': '"'
-        'end': '"|(?=\\*/)'
-        'patterns': [
-          {
-            'include': '#quotes'
           }
         ]
       }
