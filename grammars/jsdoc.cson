@@ -11,7 +11,7 @@
       '3':
         'name': 'constant.language.access-type.jsdoc'
     'match': '''(?x)
-      ((@)access)
+      ((@)(?:access|api))
       \\s+
       (private|protected|public)
       \\b
@@ -79,12 +79,8 @@
         'name': 'punctuation.definition.block.tag.jsdoc'
     'patterns': [
       {
-        # Match to prevent leading asterisk being highlighted as JS
-        'match': '^\\s\\*\\s+'
-      }
-      {
         # Leading <caption>…</caption> before example
-        'begin': '\\G(<)caption(>)'
+        'begin': '(<)caption(>)'
         'beginCaptures':
           '0':
             'name': 'entity.name.tag.inline.jsdoc'
@@ -92,7 +88,6 @@
             'name': 'punctuation.definition.bracket.angle.begin.jsdoc'
           '2':
             'name': 'punctuation.definition.bracket.angle.end.jsdoc'
-        'contentName': 'constant.other.description.jsdoc'
         'end': '(</)caption(>)|(?=\\*/)'
         'endCaptures':
           '0':
@@ -101,18 +96,38 @@
             'name': 'punctuation.definition.bracket.angle.begin.jsdoc'
           '2':
             'name': 'punctuation.definition.bracket.angle.end.jsdoc'
+        'name': 'meta.caption.jsdoc'
+        'patterns': [
+          {
+            # Keep leading asterisks highlighted as comments in multiline captions
+            'match': '^\\s\\*\\s+'
+          }
+          {
+            # Highlight contents as embedded HTML
+            'match': '(?:[^<*]|\\*[^/]|<(?!/caption>))+'
+            'name': 'constant.other.description.jsdoc'
+            'captures':
+              '0':
+                'patterns': [
+                  {
+                    'include': 'text.html.basic'
+                  }
+                ]
+          }
+        ]
       }
       {
-        # Highlighted JavaScript example
-        'match': '[^\\s@*](?:[^*]|\\*[^/])*'
-        'captures':
-          '0':
-            'name': 'source.embedded.js'
-            'patterns': [
-              {
-                'include': 'source.js'
-              }
-            ]
+        # Make sure <caption> only matches once in each @example
+        'begin': '(?<=</caption>)'
+        'end': '(?=@|\\*/)'
+        'patterns': [
+          {
+            'include': '#example-js'
+          }
+        ]
+      }
+      {
+        'include': '#example-js'
       }
     ]
   }
@@ -155,7 +170,15 @@
         |
         # JSDoc namepath
         (
-          (?!https?://)
+          (?!
+            # Avoid matching bare URIs (also acceptable as links)
+            https?://
+            |
+            # Avoid matching {@inline tags}; we match those below
+            (?:\\[[^\\[\\]]*\\])? # Possible description [preceding]{@tag}
+            {@(?:link|linkcode|linkplain|tutorial)\\b
+          )
+          # Matched namepath
           (?:[^@\\s*/]|\\*[^/])+
         )
       )
@@ -252,28 +275,24 @@
         'name': 'variable.other.jsdoc'
       }
       {
-        'name': 'variable.other.jsdoc'
         'begin': '\\['
-        'end': '\\]|(?=\\*/)'
+        'end': '\\]((?:[^*\\s]|\\*[^\\s/])+)?|(?=\\*/)'
+        'endCaptures':
+          '1':
+            'name': 'invalid.illegal.syntax.jsdoc'
+        'name': 'variable.other.jsdoc'
         'patterns': [
           {
-            'match': '(=)((?:[^\\]*]|\\*[^/])*)'
-            'captures':
-              '1':
+            'begin': '='
+            'beginCaptures':
+              '0':
                 'name': 'keyword.operator.assignment.jsdoc'
-              '2':
-                'name': 'source.embedded.js'
-                'patterns': [
-                  {
-                    'include': '#inline-tags'
-                  }
-                  {
-                    'include': 'source.js'
-                  }
-                ]
-          }
-          {
-            'include': '#brackets'
+            'end': '(?=\\]|\\*/)'
+            'patterns': [
+              {
+                'include': '#default-value'
+              }
+            ]
           }
           {
             'include': '#quotes'
@@ -369,16 +388,16 @@
       '1':
         'name': 'punctuation.definition.block.tag.jsdoc'
     'match': '''(?x) (@)
-      (?:abstract|access|alias|arg|argument|async|attribute|augments|author|beta|borrows|bubbles
+      (?:abstract|access|alias|api|arg|argument|async|attribute|augments|author|beta|borrows|bubbles
       |callback|chainable|class|classdesc|code|config|const|constant|constructor|constructs|copyright
       |default|defaultvalue|define|deprecated|desc|description|dict|emits|enum|event|example|exception
       |exports?|extends|extension(?:_?for)?|external|externs|file|fileoverview|final|fires|for|func
-      |function|global|host|ignore|implements|implicitCast|inherit[Dd]oc|inner|instance|interface|kind
-      |lends|license|listens|main|member|memberof!?|method|mixes|mixins?|modifies|module|name|namespace
-      |noalias|nocollapse|nocompile|nosideeffects|override|overview|package|param|preserve|private|prop
-      |property|protected|public|read[Oo]nly|record|require[ds]|returns?|see|since|static|struct|submodule
-      |summary|suppress|template|this|throws|todo|tutorial|type|typedef|unrestricted|uses|var|variation
-      |version|virtual|writeOnce)
+      |function|global|host|ignore|implements|implicitCast|inherit[Dd]oc|inner|instance|interface
+      |internal|kind|lends|license|listens|main|member|memberof!?|method|mixes|mixins?|modifies|module
+      |name|namespace|noalias|nocollapse|nocompile|nosideeffects|override|overview|package|param|preserve
+      |private|prop|property|protected|public|read[Oo]nly|record|require[ds]|returns?|see|since|static
+      |struct|submodule|summary|suppress|template|this|throws|todo|tutorial|type|typedef|unrestricted
+      |uses|var|variation|version|virtual|writeOnce)
       \\b
     '''
     'name': 'storage.type.class.jsdoc'
@@ -409,6 +428,110 @@
             'include': '#brackets'
           }
         ]
+      }
+    ]
+  # Default @param value, highlighted as JavaScript
+  'default-value':
+    'patterns': [
+      # Double-quoted string
+      {
+        'begin': '"'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.js'
+        'end': '"|(?=\\*/)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.js'
+        'name': 'string.quoted.double.js'
+        'patterns': [
+          {
+            'match': '\\\\(?:[^*]|\\*(?!/))'
+            'name': 'constant.character.escape.js'
+          }
+        ]
+      }
+      # Single-quoted string
+      {
+        'begin': '\''
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.js'
+        'end': '\'|(?=\\*/)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.js'
+        'name': 'string.quoted.single.js'
+        'patterns': [
+          {
+            'match': '\\\\(?:[^*]|\\*(?!/))'
+            'name': 'constant.character.escape.js'
+          }
+        ]
+      }
+      {
+        # Nested arrays matched to keep brackets balanced
+        'begin': '(\\[)'
+        'beginCaptures':
+          '0':
+            'name': 'source.embedded.js'
+          '1':
+            # NOTE: Should ideally be "punctuation.definition.bracket.square.begin.js"
+            # We're using the old/"incorrect" scope to ensure consistent highlighting.
+            'name': 'meta.brace.square.js'
+        'end': '(\\])|(?=\\*/)'
+        'endCaptures':
+          '0':
+            'name': 'source.embedded.js'
+          '1':
+            'name': 'meta.brace.square.js'
+        'patterns': [
+          {
+            'include': '#default-value'
+          }
+        ]
+      }
+      # Chunk of JS source (excluding nested arrays; see above). Note we "clamp" the
+      # imported highlighting within a fixed range to stop runaway problems with any
+      # begin/end patterns the JavaScript grammar matches.
+      {
+        'match': '(?:[^"\'\\[\\]*]|\\*[^/])+'
+        'name': 'source.embedded.js'
+        'captures':
+          '0':
+            'patterns': [
+              # Unmatched } after a string literal: `"string"}`
+              {
+                'match': '}'
+                'name': 'meta.brace.curly.js'
+              }
+              {
+                'include': '#inline-tags'
+              }
+              {
+                'include': 'source.js'
+              }
+            ]
+      }
+    ]
+  # Highlighted JavaScript for @example tag
+  'example-js':
+    'patterns': [
+      {
+        # Match to prevent leading asterisk being highlighted as JS
+        'match': '^\\s\\*\\s+'
+      }
+      {
+        # "Clamped" line of JS source
+        'match': '[^\\s@*](?:[^*]|\\*[^/])+'
+        'captures':
+          '0':
+            'name': 'source.embedded.js'
+            'patterns': [
+              {
+                'include': 'source.js'
+              }
+            ]
       }
     ]
   'inline-tags':
