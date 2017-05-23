@@ -1679,7 +1679,7 @@
                   contextual|confirm|compile|clear|captureEvents|call|createStyleSheet|createPopup|
                   createEventObject|to(GMTString|UTCString|String|Source|UpperCase|LowerCase|LocaleString)|
                   test|taint|taintEnabled|indexOf|italics|disableExternalCapture|dump|detachEvent|unshift|
-                  untaint|unwatch|updateCommands|join|javaEnabled|pop|push|plugins.refresh|paddings|parse|
+                  untaint|unwatch|updateCommands|join|javaEnabled|pop|push|plugins.refresh|paddings|parse|stringify|
                   print|prompt|preference|enableExternalCapture|exec|execScript|valueOf|UTC|find|file|
                   fileModifiedDate|fileSize|fileCreatedDate|fileUpdatedDate|fixed|fontsize|fontcolor|
                   forward|fromCharCode|watch|link|load|lastIndexOf|anchor|attachEvent|atob|apply|alert|
