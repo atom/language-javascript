@@ -102,6 +102,18 @@
           '2':
             'name': 'punctuation.definition.bracket.angle.end.jsdoc'
       }
+      {
+        # Highlighted JavaScript example
+        'match': '[^\\s@*](?:[^*]|\\*[^/])*'
+        'captures':
+          '0':
+            'name': 'source.embedded.js'
+            'patterns': [
+              {
+                'include': 'source.js'
+              }
+            ]
+      }
     ]
   }
   {
@@ -248,23 +260,50 @@
         'name': 'variable.other.jsdoc'
       }
       {
+        # Optional value
         'name': 'variable.other.jsdoc'
-        'begin': '\\['
-        'end': '\\](?=\\s*([\\w-]|$|\\*/))|(?=\\*/)'
-        'patterns': [
-          {
-            'begin': '='
-            'beginCaptures':
-              '0':
-                'name': 'keyword.operator.assignment.jsdoc'
-            'end': '(?=(\\]\\s*([\\w-]|$|\\*/))|\\*/)'
+        'match': '''(?x)
+          (\\[)\\s*
+          [\\w$]+
+          (?:
+            (?:\\[\\])?                                        # Foo[].bar properties within an array
+            \\.                                                # Foo.Bar namespaced parameter
+            [\\w$]+
+          )*
+          (?:
+            \\s*
+            (=)                                                # [foo=bar] Default parameter value
+            \\s*
+            (
+              (?:
+                "(?:(?:\\*(?!/))|(?:\\\\(?!"))|[^*\\\\])*?" |  # [foo="bar"] Double-quoted
+                '(?:(?:\\*(?!/))|(?:\\\\(?!'))|[^*\\\\])*?' |  # [foo='bar'] Single-quoted
+                \\[ (?:(?:\\*(?!/))|[^*])*? \\] |              # [foo=[1,2]] Array literal
+                (?:(?:\\*(?!/))|[^*])*?                        # Everything else, but stop the match early at */
+              )*
+            )
+          )?
+          \\s*(?:(\\])((?:[^*\\s]|\\*[^\\s/])+)?|(?=\\*/))
+        '''
+        'captures':
+          '1':
+            'name': 'punctuation.definition.optional-value.begin.bracket.square.jsdoc'
+          '2':
+            'name': 'keyword.operator.assignment.jsdoc'
+          '3':
+            'name': 'source.embedded.js'
             'patterns': [
               {
                 'include': '#inline-tags'
               }
+              {
+                'include': 'source.js'
+              }
             ]
-          }
-        ]
+          '4':
+            'name': 'punctuation.definition.optional-value.end.bracket.square.jsdoc'
+          '5':
+            'name': 'invalid.illegal.syntax.jsdoc'
       }
     ]
   }
