@@ -410,6 +410,10 @@
           }
         ]
       }
+      {
+        'match': '^\\s*\\*(?!/)'
+        'name': 'comment.block.documentation.jsdoc'
+      }
     ]
   'inline-tags':
     'patterns': [
@@ -483,11 +487,6 @@
   # {type}
   'type':
     'patterns': [
-      {
-        # {unclosed
-        'match': '\\G{(?:[^}*]|\\*[^/}])+$'
-        'name': 'invalid.illegal.type.jsdoc'
-      }
       {
         'begin': '\\G({)'
         'beginCaptures':
