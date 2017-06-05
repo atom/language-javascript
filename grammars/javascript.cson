@@ -810,6 +810,11 @@
           }
         ]
       }
+      {
+        # Match only console. When used as an object directly
+        # For eg. foo(console)
+        'match': '\\s*(?!\\.)'
+      }
     ]
   }
   {
