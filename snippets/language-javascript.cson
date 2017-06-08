@@ -37,7 +37,7 @@
     'body': 'for (${1:variable} of ${2:iterable}) {\n\t$3\n}'
   'Function':
     'prefix': 'fun'
-    'body': 'function ${1:functionName}($2) {\n\t$0\n}'
+    'body': 'function ${1:functionName} ($2) {\n\t$0\n}'
   'Anonymous Function':
     'prefix': 'f'
     'body': 'function ($1) {\n\t$2\n}'
@@ -46,7 +46,7 @@
     'body': '($1) => {\n\t$2\n}'
   'Generator':
     'prefix': 'gen',
-    'body': 'function* ${1:functionName}($2) {\n\t$0\n}'
+    'body': 'function* ${1:functionName} ($2) {\n\t$0\n}'
   'Anonymous Generator':
     'prefix': 'g'
     'body': 'function* ($1) {\n\t$2\n}'
@@ -70,7 +70,7 @@
     'body': 'querySelectorAll(${1:\'${2:query}\'})$3'
   'Immediately-Invoked Function Expression':
     'prefix': 'iife'
-    'body': '(function() {\n\t${1:\'use strict\';\n}\t$2\n}());'
+    'body': '(function () {\n\t${1:\'use strict\';\n}\t$2\n}());'
   'log':
     'prefix': 'log'
     'body': 'console.log($1);$0'
