@@ -70,7 +70,7 @@
     'body': 'querySelectorAll(${1:\'${2:query}\'})$3'
   'Immediately-Invoked Function Expression':
     'prefix': 'iife'
-    'body': '(function() {\n\t${1:\'use strict\';\n}\t$2\n}());'
+    'body': '(function() {\n\t${1:\'use strict\';\n}\t$2\n})();'
   'log':
     'prefix': 'log'
     'body': 'console.log($1);$0'
