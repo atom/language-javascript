@@ -11,7 +11,7 @@
       '3':
         'name': 'constant.language.access-type.jsdoc'
     'match': '''(?x)
-      ((@)access)
+      ((@)(?:access|api))
       \\s+
       (private|protected|public)
       \\b
@@ -155,7 +155,15 @@
         |
         # JSDoc namepath
         (
-          (?!https?://)
+          (?!
+            # Avoid matching bare URIs (also acceptable as links)
+            https?://
+            |
+            # Avoid matching {@inline tags}; we match those below
+            (?:\\[[^\\[\\]]*\\])? # Possible description [preceding]{@tag}
+            {@(?:link|linkcode|linkplain|tutorial)\\b
+          )
+          # Matched namepath
           (?:[^@\\s*/]|\\*[^/])+
         )
       )
@@ -252,33 +260,51 @@
         'name': 'variable.other.jsdoc'
       }
       {
+        # Optional value
         'name': 'variable.other.jsdoc'
-        'begin': '\\['
-        'end': '\\]|(?=\\*/)'
-        'patterns': [
-          {
-            'match': '(=)((?:[^\\]*]|\\*[^/])*)'
-            'captures':
-              '1':
-                'name': 'keyword.operator.assignment.jsdoc'
-              '2':
-                'name': 'source.embedded.js'
-                'patterns': [
-                  {
-                    'include': '#inline-tags'
-                  }
-                  {
-                    'include': 'source.js'
-                  }
-                ]
-          }
-          {
-            'include': '#brackets'
-          }
-          {
-            'include': '#quotes'
-          }
-        ]
+        'match': '''(?x)
+          (\\[)\\s*
+          [\\w$]+
+          (?:
+            (?:\\[\\])?                                        # Foo[].bar properties within an array
+            \\.                                                # Foo.Bar namespaced parameter
+            [\\w$]+
+          )*
+          (?:
+            \\s*
+            (=)                                                # [foo=bar] Default parameter value
+            \\s*
+            (
+              # The inner regexes are to stop the match early at */ and to not stop at escaped quotes
+              (?:
+                "(?:(?:\\*(?!/))|(?:\\\\(?!"))|[^*\\\\])*?" |  # [foo="bar"] Double-quoted
+                '(?:(?:\\*(?!/))|(?:\\\\(?!'))|[^*\\\\])*?' |  # [foo='bar'] Single-quoted
+                \\[ (?:(?:\\*(?!/))|[^*])*? \\] |              # [foo=[1,2]] Array literal
+                (?:(?:\\*(?!/))|[^*])*?                        # Everything else
+              )*
+            )
+          )?
+          \\s*(?:(\\])((?:[^*\\s]|\\*[^\\s/])+)?|(?=\\*/))
+        '''
+        'captures':
+          '1':
+            'name': 'punctuation.definition.optional-value.begin.bracket.square.jsdoc'
+          '2':
+            'name': 'keyword.operator.assignment.jsdoc'
+          '3':
+            'name': 'source.embedded.js'
+            'patterns': [
+              {
+                'include': '#inline-tags'
+              }
+              {
+                'include': 'source.js'
+              }
+            ]
+          '4':
+            'name': 'punctuation.definition.optional-value.end.bracket.square.jsdoc'
+          '5':
+            'name': 'invalid.illegal.syntax.jsdoc'
       }
     ]
   }
@@ -369,16 +395,16 @@
       '1':
         'name': 'punctuation.definition.block.tag.jsdoc'
     'match': '''(?x) (@)
-      (?:abstract|access|alias|arg|argument|async|attribute|augments|author|beta|borrows|bubbles
+      (?:abstract|access|alias|api|arg|argument|async|attribute|augments|author|beta|borrows|bubbles
       |callback|chainable|class|classdesc|code|config|const|constant|constructor|constructs|copyright
       |default|defaultvalue|define|deprecated|desc|description|dict|emits|enum|event|example|exception
       |exports?|extends|extension(?:_?for)?|external|externs|file|fileoverview|final|fires|for|func
-      |function|global|host|ignore|implements|implicitCast|inherit[Dd]oc|inner|instance|interface|kind
-      |lends|license|listens|main|member|memberof!?|method|mixes|mixins?|modifies|module|name|namespace
-      |noalias|nocollapse|nocompile|nosideeffects|override|overview|package|param|preserve|private|prop
-      |property|protected|public|read[Oo]nly|record|require[ds]|returns?|see|since|static|struct|submodule
-      |summary|suppress|template|this|throws|todo|tutorial|type|typedef|unrestricted|uses|var|variation
-      |version|virtual|writeOnce)
+      |function|global|host|ignore|implements|implicitCast|inherit[Dd]oc|inner|instance|interface
+      |internal|kind|lends|license|listens|main|member|memberof!?|method|mixes|mixins?|modifies|module
+      |name|namespace|noalias|nocollapse|nocompile|nosideeffects|override|overview|package|param|preserve
+      |private|prop|property|protected|public|read[Oo]nly|record|require[ds]|returns?|see|since|static
+      |struct|submodule|summary|suppress|template|this|throws|todo|tutorial|type|typedef|unrestricted
+      |uses|var|variation|version|virtual|writeOnce)
       \\b
     '''
     'name': 'storage.type.class.jsdoc'
@@ -454,28 +480,6 @@
               '2':
                 'name': 'punctuation.separator.pipe.jsdoc'
             'match': '\\G((?:[^{}@\\s|*]|\\*[^/])+)(\\|)?'
-          }
-        ]
-      }
-    ]
-  # Balanced quotes
-  'quotes':
-    'patterns': [
-      {
-        'begin': "'"
-        'end': "'|(?=\\*/)"
-        'patterns': [
-          {
-            'include': '#quotes'
-          }
-        ]
-      }
-      {
-        'begin': '"'
-        'end': '"|(?=\\*/)'
-        'patterns': [
-          {
-            'include': '#quotes'
           }
         ]
       }
