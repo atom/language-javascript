@@ -17,6 +17,8 @@ describe "JavaScript grammar", ->
 
     runs ->
       grammar = atom.grammars.grammarForScopeName("source.js")
+      console.log typeof grammer
+      console.dir grammer
 
   it "parses the grammar", ->
     expect(grammar).toBeTruthy()
@@ -611,6 +613,35 @@ describe "JavaScript grammar", ->
       expect(tokens[12]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.definition.function.body.end.bracket.curly.js']
       expect(tokens[13]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
       expect(tokens[14]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.end.js']
+
+  describe "CSS template strings", ->
+    beforeEach ->
+      waitsForPromise ->
+        atom.packages.activatePackage("language-css")
+
+    it "tokenizes ES6 tagged HTML string templates", ->
+      {tokens} = grammar.tokenizeLine('css`element:hover #id .class [attribute]::before { background: blue; }`')
+      expect(tokens[0]).toEqual value: 'css', scopes: ['source.js', 'string.quoted.template.css.js', 'entity.name.function.js']
+      expect(tokens[1]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.css.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[2]).toEqual value: 'element', scopes: ['source.css', 'meta.selector.css', 'entity.name.tag.custom.css']
+      expect(tokens[2]).toEqual value: ':', scopes: ['source.css', 'meta.selector.css', 'entity.other.attribute-name.pseudo-class.css', 'punctuation.definition.entity.css']
+      expect(tokens[2]).toEqual value: 'hover', scopes: ['source.css', 'meta.selector.css', 'entity.other.attribute-name.pseudo-class.css']
+      expect(tokens[3]).toEqual value: '#', scopes: ['source.css', 'meta.selector.css', 'entity.other.attribute-name.id.css', 'punctuation.definition.entity.css']
+      expect(tokens[4]).toEqual value: 'id', scopes: ['source.css', 'meta.selector.css', 'entity.other.attribute-name.id.css']
+      expect(tokens[5]).toEqual value: '.', scopes: ['source.css', 'meta.selector.css', 'entity.other.attribute-name.class.css', 'punctuation.definition.entity.css']
+      expect(tokens[6]).toEqual value: 'class', scopes: ['source.css', 'meta.selector.css', 'entity.other.attribute-name.class.css']
+      expect(tokens[7]).toEqual value: '[', scopes: ['source.css', 'meta.selector.css', 'meta.attribute-selector.css', 'punctuation.definition.entity.css']
+      expect(tokens[8]).toEqual value: 'attribute', scopes: ['source.css', 'meta.selector.css', 'meta.attribute-selector.css', 'entity.other.attribute-name.css']
+      expect(tokens[9]).toEqual value: ']', scopes: ['source.css', 'meta.selector.css', 'meta.attribute-selector.css', 'punctuation.definition.entity.css']
+      expect(tokens[9]).toEqual value: '::', scopes: ['source.css', 'meta.selector.css', 'entity.other.attribute-name.pseudo-element.css', 'punctuation.definition.entity.css']
+      expect(tokens[9]).toEqual value: 'before', scopes: ['source.css', 'meta.selector.css', 'entity.other.attribute-name.pseudo-element.css']
+      expect(tokens[10]).toEqual value: '{', scopes: ['source.css', 'meta.property-list.css', 'punctuation.section.property-list.begin.css']
+      expect(tokens[11]).toEqual value: 'background', scopes: ['source.css', 'meta.property-list.css', 'meta.property-name.css', 'support.type.property-name.css']
+      expect(tokens[11]).toEqual value: ':', scopes: ['source.css', 'meta.property-list.css', 'punctuation.separator.key-value.css']
+      expect(tokens[11]).toEqual value: 'blue', scopes: ['source.css', 'meta.property-list.css', 'meta.property-value.css', 'support.constant.property-value.css']
+      expect(tokens[11]).toEqual value: '}', scopes: ['source.css', 'meta.property-list.css', 'punctuation.section.property-list.end.css']
+      expect(tokens[11]).toEqual value: '}', scopes: ['source.css', 'meta.property-list.css', 'punctuation.terminator.rule.css']
+      expect(tokens[12]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.html.js', 'punctuation.definition.string.end.js']
 
   describe "HTML template strings", ->
     beforeEach ->
