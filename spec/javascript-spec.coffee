@@ -612,6 +612,27 @@ describe "JavaScript grammar", ->
       expect(tokens[13]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
       expect(tokens[14]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.end.js']
 
+  describe "CSS template strings", ->
+    beforeEach ->
+      waitsForPromise ->
+        atom.packages.activatePackage("language-css")
+
+    it "tokenizes ES6 tagged CSS string templates", ->
+      {tokens} = grammar.tokenizeLine('css`element { color: blue; }`')
+      expect(tokens[0]).toEqual value: 'css', scopes: ['source.js', 'string.quoted.template.css.js', 'entity.name.function.js']
+      expect(tokens[1]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.css.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[2]).toEqual value: 'element ', scopes: ['source.js', 'string.quoted.template.css.js', 'meta.selector.css']
+      expect(tokens[3]).toEqual value: '{', scopes: ['source.js', 'string.quoted.template.css.js', 'meta.property-list.css', 'punctuation.section.property-list.begin.css']
+      expect(tokens[4]).toEqual value: ' ', scopes: ['source.js', 'string.quoted.template.css.js', 'meta.property-list.css']
+      expect(tokens[5]).toEqual value: 'color', scopes: ['source.js', 'string.quoted.template.css.js', 'meta.property-list.css', 'meta.property-name.css', 'support.type.property-name.css']
+      expect(tokens[6]).toEqual value: ':', scopes: ['source.js', 'string.quoted.template.css.js', 'meta.property-list.css', 'punctuation.separator.key-value.css']
+      expect(tokens[7]).toEqual value: ' ', scopes: ['source.js', 'string.quoted.template.css.js', 'meta.property-list.css']
+      expect(tokens[8]).toEqual value: 'blue', scopes: ['source.js', 'string.quoted.template.css.js', 'meta.property-list.css', 'meta.property-value.css', 'support.constant.color.w3c-standard-color-name.css']
+      expect(tokens[9]).toEqual value: ';', scopes: ['source.js', 'string.quoted.template.css.js', 'meta.property-list.css', 'punctuation.terminator.rule.css']
+      expect(tokens[10]).toEqual value: ' ', scopes: ['source.js', 'string.quoted.template.css.js', 'meta.property-list.css']
+      expect(tokens[11]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.css.js', 'meta.property-list.css', 'punctuation.section.property-list.end.css']
+      expect(tokens[12]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.css.js', 'punctuation.definition.string.end.js']
+
   describe "HTML template strings", ->
     beforeEach ->
       waitsForPromise ->
