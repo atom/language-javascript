@@ -412,7 +412,7 @@
       }
       {
         'match': '^\\s*\\*(?!/)'
-        'name': 'comment.block.documentation.jsdoc'
+        'name': 'punctuation.section.continuation.comment.js'
       }
     ]
   'inline-tags':
