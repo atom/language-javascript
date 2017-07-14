@@ -1888,9 +1888,9 @@
       {
         'captures':
           '1':
-            'name': 'punctuation.section.begin.comment.js'
+            'name': 'punctuation.definition.comment.js'
           '2':
-            'name': 'punctuation.section.end.comment.js'
+            'name': 'punctuation.definition.comment.js'
         'match': '(/\\*)(\\*/)'
         'name': 'comment.block.empty.js'
       }
@@ -1898,11 +1898,11 @@
         'begin': '/\\*\\*'
         'beginCaptures':
           '0':
-            'name': 'punctuation.section.begin.comment.js'
+            'name': 'punctuation.definition.comment.js'
         'end': '\\*/'
         'endCaptures':
           '0':
-            'name': 'punctuation.section.end.comment.js'
+            'name': 'punctuation.definition.comment.js'
         'name': 'comment.block.documentation.js'
         'patterns': [
           {
@@ -1914,11 +1914,11 @@
         'begin': '/\\*'
         'beginCaptures':
           '0':
-            'name': 'punctuation.section.begin.comment.js'
+            'name': 'punctuation.definition.comment.js'
         'end': '\\*/'
         'endCaptures':
           '0':
-            'name': 'punctuation.section.end.comment.js'
+            'name': 'punctuation.definition.comment.js'
         'name': 'comment.block.js'
       }
       {
