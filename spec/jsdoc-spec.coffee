@@ -11,7 +11,7 @@ describe "JSDoc grammar", ->
   describe "inline tags", ->
     it "tokenises tags without descriptions", ->
       {tokens} = grammar.tokenizeLine('/** Text {@link target} text */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[1]).toEqual value: ' Text ', scopes: ['source.js', 'comment.block.documentation.js']
       expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
       expect(tokens[3]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'storage.type.class.jsdoc', 'punctuation.definition.inline.tag.jsdoc']
@@ -19,11 +19,11 @@ describe "JSDoc grammar", ->
       expect(tokens[6]).toEqual value: 'target', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'variable.other.description.jsdoc']
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[8]).toEqual value: ' text ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[9]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[9]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises tags with an embedded trailing description", ->
       {tokens} = grammar.tokenizeLine('/** Text {@linkplain target|Description text} */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[1]).toEqual value: ' Text ', scopes: ['source.js', 'comment.block.documentation.js']
       expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
       expect(tokens[3]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'storage.type.class.jsdoc', 'punctuation.definition.inline.tag.jsdoc']
@@ -32,10 +32,10 @@ describe "JSDoc grammar", ->
       expect(tokens[7]).toEqual value: '|', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.separator.pipe.jsdoc']
       expect(tokens[8]).toEqual value: 'Description text', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(tokens[9]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
-      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** Text {@linkcode target Description text} */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[1]).toEqual value: ' Text ', scopes: ['source.js', 'comment.block.documentation.js']
       expect(tokens[2]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
       expect(tokens[3]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'storage.type.class.jsdoc', 'punctuation.definition.inline.tag.jsdoc']
@@ -43,11 +43,11 @@ describe "JSDoc grammar", ->
       expect(tokens[6]).toEqual value: 'target', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'variable.other.description.jsdoc']
       expect(tokens[7]).toEqual value: ' Description text', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(tokens[8]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
-      expect(tokens[10]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[10]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises tags with a preceding description", ->
       {tokens} = grammar.tokenizeLine('/** Text [Description text]{@link target} */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[1]).toEqual value: ' Text ', scopes: ['source.js', 'comment.block.documentation.js']
       expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'comment.block.documentation.js', 'constant.other.description.jsdoc', 'punctuation.definition.bracket.square.begin.jsdoc']
       expect(tokens[3]).toEqual value: 'Description text', scopes: ['source.js', 'comment.block.documentation.js', 'constant.other.description.jsdoc']
@@ -57,10 +57,10 @@ describe "JSDoc grammar", ->
       expect(tokens[7]).toEqual value: 'link', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'storage.type.class.jsdoc']
       expect(tokens[9]).toEqual value: 'target', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'variable.other.description.jsdoc']
       expect(tokens[10]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
-      expect(tokens[12]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[12]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** Text [Description text]{@tutorial target|Description} */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[1]).toEqual value: ' Text ', scopes: ['source.js', 'comment.block.documentation.js']
       expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'comment.block.documentation.js', 'constant.other.description.jsdoc', 'punctuation.definition.bracket.square.begin.jsdoc']
       expect(tokens[3]).toEqual value: 'Description text', scopes: ['source.js', 'comment.block.documentation.js', 'constant.other.description.jsdoc']
@@ -72,11 +72,11 @@ describe "JSDoc grammar", ->
       expect(tokens[10]).toEqual value: '|', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.separator.pipe.jsdoc']
       expect(tokens[11]).toEqual value: 'Description', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(tokens[12]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
-      expect(tokens[14]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[14]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises inline tags which follow block tags", ->
       {tokens} = grammar.tokenizeLine('/** @param {object} variable - this is a {@link linked} description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -90,7 +90,7 @@ describe "JSDoc grammar", ->
       expect(tokens[15]).toEqual value: 'linked', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'variable.other.description.jsdoc']
       expect(tokens[16]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[17]).toEqual value: ' description ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[18]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[18]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {object} variable - this is a {@link linked#description}. */')
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -104,7 +104,7 @@ describe "JSDoc grammar", ->
       expect(tokens[15]).toEqual value: 'linked#description', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'variable.other.description.jsdoc']
       expect(tokens[16]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[17]).toEqual value: '. ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[18]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[18]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {object} variable - this is a [description with a]{@link example}. */')
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -121,11 +121,11 @@ describe "JSDoc grammar", ->
       expect(tokens[18]).toEqual value: 'example', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'variable.other.description.jsdoc']
       expect(tokens[19]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[20]).toEqual value: '. ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[21]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[21]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises inline tags within default @param values", ->
       {tokens} = grammar.tokenizeLine('/** @param {EntityType} [typeHint={@link EntityType.FILE}] */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -140,49 +140,49 @@ describe "JSDoc grammar", ->
       expect(tokens[16]).toEqual value: 'EntityType.FILE', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'entity.name.type.instance.jsdoc', 'variable.other.description.jsdoc']
       expect(tokens[17]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[18]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'punctuation.definition.optional-value.end.bracket.square.jsdoc']
-      expect(tokens[20]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[20]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
   describe "block tags", ->
     it "tokenises simple tags", ->
       {tokens} = grammar.tokenizeLine('/** @mixins */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'mixins', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[4]).toEqual value: ' ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[5]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[5]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @global @static */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'global', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[4]).toEqual value: ' ', scopes: ['source.js', 'comment.block.documentation.js']
       expect(tokens[5]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[6]).toEqual value: 'static', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[7]).toEqual value: ' ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[8]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[8]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises @see tags with basic links", ->
       {tokens} = grammar.tokenizeLine('/** @see name#path */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'see', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[4]).toEqual value: ' ', scopes: ['source.js', 'comment.block.documentation.js']
       expect(tokens[5]).toEqual value: 'name#path', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(tokens[6]).toEqual value: ' ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[7]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[7]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @see http://atom.io/ */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'see', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[4]).toEqual value: ' ', scopes: ['source.js', 'comment.block.documentation.js']
       expect(tokens[5]).toEqual value: 'http://atom.io/', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.link.underline.jsdoc']
       expect(tokens[6]).toEqual value: ' ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[7]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[7]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises @see tags with {@link} tags", ->
       {tokens} = grammar.tokenizeLine('/** @see {@link text|Description} */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'see', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -192,10 +192,10 @@ describe "JSDoc grammar", ->
       expect(tokens[10]).toEqual value: '|', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.separator.pipe.jsdoc']
       expect(tokens[11]).toEqual value: 'Description', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(tokens[12]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
-      expect(tokens[14]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[14]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @see [Description]{@link name#path} */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'see', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '[Description]', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
@@ -204,11 +204,11 @@ describe "JSDoc grammar", ->
       expect(tokens[8]).toEqual value: 'link', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'storage.type.class.jsdoc']
       expect(tokens[10]).toEqual value: 'name#path', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'variable.other.description.jsdoc']
       expect(tokens[11]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
-      expect(tokens[13]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[13]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises tags with type expressions", ->
       {tokens} = grammar.tokenizeLine('/** @const {object} */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'const', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[4]).toEqual value: ' ', scopes: ['source.js', 'comment.block.documentation.js']
@@ -216,7 +216,7 @@ describe "JSDoc grammar", ->
       expect(tokens[6]).toEqual value: 'object', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[8]).toEqual value: ' ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[9]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[9]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @define {object} */')
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
@@ -227,7 +227,7 @@ describe "JSDoc grammar", ->
 
     it "tokenises unnamed @param tags", ->
       {tokens} = grammar.tokenizeLine('/** @param {object} */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[1]).toEqual value: ' ', scopes: ['source.js', 'comment.block.documentation.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
@@ -235,22 +235,22 @@ describe "JSDoc grammar", ->
       expect(tokens[6]).toEqual value: 'object', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[8]).toEqual value: ' ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[9]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[9]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises @param tags", ->
       {tokens} = grammar.tokenizeLine('/** @param {object} variable */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
       expect(tokens[6]).toEqual value: 'object', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[9]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
-      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises @param tags with a description", ->
       {tokens} = grammar.tokenizeLine('/** @param {object} variable this is the description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -258,10 +258,10 @@ describe "JSDoc grammar", ->
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[9]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
       expect(tokens[10]).toEqual value: ' this is the description ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @arg {object} variable this is the description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'arg', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -269,10 +269,10 @@ describe "JSDoc grammar", ->
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[9]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
       expect(tokens[10]).toEqual value: ' this is the description ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @argument {object} variable this is the description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'argument', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -280,10 +280,10 @@ describe "JSDoc grammar", ->
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[9]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
       expect(tokens[10]).toEqual value: ' this is the description ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {object} variable - this is the description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -291,10 +291,10 @@ describe "JSDoc grammar", ->
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[9]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
       expect(tokens[10]).toEqual value: ' - this is the description ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {object} $variable this is the description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -302,11 +302,11 @@ describe "JSDoc grammar", ->
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[9]).toEqual value: '$variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
       expect(tokens[10]).toEqual value: ' this is the description ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises @param tags marked optional", ->
       {tokens} = grammar.tokenizeLine('/** @param {object} [variable] this is the description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -316,7 +316,7 @@ describe "JSDoc grammar", ->
       expect(tokens[10]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
       expect(tokens[11]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'punctuation.definition.optional-value.end.bracket.square.jsdoc']
       expect(tokens[12]).toEqual value: ' this is the description ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[13]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[13]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {object} [ variable ] this is the description */')
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
@@ -574,7 +574,7 @@ describe "JSDoc grammar", ->
 
       it "tokenizes arrays inside object literals", ->
         {tokens} = grammar.tokenizeLine('/** @param {Object} [thing={a: [], b: [0, 2], c: "String"}] [Not Highlighted] [] [] [] */')
-        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
         expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
         expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
         expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -605,11 +605,11 @@ describe "JSDoc grammar", ->
         expect(tokens[35]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'meta.brace.curly.js']
         expect(tokens[36]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'punctuation.definition.optional-value.end.bracket.square.jsdoc']
         expect(tokens[37]).toEqual value: ' [Not Highlighted] [] [] [] ', scopes: ['source.js', 'comment.block.documentation.js']
-        expect(tokens[38]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+        expect(tokens[38]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       it "flags any description text touching the closing bracket", ->
         {tokens} = grammar.tokenizeLine('/** @param {Object} [thing={a: [], b: [0, 2], c: "String"}][Bad Description] [] [] [] */')
-        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
         expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
         expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
         expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -641,11 +641,11 @@ describe "JSDoc grammar", ->
         expect(tokens[36]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'punctuation.definition.optional-value.end.bracket.square.jsdoc']
         expect(tokens[37]).toEqual value: '[Bad', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'invalid.illegal.syntax.jsdoc']
         expect(tokens[38]).toEqual value: ' Description] [] [] [] ', scopes: ['source.js', 'comment.block.documentation.js']
-        expect(tokens[39]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+        expect(tokens[39]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       it "does not tokenise arrays inside strings", ->
         {tokens} = grammar.tokenizeLine('/** @param {Object} [thing=\'{a: [], b: [0, 2], c: "String"}][Quoted Description] [\'] [Unquoted Description] */')
-        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
         expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
         expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
         expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -659,10 +659,10 @@ describe "JSDoc grammar", ->
         expect(tokens[14]).toEqual value: "'", scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
         expect(tokens[15]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'punctuation.definition.optional-value.end.bracket.square.jsdoc']
         expect(tokens[16]).toEqual value: ' [Unquoted Description] ', scopes: ['source.js', 'comment.block.documentation.js']
-        expect(tokens[17]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+        expect(tokens[17]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
         {tokens} = grammar.tokenizeLine('/** @param {Object} [thing="{a: [], b: [0, 2], c: \'String\'}][Quoted Description] ["] [] [] */')
-        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
         expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
         expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
         expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -676,7 +676,7 @@ describe "JSDoc grammar", ->
         expect(tokens[14]).toEqual value: '"', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
         expect(tokens[15]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'punctuation.definition.optional-value.end.bracket.square.jsdoc']
         expect(tokens[16]).toEqual value: ' [] [] ', scopes: ['source.js', 'comment.block.documentation.js']
-        expect(tokens[17]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+        expect(tokens[17]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
         {tokens} = grammar.tokenizeLine('/** @param {Object} [thing="{a: [], b: [0, 2], c: \'String\'}][Quoted Description] ["][Bad Description] [] */')
         expect(tokens[14]).toEqual value: '"', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
@@ -689,11 +689,11 @@ describe "JSDoc grammar", ->
         expect(tokens[15]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'punctuation.definition.optional-value.end.bracket.square.jsdoc']
         expect(tokens[16]).toEqual value: '[Bad_Unquoted', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'invalid.illegal.syntax.jsdoc']
         expect(tokens[17]).toEqual value: ' Description] ', scopes: ['source.js', 'comment.block.documentation.js']
-        expect(tokens[18]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+        expect(tokens[18]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       it "tokenises escape sequences inside strings", ->
         {tokens} = grammar.tokenizeLine('/** @param {String} [key="a[\\"]z"] */')
-        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
         expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
         expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
         expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -708,10 +708,10 @@ describe "JSDoc grammar", ->
         expect(tokens[15]).toEqual value: ']z', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.double.js']
         expect(tokens[16]).toEqual value: '"', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
         expect(tokens[17]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'punctuation.definition.optional-value.end.bracket.square.jsdoc']
-        expect(tokens[19]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+        expect(tokens[19]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
         {tokens} = grammar.tokenizeLine("/** @param {String} [key='a[\\']z'] */")
-        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+        expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
         expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
         expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
         expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -726,7 +726,7 @@ describe "JSDoc grammar", ->
         expect(tokens[15]).toEqual value: ']z', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.single.js']
         expect(tokens[16]).toEqual value: '\'', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.single.js', 'punctuation.definition.string.end.js']
         expect(tokens[17]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'punctuation.definition.optional-value.end.bracket.square.jsdoc']
-        expect(tokens[19]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+        expect(tokens[19]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises @param tags with accessor-style names", ->
       {tokens} = grammar.tokenizeLine('/** @param {object} parameter.property this is the description */')
@@ -806,7 +806,7 @@ describe "JSDoc grammar", ->
 
     it "tokenises @param tags with qualified types", ->
       {tokens} = grammar.tokenizeLine('/** @param {myNamespace.MyClass} variable this is the description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -814,10 +814,10 @@ describe "JSDoc grammar", ->
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[9]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
       expect(tokens[10]).toEqual value: ' this is the description ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {Foo~cb} variable this is the description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -825,7 +825,7 @@ describe "JSDoc grammar", ->
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[9]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
       expect(tokens[10]).toEqual value: ' this is the description ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises @param tags with multiple types", ->
       {tokens} = grammar.tokenizeLine('/** @param {function|string} variable this is the description */')
@@ -836,7 +836,7 @@ describe "JSDoc grammar", ->
       expect(tokens[10]).toEqual value: ' this is the description ', scopes: ['source.js', 'comment.block.documentation.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {string[]|number} variable this is the description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -865,7 +865,7 @@ describe "JSDoc grammar", ->
       expect(tokens[10]).toEqual value: ' this is the description ', scopes: ['source.js', 'comment.block.documentation.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {(string[]|number)} variable this is the description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -876,7 +876,7 @@ describe "JSDoc grammar", ->
       expect(tokens[10]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[12]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
       expect(tokens[13]).toEqual value: ' this is the description ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[14]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[14]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {(string|number[])} variable this is the description */')
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -914,24 +914,24 @@ describe "JSDoc grammar", ->
       expect(tokens[9]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
 
       {tokens} = grammar.tokenizeLine('/** @param {...*} remainder */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
       expect(tokens[6]).toEqual value: '...*', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[9]).toEqual value: 'remainder', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
-      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {...?} remainder */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
       expect(tokens[6]).toEqual value: '...?', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[9]).toEqual value: 'remainder', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
-      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises @param tags using Google Closure Compiler syntax", ->
       {tokens} = grammar.tokenizeLine('/** @param {number=} variable this is the description */')
@@ -950,7 +950,7 @@ describe "JSDoc grammar", ->
       expect(tokens[11]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
 
       {tokens} = grammar.tokenizeLine('/** @param {Foo[].bar} variable this is the description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -961,7 +961,7 @@ describe "JSDoc grammar", ->
       expect(tokens[10]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[12]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
       expect(tokens[13]).toEqual value: ' this is the description ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[14]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[14]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {Array<number>} variable this is the description */')
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
@@ -1147,26 +1147,26 @@ describe "JSDoc grammar", ->
 
     it "tokenises @return tags without descriptions", ->
       {tokens} = grammar.tokenizeLine('/** @return {object} */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'return', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
       expect(tokens[6]).toEqual value: 'object', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
-      expect(tokens[9]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[9]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @returns {object} */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'returns', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
       expect(tokens[6]).toEqual value: 'object', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
-      expect(tokens[9]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[9]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises @return tags with trailing descriptions", ->
       {tokens} = grammar.tokenizeLine('/** @returns {object} this is the description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'returns', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -1174,10 +1174,10 @@ describe "JSDoc grammar", ->
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[9]).toEqual value: 'this', scopes: ['source.js', 'comment.block.documentation.js']
       expect(tokens[10]).toEqual value: ' is the description ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @return {object} this is the description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'return', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -1185,7 +1185,7 @@ describe "JSDoc grammar", ->
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[9]).toEqual value: 'this', scopes: ['source.js', 'comment.block.documentation.js']
       expect(tokens[10]).toEqual value: ' is the description ', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       {tokens} = grammar.tokenizeLine('/** @returns {(Something)} */')
       expect(tokens[3]).toEqual value: 'returns', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
@@ -1201,7 +1201,7 @@ describe "JSDoc grammar", ->
       expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
 
       {tokens} = grammar.tokenizeLine('/** @return {(String[]|Number[])} Description */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'return', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -1214,7 +1214,7 @@ describe "JSDoc grammar", ->
       expect(tokens[12]).toEqual value: ')', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(tokens[13]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(tokens[15]).toEqual value: 'Description', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(tokens[17]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[17]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises function-type @return tags", ->
       {tokens} = grammar.tokenizeLine('/** @return {function()} this is the description */')
@@ -1312,7 +1312,7 @@ describe "JSDoc grammar", ->
       expect(lines[1][8]).toEqual value: '"', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'meta.function-call.js', 'meta.arguments.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
       expect(lines[1][9]).toEqual value: ')', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'meta.function-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
       expect(lines[1][10]).toEqual value: ';', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'punctuation.terminator.statement.js']
-      expect(lines[2][1]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(lines[2][1]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       lines = grammar.tokenizeLines """
         /**
@@ -1332,7 +1332,7 @@ describe "JSDoc grammar", ->
       expect(lines[2][5]).toEqual value: '"', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'meta.function-call.js', 'meta.arguments.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
       expect(lines[2][6]).toEqual value: ')', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'meta.function-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
       expect(lines[2][7]).toEqual value: ';', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'punctuation.terminator.statement.js']
-      expect(lines[3][1]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(lines[3][1]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       lines = grammar.tokenizeLines """
         /**
@@ -1369,11 +1369,11 @@ describe "JSDoc grammar", ->
       expect(lines[3][3]).toEqual value: '+', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'keyword.operator.js']
       expect(lines[3][5]).toEqual value: '50', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'constant.numeric.decimal.js']
       expect(lines[3][6]).toEqual value: ';', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'punctuation.terminator.statement.js']
-      expect(lines[4][1]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(lines[4][1]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenises <caption> tags at the start of an example block", ->
       {tokens} = grammar.tokenizeLine('/** @example <caption>Text</caption> */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'example', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '<', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'entity.name.tag.inline.jsdoc', 'punctuation.definition.bracket.angle.begin.jsdoc']
@@ -1383,7 +1383,7 @@ describe "JSDoc grammar", ->
       expect(tokens[9]).toEqual value: '</', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'entity.name.tag.inline.jsdoc', 'punctuation.definition.bracket.angle.begin.jsdoc']
       expect(tokens[10]).toEqual value: 'caption', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'entity.name.tag.inline.jsdoc']
       expect(tokens[11]).toEqual value: '>', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'entity.name.tag.inline.jsdoc', 'punctuation.definition.bracket.angle.end.jsdoc']
-      expect(tokens[13]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[13]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
       lines = grammar.tokenizeLines """
         /**
@@ -1392,7 +1392,7 @@ describe "JSDoc grammar", ->
          * @return {String}
          */
       """
-      expect(lines[0][0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(lines[0][0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(lines[1][0]).toEqual value: ' * ', scopes: ['source.js', 'comment.block.documentation.js']
       expect(lines[1][1]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(lines[1][2]).toEqual value: 'example', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'storage.type.class.jsdoc']
@@ -1418,22 +1418,22 @@ describe "JSDoc grammar", ->
       expect(lines[3][5]).toEqual value: 'String', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(lines[3][6]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(lines[3][7]).toEqual value: '', scopes: ['source.js', 'comment.block.documentation.js']
-      expect(lines[4][1]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(lines[4][1]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
 
   describe "when the containing comment ends unexpectedly", ->
     it "terminates any unclosed tags", ->
       {tokens} = grammar.tokenizeLine('/** @param {String */ aa')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
       expect(tokens[6]).toEqual value: 'String ', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
-      expect(tokens[7]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[7]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
       expect(tokens[8]).toEqual value: ' aa', scopes: ['source.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {*} [name={value: {a:[{*/}}]}] */')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -1450,7 +1450,7 @@ describe "JSDoc grammar", ->
       expect(tokens[18]).toEqual value: ':', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'keyword.operator.assignment.js']
       expect(tokens[19]).toEqual value: '[', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'meta.brace.square.js']
       expect(tokens[20]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'meta.brace.curly.js']
-      expect(tokens[21]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[21]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
       expect(tokens[22]).toEqual value: '}}', scopes: ['source.js']
       expect(tokens[23]).toEqual value: ']', scopes: ['source.js', 'meta.brace.square.js']
       expect(tokens[24]).toEqual value: '}', scopes: ['source.js']
@@ -1459,12 +1459,12 @@ describe "JSDoc grammar", ->
       expect(tokens[28]).toEqual value: '/', scopes: ['source.js', 'keyword.operator.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {string="Foo*/oo"} bar')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
       expect(tokens[6]).toEqual value: 'string="Foo', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
-      expect(tokens[7]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[7]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
       expect(tokens[8]).toEqual value: 'oo', scopes: ['source.js']
       expect(tokens[9]).toEqual value: '"', scopes: ['source.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
       expect(tokens[10]).toEqual value: '} bar', scopes: ['source.js', 'string.quoted.double.js', 'invalid.illegal.string.js']
@@ -1477,7 +1477,7 @@ describe "JSDoc grammar", ->
          * @return {String}
          */
       """
-      expect(lines[0][0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(lines[0][0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(lines[1][0]).toEqual value: ' * ', scopes: ['source.js', 'comment.block.documentation.js']
       expect(lines[1][1]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(lines[1][2]).toEqual value: 'example', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'storage.type.class.jsdoc']
@@ -1490,9 +1490,9 @@ describe "JSDoc grammar", ->
       expect(lines[2][5]).toEqual value: '"', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'meta.function-call.js', 'meta.arguments.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
       expect(lines[2][6]).toEqual value: ')', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'meta.function-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
       expect(lines[2][7]).toEqual value: ';', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'punctuation.terminator.statement.js']
-      expect(lines[2][9]).toEqual value: '/*', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'comment.block.js', 'punctuation.definition.comment.js']
+      expect(lines[2][9]).toEqual value: '/*', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'comment.block.js', 'punctuation.definition.comment.begin.js']
       expect(lines[2][10]).toEqual value: ' Comment ', scopes: ['source.js', 'comment.block.documentation.js', 'meta.example.jsdoc', 'source.embedded.js', 'comment.block.js']
-      expect(lines[2][11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(lines[2][11]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
       expect(lines[3][1]).toEqual value: '*', scopes: ['source.js', 'keyword.operator.js']
       expect(lines[3][2]).toEqual value: ' @', scopes: ['source.js']
       expect(lines[3][3]).toEqual value: 'return', scopes: ['source.js', 'keyword.control.js']
@@ -1503,7 +1503,7 @@ describe "JSDoc grammar", ->
       expect(lines[4][2]).toEqual value: '/', scopes: ['source.js', 'keyword.operator.js']
 
       {tokens} = grammar.tokenizeLine('/** @param {Something} [value={key: [value, ["22"}] */ 20;')
-      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
       expect(tokens[2]).toEqual value: '@', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc', 'punctuation.definition.block.tag.jsdoc']
       expect(tokens[3]).toEqual value: 'param', scopes: ['source.js', 'comment.block.documentation.js', 'storage.type.class.jsdoc']
       expect(tokens[5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
@@ -1524,6 +1524,6 @@ describe "JSDoc grammar", ->
       expect(tokens[23]).toEqual value: '"', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'string.quoted.double.js', 'punctuation.definition.string.end.js']
       expect(tokens[24]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'meta.brace.curly.js']
       expect(tokens[25]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'meta.brace.square.js']
-      expect(tokens[27]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.js']
+      expect(tokens[27]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
       expect(tokens[29]).toEqual value: '20', scopes: ['source.js', 'constant.numeric.decimal.js']
       expect(tokens[30]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
