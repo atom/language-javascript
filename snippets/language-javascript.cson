@@ -74,6 +74,9 @@
   'log':
     'prefix': 'log'
     'body': 'console.log($1);$0'
+  'dir':
+    'prefix': 'dir'
+    'body': 'console.dir($1);$0'
   'warn':
     'prefix': 'warn'
     'body': 'console.warn($1);$0'
