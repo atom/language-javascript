@@ -1177,8 +1177,7 @@
     'include': '#properties'
   }
   {
-    'match': '((?<!\\.|[\\w$])(?![_\\$]+[^A-Z0-9_$])\\$*\\b(?:[A-Z_$][A-Z0-9_$]*)\\b\\$*)'
-    'name': 'constant.other.js'
+    'include': '#constants'
   }
   {
     'match': '(?<!\\$)\\b[0-9]+[\\w$]*'
@@ -1216,6 +1215,58 @@
         'name': 'meta.brace.curly.js'
     'patterns': [
       {
+        'match': '(?<!\\.|[\\w$])([A-Za-z_$][\\w$]*)\\s*(:)'
+        'captures':
+          '1':
+            'name': 'variable.assignment.js'
+            'patterns': [
+              {
+                'include': '#constants'
+              }
+            ]
+          '2':
+            'name': 'keyword.operator.assignment.js'
+      }
+      {
+        'match': '(?<!\\.|[\\w$])(\\d+)\\s*(:)'
+        'captures':
+          '1':
+            'name': 'variable.assignment.js'
+            'patterns': [
+              {
+                'include': '#numbers'
+              }
+            ]
+          '2':
+            'name': 'keyword.operator.assignment.js'
+      }
+      {
+        'match': '(?<!\\.|[\\w$])(\'.*\')\\s*(:)'
+        'captures':
+          '1':
+            'name': 'variable.assignment.js'
+            'patterns': [
+              {
+                'include': '#strings'
+              }
+            ]
+          '2':
+            'name': 'keyword.operator.assignment.js'
+      }
+      {
+        'match': '(?<!\\.|[\\w$])(".*")\\s*(:)'
+        'captures':
+          '1':
+            'name': 'variable.assignment.js'
+            'patterns': [
+              {
+                'include': '#strings'
+              }
+            ]
+          '2':
+            'name': 'keyword.operator.assignment.js'
+      }
+      {
         'include': '$self'
       }
     ]
@@ -1245,6 +1296,13 @@
   }
 ]
 'repository':
+  'constants':
+    'patterns': [
+      {
+        'match': '((?<!\\.|[\\w$])(?![_\\$]+[^A-Z0-9_$])\\$*\\b(?:[A-Z_$][A-Z0-9_$]*)\\b\\$*)'
+        'name': 'constant.other.js'
+      }
+    ]
   'numbers':
     'patterns': [
       {
