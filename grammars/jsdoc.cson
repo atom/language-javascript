@@ -315,7 +315,8 @@
     (
       (@)
       (?:define|enum|exception|export|extends|lends|implements|modifies
-      |namespace|private|protected|returns?|suppress|this|throws|type)
+      |namespace|private|protected|returns?|suppress|this|throws|type
+      |yields?)
     )
     \\s+(?={)
     '''
@@ -406,12 +407,13 @@
       |callback|chainable|class|classdesc|code|config|const|constant|constructor|constructs|copyright
       |default|defaultvalue|define|deprecated|desc|description|dict|emits|enum|event|example|exception
       |exports?|extends|extension(?:_?for)?|external|externs|file|fileoverview|final|fires|for|func
-      |function|global|host|ignore|implements|implicitCast|inherit[Dd]oc|inner|instance|interface
-      |internal|kind|lends|license|listens|main|member|memberof!?|method|mixes|mixins?|modifies|module
-      |name|namespace|noalias|nocollapse|nocompile|nosideeffects|override|overview|package|param
-      |polymer(?:Behavior)?|preserve|private|prop|property|protected|public|read[Oo]nly|record
-      |require[ds]|returns?|see|since|static|struct|submodule|summary|suppress|template|this
-      |throws|todo|tutorial|type|typedef|unrestricted|uses|var|variation|version|virtual|writeOnce)
+      |function|generator|global|hideconstructor|host|ignore|implements|implicitCast|inherit[Dd]oc
+      |inner|instance|interface|internal|kind|lends|license|listens|main|member|memberof!?|method
+      |mixes|mixins?|modifies|module|name|namespace|noalias|nocollapse|nocompile|nosideeffects
+      |override|overview|package|param|polymer(?:Behavior)?|preserve|private|prop|property|protected
+      |public|read[Oo]nly|record|require[ds]|returns?|see|since|static|struct|submodule|summary
+      |suppress|template|this|throws|todo|tutorial|type|typedef|unrestricted|uses|var|variation
+      |version|virtual|writeOnce|yields?)
       \\b
     '''
     'name': 'storage.type.class.jsdoc'
