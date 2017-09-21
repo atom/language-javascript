@@ -276,11 +276,11 @@
             \\s*
             (
               # The inner regexes are to stop the match early at */ and to not stop at escaped quotes
-              (?:
+              (?>
                 "(?:(?:\\*(?!/))|(?:\\\\(?!"))|[^*\\\\])*?" |  # [foo="bar"] Double-quoted
                 '(?:(?:\\*(?!/))|(?:\\\\(?!'))|[^*\\\\])*?' |  # [foo='bar'] Single-quoted
                 \\[ (?:(?:\\*(?!/))|[^*])*? \\] |              # [foo=[1,2]] Array literal
-                (?:(?:\\*(?!/))|[^*])*?                        # Everything else
+                (?:(?:\\*(?!/))|\\s(?!\\s*\\])|\\[.*?(?:\\]|(?=\\*/))|[^*\\s\\[\\]])* # Everything else (sorry)
               )*
             )
           )?
