@@ -401,10 +401,10 @@
       |exports?|extends|extension(?:_?for)?|external|externs|file|fileoverview|final|fires|for|func
       |function|global|host|ignore|implements|implicitCast|inherit[Dd]oc|inner|instance|interface
       |internal|kind|lends|license|listens|main|member|memberof!?|method|mixes|mixins?|modifies|module
-      |name|namespace|noalias|nocollapse|nocompile|nosideeffects|override|overview|package|param|preserve
-      |private|prop|property|protected|public|read[Oo]nly|record|require[ds]|returns?|see|since|static
-      |struct|submodule|summary|suppress|template|this|throws|todo|tutorial|type|typedef|unrestricted
-      |uses|var|variation|version|virtual|writeOnce)
+      |name|namespace|noalias|nocollapse|nocompile|nosideeffects|override|overview|package|param
+      |polymer(?:Behavior)?|preserve|private|prop|property|protected|public|read[Oo]nly|record
+      |require[ds]|returns?|see|since|static|struct|submodule|summary|suppress|template|this
+      |throws|todo|tutorial|type|typedef|unrestricted|uses|var|variation|version|virtual|writeOnce)
       \\b
     '''
     'name': 'storage.type.class.jsdoc'
