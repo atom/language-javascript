@@ -613,6 +613,15 @@ describe "JavaScript grammar", ->
       expect(tokens[14]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.end.js']
 
   describe "HTML template strings", ->
+    # TODO: Remove after Atom 1.21 is released
+    [tagScope, entityScope] = []
+    if parseFloat(atom.getVersion()) <= 1.21
+      tagScope = 'meta.tag.inline.any.html'
+      entityScope = 'entity.name.tag.inline.any.html'
+    else
+      tagScope = 'meta.tag.inline.b.html'
+      entityScope = 'entity.name.tag.inline.b.html'
+
     beforeEach ->
       waitsForPromise ->
         atom.packages.activatePackage("language-html")
@@ -622,15 +631,15 @@ describe "JavaScript grammar", ->
       expect(tokens[0]).toEqual value: 'html', scopes: ['source.js', 'string.quoted.template.html.js', 'entity.name.function.js']
       expect(tokens[1]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.html.js', 'punctuation.definition.string.begin.js']
       expect(tokens[2]).toEqual value: 'hey ', scopes: ['source.js', 'string.quoted.template.html.js']
-      expect(tokens[3]).toEqual value: '<', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.begin.html']
-      expect(tokens[4]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'entity.name.tag.inline.any.html']
-      expect(tokens[5]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.end.html']
+      expect(tokens[3]).toEqual value: '<', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.begin.html']
+      expect(tokens[4]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, entityScope]
+      expect(tokens[5]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.end.html']
       expect(tokens[6]).toEqual value: '${', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
       expect(tokens[7]).toEqual value: 'name', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source']
       expect(tokens[8]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
-      expect(tokens[9]).toEqual value: '</', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.begin.html']
-      expect(tokens[10]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'entity.name.tag.inline.any.html']
-      expect(tokens[11]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.end.html']
+      expect(tokens[9]).toEqual value: '</', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.begin.html']
+      expect(tokens[10]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, entityScope]
+      expect(tokens[11]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.end.html']
       expect(tokens[12]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.html.js', 'punctuation.definition.string.end.js']
 
     it "tokenizes innerHTML attribute declarations with string template tags", ->
@@ -643,15 +652,15 @@ describe "JavaScript grammar", ->
       expect(tokens[5]).toEqual value: ' ', scopes: ['source.js']
       expect(tokens[6]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.html.js', 'punctuation.definition.string.begin.js']
       expect(tokens[7]).toEqual value: 'hey ', scopes: ['source.js', 'string.quoted.template.html.js']
-      expect(tokens[8]).toEqual value: '<', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.begin.html']
-      expect(tokens[9]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'entity.name.tag.inline.any.html']
-      expect(tokens[10]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.end.html']
+      expect(tokens[8]).toEqual value: '<', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.begin.html']
+      expect(tokens[9]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, entityScope]
+      expect(tokens[10]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.end.html']
       expect(tokens[11]).toEqual value: '${', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
       expect(tokens[12]).toEqual value: 'name', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source']
       expect(tokens[13]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
-      expect(tokens[14]).toEqual value: '</', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.begin.html']
-      expect(tokens[15]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'entity.name.tag.inline.any.html']
-      expect(tokens[16]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.end.html']
+      expect(tokens[14]).toEqual value: '</', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.begin.html']
+      expect(tokens[15]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, entityScope]
+      expect(tokens[16]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.end.html']
       expect(tokens[17]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.html.js', 'punctuation.definition.string.end.js']
 
     it "tokenizes ES6 tagged HTML string templates with expanded function name", ->
@@ -659,15 +668,15 @@ describe "JavaScript grammar", ->
       expect(tokens[0]).toEqual value: 'escapeHTML', scopes: ['source.js', 'string.quoted.template.html.js', 'entity.name.function.js']
       expect(tokens[1]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.html.js', 'punctuation.definition.string.begin.js']
       expect(tokens[2]).toEqual value: 'hey ', scopes: ['source.js', 'string.quoted.template.html.js']
-      expect(tokens[3]).toEqual value: '<', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.begin.html']
-      expect(tokens[4]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'entity.name.tag.inline.any.html']
-      expect(tokens[5]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.end.html']
+      expect(tokens[3]).toEqual value: '<', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.begin.html']
+      expect(tokens[4]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, entityScope]
+      expect(tokens[5]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.end.html']
       expect(tokens[6]).toEqual value: '${', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
       expect(tokens[7]).toEqual value: 'name', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source']
       expect(tokens[8]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
-      expect(tokens[9]).toEqual value: '</', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.begin.html']
-      expect(tokens[10]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'entity.name.tag.inline.any.html']
-      expect(tokens[11]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.end.html']
+      expect(tokens[9]).toEqual value: '</', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.begin.html']
+      expect(tokens[10]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, entityScope]
+      expect(tokens[11]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.end.html']
       expect(tokens[12]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.html.js', 'punctuation.definition.string.end.js']
 
     it "tokenizes ES6 tagged HTML string templates with expanded function name and white space", ->
@@ -676,15 +685,15 @@ describe "JavaScript grammar", ->
       expect(tokens[1]).toEqual value: '   ', scopes: ['source.js', 'string.quoted.template.html.js']
       expect(tokens[2]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.html.js', 'punctuation.definition.string.begin.js']
       expect(tokens[3]).toEqual value: 'hey ', scopes: ['source.js', 'string.quoted.template.html.js']
-      expect(tokens[4]).toEqual value: '<', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.begin.html']
-      expect(tokens[5]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'entity.name.tag.inline.any.html']
-      expect(tokens[6]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.end.html']
+      expect(tokens[4]).toEqual value: '<', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.begin.html']
+      expect(tokens[5]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, entityScope]
+      expect(tokens[6]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.end.html']
       expect(tokens[7]).toEqual value: '${', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
       expect(tokens[8]).toEqual value: 'name', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source']
       expect(tokens[9]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.html.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
-      expect(tokens[10]).toEqual value: '</', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.begin.html']
-      expect(tokens[11]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'entity.name.tag.inline.any.html']
-      expect(tokens[12]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', 'meta.tag.inline.any.html', 'punctuation.definition.tag.end.html']
+      expect(tokens[10]).toEqual value: '</', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.begin.html']
+      expect(tokens[11]).toEqual value: 'b', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, entityScope]
+      expect(tokens[12]).toEqual value: '>', scopes: ['source.js', 'string.quoted.template.html.js', tagScope, 'punctuation.definition.tag.end.html']
       expect(tokens[13]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.html.js', 'punctuation.definition.string.end.js']
 
   describe "ES6 tagged Relay.QL string templates", ->
