@@ -1527,3 +1527,9 @@ describe "JSDoc grammar", ->
       expect(tokens[27]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
       expect(tokens[29]).toEqual value: '20', scopes: ['source.js', 'constant.numeric.decimal.js']
       expect(tokens[30]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+
+  describe "when the line ends without a closing bracket", ->
+    it "does not attempt to match the optional value (regression)", ->
+      {tokens} = grammar.tokenizeLine('/** @param {array} [bar = "x" REMOVE THE CLOSE BRACKET HERE.')
+      expect(tokens[9]).toEqual value: '[', scopes: ['source.js', 'comment.block.documentation.js']
+      expect(tokens[11]).toEqual value: ' = "x" REMOVE THE CLOSE BRACKET HERE.', scopes: ['source.js', 'comment.block.documentation.js']
