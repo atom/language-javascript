@@ -311,7 +311,14 @@
   {
     # Tags followed by a type expression
     # -  @<tag> {type}
-    'begin': '((@)(?:define|enum|exception|implements|modifies|namespace|private|protected|returns?|suppress|throws|type))\\s+(?={)'
+    'begin': '''(?x)
+    (
+      (@)
+      (?:define|enum|exception|export|extends|lends|implements|modifies
+      |namespace|private|protected|returns?|suppress|this|throws|type)
+    )
+    \\s+(?={)
+    '''
     'beginCaptures':
       '1':
         'name': 'storage.type.class.jsdoc'
