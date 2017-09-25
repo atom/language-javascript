@@ -1,6 +1,4 @@
 'scopeName': 'source.js.regexp'
-'name': 'Regular Expressions (JavaScript)'
-'fileTypes': []
 'patterns': [
   {
     'include': '#regexp'
