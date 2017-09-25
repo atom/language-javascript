@@ -1,6 +1,4 @@
 'scopeName': 'source.js.regexp.replacement'
-'name': 'Regular Expression Replacement (JavaScript)'
-'fileTypes': []
 'patterns': [
   {
     'include': '#regexp-replacement'
