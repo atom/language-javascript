@@ -120,6 +120,14 @@ describe "JavaScript grammar", ->
       expect(tokens[0]).toEqual value: "debugger", scopes: ['source.js', 'keyword.other.debugger.js']
       expect(tokens[1]).toEqual value: ";", scopes: ['source.js', 'punctuation.terminator.statement.js']
 
+    it "tokenises an `await` keyword after a spread operator", ->
+      {tokens} = grammar.tokenizeLine("...await stuff()")
+      expect(tokens[0]).toEqual value: '...', scopes: ['source.js', 'keyword.operator.spread.js']
+      expect(tokens[1]).toEqual value: 'await', scopes: ['source.js', 'keyword.control.js']
+      expect(tokens[3]).toEqual value: 'stuff', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
+      expect(tokens[4]).toEqual value: '(', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
+      expect(tokens[5]).toEqual value: ')', scopes: ['source.js', 'meta.function-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
+
   describe "built-in globals", ->
     it "tokenizes built-in classes", ->
       {tokens} = grammar.tokenizeLine('window')

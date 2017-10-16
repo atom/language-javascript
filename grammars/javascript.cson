@@ -951,7 +951,11 @@
     'name': 'meta.control.yield.js'
   }
   {
-    'match': '(?<!\\.)\\b(await|break|catch|continue|do|else|finally|for|if|import|package|return|throw|try|while|with)(?!\\s*:)\\b'
+    'match': '(?:(?<=\\.{3})|(?<!\\.))\\b(await)(?!\\s*:)\\b'
+    'name': 'keyword.control.js'
+  }
+  {
+    'match': '(?<!\\.)\\b(break|catch|continue|do|else|finally|for|if|import|package|return|throw|try|while|with)(?!\\s*:)\\b'
     'name': 'keyword.control.js'
   }
   {
