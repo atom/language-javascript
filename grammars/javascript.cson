@@ -467,7 +467,7 @@
       (?=
         (?!
           (break|case|catch|continue|do|else|finally|for|function|if|
-          package|return|switch|throw|try|while|with)
+          return|switch|throw|try|while|with)
           [\\s\\(]
         )
         (
