@@ -508,7 +508,7 @@
             'name': 'entity.name.type.instance.jsdoc'
           '1':
             'name': 'punctuation.definition.bracket.curly.begin.jsdoc'
-        'contentName': 'entity.name.type.instance.jsdoc'
+        'contentName': 'entity.name.type.instance.jsdoc.meta.embedded'
         'end': '((}))\\s*|(?=\\*/)'
         'endCaptures':
           '1':
