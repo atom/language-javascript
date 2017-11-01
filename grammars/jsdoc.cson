@@ -502,18 +502,15 @@
         'name': 'invalid.illegal.type.jsdoc'
       }
       {
+        'name': 'entity.name.type.instance.jsdoc'
         'begin': '\\G({)'
         'beginCaptures':
-          '0':
-            'name': 'entity.name.type.instance.jsdoc'
           '1':
             'name': 'punctuation.definition.bracket.curly.begin.jsdoc'
-        'contentName': 'entity.name.type.instance.jsdoc.meta.embedded'
-        'end': '((}))\\s*|(?=\\*/)'
+        'contentName': 'meta.embedded.line.js.jsdoc.type'
+        'end': '(})\\s*|(?=\\*/)'
         'endCaptures':
           '1':
-            'name': 'entity.name.type.instance.jsdoc'
-          '2':
             'name': 'punctuation.definition.bracket.curly.end.jsdoc'
         'patterns': [
           {
