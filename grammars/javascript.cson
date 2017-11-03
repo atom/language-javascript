@@ -1908,6 +1908,7 @@
         'endCaptures':
           '0':
             'name': 'punctuation.definition.comment.end.js'
+        'contentName': 'meta.embedded.js'
         'name': 'comment.block.documentation.js'
         'patterns': [
           {

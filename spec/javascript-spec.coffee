@@ -1700,7 +1700,7 @@ describe "JavaScript grammar", ->
 
       {tokens} = grammar.tokenizeLine('/** foo */')
       expect(tokens[0]).toEqual value: '/**', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.begin.js']
-      expect(tokens[1]).toEqual value: ' foo ', scopes: ['source.js', 'comment.block.documentation.js']
+      expect(tokens[1]).toEqual value: ' foo ', scopes: ['source.js', 'comment.block.documentation.js', 'meta.embedded.js']
       expect(tokens[2]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
 
     it "tokenizes // comments", ->
