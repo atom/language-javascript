@@ -1130,7 +1130,7 @@
     'name': 'constant.language.js'
   }
   {
-    'begin': '(?<=[\\[=(?:+,!]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])(?=.*/)'
+    'begin': '(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])(?=.*/)'
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.string.begin.js'

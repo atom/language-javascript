@@ -216,6 +216,14 @@ describe "JavaScript grammar", ->
       expect(tokens[6]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
       expect(tokens[7]).toEqual value: ']', scopes: ['source.js', 'meta.brace.square.js']
 
+    it "tokenizes regular expressions inside curly brackets", ->
+      {tokens} = grammar.tokenizeLine('{/test/}')
+      expect(tokens[0]).toEqual value: '{', scopes: ['source.js', 'meta.brace.curly.js']
+      expect(tokens[1]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[2]).toEqual value: 'test', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[3]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+      expect(tokens[4]).toEqual value: '}', scopes: ['source.js', 'meta.brace.curly.js']
+
     it "tokenizes regular expressions inside arrow function expressions", ->
       {tokens} = grammar.tokenizeLine('getRegex = () => /^helloworld$/;')
       expect(tokens[9]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
