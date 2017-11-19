@@ -1,5 +1,6 @@
 '.source.js':
   'editor':
+    'nonWordCharacters': '/\\()"\':,.;<>~!#@%^&*|+=[]{}`?-…'
     'commentStart': '// '
     'foldEndPattern': '^\\s*\\}|^\\s*\\]|^\\s*\\)'
     'increaseIndentPattern': '(?x)
