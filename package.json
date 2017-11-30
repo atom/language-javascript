@@ -17,5 +17,8 @@
   },
   "devDependencies": {
     "coffeelint": "^1.10.1"
+  },
+  "dependencies": {
+    "tree-sitter-javascript": "^0.4.7"
   }
 }
