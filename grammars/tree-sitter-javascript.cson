@@ -1,28 +1,9 @@
 id: 'javascript'
-
 name: 'JavaScript'
-
 type: 'tree-sitter'
-
 parser: 'tree-sitter-javascript'
 
-folds:
-  delimiters: [
-    ['{', '}']
-    ['(', ')']
-    ['[', ']'],
-    ['jsx_opening_element', 'jsx_closing_element'],
-    ['<', '>', {afterChildCount: 1}]
-  ],
-
-  tokens: [
-    ['comment', 2, 2]
-    ['template_string', 1, 1]
-  ]
-
-fileTypes: [
-  'js'
-]
+fileTypes: ['js', 'jsx']
 
 firstLineMatch: '''(?x)
   # Hashbang
@@ -43,6 +24,20 @@ firstLineMatch: '''(?x)
   (?=\\s|:|$)
   )
 '''
+
+folds:
+  delimiters: [
+    ['{', '}']
+    ['(', ')']
+    ['[', ']']
+    ['jsx_opening_element', 'jsx_closing_element']
+    ['<', '>', {afterChildCount: 1}]
+  ]
+
+  tokens: [
+    ['comment', 2, 2]
+    ['template_string', 1, 1]
+  ]
 
 comments:
   start: '// '
