@@ -34,9 +34,9 @@ folds:
     ['<', '>', {afterChildCount: 1}]
   ]
 
-  tokens: [
-    ['comment', 2, 2]
-    ['template_string', 1, 1]
+  nodes: [
+    'comment',
+    'template_string',
   ]
 
 comments:
