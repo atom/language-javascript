@@ -137,7 +137,7 @@ scopes:
   '"async"': 'keyword.control'
   '"await"': 'keyword.control'
 
-  'jsx_attribute': 'entity.other.attribute-name'
+  'jsx_attribute > property_identifier': 'entity.other.attribute-name'
   'jsx_opening_element > identifier': 'entity.name.tag'
   'jsx_closing_element > identifier': 'entity.name.tag'
   'jsx_self_closing_element > identifier': 'entity.name.tag'
