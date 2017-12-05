@@ -25,19 +25,33 @@ firstLineMatch: '''(?x)
   )
 '''
 
-folds:
-  delimiters: [
-    ['{', '}']
-    ['(', ')']
-    ['[', ']']
-    ['jsx_opening_element', 'jsx_closing_element']
-    ['<', '>', {afterChildCount: 1}]
-  ]
-
-  nodes: [
-    'comment',
-    'template_string',
-  ]
+folds: [
+  {
+    type: ['comment', 'template_string']
+  }
+  {
+    type: 'jsx_element'
+    start: {index: 0}
+    end: {index: -1}
+  }
+  {
+    type: 'jsx_self_closing_element'
+    start: {index: 1}
+    end: {index: -2}
+  }
+  {
+    start: {index: 0, type: '{'}
+    end: {index: -1, type: '}'}
+  }
+  {
+    start: {index: 0, type: '['}
+    end: {index: -1, type: ']'}
+  }
+  {
+    start: {index: 0, type: '('}
+    end: {index: -1, type: ')'}
+  }
+]
 
 comments:
   start: '// '
