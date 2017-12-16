@@ -2,6 +2,7 @@ id: 'javascript'
 name: 'JavaScript'
 type: 'tree-sitter'
 parser: 'tree-sitter-javascript'
+legacyScopeName: 'source.js'
 
 fileTypes: ['js', 'jsx']
 
