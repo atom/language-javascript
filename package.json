@@ -1,6 +1,6 @@
 {
   "name": "language-javascript",
-  "version": "0.127.7",
+  "version": "0.128.0-4",
   "description": "JavaScript language support in Atom",
   "engines": {
     "atom": "*",
@@ -17,5 +17,8 @@
   },
   "devDependencies": {
     "coffeelint": "^1.10.1"
+  },
+  "dependencies": {
+    "tree-sitter-javascript": "^0.5.0"
   }
 }

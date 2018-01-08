@@ -1,0 +1,144 @@
+id: 'javascript'
+name: 'JavaScript'
+type: 'tree-sitter'
+parser: 'tree-sitter-javascript'
+legacyScopeName: 'source.js'
+
+fileTypes: ['js', 'jsx']
+
+firstLineMatch: '''(?x)
+  # Hashbang
+  ^\\#!.*(?:\\s|\\/|(?<=!)\\b)
+    (?:node|iojs|JavaScript)
+  (?:$|\\s)
+  |
+  # Modeline
+  (?i:
+    # Emacs
+    -\\*-(?:\\s*(?=[^:;\\s]+\\s*-\\*-)|(?:.*?[;\\s]|(?<=-\\*-))mode\\s*:\\s*)
+      (?:js|javascript)
+    (?=[\\s;]|(?<![-*])-\\*-).*?-\\*-
+  |
+  # Vim
+  (?:(?:\\s|^)vi(?:m[<=>]?\\d+|m)?|\\sex)(?=:(?=\\s*set?\\s[^\\n:]+:)|:(?!\\s*set?\\s))(?:(?:\\s|\\s*:\\s*)\\w*(?:\\s*=(?:[^\\n\\\\\\s]|\\\\.)*)?)*[\\s:](?:filetype|ft|syntax)\\s*=
+    javascript
+  (?=\\s|:|$)
+  )
+'''
+
+folds: [
+  {
+    type: 'comment'
+  }
+  {
+    type: ['jsx_element', 'template_string'],
+    start: {index: 0}
+    end: {index: -1}
+  }
+  {
+    type: 'jsx_self_closing_element'
+    start: {index: 1}
+    end: {index: -2}
+  }
+  {
+    start: {index: 0, type: '{'}
+    end: {index: -1, type: '}'}
+  }
+  {
+    start: {index: 0, type: '['}
+    end: {index: -1, type: ']'}
+  }
+  {
+    start: {index: 0, type: '('}
+    end: {index: -1, type: ')'}
+  }
+]
+
+comments:
+  start: '// '
+
+scopes:
+  'program': 'source.js'
+
+  'class > identifier': 'entity.name.type.class'
+
+  'property_identifier': 'variable.other.object.property'
+
+  'function > identifier': 'entity.name.function'
+  'call_expression > identifier': 'entity.name.function'
+
+  'method_definition > property_identifier': 'entity.name.function'
+  'call_expression > member_expression > property_identifier': 'entity.name.function'
+
+  'new_expression > call_expression > identifier': 'meta.class.instance.constructor'
+
+  'import_specifier > identifier': 'variable.other.module'
+  'import_clause > identifier': 'variable.other.module'
+
+  'number': 'constant.numeric'
+  'string': 'string.quoted'
+  'regex': 'string.regexp'
+  'template_string': 'string.quoted.template'
+  'undefined': 'constant.language'
+  'null': 'constant.language.null'
+  'true': 'constant.language.boolean.true'
+  'false': 'constant.language.boolean.false'
+  'comment': 'comment.block'
+
+  'template_substitution > "${"': 'punctuation.section.embedded'
+  'template_substitution > "}"': 'punctuation.section.embedded'
+
+  '"("': 'punctuation.definition.parameters.begin.bracket.round'
+  '")"': 'punctuation.definition.parameters.end.bracket.round'
+  '"{"': 'punctuation.definition.function.body.begin.bracket.curly'
+  '"}"': 'punctuation.definition.function.body.end.bracket.curly'
+
+  '"var"': 'storage.type'
+  '"let"': 'storage.type'
+  '"class"': 'storage.type'
+  '"const"': 'storage.modifier'
+  '"static"': 'storage.modifier'
+  '"function"': 'storage.type'
+
+  '"+"': 'keyword.operator'
+  '"-"': 'keyword.operator'
+  '"*"': 'keyword.operator'
+  '"/"': 'keyword.operator'
+  '"in"': 'keyword.operator.in'
+  '"instanceof"': 'keyword.operator.instanceof'
+  '"of"': 'keyword.operator.of'
+  '"new"': 'keyword.operator.new'
+  '"typeof"': 'keyword.operator.typeof'
+
+  '"get"': 'keyword.operator.setter'
+  '"set"': 'keyword.operator.setter'
+
+  '"."': 'meta.delimiter'
+  '","': 'meta.delimiter'
+
+  '"if"': 'keyword.control'
+  '"do"': 'keyword.control'
+  '"else"': 'keyword.control'
+  '"while"': 'keyword.control'
+  '"for"': 'keyword.control'
+  '"return"': 'keyword.control'
+  '"break"': 'keyword.control'
+  '"continue"': 'keyword.control'
+  '"throw"': 'keyword.control'
+  '"try"': 'keyword.control'
+  '"catch"': 'keyword.control'
+  '"finally"': 'keyword.control'
+  '"switch"': 'keyword.control'
+  '"case"': 'keyword.control'
+  '"default"': 'keyword.control'
+  '"export"': 'keyword.control'
+  '"import"': 'keyword.control'
+  '"from"': 'keyword.control'
+  '"yield"': 'keyword.control'
+  '"async"': 'keyword.control'
+  '"await"': 'keyword.control'
+
+  'jsx_attribute > property_identifier': 'entity.other.attribute-name'
+  'jsx_opening_element > identifier': 'entity.name.tag'
+  'jsx_closing_element > identifier': 'entity.name.tag'
+  'jsx_self_closing_element > identifier': 'entity.name.tag'
