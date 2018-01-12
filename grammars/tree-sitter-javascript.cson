@@ -84,6 +84,7 @@ scopes:
   'true': 'constant.language.boolean.true'
   'false': 'constant.language.boolean.false'
   'comment': 'comment.block'
+  'hash_bang_line': 'comment.block'
 
   'template_substitution > "${"': 'punctuation.section.embedded'
   'template_substitution > "}"': 'punctuation.section.embedded'
@@ -137,6 +138,7 @@ scopes:
   '"yield"': 'keyword.control'
   '"async"': 'keyword.control'
   '"await"': 'keyword.control'
+  '"debugger"': 'keyword.control'
 
   'jsx_attribute > property_identifier': 'entity.other.attribute-name'
   'jsx_opening_element > identifier': 'entity.name.tag'
