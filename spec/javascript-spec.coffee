@@ -1099,6 +1099,29 @@ describe "JavaScript grammar", ->
       expect(tokens[10]).toEqual value: '}', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.end.js']
       expect(tokens[12]).toEqual value: 'from', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
 
+    it "tokenizes multiline re-export", ->
+      lines = grammar.tokenizeLines '''
+        export {
+          default as alias,
+          member1 as alias1,
+          member2,
+        } from "module-name";
+      '''
+      expect(lines[0][0]).toEqual value: 'export', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(lines[0][2]).toEqual value: '{', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.begin.js']
+      expect(lines[1][1]).toEqual value: 'default', scopes: ['source.js', 'meta.export.js', 'variable.language.default.js']
+      expect(lines[1][3]).toEqual value: 'as', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(lines[1][5]).toEqual value: 'alias', scopes: ['source.js', 'meta.export.js', 'variable.other.module-alias.js']
+      expect(lines[1][6]).toEqual value: ',', scopes: ['source.js', 'meta.export.js', 'meta.delimiter.object.comma.js']
+      expect(lines[2][1]).toEqual value: 'member1', scopes: ['source.js', 'meta.export.js', 'variable.other.module.js']
+      expect(lines[2][3]).toEqual value: 'as', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+      expect(lines[2][5]).toEqual value: 'alias1', scopes: ['source.js', 'meta.export.js', 'variable.other.module-alias.js']
+      expect(lines[2][6]).toEqual value: ',', scopes: ['source.js', 'meta.export.js', 'meta.delimiter.object.comma.js']
+      expect(lines[3][1]).toEqual value: 'member2', scopes: ['source.js', 'meta.export.js', 'variable.other.module.js']
+      expect(lines[3][2]).toEqual value: ',', scopes: ['source.js', 'meta.export.js', 'meta.delimiter.object.comma.js']
+      expect(lines[4][0]).toEqual value: '}', scopes: ['source.js', 'meta.export.js', 'punctuation.definition.modules.end.js']
+      expect(lines[4][2]).toEqual value: 'from', scopes: ['source.js', 'meta.export.js', 'keyword.control.js']
+
   describe "ES6 yield", ->
     it "tokenizes yield", ->
       {tokens} = grammar.tokenizeLine('yield next')
