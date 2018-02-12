@@ -43,14 +43,18 @@
         'name': 'keyword.operator.or.regexp'
       }
       {
-        'begin': '(\\()((\\?=)|(\\?!))'
+        'begin': '(\\()(?:(\\?=)|(\\?!)|(\\?<=)|(\\?<!))'
         'beginCaptures':
           '1':
             'name': 'punctuation.definition.group.regexp'
-          '3':
+          '2':
             'name': 'meta.assertion.look-ahead.regexp'
-          '4':
+          '3':
             'name': 'meta.assertion.negative-look-ahead.regexp'
+          '4':
+            'name': 'meta.assertion.look-behind.regexp'
+          '5':
+            'name': 'meta.assertion.negative-look-behind.regexp'
         'end': '(\\))'
         'endCaptures':
           '1':
