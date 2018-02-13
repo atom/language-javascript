@@ -1137,10 +1137,12 @@
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.string.begin.js'
-    'end': '(/)[gimuy]*'
+    'end': '(/)([gimsuy]*)'
     'endCaptures':
       '1':
         'name': 'punctuation.definition.string.end.js'
+      '2':
+        'name': 'meta.flag.regexp'
     'name': 'string.regexp.js'
     'patterns': [
       {
