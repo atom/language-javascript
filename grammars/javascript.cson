@@ -865,6 +865,39 @@
     ]
   }
   {
+    # Promise
+    'begin': '(?<![\\w$])Promise(?![\\w$]|\\s*:)'
+    'beginCaptures':
+      '0':
+        'name': 'support.class.promise.js'
+    'end': '''(?x)
+      (?<=\\)) | (?=
+        (?! (\\s*//)|(\\s*/\\*)|(\\s*\\.\\s*(all|race|reject|resolve)\\s*\\() )\\s*\\S
+      )
+    '''
+    'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        # Promise.all()
+        'begin': '\\s*(\\.)\\s*(\\w+)\\s*(?=\\()'
+        'beginCaptures':
+          '1':
+            'name': 'meta.delimiter.method.period.js'
+          '2':
+            'name': 'support.function.promise.js'
+        'end': '(?<=\\))'
+        'name': 'meta.method-call.js'
+        'patterns': [
+          {
+            'include': '#arguments'
+          }
+        ]
+      }
+    ]
+  }
+  {
     'include': '#strings'
   }
   {
@@ -987,7 +1020,7 @@
   {
     'match': '''(?x) (?<!\\$) \\b
       (Array|ArrayBuffer|Atomics|Boolean|DataView|Date|Error|EvalError|Float32Array|Float64Array|Function|Generator
-      |GeneratorFunction|Int16Array|Int32Array|Int8Array|InternalError|Intl|JSON|Map|Number|Object|Promise|Proxy
+      |GeneratorFunction|Int16Array|Int32Array|Int8Array|InternalError|Intl|JSON|Map|Number|Object|Proxy
       |RangeError|ReferenceError|Reflect|RegExp|Set|SharedArrayBuffer|SIMD|String|Symbol|SyntaxError|TypeError
       |Uint16Array|Uint32Array|Uint8Array|Uint8ClampedArray|URIError|WeakMap|WeakSet)
       \\b
@@ -1680,7 +1713,7 @@
               }
               {
                 'match': '''(?x)
-                  \\b(shift|showModelessDialog|showModalDialog|showHelp|scroll|scrollX|scrollByPages|
+                  \\b(catch|finally|then|shift|showModelessDialog|showModalDialog|showHelp|scroll|scrollX|scrollByPages|
                   scrollByLines|scrollY|scrollTo|stop|strike|sizeToContent|sidebar|signText|sort|
                   sup|sub|substr|substring|splice|split|send|set(Milliseconds|Seconds|Minutes|Hours|
                   Month|Year|FullYear|Date|UTC(Milliseconds|Seconds|Minutes|Hours|Month|FullYear|Date)|
