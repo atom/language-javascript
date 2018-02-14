@@ -186,6 +186,22 @@ describe "JavaScript grammar", ->
       expect(tokens[1]).toEqual value: 'test', scopes: ['source.js', 'string.regexp.js']
       expect(tokens[2]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
 
+      {tokens} = grammar.tokenizeLine('/random/g')
+      expect(tokens[0]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[1]).toEqual value: 'random', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[2]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+      expect(tokens[3]).toEqual value: 'g', scopes: ['source.js', 'string.regexp.js', 'meta.flag.regexp']
+
+      {tokens} = grammar.tokenizeLine('/rock(et)?/is')
+      expect(tokens[0]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[1]).toEqual value: 'rock', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[2]).toEqual value: '(', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.regexp']
+      expect(tokens[3]).toEqual value: 'et', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp']
+      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.regexp']
+      expect(tokens[5]).toEqual value: '?', scopes: ['source.js', 'string.regexp.js', 'keyword.operator.quantifier.regexp']
+      expect(tokens[6]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+      expect(tokens[7]).toEqual value: 'is', scopes: ['source.js', 'string.regexp.js', 'meta.flag.regexp']
+
       {tokens} = grammar.tokenizeLine('/(?<=foo)test(?=bar)/')
       expect(tokens[0]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
       expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'punctuation.definition.group.regexp']
