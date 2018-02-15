@@ -1911,6 +1911,41 @@ describe "JavaScript grammar", ->
       expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
       expect(tokens[5]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
 
+  describe "promise", ->
+    it "tokenizes the promise object", ->
+      {tokens} = grammar.tokenizeLine('Promise;')
+      expect(tokens[0]).toEqual value: 'Promise', scopes: ['source.js', 'support.class.promise.js']
+      expect(tokens[1]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+
+    it "tokenizes promise support functions", ->
+      {tokens} = grammar.tokenizeLine('Promise.race();')
+      expect(tokens[0]).toEqual value: 'Promise', scopes: ['source.js', 'support.class.promise.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
+      expect(tokens[2]).toEqual value: 'race', scopes: ['source.js', 'meta.method-call.js', 'support.function.promise.js']
+      expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
+      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
+      expect(tokens[5]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+
+      lines = grammar.tokenizeLines '''
+        Promise
+        .resolve();
+      '''
+      expect(lines[0][0]).toEqual value: 'Promise', scopes: ['source.js', 'support.class.promise.js']
+      expect(lines[1][0]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
+      expect(lines[1][1]).toEqual value: 'resolve', scopes: ['source.js', 'meta.method-call.js', 'support.function.promise.js']
+      expect(lines[1][2]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
+      expect(lines[1][3]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
+      expect(lines[1][4]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+
+    it "tokenizes promise custom functions", ->
+      {tokens} = grammar.tokenizeLine('Promise.anExtraFunction();')
+      expect(tokens[0]).toEqual value: 'Promise', scopes: ['source.js', 'support.class.promise.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.period.js']
+      expect(tokens[2]).toEqual value: 'anExtraFunction', scopes: ['source.js', 'meta.method-call.js', 'entity.name.function.js']
+      expect(tokens[3]).toEqual value: '(', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.begin.bracket.round.js']
+      expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'meta.method-call.js', 'meta.arguments.js', 'punctuation.definition.arguments.end.bracket.round.js']
+      expect(tokens[5]).toEqual value: ';', scopes: ['source.js', 'punctuation.terminator.statement.js']
+
   describe "object literals", ->
     keywords = ['super', 'this', 'null', 'true', 'false', 'debugger', 'exports', '__filename']
 
