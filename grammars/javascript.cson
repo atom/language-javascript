@@ -788,14 +788,15 @@
       '0':
         'name': 'entity.name.type.object.console.js'
     'end': '''(?x)
-      (?<=\\)) | (?=
-        (?! (\\s*//)|(\\s*/\\*)|(\\s*(\\.)\\s*
-          (assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)
-          \\s*\\(
-        )) \\s*\\S
+      (?<=\\)) | (?=\\s*\\S)(?!
+        \\s*(//|/\\*|\\.\\s*(assert|clear|debug|error|info|log|profile|
+        profileEnd|time|timeEnd|warn)\\s*\\()
       )
     '''
     'patterns': [
+      {
+        'include': '#wrapped_line_comment'
+      }
       {
         'include': '#comments'
       }
@@ -823,17 +824,19 @@
       '0':
         'name': 'support.class.math.js'
     'end': '''(?x)
-      (?<=E|LN10|LN2|LOG10E|LOG2E|PI|SQRT1_2|SQRT2|\\)
-      ) | (?=
-        (?! (\\s*//)|(\\s*/\\*)|(\\s*\\.\\s* (
-          ((abs|acos|acosh|asin|asinh|atan|atan2|atanh|cbrt|ceil|clz32|cos|cosh|exp|
+      (?<=\\)) | (?<=[\\w$])(?<!^Math|[^\\w$]Math) | (?=\\s*\\S)(?!
+        \\s*(//|/\\*|\\.\\s*(
+          (abs|acos|acosh|asin|asinh|atan|atan2|atanh|cbrt|ceil|clz32|cos|cosh|exp|
           expm1|floor|fround|hypot|imul|log|log10|log1p|log2|max|min|pow|random|
           round|sign|sin|sinh|sqrt|tan|tanh|trunc)\\s*\\(
-          ) | (E|LN10|LN2|LOG10E|LOG2E|PI|SQRT1_2|SQRT2)(?!\\s*[\\w$(]))
-        )) \\s*\\S
+          | (E|LN10|LN2|LOG10E|LOG2E|PI|SQRT1_2|SQRT2)(?!\\s*[\\w$(])
+        ))
       )
     '''
     'patterns': [
+      {
+        'include': '#wrapped_line_comment'
+      }
       {
         'include': '#comments'
       }
@@ -871,11 +874,14 @@
       '0':
         'name': 'support.class.promise.js'
     'end': '''(?x)
-      (?<=\\)) | (?=
-        (?! (\\s*//)|(\\s*/\\*)|(\\s*\\.\\s*(all|race|reject|resolve)\\s*\\() )\\s*\\S
+      (?<=\\)) | (?=\\s*\\S)(?!
+        \\s*(//|/\\*|\\.\\s*(all|race|reject|resolve)\\s*\\()
       )
     '''
     'patterns': [
+      {
+        'include': '#wrapped_line_comment'
+      }
       {
         'include': '#comments'
       }
@@ -1971,6 +1977,18 @@
             'name': 'punctuation.definition.comment.js'
         'end': '$'
         'name': 'comment.line.double-slash.js'
+      }
+    ]
+  'wrapped_line_comment':
+    'patterns': [
+      {
+        'begin': '(//).*'
+        'beginCaptures':
+          '0':
+            'name': 'comment.line.double-slash.js'
+          '1':
+            'name': 'punctuation.definition.comment.js'
+        'end': '^'
       }
     ]
   'switch_statement':
