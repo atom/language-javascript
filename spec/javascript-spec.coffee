@@ -202,6 +202,32 @@ describe "JavaScript grammar", ->
       expect(tokens[6]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
       expect(tokens[7]).toEqual value: 'is', scopes: ['source.js', 'string.regexp.js', 'meta.flag.regexp']
 
+      {tokens} = grammar.tokenizeLine('/(foo)bar\\1/')
+      expect(tokens[0]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.regexp']
+      expect(tokens[2]).toEqual value: 'foo', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp']
+      expect(tokens[3]).toEqual value: ')', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.regexp']
+      expect(tokens[4]).toEqual value: 'bar', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[5]).toEqual value: '\\1', scopes: ['source.js', 'string.regexp.js', 'keyword.other.back-reference.regexp']
+      expect(tokens[6]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+
+      {tokens} = grammar.tokenizeLine('/(?<bY_$>foo)bar\\k<bY_$>/')
+      expect(tokens[0]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[1]).toEqual value: '(?<bY_$>', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.regexp']
+      expect(tokens[2]).toEqual value: 'foo', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp']
+      expect(tokens[3]).toEqual value: ')', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.regexp']
+      expect(tokens[4]).toEqual value: 'bar', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[5]).toEqual value: '\\k<bY_$>', scopes: ['source.js', 'string.regexp.js', 'keyword.other.back-reference.regexp']
+      expect(tokens[6]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+
+      {tokens} = grammar.tokenizeLine('/(?:foo)bar/')
+      expect(tokens[0]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[1]).toEqual value: '(?:', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.regexp']
+      expect(tokens[2]).toEqual value: 'foo', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp']
+      expect(tokens[3]).toEqual value: ')', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.regexp']
+      expect(tokens[4]).toEqual value: 'bar', scopes: ['source.js', 'string.regexp.js']
+      expect(tokens[5]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
+
       {tokens} = grammar.tokenizeLine('/(?<=foo)test(?=bar)/')
       expect(tokens[0]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
       expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'punctuation.definition.group.regexp']
