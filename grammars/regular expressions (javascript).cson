@@ -31,7 +31,7 @@
         'name': 'keyword.control.anchor.regexp'
       }
       {
-        'match': '\\\\[1-9]\\d*'
+        'match': '\\\\[1-9]\\d*|\\\\k<[a-zA-Z_$][\\w$]*>'
         'name': 'keyword.other.back-reference.regexp'
       }
       {
@@ -67,7 +67,7 @@
         ]
       }
       {
-        'begin': '\\((\\?:)?'
+        'begin': '\\(((\\?:)|(\\?<[a-zA-Z_$][\\w$]*>))?'
         'beginCaptures':
           '0':
             'name': 'punctuation.definition.group.regexp'
