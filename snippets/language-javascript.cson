@@ -52,22 +52,22 @@
     'body': 'function* ($1) {\n\t$2\n}'
   'getElementsByClassName':
     'prefix': 'get'
-    'body': 'getElementsByClassName(${1:\'${2:className}\'})$3'
+    'body': 'getElementsByClassName(\'${1:className}\')$2'
   'getElementsByName':
     'prefix': 'getn'
-    'body': 'getElementsByName(${1:\'${2:name}\'})$3'
+    'body': 'getElementsByName(\'${1:name}\')$2'
   'getElementsByTagName':
     'prefix': 'gett'
-    'body': 'getElementsByTagName(${1:\'${2:tagName}\'})$3'
+    'body': 'getElementsByTagName(\'${1:tagName}\')$2'
   'getElementById':
     'prefix': 'geti'
-    'body': 'getElementById(${1:\'${2:id}\'})$3'
+    'body': 'getElementById(\'${1:id}\')$2'
   'querySelector':
     'prefix': 'qs'
-    'body': 'querySelector(${1:\'${2:query}\'})$3'
+    'body': 'querySelector(\'${1:query}\')$2'
   'querySelectorAll':
     'prefix': 'qsa'
-    'body': 'querySelectorAll(${1:\'${2:query}\'})$3'
+    'body': 'querySelectorAll(\'${1:query}\')$2'
   'Immediately-Invoked Function Expression':
     'prefix': 'iife'
     'body': '(function() {\n\t${1:\'use strict\';\n}\t$2\n}());'
