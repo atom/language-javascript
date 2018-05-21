@@ -119,6 +119,8 @@ scopes:
   '"?"': 'keyword.operator.js'
   '"&&"': 'keyword.operator.js'
   '"||"': 'keyword.operator.js'
+  '"++"': 'keyword.operator.js'
+  '"--"': 'keyword.operator.js'
   
   '"in"': 'keyword.operator.in'
   '"instanceof"': 'keyword.operator.instanceof'
