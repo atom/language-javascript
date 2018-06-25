@@ -106,6 +106,7 @@ scopes:
   '"+"': 'keyword.operator.js'
   '"-"': 'keyword.operator.js'
   '"*"': 'keyword.operator.js'
+  '"/"': 'keyword.operator.js'
   '"%"': 'keyword.operator.js'
   '"=="': 'keyword.operator.js'
   '"==="': 'keyword.operator.js'
