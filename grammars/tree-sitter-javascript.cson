@@ -6,6 +6,8 @@ legacyScopeName: 'source.js'
 
 fileTypes: ['js', 'jsx']
 
+injectionRegExp: 'js|javascript'
+
 firstLineMatch: '''(?x)
   # Hashbang
   ^\\#!.*(?:\\s|\\/|(?<=!)\\b)
