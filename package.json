@@ -6,6 +6,7 @@
     "atom": "*",
     "node": "*"
   },
+  "main": "lib/main",
   "homepage": "http://atom.github.io/language-javascript",
   "repository": {
     "type": "git",
