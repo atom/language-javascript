@@ -6,6 +6,8 @@ legacyScopeName: 'source.js'
 
 fileTypes: ['js', 'jsx']
 
+injectionRegExp: 'js|javascript'
+
 firstLineMatch: '''(?x)
   # Hashbang
   ^\\#!.*(?:\\s|\\/|(?<=!)\\b)
@@ -88,6 +90,7 @@ scopes:
 
   'template_substitution > "${"': 'punctuation.section.embedded'
   'template_substitution > "}"': 'punctuation.section.embedded'
+  'template_substitution': 'interpolation'
 
   '"("': 'punctuation.definition.parameters.begin.bracket.round'
   '")"': 'punctuation.definition.parameters.end.bracket.round'
@@ -123,7 +126,7 @@ scopes:
   '"++"': 'keyword.operator.js'
   '"--"': 'keyword.operator.js'
   '"..."': 'keyword.operator.js'
-  
+
   '"in"': 'keyword.operator.in'
   '"instanceof"': 'keyword.operator.instanceof'
   '"of"': 'keyword.operator.of'

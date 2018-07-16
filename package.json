@@ -1,11 +1,12 @@
 {
   "name": "language-javascript",
-  "version": "0.128.9",
+  "version": "0.128.10-0",
   "description": "JavaScript language support in Atom",
   "engines": {
     "atom": "*",
     "node": "*"
   },
+  "main": "lib/main",
   "homepage": "http://atom.github.io/language-javascript",
   "repository": {
     "type": "git",
