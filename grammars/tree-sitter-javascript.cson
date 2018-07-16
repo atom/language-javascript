@@ -90,7 +90,7 @@ scopes:
 
   'template_substitution > "${"': 'punctuation.section.embedded'
   'template_substitution > "}"': 'punctuation.section.embedded'
-  'template_substitution': 'interpolation'
+  'template_substitution': 'source.js'
 
   '"("': 'punctuation.definition.parameters.begin.bracket.round'
   '")"': 'punctuation.definition.parameters.end.bracket.round'
