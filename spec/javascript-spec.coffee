@@ -696,6 +696,17 @@ describe "JavaScript grammar", ->
       expect(tokens[13]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
       expect(tokens[14]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.end.js']
 
+    describe "ES6 string templates with optional chaining", ->
+      it "tokenizes them as strings", ->
+        {tokens} = grammar.tokenizeLine('`hey ${person?.name}`')
+        expect(tokens[0]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.begin.js']
+        expect(tokens[1]).toEqual value: 'hey ', scopes: ['source.js', 'string.quoted.template.js']
+        expect(tokens[2]).toEqual value: '${', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
+        expect(tokens[3]).toEqual value: 'person', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'variable.other.object.js']
+        expect(tokens[6]).toEqual value: 'name', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'support.variable.property.dom.js']
+        expect(tokens[7]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
+        expect(tokens[8]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.js', 'punctuation.definition.string.end.js']
+
   describe "HTML template strings", ->
     # TODO: Remove after Atom 1.21 is released
     [tagScope, entityScope] = []
