@@ -316,12 +316,24 @@ describe "JavaScript grammar", ->
       {tokens} = grammar.tokenizeLine('0X1D306')
       expect(tokens[0]).toEqual value: '0X1D306', scopes: ['source.js', 'constant.numeric.hex.js']
 
+      {tokens} = grammar.tokenizeLine('0x1D306n')
+      expect(tokens[0]).toEqual value: '0x1D306n', scopes: ['source.js', 'constant.numeric.hex.js']
+
+      {tokens} = grammar.tokenizeLine('0X1D306n')
+      expect(tokens[0]).toEqual value: '0X1D306n', scopes: ['source.js', 'constant.numeric.hex.js']
+
     it "tokenizes binary literals", ->
       {tokens} = grammar.tokenizeLine('0b011101110111010001100110')
       expect(tokens[0]).toEqual value: '0b011101110111010001100110', scopes: ['source.js', 'constant.numeric.binary.js']
 
       {tokens} = grammar.tokenizeLine('0B011101110111010001100110')
       expect(tokens[0]).toEqual value: '0B011101110111010001100110', scopes: ['source.js', 'constant.numeric.binary.js']
+
+      {tokens} = grammar.tokenizeLine('0b011101110111010001100110n')
+      expect(tokens[0]).toEqual value: '0b011101110111010001100110n', scopes: ['source.js', 'constant.numeric.binary.js']
+
+      {tokens} = grammar.tokenizeLine('0B011101110111010001100110n')
+      expect(tokens[0]).toEqual value: '0B011101110111010001100110n', scopes: ['source.js', 'constant.numeric.binary.js']
 
     it "tokenizes octal literals", ->
       {tokens} = grammar.tokenizeLine('0o1411')
@@ -330,12 +342,21 @@ describe "JavaScript grammar", ->
       {tokens} = grammar.tokenizeLine('0O1411')
       expect(tokens[0]).toEqual value: '0O1411', scopes: ['source.js', 'constant.numeric.octal.js']
 
+      {tokens} = grammar.tokenizeLine('0o1411n')
+      expect(tokens[0]).toEqual value: '0o1411n', scopes: ['source.js', 'constant.numeric.octal.js']
+
+      {tokens} = grammar.tokenizeLine('0O1411n')
+      expect(tokens[0]).toEqual value: '0O1411n', scopes: ['source.js', 'constant.numeric.octal.js']
+
       {tokens} = grammar.tokenizeLine('0010')
       expect(tokens[0]).toEqual value: '0010', scopes: ['source.js', 'constant.numeric.octal.js']
 
     it "tokenizes decimals", ->
       {tokens} = grammar.tokenizeLine('1234')
       expect(tokens[0]).toEqual value: '1234', scopes: ['source.js', 'constant.numeric.decimal.js']
+
+      {tokens} = grammar.tokenizeLine('123456789n')
+      expect(tokens[0]).toEqual value: '123456789n', scopes: ['source.js', 'constant.numeric.decimal.js']
 
       {tokens} = grammar.tokenizeLine('5e-10')
       expect(tokens[0]).toEqual value: '5e-10', scopes: ['source.js', 'constant.numeric.decimal.js']
