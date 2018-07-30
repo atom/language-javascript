@@ -62,17 +62,18 @@ comments:
 scopes:
   'program': 'source.js'
 
-  'class > identifier': 'entity.name.type.class'
-
   'property_identifier': 'variable.other.object.property'
 
   'function > identifier': 'entity.name.function'
-  'call_expression > identifier': 'entity.name.function'
+
+  'call_expression > identifier': [
+    {match: '^require$', scopes: 'support.function'},
+    {match: '^[A-Z]', scopes: 'meta.class'},
+    'entity.name.function'
+  ]
 
   'method_definition > property_identifier': 'entity.name.function'
   'call_expression > member_expression > property_identifier': 'entity.name.function'
-
-  'new_expression > call_expression > identifier': 'meta.class.instance.constructor'
 
   'import_specifier > identifier': 'variable.other.module'
   'import_clause > identifier': 'variable.other.module'
@@ -96,6 +97,35 @@ scopes:
   '")"': 'punctuation.definition.parameters.end.bracket.round'
   '"{"': 'punctuation.definition.function.body.begin.bracket.curly'
   '"}"': 'punctuation.definition.function.body.end.bracket.curly'
+
+  'identifier': [
+    {
+      match: '^(global|module|exports|__filename|__dirname)$',
+      scopes: 'support.variable'
+    },
+    {
+      exact: 'require', scopes: 'support.function'
+    }
+    {
+      match: '^[\$A-Z_]+$',
+      scopes: 'constant.other'
+    },
+    {
+      match: '^[A-Z]',
+      scopes: 'meta.class'
+    },
+  ]
+
+  'shorthand_property_identifier': [
+    {
+      match: '^[\$A-Z_]+$',
+      scopes: 'constant.other'
+    },
+    {
+      match: '^[A-Z]',
+      scopes: 'meta.class'
+    },
+  ]
 
   '"var"': 'storage.type'
   '"let"': 'storage.type'
