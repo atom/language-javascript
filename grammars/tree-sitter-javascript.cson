@@ -81,6 +81,7 @@ scopes:
   'number': 'constant.numeric'
   'string': 'string.quoted'
   'regex': 'string.regexp'
+  'escape_sequence': 'constant.character.escape'
   'template_string': 'string.quoted.template'
   'undefined': 'constant.language'
   'null': 'constant.language.null'
