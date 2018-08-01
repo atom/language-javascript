@@ -75,9 +75,6 @@ scopes:
   'method_definition > property_identifier': 'entity.name.function'
   'call_expression > member_expression > property_identifier': 'entity.name.function'
 
-  'import_specifier > identifier': 'variable.other.module'
-  'import_clause > identifier': 'variable.other.module'
-
   'number': 'constant.numeric'
   'string': 'string.quoted'
   'regex': 'string.regexp'
@@ -131,6 +128,7 @@ scopes:
   '"var"': 'storage.type'
   '"let"': 'storage.type'
   '"class"': 'storage.type'
+  '"extends"': 'storage.modifier'
   '"const"': 'storage.modifier'
   '"static"': 'storage.modifier'
   '"function"': 'storage.type.function'
@@ -154,6 +152,8 @@ scopes:
   '"?"': 'keyword.operator.js'
   '"&&"': 'keyword.operator.js'
   '"||"': 'keyword.operator.js'
+  '"&"': 'keyword.operator.js'
+  '"|"': 'keyword.operator.js'
   '"++"': 'keyword.operator.js'
   '"--"': 'keyword.operator.js'
   '"..."': 'keyword.operator.js'
