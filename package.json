@@ -20,6 +20,7 @@
     "coffeelint": "^1.10.1"
   },
   "dependencies": {
-    "tree-sitter-javascript": "^0.13.3"
+    "tree-sitter-javascript": "^0.13.5",
+    "tree-sitter-regex": "^0.13.0"
   }
 }
