@@ -6,9 +6,6 @@ legacyScopeName: 'source.js.regexp'
 fileTypes: ['jsre']
 injectionRegExp: 'regex'
 
-comments:
-  start: '// '
-
 scopes:
   'pattern': 'string.quoted',
   'group_name': 'variable.other.object.property'
