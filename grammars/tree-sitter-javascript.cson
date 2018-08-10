@@ -6,27 +6,15 @@ legacyScopeName: 'source.js'
 
 fileTypes: ['js', 'jsx']
 
-injectionRegExp: 'js|javascript'
+injectionRegex: 'js|javascript'
 
-firstLineMatch: '''(?x)
-  # Hashbang
-  ^\\#!.*(?:\\s|\\/|(?<=!)\\b)
-    (?:node|iojs|JavaScript)
-  (?:$|\\s)
-  |
-  # Modeline
-  (?i:
-    # Emacs
-    -\\*-(?:\\s*(?=[^:;\\s]+\\s*-\\*-)|(?:.*?[;\\s]|(?<=-\\*-))mode\\s*:\\s*)
-      (?:js|javascript)
-    (?=[\\s;]|(?<![-*])-\\*-).*?-\\*-
-  |
-  # Vim
-  (?:(?:\\s|^)vi(?:m[<=>]?\\d+|m)?|\\sex)(?=:(?=\\s*set?\\s[^\\n:]+:)|:(?!\\s*set?\\s))(?:(?:\\s|\\s*:\\s*)\\w*(?:\\s*=(?:[^\\n\\\\\\s]|\\\\.)*)?)*[\\s:](?:filetype|ft|syntax)\\s*=
-    javascript
-  (?=\\s|:|$)
-  )
-'''
+firstLineRegex: [
+  # shebang line
+  '^#!.*\\b(node)\\r?\\n'
+
+  # vim modeline
+  'vim\\b.*\\bset\\b.*\\b(filetype|ft|syntax)=(js|javascript)'
+]
 
 folds: [
   {

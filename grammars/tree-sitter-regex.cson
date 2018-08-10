@@ -3,7 +3,6 @@ name: 'Javascript RegExp'
 type: 'tree-sitter'
 parser: 'tree-sitter-regex'
 legacyScopeName: 'source.js.regexp'
-fileTypes: ['jsre']
 injectionRegExp: 'regex'
 
 scopes:
