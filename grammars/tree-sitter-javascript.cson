@@ -56,9 +56,10 @@ scopes:
 
   'call_expression > identifier': [
     {match: '^require$', scopes: 'support.function'},
-    {match: '^[A-Z]', scopes: 'meta.class'},
     'entity.name.function'
   ]
+
+  'new_expression > call_expression > identifier': 'entity.name.type.instance.meta.constructor'
 
   'method_definition > property_identifier': 'entity.name.function'
   'call_expression > member_expression > property_identifier': 'entity.name.function'
@@ -86,7 +87,7 @@ scopes:
 
   'identifier': [
     {
-      match: '^(global|module|exports|__filename|__dirname)$',
+      match: '^(global|module|exports|__filename|__dirname|window|document)$',
       scopes: 'support.variable'
     },
     {
