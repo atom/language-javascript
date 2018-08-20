@@ -1,9 +1,9 @@
-id: 'regex'
 name: 'Javascript RegExp'
+scopeName: 'source.js.regexp'
 type: 'tree-sitter'
 parser: 'tree-sitter-regex'
-legacyScopeName: 'source.js.regexp'
-injectionRegExp: 'regex'
+
+injectionRegex: 'regex'
 
 scopes:
   'pattern': 'string.quoted',
