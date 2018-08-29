@@ -52,6 +52,7 @@ scopes:
   'property_identifier': 'variable.other.object.property'
 
   'function > identifier': 'entity.name.function'
+  'generator_function > identifier': 'entity.name.function'
 
   'call_expression > identifier': [
     {match: '^require$', scopes: 'support.function'},
