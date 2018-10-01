@@ -49,7 +49,14 @@ comments:
 scopes:
   'program': 'source.js'
 
-  'property_identifier': 'variable.other.object.property'
+  'property_identifier': [
+    {
+      match: '^[\$A-Z_]+$',
+      scopes: 'constant.other.property.js'
+    }
+
+    'variable.other.object.property'
+  ]
 
   'function > identifier': 'entity.name.function'
   'generator_function > identifier': 'entity.name.function'
