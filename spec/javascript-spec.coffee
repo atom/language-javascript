@@ -802,6 +802,14 @@ describe "JavaScript grammar", ->
       expect(tokens[6]).toEqual value: ' }', scopes: ['source.js', 'string.quoted.template.graphql.js']
       expect(tokens[7]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.graphql.js', 'punctuation.definition.string.end.js']
 
+  describe "ES6 tagged gql string templates", ->
+    it "tokenizes them as strings", ->
+      {tokens} = grammar.tokenizeLine('gql`fragment on Foo { id }`')
+      expect(tokens[0]).toEqual value: 'gql', scopes: ['source.js', 'string.quoted.template.graphql.js', 'entity.name.function.js']
+      expect(tokens[1]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.graphql.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[2]).toEqual value: 'fragment on Foo { id }', scopes: ['source.js', 'string.quoted.template.graphql.js']
+      expect(tokens[3]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.graphql.js', 'punctuation.definition.string.end.js']
+
   describe "ES6 tagged SQL string templates", ->
     it "tokenizes them as strings", ->
       {tokens} = grammar.tokenizeLine('SQL`SELECT foo FROM bar WHERE id = :id`')
