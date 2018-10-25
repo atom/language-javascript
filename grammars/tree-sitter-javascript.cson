@@ -58,6 +58,29 @@ scopes:
     'variable.other.object.property'
   ]
 
+  'shorthand_property_identifier': [
+    {
+      match: '^[\$A-Z_]{2,}$',
+      scopes: 'constant.other'
+    }
+  ]
+
+  '
+    class > identifier,
+    new_expression > call_expression > identifier
+  ': 'meta.class'
+
+  '
+    jsx_opening_element > identifier,
+    jsx_closing_element > identifier,
+    call_expression > identifier
+  ': [
+    {
+      match: '^[A-Z]',
+      scopes: 'meta.class'
+    },
+  ]
+
   'function > identifier': 'entity.name.function'
   'generator_function > identifier': 'entity.name.function'
 
@@ -66,10 +89,26 @@ scopes:
     'entity.name.function'
   ]
 
-  'new_expression > call_expression > identifier': 'entity.name.type.instance.meta.constructor'
-
   'method_definition > property_identifier': 'entity.name.function'
   'call_expression > member_expression > property_identifier': 'entity.name.function'
+
+  'identifier': [
+    {
+      match: '^(global|module|exports|__filename|__dirname|window|document)$',
+      scopes: 'support.variable'
+    },
+    {
+      exact: 'require', scopes: 'support.function'
+    }
+    {
+      match: '^[\$A-Z_]{2,}$',
+      scopes: 'constant.other'
+    },
+    {
+      match: '^[A-Z]',
+      scopes: 'meta.class'
+    },
+  ]
 
   'number': 'constant.numeric'
   'string': 'string.quoted'
@@ -83,43 +122,18 @@ scopes:
   'comment': 'comment.block'
   'hash_bang_line': 'comment.block'
 
-  'template_substitution > "${"': 'punctuation.section.embedded'
-  'template_substitution > "}"': 'punctuation.section.embedded'
+  '
+    jsx_expression > "{",
+    jsx_expression > "}",
+    template_substitution > "${",
+    template_substitution > "}"
+  ': 'punctuation.section.embedded'
   'template_substitution': 'embedded.source'
 
   '"("': 'punctuation.definition.parameters.begin.bracket.round'
   '")"': 'punctuation.definition.parameters.end.bracket.round'
   '"{"': 'punctuation.definition.function.body.begin.bracket.curly'
   '"}"': 'punctuation.definition.function.body.end.bracket.curly'
-
-  'identifier': [
-    {
-      match: '^(global|module|exports|__filename|__dirname|window|document)$',
-      scopes: 'support.variable'
-    },
-    {
-      exact: 'require', scopes: 'support.function'
-    }
-    {
-      match: '^[\$A-Z_]+$',
-      scopes: 'constant.other'
-    },
-    {
-      match: '^[A-Z]',
-      scopes: 'meta.class'
-    },
-  ]
-
-  'shorthand_property_identifier': [
-    {
-      match: '^[\$A-Z_]+$',
-      scopes: 'constant.other'
-    },
-    {
-      match: '^[A-Z]',
-      scopes: 'meta.class'
-    },
-  ]
 
   '"var"': 'storage.type'
   '"let"': 'storage.type'
