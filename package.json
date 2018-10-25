@@ -1,6 +1,6 @@
 {
   "name": "language-javascript",
-  "version": "0.129.11",
+  "version": "0.129.12",
   "description": "JavaScript language support in Atom",
   "engines": {
     "atom": "*",
