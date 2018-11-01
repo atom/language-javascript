@@ -89,7 +89,7 @@ scopes:
     'entity.name.function'
   ]
 
-  'call_expression > super': 'support.function'
+  'call_expression > super': 'support.function.super'
 
   'method_definition > property_identifier': 'entity.name.function'
   'call_expression > member_expression > property_identifier': 'entity.name.function'
