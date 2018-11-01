@@ -136,6 +136,9 @@ scopes:
   '")"': 'punctuation.definition.parameters.end.bracket.round'
   '"{"': 'punctuation.definition.function.body.begin.bracket.curly'
   '"}"': 'punctuation.definition.function.body.end.bracket.curly'
+  '";"': 'punctuation.terminator.statement.semicolon'
+  '"["': 'punctuation.definition.array.begin.bracket.square'
+  '"]"': 'punctuation.definition.array.end.bracket.square'
 
   '"var"': 'storage.type'
   '"let"': 'storage.type'
@@ -199,6 +202,7 @@ scopes:
   '"."': 'meta.delimiter'
   '","': 'meta.delimiter'
 
+  '"as"': 'keyword.control'
   '"if"': 'keyword.control'
   '"do"': 'keyword.control'
   '"else"': 'keyword.control'
