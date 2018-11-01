@@ -94,6 +94,7 @@ scopes:
   'method_definition > property_identifier': 'entity.name.function'
   'call_expression > member_expression > property_identifier': 'entity.name.function'
 
+  'this': 'variable.language'
   'super': 'variable.language'
 
   'identifier': [
