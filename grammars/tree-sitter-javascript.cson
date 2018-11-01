@@ -103,10 +103,12 @@ scopes:
     },
     {
       exact: 'arguments',
-      scopes:'variable.language'},
+      scopes:'variable.language'
+    },
     {
-      exact: 'require', scopes: 'support.function'
-    }
+      exact: 'require',
+      scopes: 'support.function'
+    },
     {
       match: '^[\$A-Z_]{2,}$',
       scopes: 'constant.other'
