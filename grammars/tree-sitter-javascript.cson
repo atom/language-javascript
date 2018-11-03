@@ -155,7 +155,7 @@ scopes:
   '"const"': 'storage.modifier'
   '"static"': 'storage.modifier'
   '"function"': 'storage.type.function'
-  '"=>"': 'storage.type.function'
+  '"=>"': 'storage.type.function.arrow'
 
   '"="': 'keyword.operator.js'
   '"+="': 'keyword.operator.js'
