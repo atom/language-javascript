@@ -73,6 +73,7 @@ scopes:
   '
     jsx_opening_element > identifier,
     jsx_closing_element > identifier,
+    jsx_self_closing_element > identifier,
     call_expression > identifier
   ': [
     {
