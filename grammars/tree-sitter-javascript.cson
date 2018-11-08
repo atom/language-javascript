@@ -94,17 +94,10 @@ scopes:
   'method_definition > property_identifier': 'entity.name.function'
   'call_expression > member_expression > property_identifier': 'entity.name.function'
 
-  'this': 'variable.language'
-  'super': 'variable.language'
-
   'identifier': [
     {
       match: '^(global|module|exports|__filename|__dirname|window|document)$',
       scopes: 'support.variable'
-    },
-    {
-      exact: 'arguments',
-      scopes:'variable.language'
     },
     {
       exact: 'require',
