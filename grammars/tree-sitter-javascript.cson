@@ -99,7 +99,7 @@ scopes:
     'entity.name.function'
   ]
 
-  'call_expression > super': 'support.function'
+  'call_expression > super': 'support.function.super'
 
   'method_definition > property_identifier': 'entity.name.function'
   'call_expression > member_expression > property_identifier': 'entity.name.function'
@@ -110,8 +110,9 @@ scopes:
       scopes: 'support.variable'
     },
     {
-      exact: 'require', scopes: 'support.function'
-    }
+      exact: 'require',
+      scopes: 'support.function'
+    },
     {
       match: '^[\$A-Z_]{2,}$',
       scopes: 'constant.other'
@@ -146,6 +147,9 @@ scopes:
   '")"': 'punctuation.definition.parameters.end.bracket.round'
   '"{"': 'punctuation.definition.function.body.begin.bracket.curly'
   '"}"': 'punctuation.definition.function.body.end.bracket.curly'
+  '";"': 'punctuation.terminator.statement.semicolon'
+  '"["': 'punctuation.definition.array.begin.bracket.square'
+  '"]"': 'punctuation.definition.array.end.bracket.square'
 
   '"var"': 'storage.type'
   '"let"': 'storage.type'
@@ -154,7 +158,7 @@ scopes:
   '"const"': 'storage.modifier'
   '"static"': 'storage.modifier'
   '"function"': 'storage.type.function'
-  '"=>"': 'storage.type.function'
+  '"=>"': 'storage.type.function.arrow'
 
   '"="': 'keyword.operator.js'
   '"+="': 'keyword.operator.js'
@@ -209,6 +213,7 @@ scopes:
   '"."': 'meta.delimiter.period'
   '","': 'meta.delimiter.comma'
 
+  '"as"': 'keyword.control'
   '"if"': 'keyword.control'
   '"do"': 'keyword.control'
   '"else"': 'keyword.control'
