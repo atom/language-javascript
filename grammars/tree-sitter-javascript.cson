@@ -132,7 +132,13 @@ scopes:
   'null': 'constant.language.null'
   'true': 'constant.language.boolean.true'
   'false': 'constant.language.boolean.false'
-  'comment': 'comment.block'
+  'comment': [
+    {
+      match: "^//",
+      scopes: 'comment.line'
+    },
+    'comment.block'
+  ]
   'hash_bang_line': 'comment.block'
 
   '
