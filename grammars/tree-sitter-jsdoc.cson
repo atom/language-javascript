@@ -1,0 +1,11 @@
+name: 'JSDoc'
+scopeName: 'source.jsdoc'
+type: 'tree-sitter'
+parser: 'tree-sitter-jsdoc'
+
+injectionRegex: 'jsdoc'
+
+scopes:
+  '"@param", "@returns", "@alias", tag_name': 'keyword.control'
+  'param_tag > identifier, alias_tag > identifier': 'variable.other.jsdoc'
+  'type': 'support.type'

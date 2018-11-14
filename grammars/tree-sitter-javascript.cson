@@ -5,7 +5,7 @@ parser: 'tree-sitter-javascript'
 
 fileTypes: ['js', 'jsx']
 
-injectionRegex: 'js|javascript'
+injectionRegex: '^js$|^JS$|javascript|JavaScript'
 
 firstLineRegex: [
   # shebang line
