@@ -67,6 +67,10 @@ scopes:
     'variable.other.object.property'
   ]
 
+  'member_expression > property_identifier': 'variable.other.object.property.unquoted'
+
+  'formal_parameters > identifier': 'formal-parameter.identifier'
+
   'shorthand_property_identifier': [
     {
       match: '^[\$A-Z_]{2,}$',
@@ -83,13 +87,14 @@ scopes:
     jsx_opening_element > identifier,
     jsx_closing_element > identifier,
     jsx_self_closing_element > identifier,
-    call_expression > identifier
   ': [
     {
       match: '^[A-Z]',
-      scopes: 'meta.class'
-    },
+      scopes: 'meta.class.component.jsx'
+    }
   ]
+
+  'call_expression > identifier': {match: '^[A-Z]', scopes: 'meta.class'}
 
   'function > identifier': 'entity.name.function'
   'generator_function > identifier': 'entity.name.function'
@@ -106,8 +111,12 @@ scopes:
 
   'identifier': [
     {
-      match: '^(global|module|exports|__filename|__dirname|window|document)$',
+      match: '^(global|module|exports|__filename|__dirname)$',
       scopes: 'support.variable'
+    },
+    {
+      match: '^(window|event|document|performance|screen|navigator|console)$'
+      scopes: 'support.variable.dom'
     },
     {
       exact: 'require',
@@ -199,7 +208,7 @@ scopes:
   '"|"': 'keyword.operator.js'
   '"++"': 'keyword.operator.js'
   '"--"': 'keyword.operator.js'
-  '"..."': 'keyword.operator.js'
+  '"..."': 'keyword.operator.spread.js'
 
   '"in"': 'keyword.operator.in'
   '"instanceof"': 'keyword.operator.instanceof'
