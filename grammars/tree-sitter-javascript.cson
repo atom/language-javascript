@@ -80,7 +80,7 @@ scopes:
 
   '
     class > identifier,
-    new_expression > call_expression > identifier
+    new_expression > identifier
   ': 'meta.class'
 
   '
