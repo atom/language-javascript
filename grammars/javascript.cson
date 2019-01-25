@@ -1371,6 +1371,30 @@
         ]
       }
       {
+        'begin': '((\\w+)?(css|CSS|Css))\\s*(`)'
+        'beginCaptures':
+          '1':
+            'name': 'entity.name.function.js'
+          '4':
+            'name': 'punctuation.definition.string.begin.js'
+        'end': '`'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.js'
+        'name': 'string.quoted.template.css.js'
+        'patterns': [
+          {
+            'include': '#string_escapes'
+          }
+          {
+            'include': '#interpolated_js'
+          }
+          {
+            'include': 'source.css'
+          }
+        ]
+      }
+      {
         'begin': '((\\w+)?(html|HTML|Html))\\s*(`)'
         'beginCaptures':
           '1':
