@@ -1344,10 +1344,6 @@
           {
             'include': '#string_escapes'
           }
-          {
-            'match': "[^']*[^\\n\\r'\\\\]$"
-            'name': 'invalid.illegal.string.js'
-          }
         ]
       }
       {
@@ -1363,10 +1359,6 @@
         'patterns': [
           {
             'include': '#string_escapes'
-          }
-          {
-            'match': '[^"]*[^\\n\\r"\\\\]$'
-            'name': 'invalid.illegal.string.js'
           }
         ]
       }
