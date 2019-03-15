@@ -51,7 +51,6 @@ describe "JavaScript grammar", ->
           line3
         """ + delim
         expect(lines[0][0]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.begin.js']
-        expect(lines[0][1]).toEqual value: 'line1', scopes: ['source.js', scope, 'invalid.illegal.string.js']
         expect(lines[1][0]).toEqual value: 'line2\\', scopes: ['source.js', scope]
         expect(lines[2][0]).toEqual value: 'line3', scopes: ['source.js', scope]
         expect(lines[2][1]).toEqual value: delim, scopes: ['source.js', scope, 'punctuation.definition.string.end.js']
