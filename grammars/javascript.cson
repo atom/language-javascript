@@ -158,7 +158,7 @@
       '0':
         'name': 'meta.export.js'
       '1':
-        'name': 'keyword.control.js'
+        'name': 'keyword.control.export.js'
       '2':
         'name': 'variable.language.default.js'
       '3':
@@ -707,13 +707,13 @@
       '1':
         'name': 'storage.type.class.js'
       '2':
-        'name': 'storage.modifier.js'
+        'name': 'storage.modifier.extends.js'
       '3':
         'name': 'entity.other.inherited-class.js'
       '4':
         'name': 'entity.name.type.class.js'
       '5':
-        'name': 'storage.modifier.js'
+        'name': 'storage.modifier.extends.js'
       '6':
         'name': 'entity.other.inherited-class.js'
     'name': 'meta.class.js'
@@ -934,9 +934,9 @@
     'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?',
     'captures':
       '1':
-        'name': 'keyword.control.js'
+        'name': 'keyword.control.yield.js'
       '2':
-        'name': 'storage.modifier.js'
+        'name': 'storage.modifier.yield.js'
     'name': 'meta.control.yield.js'
   }
   {
@@ -1546,11 +1546,24 @@
                 'name': 'variable.parameter.rest.function.js'
           }
           {
-            'include': '$self'
+            'begin': '='
+            'beginCaptures':
+              '0':
+                'name': 'keyword.operator.assignment.js'
+            'end': '(?=[,)])'
+            'patterns': [
+              {
+                'include': '$self'
+              }
+            ]
           }
           {
             'match': '[a-zA-Z_$][\\w$]*'
             'name': 'variable.parameter.function.js'
+          }
+          {
+            'match': ','
+            'name': 'meta.delimiter.object.comma.js'
           }
         ]
       }
