@@ -1119,7 +1119,7 @@
     'name': 'constant.language.js'
   }
   {
-    'match': '(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:.*?(?:\\\\\\\\)*(?:\\\\/)*)*[^/]*)(/)([gimsy]*u[gimsy]*)'
+    'match': '(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:.*?(?:\\\\\\\\)*(?:\\\\/)*)*[^/]*)(/)(?!([gimsuy])*(?=[gimsuy]*\\4))(?=[gimsuy]+\\b)([gimsy]*u[gimsy]*)'
     'captures':
       '1':
         'name': 'punctuation.definition.string.begin.js'
@@ -1131,12 +1131,12 @@
         ]
       '3':
         'name': 'punctuation.definition.string.end.js'
-      '4':
+      '5':
         'name': 'meta.flag.regexp.js'
     'name': 'string.regexp.js'
   }
   {
-    'match': '(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:.*?(?:(?:\\\\\\\\)*\\\\/))*[^/]*)(/)([gimsy]*)(?!u)'
+    'match': '(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:.*?(?:(?:\\\\\\\\)*\\\\/))*[^/]*)(/)(?:(?!([gimsy])*(?=[gimsy]*\\4))(?=[gimsy]+\\b)([gimsy]*)|\\B)'
     'captures':
       '1':
         'name': 'punctuation.definition.string.begin.js'
@@ -1148,7 +1148,7 @@
         ]
       '3':
         'name': 'punctuation.definition.string.end.js'
-      '4':
+      '5':
         'name': 'meta.flag.regexp.js'
     'name': 'string.regexp.js'
   }
