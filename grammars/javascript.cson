@@ -158,7 +158,7 @@
       '0':
         'name': 'meta.export.js'
       '1':
-        'name': 'keyword.control.export.js'
+        'name': 'keyword.control.js'
       '2':
         'name': 'variable.language.default.js'
       '3':
@@ -707,13 +707,13 @@
       '1':
         'name': 'storage.type.class.js'
       '2':
-        'name': 'storage.modifier.extends.js'
+        'name': 'storage.modifier.js'
       '3':
         'name': 'entity.other.inherited-class.js'
       '4':
         'name': 'entity.name.type.class.js'
       '5':
-        'name': 'storage.modifier.extends.js'
+        'name': 'storage.modifier.js'
       '6':
         'name': 'entity.other.inherited-class.js'
     'name': 'meta.class.js'
@@ -934,9 +934,9 @@
     'match': '(?<!\\.)\\b(yield)(?!\\s*:)\\b(?:\\s*(\\*))?',
     'captures':
       '1':
-        'name': 'keyword.control.yield.js'
+        'name': 'keyword.control.js'
       '2':
-        'name': 'storage.modifier.yield.js'
+        'name': 'storage.modifier.js'
     'name': 'meta.control.yield.js'
   }
   {
