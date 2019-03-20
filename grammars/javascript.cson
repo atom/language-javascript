@@ -1667,14 +1667,16 @@
               {
                 'match': '''(?x)
                   \\b(catch|finally|then|shift|showModelessDialog|showModalDialog|showHelp|scroll|scrollX|scrollByPages|
-                  scrollByLines|scrollY|scrollTo|stop|strike|sizeToContent|sidebar|signText|sort|
-                  sup|sub|substr|substring|splice|split|send|set(Milliseconds|Seconds|Minutes|Hours|
-                  Month|Year|FullYear|Date|UTC(Milliseconds|Seconds|Minutes|Hours|Month|FullYear|Date)|
-                  Time|Hotkeys|Cursor|ZOptions|Active|Resizable|RequestHeader)|search|slice|
+                  scrollByLines|scrollY|scrollTo|stop|strike|sizeToContent|sidebar|signText|send|sup|sub|hasOwnProperty|
+                  sort|copyWithin|every|substr|substring|slice|splice|split|map|reduce|reduceRight|filter|
+                  fill|flat|flatMap|unshift|every|some|includes|
+                  set(Milliseconds|Seconds|Minutes|Hours|Month|Year|FullYear|Date|
+                  UTC(Milliseconds|Seconds|Minutes|Hours|Month|FullYear|Date)|
+                  Time|Hotkeys|Cursor|ZOptions|Active|Resizable|RequestHeader)|search|
                   savePreferences|small|home|handleEvent|navigate|char|charCodeAt|charAt|concat|
-                  contextual|confirm|compile|clear|captureEvents|call|createStyleSheet|createPopup|
+                  contextual|confirm|compile|clear|captureEvents|call|bind|createStyleSheet|createPopup|
                   createEventObject|to(GMTString|UTCString|String|Source|UpperCase|LowerCase|LocaleString)|
-                  test|taint|taintEnabled|indexOf|italics|disableExternalCapture|dump|detachEvent|unshift|
+                  test|taint|taintEnabled|indexOf|italics|disableExternalCapture|dump|detachEvent|
                   untaint|unwatch|updateCommands|join|javaEnabled|pop|push|plugins.refresh|paddings|parse|stringify|
                   print|prompt|preference|enableExternalCapture|exec|execScript|valueOf|UTC|find|file|
                   fileModifiedDate|fileSize|fileCreatedDate|fileUpdatedDate|fixed|fontsize|fontcolor|
