@@ -1469,7 +1469,7 @@ describe "JSDoc grammar", ->
       expect(tokens[7]).toEqual value: '*/', scopes: ['source.js', 'comment.block.documentation.js', 'punctuation.definition.comment.end.js']
       expect(tokens[8]).toEqual value: 'oo', scopes: ['source.js']
       expect(tokens[9]).toEqual value: '"', scopes: ['source.js', 'string.quoted.double.js', 'punctuation.definition.string.begin.js']
-      expect(tokens[10]).toEqual value: '} bar', scopes: ['source.js', 'string.quoted.double.js', 'invalid.illegal.string.js']
+      expect(tokens[10]).toEqual value: '} bar', scopes: ['source.js', 'string.quoted.double.js']
 
     it "terminates any embedded JavaScript code", ->
       lines = grammar.tokenizeLines """
