@@ -1151,7 +1151,7 @@ describe "JSDoc grammar", ->
             } variable this is the description */
       """)
       expect(lines[0][5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
-      expect(lines[1][0].value).toMatch(/number/)
+      expect(lines[1][0].value).toEqual('number')
       expect(lines[1][0].scopes).toEqual ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(lines[2][1]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.end.jsdoc']
       expect(lines[2][3]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
@@ -1174,7 +1174,7 @@ describe "JSDoc grammar", ->
       expect(lines[1][4]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.definition.bracket.curly.begin.jsdoc']
       expect(lines[1][5]).toEqual value: '{', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(lines[2][0]).toEqual value: ' *', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.section.continuation.comment.js']
-      expect(lines[2][1].value).toMatch(/number/)
+      expect(lines[2][1].value).toEqual('number')
       expect(lines[2][1].scopes).toEqual ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
       expect(lines[3][0]).toEqual value: ' *', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc', 'punctuation.section.continuation.comment.js']
       expect(lines[3][2]).toEqual value: '}', scopes: ['source.js', 'comment.block.documentation.js', 'entity.name.type.instance.jsdoc']
