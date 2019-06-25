@@ -2202,7 +2202,7 @@ describe "JavaScript grammar", ->
     it "indents non-allman-style curly braces", ->
       expectPreservedIndentation """
         if (true) {
-          for (;;) {
+          for (;;) { // "
             while (true) {
               x();
             }
@@ -2226,7 +2226,7 @@ describe "JavaScript grammar", ->
 
     it "indents collection literals", ->
       expectPreservedIndentation """
-        [
+        [ // "
           {
             a: b,
             c: d
@@ -2239,7 +2239,7 @@ describe "JavaScript grammar", ->
     it "indents function arguments", ->
       expectPreservedIndentation """
         f(
-          g(
+          g( // "
             h,
             i
           ),
