@@ -97,6 +97,7 @@ scopes:
   'call_expression > identifier': {match: '^[A-Z]', scopes: 'meta.class'}
 
   'function > identifier': 'entity.name.function'
+  'function_declaration > identifier': 'entity.name.function'
   'generator_function > identifier': 'entity.name.function'
 
   'call_expression > identifier': [
