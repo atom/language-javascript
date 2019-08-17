@@ -42,12 +42,12 @@ folds: [
     end: {index: -1, type: ')'}
   }
   {
-    type: 'switch_case'
+    type: ['switch_case', 'switch_default']
     start: {index: 0}
     end: {type: 'break_statement', index: -1}
   }
   {
-    type: 'switch_case'
+    type: ['switch_case', 'switch_default']
     start: {index: 0}
   }
 ]
