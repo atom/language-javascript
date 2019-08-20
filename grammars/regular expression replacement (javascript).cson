@@ -8,7 +8,7 @@
   'regexp-replacement':
     'patterns': [
       {
-        'match': '\\$([1-9][0-9]|[1-9]|0[1-9]|[&`\'])'
+        'match': '\\$([1-9][0-9]|0?[1-9]|[&`\']|<[a-zA-Z_$][\\w$]*>)'
         'name': 'variable.regexp.replacement'
       }
       {
@@ -16,7 +16,7 @@
         'name': 'constant.character.escape.dollar.regexp.replacement'
       }
       {
-        'match': '\\\\[^$]'
+        'match': '\\\\.'
         'name': 'constant.character.escape.backslash.regexp.replacement'
       }
     ]

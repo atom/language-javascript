@@ -1119,9 +1119,7 @@
     'name': 'constant.language.js'
   }
   {
-# validates the flags, but it's much slower:
-#    'match': '(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:[^\\\\/]*\\\\.)*[^\\\\/]*)(/)(?!([gimsuy]){1,5}(?=[gimsuy]{0,5}\\4))(?=[gimsuy]{1,6}\\b(?!\\$))([gimsy]*u[gimsy]*)'
-    'match': '(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:[^\\\\/]*\\\\.)*[^\\\\/]*)(/)([gimsy]*u[gimsy]*)\\b(?!\\$)'
+    'match': '(?>(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:[^\\\\/]*\\\\.)*[^\\\\/]*)(/))(?=([gimsy]{0,5}+)(?:[\\]})?:+*,;\\s]|&&|\\|\\||$))(?![gimsy]{0,3}?([gimsy])[gimsy]{0,3}?\\5)\\4'
     'captures':
       '0':
         'name': 'string.regexp.js'
@@ -1130,19 +1128,16 @@
       '2':
         'patterns': [
           {
-            'include': '#regexp-unicode'
+            'include': 'source.js.regexp#regexp'
           }
         ]
       '3':
         'name': 'punctuation.definition.string.end.js'
-#      '5':
       '4':
-        'name': 'meta.flag.regexp.js'
+        'name': 'meta.flag.regexp'
   }
   {
-# validates the flags, but it's much slower:
-#    'match': '(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:[^\\\\/]*\\\\.)*[^\\\\/]*)(/)(?:(?!([gimsy]){1,4}(?=[gimsy]{0,4}\\4))([gimsy]{1,5}\\b)|\\B)(?!\\$)'
-    'match': '(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])(?![/*+?])((?:[^\\\\/]*\\\\.)*[^\\\\/]*)(/)([gimsy]+\\b|\\B)(?!\\$)'
+    'match': '(?>(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:[^\\\\/]*\\\\.)*[^\\\\/]*)(/))(?=[gimsuy]{0,6}+(?:[\\]})?:+*,;\\s]|&&|\\|\\||$))(?![gimsuy]{0,4}?([gimsuy])[gimsuy]{0,4}?\\4)([gimsy]{0,5}u[gimsy]{0,5})'
     'captures':
       '0':
         'name': 'string.regexp.js'
@@ -1151,14 +1146,13 @@
       '2':
         'patterns': [
           {
-            'include': '#regexp'
+            'include': 'source.js.regexp#regexp-unicode'
           }
         ]
       '3':
         'name': 'punctuation.definition.string.end.js'
-#      '5':
-      '4':
-        'name': 'meta.flag.regexp.js'
+      '5':
+        'name': 'meta.flag.regexp'
   }
   {
     'begin': '\\?'
@@ -2076,237 +2070,5 @@
             'patterns': [
               'include': '$self'
             ]
-      }
-    ]
-  'regex-character-class':
-    'patterns': [
-      {
-        'match': '\\\\[wWsSdDtrnvf]|\\.'
-        'name': 'constant.character.character-class.regexp.js'
-      }
-      {
-        'match': '\\\\([0-3][0-7]{2}|[0-7]{2}|[1-7]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4})'
-        'name': 'constant.character.numeric.regexp.js'
-      }
-      {
-        'match': '\\\\c[A-Z]'
-        'name': 'constant.character.control.regexp.js'
-      }
-      {
-        'match': '\\\\.'
-        'name': 'constant.character.escape.backslash.regexp.js'
-      }
-    ]
-  'regexp':
-    'patterns': [
-      {
-        'match': '\\\\[bB]|\\^|\\$'
-        'name': 'keyword.control.anchor.regexp.js'
-      }
-      {
-        'match': '\\\\[1-9]\\d*|\\\\k<[a-zA-Z_$][\\w$]*>'
-        'name': 'keyword.other.back-reference.regexp.js'
-      }
-      {
-        'match': '[?+*]|\\{(\\d+,\\d+|\\d+,|,\\d+|\\d+)\\}\\??'
-        'name': 'keyword.operator.quantifier.regexp.js'
-      }
-      {
-        'match': '\\|'
-        'name': 'keyword.operator.or.regexp.js'
-      }
-      {
-        'begin': '(\\()(?:(\\?=)|(\\?!)|(\\?<=)|(\\?<!))'
-        'beginCaptures':
-          '1':
-            'name': 'punctuation.definition.group.regexp.js'
-          '2':
-            'name': 'meta.assertion.look-ahead.regexp.js'
-          '3':
-            'name': 'meta.assertion.negative-look-ahead.regexp.js'
-          '4':
-            'name': 'meta.assertion.look-behind.regexp.js'
-          '5':
-            'name': 'meta.assertion.negative-look-behind.regexp.js'
-        'end': '(\\))'
-        'endCaptures':
-          '1':
-            'name': 'punctuation.definition.group.regexp.js'
-        'name': 'meta.group.assertion.regexp.js'
-        'patterns': [
-          {
-            'include': '#regexp'
-          }
-        ]
-      }
-      {
-        'begin': '\\(((\\?:)|(\\?<[a-zA-Z_$][\\w$]*>))?'
-        'beginCaptures':
-          '0':
-            'name': 'punctuation.definition.group.regexp.js'
-        'end': '\\)'
-        'endCaptures':
-          '0':
-            'name': 'punctuation.definition.group.regexp.js'
-        'name': 'meta.group.regexp.js'
-        'patterns': [
-          {
-            'include': '#regexp'
-          }
-        ]
-      }
-      {
-        'begin': '(\\[)(\\^)?'
-        'beginCaptures':
-          '1':
-            'name': 'punctuation.definition.character-class.regexp.js'
-          '2':
-            'name': 'keyword.operator.negation.regexp.js'
-        'end': '(\\])'
-        'endCaptures':
-          '1':
-            'name': 'punctuation.definition.character-class.regexp.js'
-        'name': 'constant.other.character-class.set.regexp.js'
-        'patterns': [
-          {
-            'captures':
-              '1':
-                'name': 'constant.character.numeric.regexp.js'
-              '2':
-                'name': 'constant.character.control.regexp.js'
-              '3':
-                'name': 'constant.character.escape.backslash.regexp.js'
-              '4':
-                'name': 'constant.character.numeric.regexp.js'
-              '5':
-                'name': 'constant.character.control.regexp.js'
-              '6':
-                'name': 'constant.character.escape.backslash.regexp.js'
-            'match': '(?:.|(\\\\(?:[0-3][0-7]{2}|[0-7]{2}|[1-7]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-3][0-7]{2}|[0-7]{2}|[1-7]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))'
-            'name': 'constant.other.character-class.range.regexp.js'
-          }
-          {
-            'include': '#regex-character-class'
-          }
-        ]
-      }
-      {
-        'include': '#regex-character-class'
-      }
-    ]
-  'regex-character-class-unicode':
-    'patterns': [
-      {
-        'match': '\\\\[wWsSdDtrnvf]|\\.'
-        'name': 'constant.character.character-class.regexp.js'
-      }
-      {
-        'match': '\\\\([0-3][0-7]{2}|[0-7]{2}|[1-7]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{[0-9a-fA-F]{4,5}\\})'
-        'name': 'constant.character.numeric.regexp.js'
-      }
-      {
-        'match': '\\\\c[A-Z]'
-        'name': 'constant.character.control.regexp.js'
-      }
-      {
-        'match': '\\\\.'
-        'name': 'constant.character.escape.backslash.regexp.js'
-      }
-    ]
-  'regexp-unicode':
-    'patterns': [
-      {
-        'match': '\\\\[bB]|\\^|\\$'
-        'name': 'keyword.control.anchor.regexp.js'
-      }
-      {
-        'match': '\\\\[1-9]\\d*|\\\\k<[a-zA-Z_$][\\w$]*>'
-        'name': 'keyword.other.back-reference.regexp.js'
-      }
-      {
-        'match': '[?+*]|\\{(\\d+,\\d+|\\d+,|,\\d+|\\d+)\\}\\??'
-        'name': 'keyword.operator.quantifier.regexp.js'
-      }
-      {
-        'match': '\\|'
-        'name': 'keyword.operator.or.regexp.js'
-      }
-      {
-        'begin': '(\\()(?:(\\?=)|(\\?!)|(\\?<=)|(\\?<!))'
-        'beginCaptures':
-          '1':
-            'name': 'punctuation.definition.group.regexp.js'
-          '2':
-            'name': 'meta.assertion.look-ahead.regexp.js'
-          '3':
-            'name': 'meta.assertion.negative-look-ahead.regexp.js'
-          '4':
-            'name': 'meta.assertion.look-behind.regexp.js'
-          '5':
-            'name': 'meta.assertion.negative-look-behind.regexp.js'
-        'end': '(\\))'
-        'endCaptures':
-          '1':
-            'name': 'punctuation.definition.group.regexp.js'
-        'name': 'meta.group.assertion.regexp.js'
-        'patterns': [
-          {
-            'include': '#regexp-unicode'
-          }
-        ]
-      }
-      {
-        'begin': '\\(((\\?:)|(\\?<[a-zA-Z_$][\\w$]*>))?'
-        'beginCaptures':
-          '0':
-            'name': 'punctuation.definition.group.regexp.js'
-        'end': '\\)'
-        'endCaptures':
-          '0':
-            'name': 'punctuation.definition.group.regexp.js'
-        'name': 'meta.group.regexp.js'
-        'patterns': [
-          {
-            'include': '#regexp-unicode'
-          }
-        ]
-      }
-      {
-        'begin': '(\\[)(\\^)?'
-        'beginCaptures':
-          '1':
-            'name': 'punctuation.definition.character-class.regexp.js'
-          '2':
-            'name': 'keyword.operator.negation.regexp.js'
-        'end': '(\\])'
-        'endCaptures':
-          '1':
-            'name': 'punctuation.definition.character-class.regexp.js'
-        'name': 'constant.other.character-class.set.regexp.js'
-        'patterns': [
-          {
-            'captures':
-              '1':
-                'name': 'constant.character.numeric.regexp.js'
-              '2':
-                'name': 'constant.character.control.regexp.js'
-              '3':
-                'name': 'constant.character.escape.backslash.regexp.js'
-              '4':
-                'name': 'constant.character.numeric.regexp.js'
-              '5':
-                'name': 'constant.character.control.regexp.js'
-              '6':
-                'name': 'constant.character.escape.backslash.regexp.js'
-            'match': '(?:.|(\\\\(?:[0-3][0-7]{2}|[0-7]{2}|[1-7]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{[0-9a-fA-F]{4,5}\\}))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-3][0-7]{2}|[0-7]{2}|[1-7]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{[0-9a-fA-F]{4,5}\\}))|(\\\\c[A-Z])|(\\\\.))'
-            'name': 'constant.other.character-class.range.regexp.js'
-          }
-          {
-            'include': '#regex-character-class-unicode'
-          }
-        ]
-      }
-      {
-        'include': '#regex-character-class-unicode'
       }
     ]
