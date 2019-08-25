@@ -24,13 +24,13 @@
         'name': 'constant.character.control.regexp'
       }
       {
-        'match': '\\\\.'
+        'match': '\\\\[^c]'
         'name': 'constant.character.escape.backslash.regexp'
-        #Note: At least in practice, /\c/ matches a backslash followed by the letter "c", instead of representing an escaped "c" character.
+        #Note: /\c/ matches a backslash followed by the letter "c", instead of representing an escaped "c" character.
       }
     ]
   'regex-character-class-for-range':
-    'match': '^(?:(\\\\[wWsSdDtrnvfb]|\\.)|(\\\\(?:(?!0{1,2}[1-7])0{1,3}|[0-3]?[0-7]{1,2}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[a-zA-Z])|(\\\\.)|.)$'
+    'match': '^(?:(\\\\[wWsSdDtrnvfb]|\\.)|(\\\\(?:(?!0{1,2}[1-7])0{1,3}|[0-3]?[0-7]{1,2}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[a-zA-Z])|(\\\\[^c])|.)$'
     'captures':
       '1': 'name': 'constant.character.character-class.regexp'
       '2': 'name': 'constant.character.numeric.regexp'
@@ -131,7 +131,7 @@
       }
     ]
   'regex-character-class-for-range-unicode':
-    'match': '^(?:(\\\\[wWsSdDtrnvfb]|\\.)|(\\\\(?:(?!0{1,2}[1-7])0{1,3}|[0-3]?[0-7]{1,2}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{(?:[0-9a-fA-F]{4,5}|10[0-9a-fA-F]{4})\\}))|(\\\\c[a-zA-Z])|(\\\\.)|.)$'
+    'match': '^(?:(\\\\[wWsSdDtrnvfb]|\\.)|(\\\\(?:(?!0{1,2}[1-7])0{1,3}|[0-3]?[0-7]{1,2}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{(?:[0-9a-fA-F]{4,5}|10[0-9a-fA-F]{4})\\}))|(\\\\c[a-zA-Z])|(\\\\[^c])|.)$'
     'captures':
       '1': 'name': 'constant.character.character-class.regexp'
       '2': 'name': 'constant.character.numeric.regexp'
