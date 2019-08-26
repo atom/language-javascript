@@ -126,12 +126,12 @@
         'include': '#regex-character-class'
       }
       {
-        'match': '\\\\u\\{(?:[0-9a-fA-F]{4,5}|10[0-9a-fA-F]{4})\\}'
+        'match': '\\\\u\\{0*(?:[0-9a-fA-F]{1,5}|10[0-9a-fA-F]{4})\\}'
         'name': 'constant.character.numeric.regexp'
       }
     ]
   'regex-character-class-for-range-unicode':
-    'match': '^(?:(\\\\[wWsSdDtrnvfb]|\\.)|(\\\\(?:(?!0{1,2}[1-7])0{1,3}|[0-3]?[0-7]{1,2}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{(?:[0-9a-fA-F]{4,5}|10[0-9a-fA-F]{4})\\}))|(\\\\c[a-zA-Z])|(\\\\[^c])|.)$'
+    'match': '^(?:(\\\\[wWsSdDtrnvfb]|\\.)|(\\\\(?:(?!0{1,2}[1-7])0{1,3}|[0-3]?[0-7]{1,2}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{0*(?:[0-9a-fA-F]{1,5}|10[0-9a-fA-F]{4})\\}))|(\\\\c[a-zA-Z])|(\\\\[^c])|.)$'
     'captures':
       '1': 'name': 'constant.character.character-class.regexp'
       '2': 'name': 'constant.character.numeric.regexp'
