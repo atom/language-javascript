@@ -69,7 +69,7 @@ scopes:
 
   'member_expression > property_identifier': 'variable.other.object.property.unquoted'
 
-  'formal_parameters > identifier': 'formal-parameter.identifier'
+  'formal_parameters > identifier': 'variable.parameter.function'
 
   'shorthand_property_identifier': [
     {
@@ -95,6 +95,7 @@ scopes:
   ]
 
   'call_expression > identifier': {match: '^[A-Z]', scopes: 'meta.class'}
+  'arrow_function > identifier:nth-child(0)': 'variable.parameter.function'
 
   'function > identifier': 'entity.name.function'
   'generator_function > identifier': 'entity.name.function'
