@@ -1,18 +1,28 @@
 'scopeName': 'source.js.regexp'
-'patterns': [
-  {
-    'include': '#regexp'
-  }
-  {
-    'include': '#regexp-unicode'
-  }
-]
+#'patterns': [
+#  {
+#    'include': '#regexp'
+#  }
+#  {
+#    'include': '#regexp-unicode'
+#  }
+#]
 'repository':
   'regex-character-class':
     'patterns': [
       {
+        'include': '#regex-character-class-for-set'
+      }
+      {
+        'match': '\\.'
+        'name': 'constant.character.character-class.regexp'
+      }
+    ]
+  'regex-character-class-for-set':
+    'patterns': [
+      {
                                         #null (\0 or \00 or \000)
-        'match': '\\\\[wWsSdDtrnvf]|\\.|\\\\(?!0{1,2}[1-7])0{1,3}'
+        'match': '\\\\[wWsSdDtrnvf]|\\\\(?!0{1,2}[1-7])0{1,3}'
         'name': 'constant.character.character-class.regexp'
       }
       {
@@ -29,13 +39,6 @@
         #Note: /\c/ matches a backslash followed by the letter "c", instead of representing an escaped "c" character.
       }
     ]
-  'regex-character-class-for-range':
-    'match': '^(?:(\\\\[wWsSdDtrnvfb]|\\.)|(\\\\(?:(?!0{1,2}[1-7])0{1,3}|[0-3]?[0-7]{1,2}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[a-zA-Z])|(\\\\[^c])|.)$'
-    'captures':
-      '1': 'name': 'constant.character.character-class.regexp'
-      '2': 'name': 'constant.character.numeric.regexp'
-      '3': 'name': 'constant.character.control.regexp'
-      '4': 'name': 'constant.character.escape.backslash.regexp'
   'regexp':
     'patterns': [
       {
@@ -104,14 +107,14 @@
           '1': 'name': 'punctuation.definition.character-class.regexp'
         'patterns': [
           {
-            'match': '(\\\\.{1,5}|.)-(\\\\.{1,5}|.)'
+            'match': '(?:(\\\\.{1,5})|[^\\]])-(?:(\\\\.{1,5})|[^\\]])'
             'captures':
-              '1': 'include': '#regex-character-class-for-range'
-              '2': 'include': '#regex-character-class-for-range'
+              '1': 'include': '#regex-character-class-for-set'
+              '2': 'include': '#regex-character-class-for-set'
             'name': 'constant.other.character-class.range.regexp'
           }
           {
-            'include': '#regex-character-class'
+            'include': '#regex-character-class-for-set'
           }
         ]
         'name': 'constant.other.character-class.set.regexp'
@@ -123,20 +126,23 @@
   'regex-character-class-unicode':
     'patterns': [
       {
-        'include': '#regex-character-class'
+        'include': '#regex-character-class-for-set-unicode'
       }
+      {
+        'match': '\\.'
+        'name': 'constant.character.character-class.regexp'
+      }
+    ]
+  'regex-character-class-for-set-unicode':
+    'patterns': [
       {
         'match': '\\\\u\\{0*(?:[0-9a-fA-F]{1,5}|10[0-9a-fA-F]{4})\\}'
         'name': 'constant.character.numeric.regexp'
       }
+      {
+        'include': '#regex-character-class-for-set'
+      }
     ]
-  'regex-character-class-for-range-unicode':
-    'match': '^(?:(\\\\[wWsSdDtrnvfb]|\\.)|(\\\\(?:(?!0{1,2}[1-7])0{1,3}|[0-3]?[0-7]{1,2}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{0*(?:[0-9a-fA-F]{1,5}|10[0-9a-fA-F]{4})\\}))|(\\\\c[a-zA-Z])|(\\\\[^c])|.)$'
-    'captures':
-      '1': 'name': 'constant.character.character-class.regexp'
-      '2': 'name': 'constant.character.numeric.regexp'
-      '3': 'name': 'constant.character.control.regexp'
-      '4': 'name': 'constant.character.escape.backslash.regexp'
   'regexp-unicode':
     'patterns': [
       {
@@ -205,14 +211,14 @@
           '1': 'name': 'punctuation.definition.character-class.regexp'
         'patterns': [
           {
-            'match': '(\\\\.{1,9}|.)-(\\\\.{1,9}|.)'
+            'match': '(?:(\\\\.{1,9})|[^\\]])-(?:(\\\\.{1,9})|[^\\]])'
             'captures':
-              '1': 'include': '#regex-character-class-for-range-unicode'
-              '2': 'include': '#regex-character-class-for-range-unicode'
+              '1': 'include': '#regex-character-class-for-set-unicode'
+              '2': 'include': '#regex-character-class-for-set-unicode'
             'name': 'constant.other.character-class.range.regexp'
           }
           {
-            'include': '#regex-character-class-unicode'
+            'include': '#regex-character-class-for-set-unicode'
           }
         ]
       }
