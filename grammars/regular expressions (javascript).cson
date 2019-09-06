@@ -34,7 +34,9 @@
         'name': 'constant.character.control.regexp'
       }
       {
-        'match': '\\\\[^c]'
+        'match': '(\\\\)[^c]'
+        'captures':
+          '1': 'name': 'keyword.operator.escape-character.regexp'
         'name': 'constant.character.escape.backslash.regexp'
         #Note: /\c/ matches a backslash followed by the letter "c", instead of representing an escaped "c" character.
       }
@@ -63,18 +65,18 @@
           '1':
             'name': 'punctuation.definition.group.regexp'
           '2':
-            'name': 'meta.assertion.look-ahead.regexp'
+            'name': 'entity.name.type.assertion.look-ahead.regexp'
           '3':
-            'name': 'meta.assertion.negative-look-ahead.regexp'
+            'name': 'entity.name.type.assertion.negative-look-ahead.regexp'
           '4':
-            'name': 'meta.assertion.look-behind.regexp'
+            'name': 'entity.name.type.assertion.look-behind.regexp'
           '5':
-            'name': 'meta.assertion.negative-look-behind.regexp'
+            'name': 'entity.name.type.assertion.negative-look-behind.regexp'
         'end': '(\\))'
         'endCaptures':
           '1':
             'name': 'punctuation.definition.group.regexp'
-        'name': 'meta.group.assertion.regexp'
+        'name': 'meta.group.atomic.assertion.regexp'
         'patterns': [
           {
             'include': '#regexp'
@@ -82,10 +84,16 @@
         ]
       }
       {
-        'begin': '\\(((\\?:)|(\\?<[a-zA-Z_$][\\w$]*>))?'
+        'begin': '(\\()(?:(\\?:)|(\\?<([a-zA-Z_$][\\w$]*)>))?'
         'beginCaptures':
-          '0':
+          '1':
             'name': 'punctuation.definition.group.regexp'
+          '2':
+            'name': 'entity.name.type.non-capturing.regexp'
+          '3':
+            'name': 'entity.name.type.named.regexp'
+          '4':
+            'name': 'entity.name.tag.regexp'
         'end': '\\)'
         'endCaptures':
           '0':
@@ -107,10 +115,10 @@
           '1': 'name': 'punctuation.definition.character-class.regexp'
         'patterns': [
           {
-            'match': '(?:(\\\\.{1,5})|[^\\]])-(?:(\\\\.{1,5})|[^\\]])'
+            'match': '(?:(\\\\.+?)|[^\\]])-(?:(\\\\.+?)|[^\\]])'
             'captures':
-              '1': 'include': '#regex-character-class-for-set'
-              '2': 'include': '#regex-character-class-for-set'
+              '1': 'patterns': [ { 'include': '#regex-character-class-for-set' } ]
+              '2': 'patterns': [ { 'include': '#regex-character-class-for-set' } ]
             'name': 'constant.other.character-class.range.regexp'
           }
           {
@@ -167,18 +175,18 @@
           '1':
             'name': 'punctuation.definition.group.regexp'
           '2':
-            'name': 'meta.assertion.look-ahead.regexp'
+            'name': 'entity.name.type.assertion.look-ahead.regexp'
           '3':
-            'name': 'meta.assertion.negative-look-ahead.regexp'
+            'name': 'entity.name.type.assertion.negative-look-ahead.regexp'
           '4':
-            'name': 'meta.assertion.look-behind.regexp'
+            'name': 'entity.name.type.assertion.look-behind.regexp'
           '5':
-            'name': 'meta.assertion.negative-look-behind.regexp'
+            'name': 'entity.name.type.assertion.negative-look-behind.regexp'
         'end': '(\\))'
         'endCaptures':
           '1':
             'name': 'punctuation.definition.group.regexp'
-        'name': 'meta.group.assertion.regexp'
+        'name': 'meta.group.atomic.assertion.regexp'
         'patterns': [
           {
             'include': '#regexp-unicode'
@@ -186,10 +194,16 @@
         ]
       }
       {
-        'begin': '\\(((\\?:)|(\\?<[a-zA-Z_$][\\w$]*>))?'
+        'begin': '(\\()(?:(\\?:)|(\\?<([a-zA-Z_$][\\w$]*)>))?'
         'beginCaptures':
-          '0':
+          '1':
             'name': 'punctuation.definition.group.regexp'
+          '2':
+            'name': 'entity.name.type.non-capturing.regexp'
+          '3':
+            'name': 'entity.name.type.named.regexp'
+          '4':
+            'name': 'entity.name.tag.regexp'
         'end': '\\)'
         'endCaptures':
           '0':
@@ -211,10 +225,10 @@
           '1': 'name': 'punctuation.definition.character-class.regexp'
         'patterns': [
           {
-            'match': '(?:(\\\\.{1,9})|[^\\]])-(?:(\\\\.{1,9})|[^\\]])'
+            'match': '(?:(\\\\.+?)|[^\\]])-(?:(\\\\.+?)|[^\\]])'
             'captures':
-              '1': 'include': '#regex-character-class-for-set-unicode'
-              '2': 'include': '#regex-character-class-for-set-unicode'
+              '1': 'patterns': [ { 'include': '#regex-character-class-for-set-unicode' } ]
+              '2': 'patterns': [ { 'include': '#regex-character-class-for-set-unicode' } ]
             'name': 'constant.other.character-class.range.regexp'
           }
           {
