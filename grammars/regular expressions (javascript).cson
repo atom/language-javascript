@@ -51,9 +51,9 @@
         'match': '\\\\(?:([0-3]?[0-7]{1,2})|x([0-9A-Fa-f]{2})|u([0-9A-Fa-f]{4}))'
         'name': 'constant.character.numeric.regexp'
         'captures':
-          1: 'name': 'constant.character.numeric.value.regexp'
-          2: 'name': 'constant.character.numeric.value.regexp'
-          3: 'name': 'constant.character.numeric.value.regexp'
+          1: 'name': 'constant.character.numeric.code-point.regexp'
+          2: 'name': 'constant.character.numeric.code-point.regexp'
+          3: 'name': 'constant.character.numeric.code-point.regexp'
       }
       {
         'match': '\\\\c[a-zA-Z]'
@@ -175,7 +175,7 @@
         'match': '\\\\u\\{(0*[0-9a-fA-F]{1,5}|10[0-9a-fA-F]{4})\\}'
         'name': 'constant.character.numeric.regexp'
         'captures':
-          1: 'name': 'constant.character.numeric.value.regexp'
+          1: 'name': 'constant.character.numeric.code-point.regexp'
       }
       {
         'include': '#regex-character-class-for-set'
@@ -188,7 +188,9 @@
         'name': 'keyword.control.anchor.regexp'
       }
       {
-        'match': '\\\\[1-9]\\d*|\\\\k<[a-zA-Z_$][\\w$]*>'
+        'match': '\\\\[1-9]\\d*|\\\\k<([a-zA-Z_$][\\w$]*)>'
+        'captures':
+          '1': 'name': 'entity.name.tag.back-reference.regexp'
         'name': 'keyword.other.back-reference.regexp'
       }
       {
@@ -265,6 +267,7 @@
             'include': '#regex-character-class-for-set-unicode'
           }
         ]
+        'name': 'constant.other.character-class.set.regexp'
       }
       {
         'include': '#regex-character-class-unicode'
