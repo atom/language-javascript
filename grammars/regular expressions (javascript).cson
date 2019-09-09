@@ -1,12 +1,34 @@
 'scopeName': 'source.js.regexp'
-#'patterns': [
-#  {
-#    'include': '#regexp'
-#  }
-#  {
-#    'include': '#regexp-unicode'
-#  }
-#]
+'patterns': [
+  {
+    'match': '(?>(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:[^\\\\/]*\\\\.)*[^\\\\/]*)(/))(?=((?>[gimsy]{0,5}))(?:[\\]})?:+*,;.\\s]|&&|\\|\\||$))(?![gimsy]{0,3}?([gimsy])[gimsy]{0,3}?\\5)\\4'
+    'captures':
+      '0':
+        'name': 'string.regexp.js'
+      '1':
+        'name': 'punctuation.definition.string.begin.js'
+      '2':
+        'patterns': [ { 'include': '#regexp' } ]
+      '3':
+        'name': 'punctuation.definition.string.end.js'
+      '4':
+        'name': 'meta.flag.regexp'
+  }
+  {
+    'match': '(?>(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:[^\\\\/]*\\\\.)*[^\\\\/]*)(/))(?=(?>[gimsuy]{0,6})(?:[\\]})?:+*,;.\\s]|&&|\\|\\||$))(?![gimsuy]{0,4}?([gimsuy])[gimsuy]{0,4}?\\4)([gimsy]{0,5}u[gimsy]{0,5})'
+    'captures':
+      '0':
+        'name': 'string.regexp.js'
+      '1':
+        'name': 'punctuation.definition.string.begin.js'
+      '2':
+        'patterns': [ { 'include': '#regexp-unicode' } ]
+      '3':
+        'name': 'punctuation.definition.string.end.js'
+      '5':
+        'name': 'meta.flag.regexp'
+  }
+]
 'repository':
   'regex-character-class':
     'patterns': [
@@ -26,8 +48,12 @@
         'name': 'constant.character.character-class.regexp'
       }
       {
-        'match': '\\\\([0-3]?[0-7]{1,2}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4})'
+        'match': '\\\\(?:([0-3]?[0-7]{1,2})|x([0-9A-Fa-f]{2})|u([0-9A-Fa-f]{4}))'
         'name': 'constant.character.numeric.regexp'
+        'captures':
+          1: 'name': 'constant.character.numeric.value.regexp'
+          2: 'name': 'constant.character.numeric.value.regexp'
+          3: 'name': 'constant.character.numeric.value.regexp'
       }
       {
         'match': '\\\\c[a-zA-Z]'
@@ -146,8 +172,10 @@
   'regex-character-class-for-set-unicode':
     'patterns': [
       {
-        'match': '\\\\u\\{0*(?:[0-9a-fA-F]{1,5}|10[0-9a-fA-F]{4})\\}'
+        'match': '\\\\u\\{(0*[0-9a-fA-F]{1,5}|10[0-9a-fA-F]{4})\\}'
         'name': 'constant.character.numeric.regexp'
+        'captures':
+          1: 'name': 'constant.character.numeric.value.regexp'
       }
       {
         'include': '#regex-character-class-for-set'

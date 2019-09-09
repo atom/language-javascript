@@ -1119,40 +1119,7 @@
     'name': 'constant.language.js'
   }
   {
-    'match': '(?>(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:[^\\\\/]*\\\\.)*[^\\\\/]*)(/))(?=((?>[gimsy]{0,5}))(?:[\\]})?:+*,;.\\s]|&&|\\|\\||$))(?![gimsy]{0,3}?([gimsy])[gimsy]{0,3}?\\5)\\4'
-    'captures':
-      '0':
-        'name': 'string.regexp.js'
-      '1':
-        'name': 'punctuation.definition.string.begin.js'
-      '2':
-        'patterns': [
-          {
-            'include': 'source.js.regexp#regexp'
-          }
-        ]
-      '3':
-        'name': 'punctuation.definition.string.end.js'
-      '4':
-        'name': 'meta.flag.regexp'
-  }
-  {
-    'match': '(?>(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:[^\\\\/]*\\\\.)*[^\\\\/]*)(/))(?=(?>[gimsuy]{0,6})(?:[\\]})?:+*,;.\\s]|&&|\\|\\||$))(?![gimsuy]{0,4}?([gimsuy])[gimsuy]{0,4}?\\4)([gimsy]{0,5}u[gimsy]{0,5})'
-    'captures':
-      '0':
-        'name': 'string.regexp.js'
-      '1':
-        'name': 'punctuation.definition.string.begin.js'
-      '2':
-        'patterns': [
-          {
-            'include': 'source.js.regexp#regexp-unicode'
-          }
-        ]
-      '3':
-        'name': 'punctuation.definition.string.end.js'
-      '5':
-        'name': 'meta.flag.regexp'
+    'include': 'source.js.regexp'
   }
   {
     'begin': '\\?'
