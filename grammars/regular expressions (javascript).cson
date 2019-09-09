@@ -48,7 +48,9 @@
         'name': 'keyword.control.anchor.regexp'
       }
       {
-        'match': '\\\\[1-9]\\d*|\\\\k<[a-zA-Z_$][\\w$]*>'
+        'match': '\\\\[1-9]\\d*|\\\\k<([a-zA-Z_$][\\w$]*)>'
+        'captures':
+          '1': 'name': 'entity.name.tag.back-reference.regexp'
         'name': 'keyword.other.back-reference.regexp'
       }
       {
