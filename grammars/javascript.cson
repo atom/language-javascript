@@ -892,7 +892,7 @@
         'name': 'keyword.operator.assignment.js'
     'patterns': [
       {
-        'match': '([$_a-zA-Z][\\w$]*)\\s*(:)\\s*([$_a-zA-Z][\\w$]*)?'
+        'match': '([$_a-zA-Z][$_a-zA-Z0-9]*)\\s*(:)\\s*([$_a-zA-Z][$_a-zA-Z0-9]*)?'
         'captures':
           '2':
             'name': 'keyword.operator.assignment.js'
@@ -1229,55 +1229,28 @@
   'numbers':
     'patterns': [
       {
-        'match': '\\b(?<!\\$)0[xX][0-9a-fA-F]+\\b(?!\\$)'
+        'match': '\\b(?<!\\$)0(x|X)[0-9a-fA-F]+\\b(?!\\$)'
         'name': 'constant.numeric.hex.js'
       }
       {
-        'match': '\\b(?<!\\$)0[bB][01]+\\b(?!\\$)'
+        'match': '\\b(?<!\\$)0(b|B)[01]+\\b(?!\\$)'
         'name': 'constant.numeric.binary.js'
       }
       {
-        'match': '\\b(?<!\\$)0[oO][0-7]+\\b(?!\\$)'
+        'match': '\\b(?<!\\$)0(o|O)?[0-7]+\\b(?!\\$)'
         'name': 'constant.numeric.octal.js'
       }
       {
-        'match': '\\b(?<!\\$)0[0-7]+\\b(?!\\$)'
-        'name': 'constant.numeric.octal.illegal-in-strict.js'
-      }
-      {
         'match': '''(?x)
           (?<!\\$)(?:
-            (?:\\b(?:0+[89][0-9]*)(\\.)[0-9]+[eE][+-]?[0-9]+\\b)|   # 01.1E+3
-            (?:\\b(?:0+[89][0-9]*)(\\.)[eE][+-]?[0-9]+\\b)|         # 01.E+3
-            (?:\\b(?:0+[89][0-9]*)[eE][+-]?[0-9]+\\b)|              # 01E+3
-            (?:\\b(?:0+[89][0-9]*)(\\.)[0-9]+\\b)|                  # 01.1
-            (?:\\b(?:0+[89][0-9]*)(\\.)\\B)|                        # 01.
-            (?:\\b(?:0+[89][0-9]*)\\b(?!\\.))                       # 01
-          )(?!\\$)
-        '''
-        'captures':
-          '0':
-            'name': 'constant.numeric.decimal.illegal-in-strict.js'
-          '1':
-            'name': 'meta.delimiter.decimal.period.js'
-          '2':
-            'name': 'meta.delimiter.decimal.period.js'
-          '3':
-            'name': 'meta.delimiter.decimal.period.js'
-          '4':
-            'name': 'meta.delimiter.decimal.period.js'
-      }
-      {
-        'match': '''(?x)
-          (?<!\\$)(?:
-            (?:\\b(?:0|[1-9][0-9]*)(\\.)[0-9]+[eE][+-]?[0-9]+\\b)|   # 1.1E+3
-            (?:\\b(?:0|[1-9][0-9]*)(\\.)[eE][+-]?[0-9]+\\b)|         # 1.E+3
+            (?:\\b[0-9]+(\\.)[0-9]+[eE][+-]?[0-9]+\\b)| # 1.1E+3
+            (?:\\b[0-9]+(\\.)[eE][+-]?[0-9]+\\b)|       # 1.E+3
             (?:\\B(\\.)[0-9]+[eE][+-]?[0-9]+\\b)|                                 # .1E+3
-            (?:\\b(?:0|[1-9][0-9]*)[eE][+-]?[0-9]+\\b)|              # 1E+3
-            (?:\\b(?:0|[1-9][0-9]*)(\\.)[0-9]+\\b)|                  # 1.1
-            (?:\\b(?:0|[1-9][0-9]*)(\\.)\\B)|                        # 1.
+            (?:\\b[0-9]+[eE][+-]?[0-9]+\\b)|            # 1E+3
+            (?:\\b[0-9]+(\\.)[0-9]+\\b)|                # 1.1
+            (?:\\b[0-9]+(\\.)\\B)|                      # 1.
             (?:\\B(\\.)[0-9]+\\b)|                                                # .1
-            (?:\\b(?:0|[1-9][0-9]*)\\b(?!\\.))                       # 1
+            (?:\\b[0-9]+\\b(?!\\.))                     # 1
           )(?!\\$)
         '''
         'captures':
@@ -1295,10 +1268,6 @@
             'name': 'meta.delimiter.decimal.period.js'
           '6':
             'name': 'meta.delimiter.decimal.period.js'
-      }
-      {
-        'match': '\\b(?<!\\$)(?:0|[1-9][0-9]*)n\\b(?!\\$)'
-        'name': 'constant.numeric.bigint.js'
       }
     ]
   'operators':
@@ -1507,11 +1476,11 @@
   'string_escapes':
     'patterns': [
       {
-        'match': '\\\\u(?![A-Fa-f0-9]{4}|\\{[A-Fa-f0-9]{1,6}\\})[^\'"]*'
+        'match': '\\\\u(?![A-Fa-f0-9]{4}|{[A-Fa-f0-9]+})[^\'"]*'
         'name': 'invalid.illegal.unicode-escape.js'
       }
       {
-        'match': '\\\\u(?:[A-Fa-f0-9]{4}|(\\{)([A-Fa-f0-9]{1,6})(\\}))'
+        'match': '\\\\u(?:[A-Fa-f0-9]{4}|({)([A-Fa-f0-9]+)(}))'
         'name': 'constant.character.escape.js'
         'captures':
           '1':
@@ -1520,7 +1489,7 @@
             'patterns': [
               {
                 # Max codepoint: \u{10FFFF}
-                'match': '(?!10)[A-Fa-f\\d]{6}'
+                'match': '[A-Fa-f\\d]{7,}|(?!10)[A-Fa-f\\d]{6}'
                 'name': 'invalid.illegal.unicode-escape.js'
               }
             ]
@@ -1528,17 +1497,7 @@
             'name': 'punctuation.definition.unicode-escape.end.bracket.curly.js'
       }
       {
-        # octal escape sequence
-        'match': '\\\\(\\\\0\\d+|[0-3][0-7]{2}|[0-7]{2}|[1-7])'
-        'name': 'constant.character.escape.illegal-in-strict.js'
-      }
-      {
-        # decimal escape with leading zero
-        'match': '\\\\0\\d+'
-        'name': 'constant.character.escape.illegal-in-strict.js'
-      }
-      {
-        'match': '\\\\(x[0-9A-Fa-f]{2}|.)'
+        'match': '\\\\(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
         'name': 'constant.character.escape.js'
       }
     ]
@@ -1564,24 +1523,11 @@
                 'name': 'variable.parameter.rest.function.js'
           }
           {
-            'begin': '='
-            'beginCaptures':
-              '0':
-                'name': 'keyword.operator.assignment.js'
-            'end': '(?=[,)])'
-            'patterns': [
-              {
                 'include': '$self'
-              }
-            ]
           }
           {
             'match': '[a-zA-Z_$][\\w$]*'
             'name': 'variable.parameter.function.js'
-          }
-          {
-            'match': ','
-            'name': 'meta.delimiter.object.comma.js'
           }
         ]
       }
