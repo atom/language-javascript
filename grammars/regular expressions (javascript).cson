@@ -100,14 +100,13 @@
         # Unicode property escape sequence
         'match': '\\\\[pP]\\{([0-9a-zA-Z_]+)(?:(=)([0-9a-zA-Z_.]+))?\\}'
         'captures':
-          0:
-            'name': 'constant.character.character-class.unicode-property.regexp'
           1:
             'name': 'constant.character.character-class.unicode-property.name.regexp'
           2:
             'name': 'keyword.operator.assignment.regexp'
           3:
             'name': 'constant.character.character-class.unicode-property.value.regexp'
+        'name': 'constant.character.character-class.unicode-property.regexp'
       }
       {
         'include': '#regex-character-class-for-set--both'
@@ -183,7 +182,7 @@
         'begin': '(\\()(?:(\\?=)|(\\?!)|(\\?<=)|(\\?<!))'
         'beginCaptures':
           '1':
-            'name': 'punctuation.definition.group.regexp'
+            'name': 'punctuation.definition.group.begin.regexp'
           '2':
             'name': 'entity.name.type.assertion.look-ahead.regexp'
           '3':
@@ -195,7 +194,7 @@
         'end': '(\\))'
         'endCaptures':
           '1':
-            'name': 'punctuation.definition.group.regexp'
+            'name': 'punctuation.definition.group.end.regexp'
         'name': 'meta.group.atomic.assertion.regexp'
         'patterns': [
           {
@@ -208,7 +207,7 @@
         'begin': '(\\()(?:(\\?:)|(\\?<([a-zA-Z_$][\\w$]*)>))?'
         'beginCaptures':
           '1':
-            'name': 'punctuation.definition.group.regexp'
+            'name': 'punctuation.definition.group.begin.regexp'
           '2':
             'name': 'entity.name.type.non-capturing.regexp'
           '3':
@@ -218,7 +217,7 @@
         'end': '\\)'
         'endCaptures':
           '0':
-            'name': 'punctuation.definition.group.regexp'
+            'name': 'punctuation.definition.group.end.regexp'
         'name': 'meta.group.regexp'
         'patterns': [
           {
@@ -231,30 +230,30 @@
         'begin': '(\\[)(\\^)?'
         'beginCaptures':
           '1':
-            'name': 'punctuation.definition.character-class.regexp'
+            'name': 'punctuation.definition.character-class.set.begin.regexp'
           '2':
             'name': 'keyword.operator.negation.regexp'
         'end': '(\\])'
         'endCaptures':
           '1':
-            'name': 'punctuation.definition.character-class.regexp'
+            'name': 'punctuation.definition.character-class.set.end.regexp'
         'patterns': [
           {
             # Ranges
-            'match': '(?:(\\\\.+?)|[^\\]])-(?:(\\\\.+?)|[^\\]])'
+            #'match': '(?:(\\\\.+?)|[^\\]])(-)(?:(\\\\.+?)|[^\\]])'
+            'match': '(?x)
+              (?:(
+              \\\\([wWsSdDtrnvfb]|(?!0{1,2}[1-7])0{1,3}|00?[1-7]|[1-7][0-7]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|c[a-zA-Z]|[^c])
+              )|[^\\]])(-)(?:(
+              \\\\([wWsSdDtrnvfb]|(?!0{1,2}[1-7])0{1,3}|00?[1-7]|[1-7][0-7]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|c[a-zA-Z]|[^c])
+              )|[^\\]])'
             'captures':
               '1':
-                'patterns': [
-                  {
-                    'include': '#regex-character-class-for-set--normal'
-                  }
-                ]
+                'include': '#regex-character-class-for-set--normal'
               '2':
-                'patterns': [
-                  {
-                    'include': '#regex-character-class-for-set--normal'
-                  }
-                ]
+                'name': 'punctuation.definition.character-class.range.hyphen.regexp'
+              '3':
+                'include': '#regex-character-class-for-set--normal'
             'name': 'constant.other.character-class.range.regexp'
           }
           {
@@ -277,7 +276,7 @@
         'begin': '(\\()(?:(\\?=)|(\\?!)|(\\?<=)|(\\?<!))'
         'beginCaptures':
           '1':
-            'name': 'punctuation.definition.group.regexp'
+            'name': 'punctuation.definition.group.begin.regexp'
           '2':
             'name': 'entity.name.type.assertion.look-ahead.regexp'
           '3':
@@ -289,7 +288,7 @@
         'end': '(\\))'
         'endCaptures':
           '1':
-            'name': 'punctuation.definition.group.regexp'
+            'name': 'punctuation.definition.group.end.regexp'
         'name': 'meta.group.atomic.assertion.regexp'
         'patterns': [
           {
@@ -302,7 +301,7 @@
         'begin': '(\\()(?:(\\?:)|(\\?<([a-zA-Z_$][\\w$]*)>))?'
         'beginCaptures':
           '1':
-            'name': 'punctuation.definition.group.regexp'
+            'name': 'punctuation.definition.group.begin.regexp'
           '2':
             'name': 'entity.name.type.non-capturing.regexp'
           '3':
@@ -312,7 +311,7 @@
         'end': '\\)'
         'endCaptures':
           '0':
-            'name': 'punctuation.definition.group.regexp'
+            'name': 'punctuation.definition.group.end.regexp'
         'name': 'meta.group.regexp'
         'patterns': [
           {
@@ -325,30 +324,30 @@
         'begin': '(\\[)(\\^)?'
         'beginCaptures':
           '1':
-            'name': 'punctuation.definition.character-class.regexp'
+            'name': 'punctuation.definition.character-class.set.begin.regexp'
           '2':
             'name': 'keyword.operator.negation.regexp'
         'end': '(\\])'
         'endCaptures':
           '1':
-            'name': 'punctuation.definition.character-class.regexp'
+            'name': 'punctuation.definition.character-class.set.end.regexp'
         'patterns': [
           {
             # Ranges
-            'match': '(?:(\\\\.+?)|[^\\]])-(?:(\\\\.+?)|[^\\]])'
+            #'match': '(?:(\\\\.+?)|[^\\]])(-)(?:(\\\\.+?)|[^\\]])'
+            'match': '(?x)
+              (?:(
+              \\\\(u\\{(0*[0-9a-fA-F]{1,5}|10[0-9a-fA-F]{4})\\}|[pP]\\{([0-9a-zA-Z_]+)(?:(=)([0-9a-zA-Z_.]+))?\\}|[wWsSdDtrnvfb]|(?!0{1,2}[1-7])0{1,3}|00?[1-7]|[1-7][0-7]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|c[a-zA-Z]|[\\\\\\[\\]{}()^$?*+|-])
+              )|[^\\]])(-)(?:(
+              \\\\(u\\{(0*[0-9a-fA-F]{1,5}|10[0-9a-fA-F]{4})\\}|[pP]\\{([0-9a-zA-Z_]+)(?:(=)([0-9a-zA-Z_.]+))?\\}|[wWsSdDtrnvfb]|(?!0{1,2}[1-7])0{1,3}|00?[1-7]|[1-7][0-7]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|c[a-zA-Z]|[\\\\\\[\\]{}()^$?*+|-])
+              )|[^\\]])'
             'captures':
               '1':
-                'patterns': [
-                  {
-                    'include': '#regex-character-class-for-set--unicode'
-                  }
-                ]
+                'include': '#regex-character-class-for-set--unicode'
               '2':
-                'patterns': [
-                  {
-                    'include': '#regex-character-class-for-set--unicode'
-                  }
-                ]
+                'name': 'punctuation.definition.character-class.range.hyphen.regexp'
+              '3':
+                'include': '#regex-character-class-for-set--unicode'
             'name': 'constant.other.character-class.range.regexp'
           }
           {
