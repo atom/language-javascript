@@ -1,6 +1,7 @@
 'scopeName': 'source.js.regexp'
 'patterns': [
   {
+    # RegExp without the unicode (u) flag
     'match': '(?>(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:[^\\\\/]*\\\\.)*[^\\\\/]*)(/))(?=((?>[gimsy]{0,5}))(?:[\\]})?:+*,;.\\s]|&&|\\|\\||$))(?![gimsy]{0,3}?([gimsy])[gimsy]{0,3}?\\5)\\4'
     'captures':
       '0':
@@ -19,6 +20,7 @@
         'name': 'meta.flag.regexp'
   }
   {
+    # RegExp with the unicode (u) flag
     'match': '(?>(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])((?:[^\\\\/]*\\\\.)*[^\\\\/]*)(/))(?=(?>[gimsuy]{0,6})(?:[\\]})?:+*,;.\\s]|&&|\\|\\||$))(?![gimsuy]{0,4}?([gimsuy])[gimsuy]{0,4}?\\4)([gimsy]{0,5}u[gimsy]{0,5})'
     'captures':
       '0':
@@ -44,6 +46,7 @@
         'include': '#regex-character-class-for-set'
       }
       {
+        # Escaped character
         'match': '\\.'
         'name': 'constant.character.character-class.regexp'
       }
@@ -51,26 +54,35 @@
   'regex-character-class-for-set':
     'patterns': [
       {
-        # The second half of this expression matches a NULL character (\0 or \00 or \000).
-        'match': '\\\\[wWsSdDtrnvf]|\\\\(?!0{1,2}[1-7])0{1,3}'
+        # Special characters
+        'match': '\\\\[wWsSdDtrnvfb]|\\\\(?!0{1,2}[1-7])0{1,3}'
         'name': 'constant.character.character-class.regexp'
       }
       {
-        'match': '\\\\(?:([0-3]?[0-7]{1,2})|x([0-9A-Fa-f]{2})|u([0-9A-Fa-f]{4}))'
+        # Numeric escape sequences
+        'match': '\\\\(?:(0(0?[1-7]|[1-7][0-7]))|(x([0-9A-Fa-f]{2}))|(u([0-9A-Fa-f]{4})))'
         'name': 'constant.character.numeric.regexp'
         'captures':
           1:
-            'name': 'constant.character.numeric.code-point.regexp'
+            'name': 'constant.character.numeric.octal.regexp'
           2:
-            'name': 'constant.character.numeric.code-point.regexp'
+            'name': 'constant.character.numeric.octal.code-point.regexp'  # code units/points 01 to 077
           3:
-            'name': 'constant.character.numeric.code-point.regexp'
+            'name': 'constant.character.numeric.hexadecimal.regexp'
+          4:
+            'name': 'constant.character.numeric.hexadecimal.code-point.regexp'  # code units/points 0x0000 to 0x00FF
+          5:
+            'name': 'constant.character.numeric.unicode.regexp'
+          6:
+            'name': 'constant.character.numeric.unicode.code-point.regexp'  # code units/points U+0000 to U+FFFF
       }
       {
+        # Control character
         'match': '\\\\c[a-zA-Z]'
         'name': 'constant.character.control.regexp'
       }
       {
+        # Escaped character
         # Exclude 'c' here because /\c/ matches a backslash followed by the letter 'c'. It does not represent an escaped 'c' character.
         'match': '(\\\\)[^c]'
         'captures':
@@ -82,10 +94,12 @@
   'regexp':
     'patterns': [
       {
+        # Boundaries
         'match': '\\\\[bB]|\\^|\\$'
         'name': 'keyword.control.anchor.regexp'
       }
       {
+        # Backreferences
         'match': '\\\\[1-9]\\d*|\\\\k<([a-zA-Z_$][\\w$]*)>'
         'captures':
           '1':
@@ -93,14 +107,17 @@
         'name': 'keyword.other.back-reference.regexp'
       }
       {
+        # Quantifiers
         'match': '[?+*]|\\{(\\d+,\\d+|\\d+,|,\\d+|\\d+)\\}\\??'
         'name': 'keyword.operator.quantifier.regexp'
       }
       {
+        # The 'or' operator
         'match': '\\|'
         'name': 'keyword.operator.or.regexp'
       }
       {
+        # Assertions
         'begin': '(\\()(?:(\\?=)|(\\?!)|(\\?<=)|(\\?<!))'
         'beginCaptures':
           '1':
@@ -125,6 +142,7 @@
         ]
       }
       {
+        # Groups
         'begin': '(\\()(?:(\\?:)|(\\?<([a-zA-Z_$][\\w$]*)>))?'
         'beginCaptures':
           '1':
@@ -147,6 +165,7 @@
         ]
       }
       {
+        # Character sets
         'begin': '(\\[)(\\^)?'
         'beginCaptures':
           '1':
@@ -159,6 +178,7 @@
             'name': 'punctuation.definition.character-class.regexp'
         'patterns': [
           {
+            # Ranges
             'match': '(?:(\\\\.+?)|[^\\]])-(?:(\\\\.+?)|[^\\]])'
             'captures':
               '1':
@@ -191,6 +211,7 @@
         'include': '#regex-character-class-for-set-unicode'
       }
       {
+        # Escaped character
         'match': '\\.'
         'name': 'constant.character.character-class.regexp'
       }
@@ -198,11 +219,14 @@
   'regex-character-class-for-set-unicode':
     'patterns': [
       {
+        # Unicode code point escape sequence
         'match': '\\\\u\\{(0*[0-9a-fA-F]{1,5}|10[0-9a-fA-F]{4})\\}'
         'name': 'constant.character.numeric.regexp'
         'captures':
+          0:
+            'name': 'constant.character.numeric.unicode.regexp'
           1:
-            'name': 'constant.character.numeric.code-point.regexp'
+            'name': 'constant.character.numeric.unicode.code-point.regexp'  # code points U+10000 to U+10FFFF
       }
       {
         'include': '#regex-character-class-for-set'
@@ -211,10 +235,12 @@
   'regexp-unicode':
     'patterns': [
       {
+        # Boundaries
         'match': '\\\\[bB]|\\^|\\$'
         'name': 'keyword.control.anchor.regexp'
       }
       {
+        # Backreferences
         'match': '\\\\[1-9]\\d*|\\\\k<([a-zA-Z_$][\\w$]*)>'
         'captures':
           '1':
@@ -222,14 +248,17 @@
         'name': 'keyword.other.back-reference.regexp'
       }
       {
+        # Quantifiers
         'match': '[?+*]|\\{(\\d+,\\d+|\\d+,|,\\d+|\\d+)\\}\\??'
         'name': 'keyword.operator.quantifier.regexp'
       }
       {
+        # The 'or' operator
         'match': '\\|'
         'name': 'keyword.operator.or.regexp'
       }
       {
+        # Assertions
         'begin': '(\\()(?:(\\?=)|(\\?!)|(\\?<=)|(\\?<!))'
         'beginCaptures':
           '1':
@@ -254,6 +283,7 @@
         ]
       }
       {
+        # Groups
         'begin': '(\\()(?:(\\?:)|(\\?<([a-zA-Z_$][\\w$]*)>))?'
         'beginCaptures':
           '1':
@@ -276,6 +306,7 @@
         ]
       }
       {
+        # Character sets
         'begin': '(\\[)(\\^)?'
         'beginCaptures':
           '1':
@@ -288,6 +319,7 @@
             'name': 'punctuation.definition.character-class.regexp'
         'patterns': [
           {
+            # Ranges
             'match': '(?:(\\\\.+?)|[^\\]])-(?:(\\\\.+?)|[^\\]])'
             'captures':
               '1':
