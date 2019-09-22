@@ -231,8 +231,12 @@
       }
       {
         # Quantifiers
-        'match': '[?+*]|\\{(\\d+,\\d+|\\d+,|\\d+)\\}'
-        'name': 'keyword.operator.quantifier.regexp'
+        'match': '([+*]\\?|[?+*]|\\{(?:\\d+(?:,\\d*)?)\\})((?:[?+*]|\\{(?:\\d+(?:,\\d*)?)\\})*)'
+        'captures':
+          '1':
+            'name': 'keyword.operator.quantifier.regexp'
+          '2':
+            'name': 'invalid.illegal.quantifier.regexp'
       }
       {
         # The 'or' operator
