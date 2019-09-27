@@ -164,6 +164,11 @@
             'name': 'keyword.operator.escape-character.regexp'
         'name': 'constant.character.escape.backslash.regexp'
       }
+      {
+        # Errant backslash
+        'match': '\\\\'
+        'name': 'invalid.illegal.escape.regexp'
+      }
     ]
   'regex-character-class--both':
     'patterns': [
