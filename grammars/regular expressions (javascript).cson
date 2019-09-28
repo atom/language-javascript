@@ -1,35 +1,6 @@
 'scopeName': 'source.js.regexp'
 'patterns': [
   {
-    # RegExp without the unicode (u) flag
-    'match': '(?x)
-      (?>
-        (?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*
-        (/)
-        (?![/*+?])
-        ([^\\\\\\[/]*(?:(?:\\\\.|\\[[^\\\\\\]]*(?:\\\\.[^\\\\\\]]*)*\\])[^\\\\\\[/]*)*)
-        (/)
-      )
-      (?=((?>[gimsy]{0,5}))(?:[\\]})?:+*,;.\\s]|&&|\\|\\||$))
-      (?![gimsy]{0,3}?([gimsy])[gimsy]{0,3}?\\5)
-      \\4'
-    'captures':
-      '0':
-        'name': 'string.regexp.js'
-      '1':
-        'name': 'punctuation.definition.string.begin.js'
-      '2':
-        'patterns': [
-          {
-            'include': '#regexp--normal'
-          }
-        ]
-      '3':
-        'name': 'punctuation.definition.string.end.js'
-      '4':
-        'name': 'meta.flag.regexp'
-  }
-  {
     # RegExp with the unicode (u) flag
     'match': '(?x)
       (?>
@@ -57,6 +28,42 @@
         'name': 'punctuation.definition.string.end.js'
       '5':
         'name': 'meta.flag.regexp'
+  }
+  {
+    # RegExp without the unicode (u) flag
+    'match': '(?x)
+      (?>
+        (?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*
+        (/)
+        (?![/*+?])
+        ([^\\\\\\[/]*(?:(?:\\\\.|\\[[^\\\\\\]]*(?:\\\\.[^\\\\\\]]*)*\\])[^\\\\\\[/]*)*)
+        (/)
+      )
+      (?:
+        (?=((?>[gimsy]{0,5}))(?:[\\]})?:+*,;.\\s]|&&|\\|\\||$))
+        (?:(?=[gimsy]{0,3}?([gimsy])[gimsy]{0,3}?\\5)(\\4)|(\\4))
+        |
+        (.*?)(?=[\\]})?:+*,;.\\s]|&&|\\|\\||$)
+      )'
+    'captures':
+      '0':
+        'name': 'string.regexp.js'
+      '1':
+        'name': 'punctuation.definition.string.begin.js'
+      '2':
+        'patterns': [
+          {
+            'include': '#regexp--normal'
+          }
+        ]
+      '3':
+        'name': 'punctuation.definition.string.end.js'
+      '6':
+        'name': 'invalid.illegal.flag.regexp'
+      '7':
+        'name': 'meta.flag.regexp'
+      '8':
+        'name': 'invalid.illegal.flag.regexp'
   }
 ]
 'repository':
@@ -215,15 +222,6 @@
             'name': 'invalid.illegal.back-reference.regexp'
       }
       {
-        # Quantifiers
-        'match': '([+*]\\?|[?+*]|\\{(?:\\d+(?:,\\d*)?)\\})((?:[?+*]|\\{(?:\\d+(?:,\\d*)?)\\})*)'
-        'captures':
-          '1':
-            'name': 'keyword.operator.quantifier.regexp'
-          '2':
-            'name': 'invalid.illegal.quantifier.regexp'
-      }
-      {
         # The 'or' operator
         'match': '\\|'
         'name': 'keyword.operator.or.regexp'
@@ -233,6 +231,15 @@
     'patterns': [
       {
         'include': '#regexp--both'
+      }
+      {
+        # Quantifiers
+        'match': '((?:[?+*]|\\{(?:\\d+(?:,\\d*)?)\\})\\??)((?:[?+*]|\\{(?:\\d+(?:,\\d*)?)\\})*)'
+        'captures':
+          '1':
+            'name': 'keyword.operator.quantifier.regexp'
+          '2':
+            'name': 'invalid.illegal.quantifier.regexp'
       }
       {
         # Assertions
@@ -337,6 +344,20 @@
     'patterns': [
       {
         'include': '#regexp--both'
+      }
+      {
+        # Quantifiers
+        'match': '(?x)
+          ((?:[?+*]|\\{(?:\\d+(?:,\\d*)?)\\})\\??)((?:[?+*]|\\{(?:\\d+(?:,\\d*)?)\\})*)
+          |
+          (\\{)(?!(?:\\d+(?:,\\d*)?)\\})'
+        'captures':
+          '1':
+            'name': 'keyword.operator.quantifier.regexp'
+          '2':
+            'name': 'invalid.illegal.quantifier.regexp'
+          '3':
+            'name': 'invalid.illegal.quantifier.regexp'
       }
       {
         # Assertions
