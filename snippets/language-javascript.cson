@@ -34,7 +34,7 @@
     'body': 'for (var ${1:variable} in ${2:object}) {\n\t${3:if (${2:object}.hasOwnProperty(${1:variable})) {\n\t\t$4\n\t\\}}\n}'
   'for of':
     'prefix': 'forof'
-    'body': 'for (${1:variable} of ${2:iterable}) {\n\t$3\n}'
+    'body': 'for (var ${1:variable} of ${2:iterable}) {\n\t$3\n}'
   'Function':
     'prefix': 'fun'
     'body': 'function ${1:functionName}($2) {\n\t$0\n}'
