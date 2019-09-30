@@ -245,18 +245,18 @@
           '1':
             'name': 'punctuation.definition.group.begin.regexp'
           '2':
-            'name': 'entity.name.type.assertion.look-ahead.regexp'
+            'name': 'meta.assertion.look-ahead.regexp'
           '3':
-            'name': 'entity.name.type.assertion.negative-look-ahead.regexp'
+            'name': 'meta.assertion.negative-look-ahead.regexp'
           '4':
-            'name': 'entity.name.type.assertion.look-behind.regexp'
+            'name': 'meta.assertion.look-behind.regexp'
           '5':
-            'name': 'entity.name.type.assertion.negative-look-behind.regexp'
+            'name': 'meta.assertion.negative-look-behind.regexp'
         'end': '(\\))'
         'endCaptures':
           '1':
             'name': 'punctuation.definition.group.end.regexp'
-        'name': 'meta.group.atomic.assertion.regexp'
+        'name': 'meta.group.assertion.regexp'
         'patterns': [
           {
             'include': '#regexp--normal'
@@ -265,7 +265,7 @@
       }
       {
         # Groups
-        'begin': '(\\()(?:(\\?:)|(\\?<([a-zA-Z_$][\\w$]*)>)|(\\?))?'
+        'begin': '(\\((?:(\\?:)|(\\?<([a-zA-Z_$][\\w$]*)>)))|(\\()(\\?)?'
         'beginCaptures':
           '1':
             'name': 'punctuation.definition.group.begin.regexp'
@@ -276,6 +276,8 @@
           '4':
             'name': 'entity.name.tag.regexp'
           '5':
+            'name': 'punctuation.definition.group.begin.regexp'
+          '6':
             'name': 'invalid.illegal.quantifier.regexp'
         'end': '\\)'
         'endCaptures':
@@ -372,18 +374,18 @@
           '1':
             'name': 'punctuation.definition.group.begin.regexp'
           '2':
-            'name': 'entity.name.type.assertion.look-ahead.regexp'
+            'name': 'meta.assertion.look-ahead.regexp'
           '3':
-            'name': 'entity.name.type.assertion.negative-look-ahead.regexp'
+            'name': 'meta.assertion.negative-look-ahead.regexp'
           '4':
-            'name': 'entity.name.type.assertion.look-behind.regexp'
+            'name': 'meta.assertion.look-behind.regexp'
           '5':
-            'name': 'entity.name.type.assertion.negative-look-behind.regexp'
+            'name': 'meta.assertion.negative-look-behind.regexp'
         'end': '(\\))'
         'endCaptures':
           '1':
             'name': 'punctuation.definition.group.end.regexp'
-        'name': 'meta.group.atomic.assertion.regexp'
+        'name': 'meta.group.assertion.regexp'
         'patterns': [
           {
             'include': '#regexp--unicode'
@@ -392,7 +394,7 @@
       }
       {
         # Groups
-        'begin': '(\\()(?:(\\?:)|(\\?<([a-zA-Z_$][\\w$]*)>)|(\\?))?'
+        'begin': '(\\((?:(\\?:)|(\\?<([a-zA-Z_$][\\w$]*)>)))|(\\()(\\?)?'
         'beginCaptures':
           '1':
             'name': 'punctuation.definition.group.begin.regexp'
@@ -403,6 +405,8 @@
           '4':
             'name': 'entity.name.tag.regexp'
           '5':
+            'name': 'punctuation.definition.group.begin.regexp'
+          '6':
             'name': 'invalid.illegal.quantifier.regexp'
         'end': '\\)'
         'endCaptures':
