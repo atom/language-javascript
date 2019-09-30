@@ -214,7 +214,9 @@ describe "JavaScript grammar", ->
 
       {tokens} = grammar.tokenizeLine('/(?<bY_$>foo)bar\\k<bY_$>/')
       expect(tokens[0]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
-      expect(tokens[1]).toEqual value: '(?<bY_$>', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.begin.regexp']
+      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.begin.regexp']
+      expect(tokens[1]).toEqual value: '?<bY_$>', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.begin.regexp', 'entity.name.type.named.regexp']
+      expect(tokens[1]).toEqual value: 'bY_$', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.begin.regexp', 'entity.name.type.named.regexp', 'entity.name.tag.regexp']
       expect(tokens[2]).toEqual value: 'foo', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp']
       expect(tokens[3]).toEqual value: ')', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.end.regexp']
       expect(tokens[4]).toEqual value: 'bar', scopes: ['source.js', 'string.regexp.js']
@@ -223,7 +225,8 @@ describe "JavaScript grammar", ->
 
       {tokens} = grammar.tokenizeLine('/(?:foo)bar/')
       expect(tokens[0]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
-      expect(tokens[1]).toEqual value: '(?:', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.begin.regexp']
+      expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.begin.regexp']
+      expect(tokens[1]).toEqual value: '?:', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.begin.regexp', 'entity.name.type.non-capturing.regexp']
       expect(tokens[2]).toEqual value: 'foo', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp']
       expect(tokens[3]).toEqual value: ')', scopes: ['source.js', 'string.regexp.js', 'meta.group.regexp', 'punctuation.definition.group.end.regexp']
       expect(tokens[4]).toEqual value: 'bar', scopes: ['source.js', 'string.regexp.js']
@@ -246,12 +249,14 @@ describe "JavaScript grammar", ->
       expect(tokens[0]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.begin.js']
       expect(tokens[1]).toEqual value: '(', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'punctuation.definition.group.begin.regexp']
       expect(tokens[2]).toEqual value: '?<!', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'meta.assertion.negative-look-behind.regexp']
-      expect(tokens[3]).toEqual value: '\\$', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'constant.character.escape.backslash.regexp']
+      expect(tokens[3]).toEqual value: '\\', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'constant.character.escape.backslash.regexp', 'keyword.operator.escape-character.regexp']
+      expect(tokens[3]).toEqual value: '$', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'constant.character.escape.backslash.regexp']
       expect(tokens[4]).toEqual value: ')', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'punctuation.definition.group.end.regexp']
       expect(tokens[5]).toEqual value: 'test', scopes: ['source.js', 'string.regexp.js']
       expect(tokens[6]).toEqual value: '(', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'punctuation.definition.group.begin.regexp']
       expect(tokens[7]).toEqual value: '?!', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'meta.assertion.negative-look-ahead.regexp']
-      expect(tokens[8]).toEqual value: '\\.', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'constant.character.escape.backslash.regexp']
+      expect(tokens[8]).toEqual value: '\\', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'constant.character.escape.backslash.regexp', 'keyword.operator.escape-character.regexp']
+      expect(tokens[8]).toEqual value: '.', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'constant.character.escape.backslash.regexp']
       expect(tokens[9]).toEqual value: ')', scopes: ['source.js', 'string.regexp.js', 'meta.group.assertion.regexp', 'punctuation.definition.group.end.regexp']
       expect(tokens[10]).toEqual value: '/', scopes: ['source.js', 'string.regexp.js', 'punctuation.definition.string.end.js']
 
