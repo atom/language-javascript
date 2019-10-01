@@ -106,7 +106,7 @@
       {
         # Null character
         'match': '\\\\(?!0{1,2}[1-7])0{1,3}'
-        'name': 'constant.character.character-class.null.regexp'
+        'name': 'constant.character.numeric.null.regexp'
       }
       {
         # Octal numeric escape sequences
@@ -135,7 +135,7 @@
       {
         # Null character
         'match': '\\\\0(?!\\d)'
-        'name': 'constant.character.character-class.null.regexp'
+        'name': 'constant.character.numeric.null.regexp'
       }
       {
         # Unicode code point escape sequence
