@@ -24,7 +24,7 @@
 'firstLineMatch': '''(?x)
   # Hashbang
   ^\\#!.*(?:\\s|\\/|(?<=!)\\b)
-    (?:node|iojs|JavaScript)
+    (?:node|iojs|JavaScript|node-dev|nodemon|forever|supervisor)
   (?:$|\\s)
   |
   # Modeline
