@@ -139,7 +139,7 @@
       }
       {
         # Unicode code point escape sequence
-        'match': '(\\\\u\\{(0*[a-fA-F\\d]{1,5}|10[a-fA-F\\d]{4})\\})|(\\\\u\\{(?=\\}|[a-fA-F\\d]*(?:[^a-fA-F\\d}]|$)))'
+        'match': '(\\\\u\\{(0*[a-fA-F\\d]{1,5}|0*10[a-fA-F\\d]{4})\\})|(\\\\u\\{(?=\\}|[a-fA-F\\d]*(?:[^a-fA-F\\d}]|$)))'
         'captures':
           '1':
             'name': 'constant.character.numeric.unicode.regexp'
