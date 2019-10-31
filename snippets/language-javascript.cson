@@ -35,6 +35,9 @@
   'for of':
     'prefix': 'forof'
     'body': 'for (var ${1:variable} of ${2:iterable}) {\n\t$3\n}'
+  'forEach':
+    'prefix' : 'foreach'
+    'body' : 'forEach((${1:item}, ${2:i}) => {\n\t$3\n});\n'
   'Function':
     'prefix': 'fun'
     'body': 'function ${1:functionName}($2) {\n\t$0\n}'
