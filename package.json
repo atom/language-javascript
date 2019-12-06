@@ -25,6 +25,6 @@
   "dependencies": {
     "tree-sitter-javascript": "^0.15.2",
     "tree-sitter-jsdoc": "^0.15.2",
-    "tree-sitter-regex": "^0.15.0"
+    "tree-sitter-regex": "^0.15.1"
   }
 }
