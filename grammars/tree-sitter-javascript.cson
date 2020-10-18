@@ -118,7 +118,7 @@ scopes:
       scopes: 'support.variable'
     },
     {
-      match: '^(window|self|event|document|performance|screen|navigator|console)$'
+      match: '^(window|self|frames|event|document|performance|screen|navigator|console)$'
       scopes: 'support.variable.dom'
     },
     {
