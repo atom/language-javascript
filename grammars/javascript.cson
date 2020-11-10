@@ -1310,7 +1310,8 @@
         'name': 'keyword.operator.comparison.js'
       }
       {
-        'match': '&&|!!|!|\\|\\|'
+        # One of: && !! ! || ??
+        'match': '&&|!!|!|\\|\\||\\?\\?'
         'name': 'keyword.operator.logical.js'
       }
       {
