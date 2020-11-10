@@ -1,3 +1,6 @@
+# Note: Because of the optional chaining operator (?.), "object.property" in the comments usually means ("object.property" or "object?.property")
+# Even though sometimes it doesn't seem like using the chaining operator would make any sense, it's still supported. example: Math?.PI
+# Negative lookbehinds for "." Shouldddd cover "?."
 'scopeName': 'source.js'
 'fileTypes': [
   'js'
@@ -44,7 +47,7 @@
 'name': 'JavaScript'
 'patterns': [
   {
-    # ES6 import
+    # ES6 import - Negative \\. *should* cover "?." right?
     'begin': '(?<!\\.)\\b(import)(?!\\s*[:(])\\b'
     'beginCaptures':
       '1':
@@ -284,8 +287,8 @@
     ]
   }
   {
-    # [.]foo = function...
-    'begin': '(?=(\\.)?[a-zA-Z_$][\\w$]*\\s*=\\s*(\\basync\\b\\s*)?\\bfunction\\b)'
+    # [.|?.]foo = function...
+    'begin': '(?=(\\.|\\?\\.)?[a-zA-Z_$][\\w$]*\\s*=\\s*(\\basync\\b\\s*)?\\bfunction\\b)'
     'end': '(?<=})'
     'patterns': [
       {
@@ -300,10 +303,10 @@
         'name': 'meta.function.js'
         'patterns': [
           {
-            'match': '(\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)\\s*'
+            'match': '(\\.|\\?\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)\\s*'
             'captures':
               '1':
-                'name': 'meta.delimiter.method.period.js'
+                'name': 'meta.delimiter.method.js'
               '2':
                 'name': 'entity.name.function.js'
               '3':
@@ -533,10 +536,10 @@
     ]
   }
   {
-    # [.]foo = ... => ...
+    # [.|?.]foo = ... => ...
     'begin': '''(?x)
       (?=
-        (\\.)?[a-zA-Z_$][\\w$]*
+        (\\.|\\?\\.)?[a-zA-Z_$][\\w$]*
         \\s*(=)\\s*
         ((\\(([^\\(\\)]*)?\\))|[\\w$]+)
         \\s*=>
@@ -546,8 +549,8 @@
       (?<=})|
       ((?!
         \\s*{|
-        \\G(\\.)?[a-zA-Z_$][\\w$]*\\s*(=)\\s*\\(|
-        \\G(\\.)?[a-zA-Z_$][\\w$]*\\s*(=)\\s*[\\w$]+|
+        \\G(\\.|\\?\\.)?[a-zA-Z_$][\\w$]*\\s*(=)\\s*\\(|
+        \\G(\\.|\\?\\.)?[a-zA-Z_$][\\w$]*\\s*(=)\\s*[\\w$]+|
         \\s*/\\*|\\s*//
       )(?=\\s*\\S))
     '''
@@ -564,10 +567,10 @@
         'name': 'meta.function.arrow.js'
         'patterns': [
           {
-            'match': '\\G(\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)'
+            'match': '\\G(\\.|\\?\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)'
             'captures':
               '1':
-                'name': 'meta.delimiter.method.period.js'
+                'name': 'meta.delimiter.method.js'
               '2':
                 'name': 'entity.name.function.js'
               '3':
@@ -729,8 +732,8 @@
         'name': 'entity.name.type.instance.js'
         'patterns': [
           {
-            'match': '\\.'
-            'name': 'meta.delimiter.property.period.js'
+            'match': '\\.|\\?\\.'
+            'name': 'meta.delimiter.property.js'
           }
         ]
   }
@@ -743,7 +746,7 @@
         'name': 'entity.name.type.object.console.js'
     'end': '''(?x)
       (?<=\\)) | (?=
-        (?! (\\s*//)|(\\s*/\\*)|(\\s*(\\.)\\s*
+        (?! (\\s*//)|(\\s*/\\*)|(\\s*(\\.|\\?\\.)\\s*
           (assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)
           \\s*\\(
         )) \\s*\\S
@@ -754,10 +757,10 @@
         'include': '#comments'
       }
       {
-        'begin': '\\s*(\\.)\\s*(\\w+)\\s*(?=\\()'
+        'begin': '\\s*(\\.|\\?\\.)\\s*(\\w+)\\s*(?=\\()'
         'beginCaptures':
           '1':
-            'name': 'meta.delimiter.method.period.js'
+            'name': 'meta.delimiter.method.js'
           '2':
             'name': 'support.function.console.js'
         'end': '(?<=\\))'
@@ -779,7 +782,7 @@
     'end': '''(?x)
       (?<=E|LN10|LN2|LOG10E|LOG2E|PI|SQRT1_2|SQRT2|\\)
       ) | (?=
-        (?! (\\s*//)|(\\s*/\\*)|(\\s*\\.\\s* (
+        (?! (\\s*//)|(\\s*/\\*)|(\\s*(\\.|\\?\\.)\\s* (
           ((abs|acos|acosh|asin|asinh|atan|atan2|atanh|cbrt|ceil|clz32|cos|cosh|exp|
           expm1|floor|fround|hypot|imul|log|log10|log1p|log2|max|min|pow|random|
           round|sign|sin|sinh|sqrt|tan|tanh|trunc)\\s*\\(
@@ -793,10 +796,10 @@
       }
       {
         # Math.random()
-        'begin': '\\s*(\\.)\\s*(\\w+)\\s*(?=\\()'
+        'begin': '\\s*(\\.|\\?\\.)\\s*(\\w+)\\s*(?=\\()'
         'beginCaptures':
           '1':
-            'name': 'meta.delimiter.method.period.js'
+            'name': 'meta.delimiter.method.js'
           '2':
             'name': 'support.function.math.js'
         'end': '(?<=\\))'
@@ -809,10 +812,10 @@
       }
       {
         # Math.PI
-        'match': '\\s*(\\.)\\s*(\\w+)\\b'
+        'match': '\\s*(\\.|\\?\\.)\\s*(\\w+)\\b'
         'captures':
           '1':
-            'name': 'meta.delimiter.property.period.js'
+            'name': 'meta.delimiter.property.js'
           '2':
             'name': 'support.constant.property.math.js'
       }
@@ -826,7 +829,7 @@
         'name': 'support.class.promise.js'
     'end': '''(?x)
       (?<=\\)) | (?=
-        (?! (\\s*//)|(\\s*/\\*)|(\\s*\\.\\s*(all|race|reject|resolve)\\s*\\() )\\s*\\S
+        (?! (\\s*//)|(\\s*/\\*)|(\\s*(\\.|\\?\\.)\\s*(all|race|reject|resolve)\\s*\\() )\\s*\\S
       )
     '''
     'patterns': [
@@ -835,10 +838,10 @@
       }
       {
         # Promise.all()
-        'begin': '\\s*(\\.)\\s*(\\w+)\\s*(?=\\()'
+        'begin': '\\s*(\\.|\\?\\.)\\s*(\\w+)\\s*(?=\\()'
         'beginCaptures':
           '1':
-            'name': 'meta.delimiter.method.period.js'
+            'name': 'meta.delimiter.method.js'
           '2':
             'name': 'support.function.promise.js'
         'end': '(?<=\\))'
@@ -941,6 +944,7 @@
     'name': 'meta.control.yield.js'
   }
   {
+    # Isn't about "." but rather "...", don't need to check "?."
     'match': '(?:(?<=\\.{3})|(?<!\\.))\\b(await)(?!\\s*:)\\b'
     'name': 'keyword.control.js'
   }
@@ -982,14 +986,14 @@
     'name': 'support.class.js'
   }
   {
-    'match': '''(?x) (\\.) \\s* (?:
+    'match': '''(?x) (\\.|\\?\\.) \\s* (?:
         (constructor|length|prototype) |
         (EPSILON|MAX_SAFE_INTEGER|MAX_VALUE|MIN_SAFE_INTEGER|MIN_VALUE|NEGATIVE_INFINITY|POSITIVE_INFINITY)
       )\\b
     '''
     'captures':
       '1':
-        'name': 'meta.delimiter.property.period.js'
+        'name': 'meta.delimiter.property.js'
       '2':
         'name': 'support.variable.property.js'
       '3':
@@ -1067,7 +1071,7 @@
         'name': 'support.class.dom.js'
   }
   {
-    'match': '''(?x) (\\.) \\s*
+    'match': '''(?x) (\\.|\\?\\.) \\s*
       (?:
         (ATTRIBUTE_NODE|CDATA_SECTION_NODE|COMMENT_NODE|DOCUMENT_FRAGMENT_NODE|DOCUMENT_NODE|DOCUMENT_TYPE_NODE
         |DOMSTRING_SIZE_ERR|ELEMENT_NODE|ENTITY_NODE|ENTITY_REFERENCE_NODE|HIERARCHY_REQUEST_ERR|INDEX_SIZE_ERR
@@ -1105,7 +1109,7 @@
     '''
     'captures':
       '1':
-        'name': 'meta.delimiter.property.period.js'
+        'name': 'meta.delimiter.property.js'
       '2':
         'name': 'support.constant.dom.js'
       '3':
@@ -1189,9 +1193,10 @@
     'match': ','
     'name': 'meta.delimiter.object.comma.js'
   }
-  {
-    'match': '\\.'
-    'name': 'meta.delimiter.method.period.js'
+  { 
+    # Optional chaining operator
+    'match': '\\.|\\?\\.'
+    'name': 'meta.delimiter.method.js'
   }
   {
     # Allows the special return snippet to fire.
@@ -1422,6 +1427,7 @@
         ]
       }
       {
+        # Don't think this could have optional chaining
         'begin': '(Relay\\.QL|gql)\\s*(`)'
         'beginCaptures':
           '1':
@@ -1637,11 +1643,11 @@
   'method_calls':
     'patterns': [
       {
-        # .methodCall(arg1, "arg2", [...])
-        'begin': '(\\.)\\s*([\\w$]+)\\s*(?=\\()'
+        # [?].methodCall(arg1, "arg2", [...])
+        'begin': '(\\.|\\?\\.)\\s*([\\w$]+)\\s*(?=\\()'
         'beginCaptures':
           '1':
-            'name': 'meta.delimiter.method.period.js'
+            'name': 'meta.delimiter.method.js'
           '2':
             'patterns': [
               {
@@ -1784,59 +1790,60 @@
     'patterns': [
       {
         # OBJ in OBJ.prop, OBJ.methodCall()
-        'match': '[A-Z][A-Z0-9_$]*(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
+        'match': '[A-Z][A-Z0-9_$]*(?=\\s*(\\.|\\?\\.)\\s*[a-zA-Z_$]\\w*)'
         'name': 'constant.other.object.js'
       }
       {
         # obj in obj.prop, obj.methodCall()
-        'match': '[a-zA-Z_$][\\w$]*(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
+        'match': '[a-zA-Z_$][\\w$]*(?=\\s*(\\.|\\?\\.)\\s*[a-zA-Z_$]\\w*)'
         'name': 'variable.other.object.js'
       }
     ]
   'properties':
     'patterns': [
+      # object.prop means (object.prop OR object?.prop) in this square bracket
       {
         # PROP1 in obj.PROP1.prop2, func().PROP1.prop2
-        'match': '(\\.)\\s*([A-Z][A-Z0-9_$]*\\b\\$*)(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
+        'match': '(\\.|\\?\\.)\\s*([A-Z][A-Z0-9_$]*\\b\\$*)(?=\\s*(\\.|\\?\\.)\\s*[a-zA-Z_$]\\w*)'
         'captures':
           '1':
-            'name': 'meta.delimiter.property.period.js'
+            'name': 'meta.delimiter.property.js'
           '2':
             'name': 'constant.other.object.property.js'
       }
       {
         # prop1 in obj.prop1.prop2, func().prop1.prop2
-        'match': '(\\.)\\s*(\\$*[a-zA-Z_$][\\w$]*)(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
+        'match': '(\\.|\\?\\.)\\s*(\\$*[a-zA-Z_$][\\w$]*)(?=\\s*(\\.|\\?\\.)\\s*[a-zA-Z_$]\\w*)'
         'captures':
           '1':
-            'name': 'meta.delimiter.property.period.js'
+            'name': 'meta.delimiter.property.js'
           '2':
             'name': 'variable.other.object.property.js'
       }
       {
         # PROP in obj.PROP, func().PROP
-        'match': '(\\.)\\s*([A-Z][A-Z0-9_$]*\\b\\$*)'
+        'match': '(\\.|\\?\\.)\\s*([A-Z][A-Z0-9_$]*\\b\\$*)'
         'captures':
           '1':
-            'name': 'meta.delimiter.property.period.js'
+            'name': 'meta.delimiter.property.js'
           '2':
             'name': 'constant.other.property.js'
       }
       {
         # prop in obj.prop, func().prop
-        'match': '(\\.)\\s*(\\$*[a-zA-Z_$][\\w$]*)'
+        'match': '(\\.|\\?\\.)\\s*(\\$*[a-zA-Z_$][\\w$]*)'
         'captures':
           '1':
-            'name': 'meta.delimiter.property.period.js'
+            'name': 'meta.delimiter.property.js'
           '2':
             'name': 'variable.other.property.js'
       }
       {
         # 123illegal in obj.123illegal, func().123illegal
-        'match': '(\\.)\\s*([0-9][\\w$]*)'
+        'match': '(\\.|\\?\\.)\\s*([0-9][\\w$]*)'
         'captures':
           '1':
-            'name': 'meta.delimiter.property.period.js'
+            'name': 'meta.delimiter.property.js'
           '2':
             'name': 'invalid.illegal.identifier.js'
       }
