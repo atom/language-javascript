@@ -47,7 +47,7 @@
 'name': 'JavaScript'
 'patterns': [
   {
-    # ES6 import - Negative \\. *should* cover "?." right?
+    # ES6 import
     'begin': '(?<!\\.)\\b(import)(?!\\s*[:(])\\b'
     'beginCaptures':
       '1':
