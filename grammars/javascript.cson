@@ -997,7 +997,7 @@
   }
   {
     'match': '''(?x) (?<!\\$) \\b (?:
-      (document|event|navigator|performance|screen|window)
+      (document|event|navigator|performance|screen|window|self|frames|globalThis)
       |
       (AnalyserNode|ArrayBufferView|Attr|AudioBuffer|AudioBufferSourceNode|AudioContext|AudioDestinationNode|AudioListener
       |AudioNode|AudioParam|BatteryManager|BeforeUnloadEvent|BiquadFilterNode|Blob|BufferSource|ByteString|CSS|CSSConditionRule
