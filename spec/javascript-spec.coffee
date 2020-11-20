@@ -323,6 +323,11 @@ describe "JavaScript grammar", ->
       {tokens} = grammar.tokenizeLine('0X1D306n')
       expect(tokens[0]).toEqual value: '0X1D306n', scopes: ['source.js', 'constant.numeric.hex.js']
 
+      {tokens} = grammar.tokenizeLine('0X1D30_69A3')
+      expect(tokens[0]).toEqual value: '0X1D30', scopes: ['source.js', 'constant.numeric.hex.js']
+      expect(tokens[1]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.hex.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[2]).toEqual value: '69A3', scopes: ['source.js', 'constant.numeric.hex.js']
+
     it "tokenizes binary literals", ->
       {tokens} = grammar.tokenizeLine('0b011101110111010001100110')
       expect(tokens[0]).toEqual value: '0b011101110111010001100110', scopes: ['source.js', 'constant.numeric.binary.js']
@@ -335,6 +340,19 @@ describe "JavaScript grammar", ->
 
       {tokens} = grammar.tokenizeLine('0B011101110111010001100110n')
       expect(tokens[0]).toEqual value: '0B011101110111010001100110n', scopes: ['source.js', 'constant.numeric.binary.js']
+
+      {tokens} = grammar.tokenizeLine('0B0111_0111_0111_0100_0110_0110')
+      expect(tokens[0]).toEqual value: '0B0111', scopes: ['source.js', 'constant.numeric.binary.js']
+      expect(tokens[1]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.binary.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[2]).toEqual value: '0111', scopes: ['source.js', 'constant.numeric.binary.js']
+      expect(tokens[3]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.binary.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[4]).toEqual value: '0111', scopes: ['source.js', 'constant.numeric.binary.js']
+      expect(tokens[5]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.binary.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[6]).toEqual value: '0100', scopes: ['source.js', 'constant.numeric.binary.js']
+      expect(tokens[7]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.binary.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[8]).toEqual value: '0110', scopes: ['source.js', 'constant.numeric.binary.js']
+      expect(tokens[9]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.binary.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[10]).toEqual value: '0110', scopes: ['source.js', 'constant.numeric.binary.js']
 
     it "tokenizes octal literals", ->
       {tokens} = grammar.tokenizeLine('0o1411')
@@ -352,12 +370,31 @@ describe "JavaScript grammar", ->
       {tokens} = grammar.tokenizeLine('0010')
       expect(tokens[0]).toEqual value: '0010', scopes: ['source.js', 'constant.numeric.octal.js']
 
+      {tokens} = grammar.tokenizeLine('0010_7201_5112')
+      expect(tokens[0]).toEqual value: '0010', scopes: ['source.js', 'constant.numeric.octal.js']
+      expect(tokens[1]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.octal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[2]).toEqual value: '7201', scopes: ['source.js', 'constant.numeric.octal.js']
+      expect(tokens[3]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.octal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[4]).toEqual value: '5112', scopes: ['source.js', 'constant.numeric.octal.js']
+
+      {tokens} = grammar.tokenizeLine('0O1411_1236')
+      expect(tokens[0]).toEqual value: '0O1411', scopes: ['source.js', 'constant.numeric.octal.js']
+      expect(tokens[1]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.octal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[2]).toEqual value: '1236', scopes: ['source.js', 'constant.numeric.octal.js']
+
     it "tokenizes decimals", ->
       {tokens} = grammar.tokenizeLine('1234')
       expect(tokens[0]).toEqual value: '1234', scopes: ['source.js', 'constant.numeric.decimal.js']
 
       {tokens} = grammar.tokenizeLine('123456789n')
       expect(tokens[0]).toEqual value: '123456789n', scopes: ['source.js', 'constant.numeric.decimal.js']
+
+      {tokens} = grammar.tokenizeLine('123_456_789n')
+      expect(tokens[0]).toEqual value: '123', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[1]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[2]).toEqual value: '456', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[3]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[4]).toEqual value: '789n', scopes: ['source.js', 'constant.numeric.decimal.js']
 
       {tokens} = grammar.tokenizeLine('5e-10')
       expect(tokens[0]).toEqual value: '5e-10', scopes: ['source.js', 'constant.numeric.decimal.js']
@@ -369,23 +406,91 @@ describe "JavaScript grammar", ->
       expect(tokens[0]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.decimal.period.js']
 
+      {tokens} = grammar.tokenizeLine('9_9.')
+      expect(tokens[0]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[1]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[2]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[3]).toEqual value: '.', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.decimal.period.js']
+
       {tokens} = grammar.tokenizeLine('.9')
       expect(tokens[0]).toEqual value: '.', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.decimal.period.js']
       expect(tokens[1]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
+
+      {tokens} = grammar.tokenizeLine('.9_9')
+      expect(tokens[0]).toEqual value: '.', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.decimal.period.js']
+      expect(tokens[1]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[2]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[3]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
 
       {tokens} = grammar.tokenizeLine('9.9')
       expect(tokens[0]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.decimal.period.js']
       expect(tokens[2]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
 
+      {tokens} = grammar.tokenizeLine('9_9.9_9')
+      expect(tokens[0]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[1]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[2]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[3]).toEqual value: '.', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.decimal.period.js']
+      expect(tokens[4]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[5]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[6]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
+
       {tokens} = grammar.tokenizeLine('.1e-23')
       expect(tokens[0]).toEqual value: '.', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.decimal.period.js']
       expect(tokens[1]).toEqual value: '1e-23', scopes: ['source.js', 'constant.numeric.decimal.js']
+
+      {tokens} = grammar.tokenizeLine('.1_1E+1_1')
+      expect(tokens[0]).toEqual value: '.', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.decimal.period.js']
+      expect(tokens[1]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[2]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[3]).toEqual value: '1E+1', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[4]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[5]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.decimal.js']
 
       {tokens} = grammar.tokenizeLine('1.E3')
       expect(tokens[0]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.decimal.js']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.decimal.period.js']
       expect(tokens[2]).toEqual value: 'E3', scopes: ['source.js', 'constant.numeric.decimal.js']
+
+      {tokens} = grammar.tokenizeLine('1_1.E-1_1')
+      expect(tokens[0]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[1]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[2]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[3]).toEqual value: '.', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.decimal.period.js']
+      expect(tokens[4]).toEqual value: 'E-1', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[5]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[6]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.decimal.js']
+
+      {tokens} = grammar.tokenizeLine('1_1.1_1E1_1')
+      expect(tokens[0]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[1]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[2]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[3]).toEqual value: '.', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.decimal.period.js']
+      expect(tokens[4]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[5]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[6]).toEqual value: '1E1', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[7]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[8]).toEqual value: '1', scopes: ['source.js', 'constant.numeric.decimal.js']
+
+      {tokens} = grammar.tokenizeLine('9_9')
+      expect(tokens[0]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[1]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[2]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
+
+      {tokens} = grammar.tokenizeLine('9_9_9')
+      expect(tokens[0]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[1]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[2]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[3]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[4]).toEqual value: '9', scopes: ['source.js', 'constant.numeric.decimal.js']
+
+      {tokens} = grammar.tokenizeLine('999_999_999')
+      expect(tokens[0]).toEqual value: '999', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[1]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[2]).toEqual value: '999', scopes: ['source.js', 'constant.numeric.decimal.js']
+      expect(tokens[3]).toEqual value: '_', scopes: ['source.js', 'constant.numeric.decimal.js', 'meta.delimiter.numeric.separator.js']
+      expect(tokens[4]).toEqual value: '999', scopes: ['source.js', 'constant.numeric.decimal.js']
 
     it "does not tokenize numbers that are part of a variable", ->
       {tokens} = grammar.tokenizeLine('hi$1')
@@ -393,6 +498,20 @@ describe "JavaScript grammar", ->
 
       {tokens} = grammar.tokenizeLine('hi_1')
       expect(tokens[0]).toEqual value: 'hi_1', scopes: ['source.js']
+
+      {tokens} = grammar.tokenizeLine('_1')
+      expect(tokens[0]).toEqual value: '_1', scopes: ['source.js', 'constant.other.js']
+
+      {tokens} = grammar.tokenizeLine('1_')
+      expect(tokens[0]).toEqual value: '1_', scopes: ['source.js', 'invalid.illegal.identifier.js']
+
+      {tokens} = grammar.tokenizeLine('1_._1')
+      expect(tokens[0]).toEqual value: '1_', scopes: ['source.js', 'invalid.illegal.identifier.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
+      expect(tokens[2]).toEqual value: '_1', scopes: ['source.js', 'variable.other.property.js']
+
+      {tokens} = grammar.tokenizeLine('1__1')
+      expect(tokens[0]).toEqual value: '1__1', scopes: ['source.js', 'invalid.illegal.identifier.js']
 
   describe "operators", ->
     it "tokenizes them", ->
