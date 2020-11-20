@@ -19,6 +19,10 @@
   "keywords": [
     "tree-sitter"
   ],
+  "scripts": {
+    "test": "atom --test spec",
+    "lint": "coffeelint ."
+  },
   "devDependencies": {
     "coffeelint": "^1.10.1"
   },
