@@ -1,4 +1,7 @@
 '.source.js, .source.flow':
+  'Alert':
+    'prefix': 'alert'
+    'body': 'alert(${1:"Type here"});$2'
   'Object Method':
     'prefix': 'kf'
     'body': '${1:methodName}: function (${2:attribute}) {\n\t$3\n}${4:,}'
