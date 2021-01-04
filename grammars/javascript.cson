@@ -1194,9 +1194,12 @@
     'name': 'meta.delimiter.object.comma.js'
   }
   { 
-    # Optional chaining operator
-    'match': '\\?\\.|\\.'
+    'match': '\\.'
     'name': 'meta.delimiter.method.js'
+  }
+  {
+    'match': '\\?\\.'
+    'name': 'meta.delimiter.method.optional.js
   }
   {
     # Allows the special return snippet to fire.
