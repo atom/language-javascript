@@ -997,7 +997,7 @@
   }
   {
     'match': '''(?x) (?<!\\$) \\b (?:
-      (document|event|navigator|performance|screen|window)
+      (document|event|navigator|performance|screen|window|self|frames)
       |
       (AnalyserNode|ArrayBufferView|Attr|AudioBuffer|AudioBufferSourceNode|AudioContext|AudioDestinationNode|AudioListener
       |AudioNode|AudioParam|BatteryManager|BeforeUnloadEvent|BiquadFilterNode|Blob|BufferSource|ByteString|CSS|CSSConditionRule
@@ -1112,7 +1112,7 @@
         'name': 'support.variable.property.dom.js'
   }
   {
-    'match': '(?<!\\.)\\b(module|exports|__filename|__dirname|global|process)(?!\\s*:)\\b'
+    'match': '(?<!\\.)\\b(module|exports|__filename|__dirname|global|globalThis|process)(?!\\s*:)\\b'
     'name': 'support.variable.js'
   }
   {
