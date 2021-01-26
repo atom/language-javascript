@@ -303,10 +303,20 @@
         'name': 'meta.function.js'
         'patterns': [
           {
-            'match': '(\\?\\.|\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)\\s*'
+            'match': '(\\?\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)\\s*'
             'captures':
               '1':
-                'name': 'meta.delimiter.method.js'
+                'name': 'meta.delimiter.method.optional.js'
+              '2':
+                'name': 'entity.name.function.js'
+              '3':
+                'name': 'keyword.operator.assignment.js'
+          }
+          {
+            'match': '(\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)\\s*'
+            'captures':
+              '1':
+                'name': 'meta.delimiter.method.period.js'
               '2':
                 'name': 'entity.name.function.js'
               '3':
@@ -567,10 +577,20 @@
         'name': 'meta.function.arrow.js'
         'patterns': [
           {
-            'match': '\\G(\\?\\.|\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)'
+            'match': '\\G(\\?\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)'
             'captures':
               '1':
-                'name': 'meta.delimiter.method.js'
+                'name': 'meta.delimiter.method.optional.js'
+              '2':
+                'name': 'entity.name.function.js'
+              '3':
+                'name': 'keyword.operator.assignment.js'
+          }
+          {
+            'match': '\\G(\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)'
+            'captures':
+              '1':
+                'name': 'meta.delimiter.method.period.js'
               '2':
                 'name': 'entity.name.function.js'
               '3':
@@ -1193,9 +1213,23 @@
     'match': ','
     'name': 'meta.delimiter.object.comma.js'
   }
-  { 
-    'match': '\\.'
+  {
+    'match': '\\?\\.|\\.'
     'name': 'meta.delimiter.method.js'
+    'patterns': [
+      { 
+        'match': '\\.'
+        'name': 'meta.delimiter.method.period.js'
+      }
+      {
+        'match': '\\?\\.'
+        'name': 'meta.delimiter.method.optional.js
+      }
+    ]
+  }
+  {
+    'match': '\\.'
+    'name': 'meta.delimiter.method.period.js'
   }
   {
     'match': '\\?\\.'
