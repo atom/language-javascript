@@ -1681,7 +1681,7 @@
           '1':
             'patterns': [
               {
-                'include': '#period_or_optional_property'
+                'include': '#period_or_optional_method'
               }
             ]
           '2':
