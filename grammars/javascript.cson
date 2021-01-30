@@ -781,6 +781,9 @@
           {
             'include': '#arguments'
           }
+          {
+            'include': '#period_or_optional_method'
+          }
         ]
       }
     ]
