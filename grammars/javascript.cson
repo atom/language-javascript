@@ -731,6 +731,7 @@
     'name': 'meta.class.js'
   }
   {
+    # TODO: optional chaining is possible here
     'match': '(new)\\s+([\\w$]+[\\w.$]*)'
     'name': 'meta.class.instance.constructor.js'
     'captures':
@@ -1223,14 +1224,6 @@
   {
     'match': ','
     'name': 'meta.delimiter.object.comma.js'
-  }
-  {
-    'match': '\\.'
-    'name': 'meta.delimiter.method.period.js'
-  }
-  {
-    'match': '\\?\\.'
-    'name': 'meta.delimiter.method.optional.js'
   }
   {
     # Allows the special return snippet to fire.
@@ -2112,30 +2105,22 @@
   'period_or_optional_property':
     'patterns': [
       {
-        'match': '(\\.)'
-        'captures':
-          '0':
-            'name': 'meta.delimiter.property.period.js'
+        'match': '\\.'
+        'name': 'meta.delimiter.property.period.js'
       }
       {
-        'match': '(\\?\\.)'
-        'captures':
-          '0':
-            'name': 'meta.delimiter.property.optional.js'
+        'match': '\\?\\.'
+        'name': 'meta.delimiter.property.optional.js'
       }
     ]
   'period_or_optional_method':
     'patterns': [
       {
-        'match': '(\\.)'
-        'captures':
-          '0':
-            'name': 'meta.delimiter.method.period.js'
+        'match': '\\.'
+        'name': 'meta.delimiter.method.period.js'
       }
       {
-        'match': '(\\?\\.)'
-        'captures':
-          '0':
-            'name': 'meta.delimiter.method.optional.js'
+        'match': '\\?\\.'
+        'name': 'meta.delimiter.method.optional.js'
       }
     ]
