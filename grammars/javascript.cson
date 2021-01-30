@@ -306,17 +306,11 @@
             'match': '(\\?\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)\\s*'
             'captures':
               '1':
-                'name': 'meta.delimiter.method.optional.js'
-              '2':
-                'name': 'entity.name.function.js'
-              '3':
-                'name': 'keyword.operator.assignment.js'
-          }
-          {
-            'match': '(\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)\\s*'
-            'captures':
-              '1':
-                'name': 'meta.delimiter.method.period.js'
+                'patterns': [
+                  {
+                    'include': '#period_or_optional_method'
+                  }
+                ]
               '2':
                 'name': 'entity.name.function.js'
               '3':
@@ -580,17 +574,11 @@
             'match': '\\G(\\?\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)'
             'captures':
               '1':
-                'name': 'meta.delimiter.method.optional.js'
-              '2':
-                'name': 'entity.name.function.js'
-              '3':
-                'name': 'keyword.operator.assignment.js'
-          }
-          {
-            'match': '\\G(\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)'
-            'captures':
-              '1':
-                'name': 'meta.delimiter.method.period.js'
+                'patterns': [
+                  {
+                    'include': '#period_or_optional_method'
+                  }
+                ]
               '2':
                 'name': 'entity.name.function.js'
               '3':
@@ -752,8 +740,7 @@
         'name': 'entity.name.type.instance.js'
         'patterns': [
           {
-            'match': '\\?\\.|\\.'
-            'name': 'meta.delimiter.property.js'
+            'include': '#period_or_optional_property'
           }
         ]
   }
@@ -780,7 +767,11 @@
         'begin': '\\s*(\\?\\.|\\.)\\s*(\\w+)\\s*(?=\\()'
         'beginCaptures':
           '1':
-            'name': 'meta.delimiter.method.js'
+            'patterns': [
+              {
+                'include': '#period_or_optional_method'
+              }
+            ]
           '2':
             'name': 'support.function.console.js'
         'end': '(?<=\\))'
@@ -819,7 +810,11 @@
         'begin': '\\s*(\\?\\.|\\.)\\s*(\\w+)\\s*(?=\\()'
         'beginCaptures':
           '1':
-            'name': 'meta.delimiter.method.js'
+            'patterns': [
+              {
+                'include': '#period_or_optional_method'
+              }
+            ]
           '2':
             'name': 'support.function.math.js'
         'end': '(?<=\\))'
@@ -835,7 +830,11 @@
         'match': '\\s*(\\?\\.|\\.)\\s*(\\w+)\\b'
         'captures':
           '1':
-            'name': 'meta.delimiter.property.js'
+            'patterns': [
+              {
+                'include': '#period_or_optional_property'
+              }
+            ]
           '2':
             'name': 'support.constant.property.math.js'
       }
@@ -861,7 +860,11 @@
         'begin': '\\s*(\\?\\.|\\.)\\s*(\\w+)\\s*(?=\\()'
         'beginCaptures':
           '1':
-            'name': 'meta.delimiter.method.js'
+            'patterns': [
+              {
+                'include': '#period_or_optional_method'
+              }
+            ]
           '2':
             'name': 'support.function.promise.js'
         'end': '(?<=\\))'
@@ -1013,7 +1016,11 @@
     '''
     'captures':
       '1':
-        'name': 'meta.delimiter.property.js'
+        'patterns': [
+          {
+            'include': '#period_or_optional_property'
+          }
+        ]
       '2':
         'name': 'support.variable.property.js'
       '3':
@@ -1129,7 +1136,11 @@
     '''
     'captures':
       '1':
-        'name': 'meta.delimiter.property.js'
+        'patterns': [
+          {
+            'include': '#period_or_optional_property'
+          }
+        ]
       '2':
         'name': 'support.constant.dom.js'
       '3':
@@ -1212,20 +1223,6 @@
   {
     'match': ','
     'name': 'meta.delimiter.object.comma.js'
-  }
-  {
-    'match': '\\?\\.|\\.'
-    'name': 'meta.delimiter.method.js'
-    'patterns': [
-      { 
-        'match': '\\.'
-        'name': 'meta.delimiter.method.period.js'
-      }
-      {
-        'match': '\\?\\.'
-        'name': 'meta.delimiter.method.optional.js'
-      }
-    ]
   }
   {
     'match': '\\.'
@@ -1689,7 +1686,11 @@
         'begin': '(\\?\\.|\\.)\\s*([\\w$]+)\\s*(?=\\()'
         'beginCaptures':
           '1':
-            'name': 'meta.delimiter.method.js'
+            'patterns': [
+              {
+                'include': '#period_or_optional_property'
+              }
+            ]
           '2':
             'patterns': [
               {
@@ -1827,6 +1828,44 @@
           }
         ]
       }
+      {
+        # functionCall?.(arg1, "arg2", [...])
+        'begin': '([\\w$]+)\\s*(\\?\\.)(?=\\()'
+        'beginCaptures':
+          '1':
+            'patterns': [
+              {
+                'match': '''(?x)
+                  \\b(isNaN|isFinite|eval|uneval|parseInt|parseFloat|decodeURI|
+                  decodeURIComponent|encodeURI|encodeURIComponent|escape|unescape|
+                  require|set(Interval|Timeout)|clear(Interval|Timeout))\\b
+                '''
+                'name': 'support.function.js'
+              }
+              {
+                'match': "[a-zA-Z_$][\\w$]*"
+                'name': 'entity.name.function.js'
+              }
+              {
+                'match': '\\d[\\w$]*'
+                'name': 'invalid.illegal.identifier.js'
+              }
+            ]
+          '2':
+            'patterns': [
+              {
+                'match': '\\?\\.'
+                'name': 'meta.delimiter.method.optional.js'
+              }
+            ]
+        'end': '(?<=\\))'
+        'name': 'meta.function-call.js'
+        'patterns': [
+          {
+            'include': '#arguments'
+          }
+        ]
+      }
     ]
   'objects':
     'patterns': [
@@ -1849,7 +1888,11 @@
         'match': '(\\?\\.|\\.)\\s*([A-Z][A-Z0-9_$]*\\b\\$*)(?=\\s*(\\?\\.|\\.)\\s*[a-zA-Z_$]\\w*)'
         'captures':
           '1':
-            'name': 'meta.delimiter.property.js'
+            'patterns': [
+              {
+                'include': '#period_or_optional_property'
+              }
+            ]
           '2':
             'name': 'constant.other.object.property.js'
       }
@@ -1858,7 +1901,11 @@
         'match': '(\\?\\.|\\.)\\s*(\\$*[a-zA-Z_$][\\w$]*)(?=\\s*(\\?\\.|\\.)\\s*[a-zA-Z_$]\\w*)'
         'captures':
           '1':
-            'name': 'meta.delimiter.property.js'
+            'patterns': [
+              {
+                'include': '#period_or_optional_property'
+              }
+            ]
           '2':
             'name': 'variable.other.object.property.js'
       }
@@ -1867,7 +1914,11 @@
         'match': '(\\?\\.|\\.)\\s*([A-Z][A-Z0-9_$]*\\b\\$*)'
         'captures':
           '1':
-            'name': 'meta.delimiter.property.js'
+            'patterns': [
+              {
+                'include': '#period_or_optional_property'
+              }
+            ]
           '2':
             'name': 'constant.other.property.js'
       }
@@ -1876,7 +1927,11 @@
         'match': '(\\?\\.|\\.)\\s*(\\$*[a-zA-Z_$][\\w$]*)'
         'captures':
           '1':
-            'name': 'meta.delimiter.property.js'
+            'patterns': [
+              {
+                'include': '#period_or_optional_property'
+              }
+            ]
           '2':
             'name': 'variable.other.property.js'
       }
@@ -1885,7 +1940,11 @@
         'match': '(\\?\\.|\\.)\\s*([0-9][\\w$]*)'
         'captures':
           '1':
-            'name': 'meta.delimiter.property.js'
+            'patterns': [
+              {
+                'include': '#period_or_optional_property'
+              }
+            ]
           '2':
             'name': 'invalid.illegal.identifier.js'
       }
@@ -2047,6 +2106,52 @@
           '1':
             'patterns': [
               'include': '$self'
+            ]
+      }
+    ]
+  'period_or_optional_property':
+    'patterns': [
+      {
+        'match': '(\\.)'
+        'captures':
+          '1':
+            'patterns': [
+              {
+                'meta.delimiter.property.period.js'
+              }
+            ]
+      }
+      {
+        'match': '(\\?\\.)'
+        'captures':
+          '1':
+            'patterns': [
+              {
+                'meta.delimiter.property.optional.js'
+              }
+            ]
+      }
+    ]
+  'period_or_optional_method':
+    'patterns': [
+      {
+        'match': '(\\.)'
+        'captures':
+          '1':
+            'patterns': [
+              {
+                'meta.delimiter.method.period.js'
+              }
+            ]
+      }
+      {
+        'match': '(\\?\\.)'
+        'captures':
+          '1':
+            'patterns': [
+              {
+                'meta.delimiter.method.optional.js'
+              }
             ]
       }
     ]
