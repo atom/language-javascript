@@ -479,7 +479,7 @@ describe "JavaScript grammar", ->
           expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
 
     describe "arithmetic", ->
-      operators = ["*", "/", "-", "%", "+"]
+      operators = ["*", "/", "-", "%", "+", "**"]
 
       it "tokenizes them", ->
         for operator in operators
