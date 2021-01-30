@@ -308,7 +308,12 @@
               '1':
                 'patterns': [
                   {
-                    'include': '#period_or_optional_method'
+                    'match': '\\.'
+                    'name': 'meta.delimiter.method.period.js'
+                  }
+                  {
+                    'match': '\\?\\.'
+                    'name': 'meta.delimiter.method.optional.js'
                   }
                 ]
               '2':
@@ -576,7 +581,12 @@
               '1':
                 'patterns': [
                   {
-                    'include': '#period_or_optional_method'
+                    'match': '\\.'
+                    'name': 'meta.delimiter.method.period.js'
+                  }
+                  {
+                    'match': '\\?\\.'
+                    'name': 'meta.delimiter.method.optional.js'
                   }
                 ]
               '2':
@@ -741,7 +751,12 @@
         'name': 'entity.name.type.instance.js'
         'patterns': [
           {
-            'include': '#period_or_optional_property'
+            'match': '\\.'
+            'name': 'meta.delimiter.property.period.js'
+          }
+          {
+            'match': '\\?\\.'
+            'name': 'meta.delimiter.property.optional.js'
           }
         ]
   }
@@ -770,7 +785,12 @@
           '1':
             'patterns': [
               {
-                'include': '#period_or_optional_method'
+                'match': '\\.'
+                'name': 'meta.delimiter.method.period.js'
+              }
+              {
+                'match': '\\?\\.'
+                'name': 'meta.delimiter.method.optional.js'
               }
             ]
           '2':
@@ -813,7 +833,12 @@
           '1':
             'patterns': [
               {
-                'include': '#period_or_optional_method'
+                'match': '\\.'
+                'name': 'meta.delimiter.method.period.js'
+              }
+              {
+                'match': '\\?\\.'
+                'name': 'meta.delimiter.method.optional.js'
               }
             ]
           '2':
@@ -833,7 +858,12 @@
           '1':
             'patterns': [
               {
-                'include': '#period_or_optional_property'
+                'match': '\\.'
+                'name': 'meta.delimiter.property.period.js'
+              }
+              {
+                'match': '\\?\\.'
+                'name': 'meta.delimiter.property.optional.js'
               }
             ]
           '2':
@@ -863,7 +893,12 @@
           '1':
             'patterns': [
               {
-                'include': '#period_or_optional_method'
+                'match': '\\.'
+                'name': 'meta.delimiter.method.period.js'
+              }
+              {
+                'match': '\\?\\.'
+                'name': 'meta.delimiter.method.optional.js'
               }
             ]
           '2':
@@ -1019,7 +1054,12 @@
       '1':
         'patterns': [
           {
-            'include': '#period_or_optional_property'
+            'match': '\\.'
+            'name': 'meta.delimiter.property.period.js'
+          }
+          {
+            'match': '\\?\\.'
+            'name': 'meta.delimiter.property.optional.js'
           }
         ]
       '2':
@@ -1139,7 +1179,12 @@
       '1':
         'patterns': [
           {
-            'include': '#period_or_optional_property'
+            'match': '\\.'
+            'name': 'meta.delimiter.property.period.js'
+          }
+          {
+            'match': '\\?\\.'
+            'name': 'meta.delimiter.property.optional.js'
           }
         ]
       '2':
@@ -1681,7 +1726,12 @@
           '1':
             'patterns': [
               {
-                'include': '#period_or_optional_method'
+                'match': '\\.'
+                'name': 'meta.delimiter.method.period.js'
+              }
+              {
+                'match': '\\?\\.'
+                'name': 'meta.delimiter.method.optional.js'
               }
             ]
           '2':
@@ -1883,7 +1933,12 @@
           '1':
             'patterns': [
               {
-                'include': '#period_or_optional_property'
+                'match': '\\.'
+                'name': 'meta.delimiter.property.period.js'
+              }
+              {
+                'match': '\\?\\.'
+                'name': 'meta.delimiter.property.optional.js'
               }
             ]
           '2':
@@ -1896,7 +1951,12 @@
           '1':
             'patterns': [
               {
-                'include': '#period_or_optional_property'
+                'match': '\\.'
+                'name': 'meta.delimiter.property.period.js'
+              }
+              {
+                'match': '\\?\\.'
+                'name': 'meta.delimiter.property.optional.js'
               }
             ]
           '2':
@@ -1909,7 +1969,12 @@
           '1':
             'patterns': [
               {
-                'include': '#period_or_optional_property'
+                'match': '\\.'
+                'name': 'meta.delimiter.property.period.js'
+              }
+              {
+                'match': '\\?\\.'
+                'name': 'meta.delimiter.property.optional.js'
               }
             ]
           '2':
@@ -1922,7 +1987,12 @@
           '1':
             'patterns': [
               {
-                'include': '#period_or_optional_property'
+                'match': '\\.'
+                'name': 'meta.delimiter.property.period.js'
+              }
+              {
+                'match': '\\?\\.'
+                'name': 'meta.delimiter.property.optional.js'
               }
             ]
           '2':
@@ -1935,7 +2005,12 @@
           '1':
             'patterns': [
               {
-                'include': '#period_or_optional_property'
+                'match': '\\.'
+                'name': 'meta.delimiter.property.period.js'
+              }
+              {
+                'match': '\\?\\.'
+                'name': 'meta.delimiter.property.optional.js'
               }
             ]
           '2':
@@ -2100,27 +2175,5 @@
             'patterns': [
               'include': '$self'
             ]
-      }
-    ]
-  'period_or_optional_property':
-    'patterns': [
-      {
-        'match': '\\.'
-        'name': 'meta.delimiter.property.period.js'
-      }
-      {
-        'match': '\\?\\.'
-        'name': 'meta.delimiter.property.optional.js'
-      }
-    ]
-  'period_or_optional_method':
-    'patterns': [
-      {
-        'match': '\\.'
-        'name': 'meta.delimiter.method.period.js'
-      }
-      {
-        'match': '\\?\\.'
-        'name': 'meta.delimiter.method.optional.js'
       }
     ]
