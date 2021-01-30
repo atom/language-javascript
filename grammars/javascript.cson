@@ -2114,22 +2114,14 @@
       {
         'match': '(\\.)'
         'captures':
-          '1':
-            'patterns': [
-              {
-                'meta.delimiter.property.period.js'
-              }
-            ]
+          '0':
+            'name': 'meta.delimiter.property.period.js'
       }
       {
         'match': '(\\?\\.)'
         'captures':
-          '1':
-            'patterns': [
-              {
-                'meta.delimiter.property.optional.js'
-              }
-            ]
+          '0':
+            'name': 'meta.delimiter.property.optional.js'
       }
     ]
   'period_or_optional_method':
@@ -2137,21 +2129,13 @@
       {
         'match': '(\\.)'
         'captures':
-          '1':
-            'patterns': [
-              {
-                'meta.delimiter.method.period.js'
-              }
-            ]
+          '0':
+            'name': 'meta.delimiter.method.period.js'
       }
       {
         'match': '(\\?\\.)'
         'captures':
-          '1':
-            'patterns': [
-              {
-                'meta.delimiter.method.optional.js'
-              }
-            ]
+          '0':
+            'name': 'meta.delimiter.method.optional.js'
       }
     ]
