@@ -1265,8 +1265,19 @@
     ]
   }
   {
-    'match': '\\[|\\]'
-    'name': 'meta.brace.square.js'
+    'begin': '\\['
+    'beginCaptures':
+      '0':
+        'name': 'meta.brace.square.js'
+    'end': '\\]'
+    'endCaptures':
+      '0':
+        'name': 'meta.brace.square.js'
+    'patterns': [
+      {
+        'include': '$self'
+      }
+    ]
   }
   {
     'match': '\\A#!.*$'
@@ -1875,7 +1886,25 @@
     ]
   'properties':
     'patterns': [
-      # object.prop means (object.prop OR object?.prop) in this square bracket
+      # object.prop includes object?.prop
+      {
+        # Specifically ?.[], for example divArray?.[8]
+        'begin': '(\\?\\.)(\\[)'
+        'beginCaptures':
+          '1':
+            'name': 'meta.delimiter.property.optional.js'
+          '2':
+            'name': 'meta.brace.square.js'
+        'end': '\\]'
+        'endCaptures':
+          '0':
+            'name': 'meta.brace.square.js'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
       {
         # PROP1 in obj.PROP1.prop2, func().PROP1.prop2
         'match': '(\\?\\.|\\.)\\s*([A-Z][A-Z0-9_$]*\\b\\$*)(?=\\s*(\\?\\.|\\.)\\s*[a-zA-Z_$]\\w*)'
