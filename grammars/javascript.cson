@@ -1233,7 +1233,7 @@
   }
   {
     'match': '\\?\\.'
-    'name': 'meta.delimiter.method.optional.js
+    'name': 'meta.delimiter.method.optional.js'
   }
   {
     # Allows the special return snippet to fire.
