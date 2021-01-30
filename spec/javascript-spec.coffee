@@ -1806,7 +1806,7 @@ describe "JavaScript grammar", ->
 
       {tokens} = grammar.tokenizeLine('a.b?.()')
       expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'variable.other.object.js']
-      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.property.period.js']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.js', 'meta.delimiter.method.period.js']
       expect(tokens[2]).toEqual value: 'b', scopes: ['source.js', 'meta.method-call.js', 'entity.name.function.js']
       expect(tokens[3]).toEqual value: '?.', scopes: ['source.js', 'meta.method-call.js', 'meta.delimiter.method.optional.js']
 
