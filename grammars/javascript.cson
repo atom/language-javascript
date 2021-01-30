@@ -303,7 +303,7 @@
         'name': 'meta.function.js'
         'patterns': [
           {
-            'match': '(\\?\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)\\s*'
+            'match': '(\\?\\.|\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)\\s*'
             'captures':
               '1':
                 'patterns': [
@@ -571,7 +571,7 @@
         'name': 'meta.function.arrow.js'
         'patterns': [
           {
-            'match': '\\G(\\?\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)'
+            'match': '\\G(\\?\\.|\\.)?([a-zA-Z_$][\\w$]*)\\s*(=)'
             'captures':
               '1':
                 'patterns': [
@@ -739,11 +739,11 @@
         'name': 'keyword.operator.new.js'
       '2':
         'name': 'entity.name.type.instance.js'
-    'patterns': [
-      {
-        'include': '#period_or_optional_property'
-      }
-    ]
+        'patterns': [
+          {
+            'include': '#period_or_optional_property'
+          }
+        ]
   }
   {
     # console
