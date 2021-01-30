@@ -372,7 +372,7 @@ describe "JSDoc grammar", ->
         expect(tokens[10]).toEqual value: 'variable', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc']
         expect(tokens[11]).toEqual value: '=', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'keyword.operator.assignment.jsdoc']
         expect(tokens[12]).toEqual value: 'default', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'variable.other.object.js']
-        expect(tokens[13]).toEqual value: '.', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'meta.delimiter.property.js']
+        expect(tokens[13]).toEqual value: '.', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'meta.delimiter.property.period.js']
         expect(tokens[14]).toEqual value: 'value', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'source.embedded.js', 'support.variable.property.dom.js']
         expect(tokens[15]).toEqual value: ']', scopes: ['source.js', 'comment.block.documentation.js', 'variable.other.jsdoc', 'punctuation.definition.optional-value.end.bracket.square.jsdoc']
         expect(tokens[16]).toEqual value: ' this is the description ', scopes: ['source.js', 'comment.block.documentation.js']
