@@ -1364,7 +1364,7 @@
         'name': 'keyword.operator.increment.js'
       }
       {
-        'match': '%|\\*|/|-|\\+|\\*\\*'
+        'match': '%|\\*(?!\\*)|/|-|\\+|\\*\\*'
         'name': 'keyword.operator.js'
       }
     ]
