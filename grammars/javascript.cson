@@ -1733,7 +1733,7 @@
       }
       {
         # [?].methodCall?.(arg1, "arg2", [...])
-        'begin': '(\\?\\.|\\.)\\s*([\\w$]+)\\s*(\\?\\.)(?=\\()'
+        'begin': '(\\?\\.|\\.)\\s*([\\w$]+)\\s*(\\?\\.)\\s*(?=\\()'
         'beginCaptures':
           '1':
             'patterns': [
@@ -1748,6 +1748,21 @@
               }
             ]
           '3':
+            'name': 'meta.delimiter.method.optional.js'
+        'end': '(?<=\\))'
+        'name': 'meta.method-call.js'
+        'patterns': [
+          {
+            'include': '#arguments'
+          }
+        ]
+      }
+      {
+        # [array]?.(arg1, "arg2", [...])
+        # The array itself is not in the method-call scope, maybe later
+        'begin': '(?<=\\])\\s*(\\?\\.)\\s*(?=\\()'
+        'beginCaptures':
+          '1':
             'name': 'meta.delimiter.method.optional.js'
         'end': '(?<=\\))'
         'name': 'meta.method-call.js'
@@ -1951,7 +1966,7 @@
       # object.prop includes object?.prop
       {
         # Specifically ?.[], for example divArray?.[8]
-        'begin': '(\\?\\.)(\\[)'
+        'begin': '(\\?\\.)\\s*(\\[)'
         'beginCaptures':
           '1':
             'name': 'meta.delimiter.property.optional.js'
