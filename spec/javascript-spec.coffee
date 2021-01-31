@@ -1823,8 +1823,8 @@ describe "JavaScript grammar", ->
 
       {tokens} = grammar.tokenizeLine('a()?.[1]')
       expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'meta.function-call.js', 'entity.name.function.js']
-      expect(tokens[1]).toEqual value: '?.', scopes: ['source.js', 'meta.delimiter.property.optional.js']
-      expect(tokens[2]).toEqual value: '[', scopes: ['source.js', 'meta.brace.square.js']
+      expect(tokens[3]).toEqual value: '?.', scopes: ['source.js', 'meta.delimiter.property.optional.js']
+      expect(tokens[4]).toEqual value: '[', scopes: ['source.js', 'meta.brace.square.js']
 
       {tokens} = grammar.tokenizeLine('a[4]?.()')
       expect(tokens[0]).toEqual value: 'a', scopes: ['source.js', 'variable.other.object.js']
