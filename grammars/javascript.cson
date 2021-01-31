@@ -1922,14 +1922,27 @@
     ]
   'objects':
     'patterns': [
+      # "Obj." is already enough to prove objectness,
+      # however "Obj.[8]" is impossible, and
+      # "Obj?.()" is a function
       {
         # OBJ in OBJ.prop, OBJ.methodCall()
-        'match': '[A-Z][A-Z0-9_$]*(?=\\s*(\\?\\.|\\.)\\s*[a-zA-Z_$]\\w*)'
+        'match': '[A-Z][A-Z0-9_$]*(?=\\s*\\??\\.\\s*[a-zA-Z_$]\\w*)'
         'name': 'constant.other.object.js'
       }
       {
         # obj in obj.prop, obj.methodCall()
-        'match': '[a-zA-Z_$][\\w$]*(?=\\s*(\\?\\.|\\.)\\s*[a-zA-Z_$]\\w*)'
+        'match': '[a-zA-Z_$][\\w$]*(?=\\s*\\??\\.\\s*[a-zA-Z_$]\\w*)'
+        'name': 'variable.other.object.js'
+      }
+      {
+        # OBJ in OBJ[8], OBJ?.[8]
+        'match': '[A-Z][A-Z0-9_$]*(?=\\s*(\\?\\.)?\\s*\\[)'
+        'name': 'constant.other.object.js'
+      }
+      {
+        # obj in obj[8], obj?.[8]
+        'match': '[a-zA-Z_$][\\w$]*(?=\\s*(\\?\\.)?\\s*\\[)'
         'name': 'variable.other.object.js'
       }
     ]
