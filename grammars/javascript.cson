@@ -731,7 +731,6 @@
     'name': 'meta.class.js'
   }
   {
-    # TODO: optional chaining is possible here
     'match': '(new)\\s+([\\w$]+[\\w.$]*)'
     'name': 'meta.class.instance.constructor.js'
     'captures':
