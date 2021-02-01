@@ -209,8 +209,6 @@ scopes:
   '"<="': 'keyword.operator.js'
   '">"': 'keyword.operator.js'
   '"<"': 'keyword.operator.js'
-  '":"': 'keyword.operator.js'
-  '"?"': 'keyword.operator.js'
   '"??"': 'keyword.operator.js'
   '"&&"': 'keyword.operator.js'
   '"||"': 'keyword.operator.js'
@@ -223,6 +221,8 @@ scopes:
   '"|"': 'keyword.operator.js'
   '"++"': 'keyword.operator.js'
   '"--"': 'keyword.operator.js'
+  '":"': 'keyword.operator.js'
+  '"?"': {match: /(?<!\?)\?(?!\?|\.)/, scopes: 'keyword.operator.js'}
   '"..."': 'keyword.operator.spread.js'
 
   '"in"': 'keyword.operator.in'
