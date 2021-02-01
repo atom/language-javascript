@@ -178,7 +178,6 @@ scopes:
   '"function"': 'storage.type.function'
   '"=>"': 'storage.type.function.arrow'
 
-  
   '"="': 'keyword.operator.js'
   '"+="': 'keyword.operator.js'
   '"-="': 'keyword.operator.js'
@@ -196,12 +195,12 @@ scopes:
   '"||="': 'keyword.operator.js'
   '"??="': 'keyword.operator.js'
   '"!"': 'keyword.operator.js'
-  '"**"': 'keyword.operator.js'
   '"+"': 'keyword.operator.js'
   '"-"': 'keyword.operator.js'
   '"*"': 'keyword.operator.js'
   '"/"': 'keyword.operator.js'
   '"%"': 'keyword.operator.js'
+  '"**"': 'keyword.operator.js'
   '"=="': 'keyword.operator.js'
   '"==="': 'keyword.operator.js'
   '"!="': 'keyword.operator.js'
@@ -211,7 +210,7 @@ scopes:
   '">"': 'keyword.operator.js'
   '"<"': 'keyword.operator.js'
   '":"': 'keyword.operator.js'
-  '"?"': {match: /(?<!\?)\?(?!\?|\.)/, scopes: 'keyword.operator.js'}
+  '"?"': 'keyword.operator.js'
   '"??"': 'keyword.operator.js'
   '"&&"': 'keyword.operator.js'
   '"||"': 'keyword.operator.js'
@@ -268,3 +267,4 @@ scopes:
   'jsx_opening_element > identifier': 'entity.name.tag'
   'jsx_closing_element > identifier': 'entity.name.tag'
   'jsx_self_closing_element > identifier': 'entity.name.tag'
+  
