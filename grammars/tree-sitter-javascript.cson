@@ -178,8 +178,7 @@ scopes:
   '"function"': 'storage.type.function'
   '"=>"': 'storage.type.function.arrow'
 
-  '"?."': 'meta.delimiter.optional'
-
+  
   '"="': 'keyword.operator.js'
   '"+="': 'keyword.operator.js'
   '"-="': 'keyword.operator.js'
@@ -212,8 +211,8 @@ scopes:
   '">"': 'keyword.operator.js'
   '"<"': 'keyword.operator.js'
   '":"': 'keyword.operator.js'
+  '"?"': {match: /(?<!\?)\?(?!\?|\.)/, scopes: 'keyword.operator.js'}
   '"??"': 'keyword.operator.js'
-  '"?"': 'keyword.operator.js'
   '"&&"': 'keyword.operator.js'
   '"||"': 'keyword.operator.js'
   '"&"': 'keyword.operator.js'
@@ -236,6 +235,7 @@ scopes:
   '"get"': 'keyword.operator.setter'
   '"set"': 'keyword.operator.setter'
 
+  '"?."': 'meta.delimiter.optional'
   '"."': 'meta.delimiter.period'
   '","': 'meta.delimiter.comma'
 
