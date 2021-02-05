@@ -1,6 +1,6 @@
 # Note: Because of the optional chaining operator (?.), "object.property" in the comments usually means ("object.property" or "object?.property")
 # Even though sometimes it doesn't seem like using the chaining operator would make any sense, it's still supported. example: Math?.PI
-# Negative lookbehinds for "." Shouldddd cover "?."
+# Negative look-behinds for "." Should cover "?."
 'scopeName': 'source.js'
 'fileTypes': [
   'js'
