@@ -114,11 +114,11 @@ scopes:
 
   'identifier': [
     {
-      match: '^(global|module|exports|__filename|__dirname)$',
+      match: '^(global|globalThis|module|exports|__filename|__dirname)$',
       scopes: 'support.variable'
     },
     {
-      match: '^(window|event|document|performance|screen|navigator|console)$'
+      match: '^(window|self|frames|event|document|performance|screen|navigator|console)$'
       scopes: 'support.variable.dom'
     },
     {
