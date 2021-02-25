@@ -1366,6 +1366,16 @@
         'match': '<<=|>>=|>>>='
         'name': 'keyword.operator.assignment.compound.bitwise.shift.js'
       }
+      # Bitwise shift to match >> instead of >
+      # Then comparison to match != instead of !
+      {
+        'match': '<<|>>>|>>'
+        'name': 'keyword.operator.bitwise.shift.js'
+      }
+      {
+        'match': '!==|!=|<=|>=|===|==|<|>'
+        'name': 'keyword.operator.comparison.js'
+      }
       {
         # One of: && !! ! || ??
         'match': '&&|!!|!|\\|\\||\\?\\?'
@@ -1374,14 +1384,6 @@
       {
         'match': '&|\\||\\^|~'
         'name': 'keyword.operator.bitwise.js'
-      }
-      {
-        'match': '<<|>>>|>>'
-        'name': 'keyword.operator.bitwise.shift.js'
-      }
-      {
-        'match': '!==|!=|<=|>=|===|==|<|>'
-        'name': 'keyword.operator.comparison.js'
       }
       {
         'match': '=|:'
@@ -1620,7 +1622,7 @@
         ]
       }
       {
-        # Or starting with coptional chaining
+        # Or starting with optional chaining
         'begin': '(\\?\\.)(\\()'
         'beginCaptures':
           '1':
