@@ -987,6 +987,10 @@
     'name': 'keyword.operator.spread.js'
   }
   {
+    'match': '\\.\\.\\.'
+    'name': 'keyword.operator.rest.js'
+  }
+  {
     'match': '(?<!\\.)\\b(true|false)(?!\\s*:)\\b'
     'name': 'constant.language.boolean.$1.js'
   }
