@@ -641,11 +641,19 @@ describe "JavaScript grammar", ->
 
         describe "bitwise", ->
           it "tokenizes them", ->
-            operators = ["<<=", ">>=", ">>>=", "&=", "^=", "|="]
+            operators = ["&=", "^=", "|="]
             for operator in operators
               {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
               expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
               expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.assignment.compound.bitwise.js']
+              expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
+
+          it "tokenizes bitwise shift", ->
+            operators = ["<<=", ">>=", ">>>="]
+            for operator in operators
+              {tokens} = grammar.tokenizeLine('a ' + operator + ' b')
+              expect(tokens[0]).toEqual value: 'a ', scopes: ['source.js']
+              expect(tokens[1]).toEqual value: operator, scopes: ['source.js', 'keyword.operator.assignment.compound.bitwise.shift.js']
               expect(tokens[2]).toEqual value: ' b', scopes: ['source.js']
 
   describe "constants", ->
@@ -1613,11 +1621,11 @@ describe "JavaScript grammar", ->
 
     it "tokenizes the rest parameter", ->
       {tokens} = grammar.tokenizeLine('(...args) => args[0]')
-      expect(tokens[1]).toEqual value: '...', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'keyword.operator.spread.js']
+      expect(tokens[1]).toEqual value: '...', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'keyword.operator.rest.js']
       expect(tokens[2]).toEqual value: 'args', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'variable.parameter.rest.function.js']
 
       {tokens} = grammar.tokenizeLine('(c, ...val) => c + val')
-      expect(tokens[4]).toEqual value: '...', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'keyword.operator.spread.js']
+      expect(tokens[4]).toEqual value: '...', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'keyword.operator.rest.js']
       expect(tokens[5]).toEqual value: 'val', scopes: ['source.js', 'meta.function.arrow.js', 'meta.parameters.js', 'variable.parameter.rest.function.js']
 
     it "tokenizes illegal parameters", ->
