@@ -986,10 +986,10 @@
     'match': '\\.\\.\\.'
     'name': 'keyword.operator.spread.js'
   }
-  # {
-  #   'match': '\\.\\.\\.'
-  #   'name': 'keyword.operator.rest.js'
-  # }
+  {
+    'match': '\\.\\.\\.'
+    'name': 'keyword.operator.rest.js'
+  }
   {
     'match': '(?<!\\.)\\b(true|false)(?!\\s*:)\\b'
     'name': 'constant.language.boolean.$1.js'
@@ -1363,7 +1363,7 @@
         'name': 'keyword.operator.assignment.compound.bitwise.js'
       }
       {
-        'match': '<<=|>>=|>>>=|'
+        'match': '<<=|>>=|>>>='
         'name': 'keyword.operator.assignment.compound.bitwise.shift.js'
       }
       {
@@ -1606,7 +1606,7 @@
             'match': '(\\.\\.\\.)([a-zA-Z_$][\\w$]*)'
             'captures':
               '1':
-                'name': 'keyword.operator.spread.js' # Todo: change to keyword.operator.rest.js
+                'name': 'keyword.operator.rest.js'
               '2':
                 'name': 'variable.parameter.rest.function.js'
           }
@@ -1637,7 +1637,7 @@
             'match': '(\\.\\.\\.)([a-zA-Z_$][\\w$]*)'
             'captures':
               '1':
-                'name': 'keyword.operator.spread.js' # Todo: change to keyword.operator.rest.js
+                'name': 'keyword.operator.rest.js'
               '2':
                 'name': 'variable.parameter.rest.function.js'
           }
