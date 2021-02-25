@@ -1350,7 +1350,8 @@
   'operators':
     'patterns': [
       {
-        'match': '%=|\\+=|-=|\\*=|(?<!\\()/=|\\*\\*='
+        # %= **= *= /= += -=
+        'match': '%=|\\*\\*=|\\*=|(?<!\\()/=|\\+=|-='
         'name': 'keyword.operator.assignment.compound.js'
       }
       {
@@ -1398,7 +1399,7 @@
         'name': 'keyword.operator.increment.js'
       }
       {
-        'match': '%|\\*(?!\\*)|/|-|\\+|\\*\\*'
+        'match': '%|\\*\\*|\\*|/|-|\\+'
         'name': 'keyword.operator.js'
       }
     ]
