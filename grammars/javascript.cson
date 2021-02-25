@@ -1355,16 +1355,12 @@
         'name': 'keyword.operator.assignment.compound.logical.js'
       }
       {
-        'match': '&=|\\^=|<<=|>>=|>>>=|\\|='
+        'match': '&=|\\^=|\\|='
         'name': 'keyword.operator.assignment.compound.bitwise.js'
       }
       {
-        'match': '<<|>>>|>>'
-        'name': 'keyword.operator.bitwise.shift.js'
-      }
-      {
-        'match': '!==|!=|<=|>=|===|==|<|>'
-        'name': 'keyword.operator.comparison.js'
+        'match': '<<=|>>=|>>>=|'
+        'name': 'keyword.operator.assignment.compound.bitwise.shift.js'
       }
       {
         # One of: && !! ! || ??
@@ -1374,6 +1370,14 @@
       {
         'match': '&|\\||\\^|~'
         'name': 'keyword.operator.bitwise.js'
+      }
+      {
+        'match': '<<|>>>|>>'
+        'name': 'keyword.operator.bitwise.shift.js'
+      }
+      {
+        'match': '!==|!=|<=|>=|===|==|<|>'
+        'name': 'keyword.operator.comparison.js'
       }
       {
         'match': '=|:'
@@ -1598,7 +1602,7 @@
             'match': '(\\.\\.\\.)([a-zA-Z_$][\\w$]*)'
             'captures':
               '1':
-                'name': 'keyword.operator.spread.js'
+                'name': 'keyword.operator.rest.js'
               '2':
                 'name': 'variable.parameter.rest.function.js'
           }
@@ -1629,7 +1633,7 @@
             'match': '(\\.\\.\\.)([a-zA-Z_$][\\w$]*)'
             'captures':
               '1':
-                'name': 'keyword.operator.spread.js'
+                'name': 'keyword.operator.rest.js'
               '2':
                 'name': 'variable.parameter.rest.function.js'
           }
