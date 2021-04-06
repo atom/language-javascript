@@ -445,6 +445,10 @@
           }
         ]
       }
+      {
+        'match': '^\\s*\\*(?!/)'
+        'name': 'punctuation.section.continuation.comment.js'
+      }
     ]
   'inline-tags':
     'patterns': [
@@ -496,11 +500,6 @@
   # {type}
   'type':
     'patterns': [
-      {
-        # {unclosed
-        'match': '\\G{(?:[^}*]|\\*[^/}])+$'
-        'name': 'invalid.illegal.type.jsdoc'
-      }
       {
         'begin': '\\G({)'
         'beginCaptures':
