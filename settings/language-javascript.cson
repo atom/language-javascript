@@ -23,7 +23,6 @@
         jsx_opening_element: true
         jsx_expression: true
         switch_body: true
-        comment: true
       indentExceptFirst:
         member_expression: true
         assignment_expression: true
@@ -36,6 +35,7 @@
         if_statement: true
         while_statement: true
       types:
-        indent: {}
+        indent:
+          description: true
         outdent:
           else: true
