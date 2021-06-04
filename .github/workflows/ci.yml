@@ -16,7 +16,7 @@ jobs:
           - windows-latest
         atom_channel:
           - stable
-          - nightly
+          - beta
     steps:
       - uses: actions/checkout@v2
       - name: Cache
