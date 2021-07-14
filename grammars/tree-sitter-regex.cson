@@ -6,12 +6,32 @@ parser: 'tree-sitter-regex'
 injectionRegex: 'regex'
 
 scopes:
-  'pattern': 'string.quoted',
-  'group_name': 'variable.other.object.property'
-  'identity_escape, control_letter_escape, control_escape, class_escape': 'constant.character.character-class.regexp'
-  'start_assertion, end_assertion, boundary_assertion, non_boundary_assertion': 'constant.character.character-class.regexp'
-  'count_quantifier, one_or_more, zero_or_more, optional': 'storage.modifier'
-  'character_class': 'string.regexp'
-  '"(", "(?", "(?:", "(?<"': 'punctuation.definition.parameters.begin.bracket.round'
-  '">", ")"': 'punctuation.definition.parameters.end.bracket.round'
-  '"=", "<=", "!", "<!"': 'punctuation.definition.parameters.begin.bracket.round'
+  'start_assertion, end_assertion': 'string.regexp.part.language.control.anchor.symbolic'
+  'boundary_assertion, non_boundary_assertion': 'string.regexp.part.language.control.anchor.boundary'
+  'backreference_escape': 'string.regexp.part.language.control.reference'
+
+  'count_quantifier, one_or_more, zero_or_more, optional, lazy': 'string.regexp.part.language.operator.quantifier.symbolic'
+
+  'group_name': 'string.regexp.part.variable'
+
+  'anonymous_capturing_group, named_capturing_group, non_capturing_group': 'string.regexp.part.group'
+  'lookahead_assertion': 'string.regexp.part.lookaround'
+  'character_class': 'string.regexp.part.set'
+
+  'identity_escape': 'constant.character.escape'
+  'control_escape, control_letter_escape': 'constant.character.escape.code'
+  'character_class_escape': 'constant.character.escape.code.shorthand'
+  'any_character': 'constant.character.code.shorthand.wildcard'
+  'class_range': 'constant.character.code.range'
+
+  '"[", "]", character_class > "^"': 'punctuation.delimiter.string.regexp.part.set'
+  '"(", "(?", "(?:", "(?<"': 'punctuation.delimiter.string.regexp.part.group'
+  '">", ")"': 'punctuation.delimiter.string.regexp.part.group'
+  '"<=", "!", "<!"': 'punctuation.delimiter.string.regexp.part.group'
+  'lookahead_assertion > "="': 'punctuation.delimiter.string.regexp.part.group'
+  '"|"': 'punctuation.delimiter.string.regexp.part.disjunction'
+
+  'character_class_escape > "{"': 'punctuation.definition.constant.character.escape.code'
+  'character_class_escape > "}"': 'punctuation.definition.constant.character.escape.code'
+  'unicode_property_value_expression > "="': 'punctuation.definition.constant.character.escape.code'
+  'class_range > "-"': 'punctuation.definition.constant.character.code.range'

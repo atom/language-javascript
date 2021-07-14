@@ -58,205 +58,391 @@ comments:
 scopes:
   'program': 'source.js'
 
-  'property_identifier': [
+  # Keyword
+  '"if"': 'keyword.control.condition'
+  '"else"': 'keyword.control.condition'
+  '"switch"': 'keyword.control.condition'
+  '"case"': 'keyword.control.condition'
+  'switch_statement > "default"': 'keyword.control.condition'
+  'export_statement > "default"': 'keyword.control.package'
+  '"import"': 'keyword.control.package'
+  '"export"': 'keyword.control.package'
+  '"from"': 'keyword.control.package'
+  '"do"': 'keyword.control.loop'
+  '"while"': 'keyword.control.loop'
+  '"for"': 'keyword.control.loop'
+  '"break"': 'keyword.control.jump'
+  '"continue"': 'keyword.control.jump'
+  '"yield"': 'keyword.control.jump'
+  '"return"': 'keyword.control.jump'
+  '"await"': 'keyword.control.jump'
+  '"debugger"': 'keyword.control.jump'
+  '"throw"': 'keyword.control.jump'
+  '"try"': 'keyword.control.exception'
+  '"catch"': 'keyword.control.exception'
+  '"finally"': 'keyword.control.exception'
+  '"as"': 'keyword.control.evaluate'
+
+  '"+"': 'keyword.operator.arithmetic.symbolic'
+  '"-"': 'keyword.operator.arithmetic.symbolic'
+  'binary_expression > "*"': 'keyword.operator.arithmetic.symbolic'
+  'binary_expression > "/"': 'keyword.operator.arithmetic.symbolic'
+  '"%"': 'keyword.operator.arithmetic.symbolic'
+  '"++"': 'keyword.operator.arithmetic.symbolic'
+  '"--"': 'keyword.operator.arithmetic.symbolic'
+
+  '"&"': 'keyword.operator.bitwise.symbolic'
+  '"|"': 'keyword.operator.bitwise.symbolic'
+  '"^"': 'keyword.operator.bitwise.symbolic'
+  '"~"': 'keyword.operator.bitwise.symbolic'
+  '"<<"': 'keyword.operator.bitwise.symbolic'
+  '">>"': 'keyword.operator.bitwise.symbolic'
+  '">>>"': 'keyword.operator.bitwise.symbolic'
+
+  '"="': 'keyword.operator.assignment.symbolic'
+  '"+="': 'keyword.operator.assignment.compound.symbolic'
+  '"-="': 'keyword.operator.assignment.compound.symbolic'
+  '"*="': 'keyword.operator.assignment.compound.symbolic'
+  '"/="': 'keyword.operator.assignment.compound.symbolic'
+  '"%="': 'keyword.operator.assignment.compound.symbolic'
+  '"&="': 'keyword.operator.assignment.compound.symbolic'
+  '"|="': 'keyword.operator.assignment.compound.symbolic'
+  '"^="': 'keyword.operator.assignment.compound.symbolic'
+  '"<<="': 'keyword.operator.assignment.compound.symbolic'
+  '">>="': 'keyword.operator.assignment.compound.symbolic'
+  '">>>="': 'keyword.operator.assignment.compound.symbolic'
+
+  '"=="': 'keyword.operator.comparison.symbolic'
+  '"==="': 'keyword.operator.comparison.symbolic'
+  '"!="': 'keyword.operator.comparison.symbolic'
+  '"!=="': 'keyword.operator.comparison.symbolic'
+  '"<"': 'keyword.operator.comparison.symbolic'
+  '">"': 'keyword.operator.comparison.symbolic'
+  '"<="': 'keyword.operator.comparison.symbolic'
+  '">="': 'keyword.operator.comparison.symbolic'
+
+  '"in"': 'keyword.operator.comparison'
+  '"of"': 'keyword.operator.comparison'
+  '"instanceof"': 'keyword.operator.comparison'
+  '"void"': 'keyword.operator.comparison'
+
+  '"new"': 'keyword.operator.instance'
+  '"delete"': 'keyword.operator.instance'
+  '"typeof"': 'keyword.operator.instance'
+
+  '"!"': 'keyword.operator.logical.symbolic'
+  '"&&"': 'keyword.operator.logical.symbolic'
+  '"||"': 'keyword.operator.logical.symbolic'
+
+  '"?"': 'keyword.operator.ternary.symbolic'
+  'ternary_expression > ":"': 'keyword.operator.ternary.symbolic'
+
+  'this': 'keyword.variable.this'
+  'super': 'keyword.variable.super'
+
+  '"get"': 'keyword.storage.modifier.getter'
+  '"set"': 'keyword.storage.modifier.setter'
+  '"extends"': 'keyword.storage.modifier'
+  '"static"': 'keyword.storage.modifier'
+  '"async"': 'keyword.storage.modifier'
+
+  '"var"': 'keyword.storage.declaration'
+  '"let"': 'keyword.storage.declaration'
+  '"const"': 'keyword.storage.declaration'
+  '"function"': 'keyword.storage.declaration'
+  '"class"': 'keyword.storage.declaration'
+
+  # Entity
+  '''
+  class > identifier,
+  class_declaration > identifier
+  ''': 'entity.type.class'
+
+  'class_heritage > identifier': 'entity.type.class.inherited'
+
+  '''
+  new_expression > identifier,
+  new_expression > member_expression > property_identifier
+  ''': 'entity.type.class.constructor.call'
+
+  'member_expression > new_expression > member_expression > property_identifier': [
     {
-      match: '^[\$A-Z_]+$',
-      scopes: 'constant.other.property.js'
-    }
-
-    'variable.other.object.property'
-  ]
-
-  'member_expression > property_identifier': 'variable.other.object.property.unquoted'
-
-  'formal_parameters > identifier': 'variable.parameter.function'
-  'formal_parameters > rest_parameter > identifier': 'variable.parameter.rest.function'
-
-  'shorthand_property_identifier': [
+      match: '^[0-9_$]*[A-Z][A-Z0-9_$]*$',
+      scopes: 'entity.variable.member.immutable' # new _.VARIABLE._()
+    },
     {
-      match: '^[\$A-Z_]{2,}$',
-      scopes: 'constant.other'
-    }
+      match: '^[0-9_$]*[A-Z]',
+      scopes: 'entity.type.class' # new _.Type._()
+    },
+    'entity.variable.member' # new _.variable._()
   ]
-
-  '
-    class > identifier,
-    new_expression > identifier
-  ': 'meta.class'
-
-  '
-    jsx_opening_element > identifier,
-    jsx_closing_element > identifier,
-    jsx_self_closing_element > identifier
-  ': [
-    {
-      match: '^[A-Z]',
-      scopes: 'meta.class.component.jsx'
-    }
-  ]
-
-  'call_expression > identifier': {match: '^[A-Z]', scopes: 'meta.class'}
-  'arrow_function > identifier:nth-child(0)': 'variable.parameter.function'
-
-  'function > identifier': 'entity.name.function'
-  'function_declaration > identifier': 'entity.name.function'
-  'generator_function > identifier': 'entity.name.function'
 
   'call_expression > identifier': [
-    {match: '^require$', scopes: 'support.function'},
-    'entity.name.function'
+    {
+      exact: 'require',
+      scopes: 'entity.function.support.call'
+    },
+    {
+      match: '^[0-9_$]*[A-Z]',
+      scopes: 'entity.type.class.constructor.call' # Type()
+    },
+    'entity.function.call' # function()
   ]
 
-  'call_expression > super': 'support.function.super'
+  '''
+  call_expression > member_expression > property_identifier
+  ''': [
+    {
+      match: '^[0-9_$]*[A-Z]',
+      scopes: 'entity.type.class.constructor.call' # _.Type()
+    },
+    'entity.function.method.call' # _.function()
+  ]
 
-  'method_definition > property_identifier': 'entity.name.function'
-  'call_expression > member_expression > property_identifier': 'entity.name.function'
+  '''
+  function > identifier,
+  decorator > identifier,
+  decorator > member_expression > property_identifier,
+  function_declaration > identifier
+  ''': [
+    {
+      match: '^[0-9_$]*[A-Z]',
+      scopes: 'entity.type.class.constructor' # Type
+    },
+    'entity.function' # function
+  ]
+
+  '''
+  generator_function > identifier,
+  generator_function_declaration > identifier
+  ''': 'entity.function'
+
+  'method_definition > property_identifier': 'entity.function.method'
+
+  '''
+  property_identifier,
+  shorthand_property_identifier
+  ''': [
+    {
+      match: '^[0-9_$]*[A-Z][A-Z0-9_$]*$',
+      scopes: 'entity.variable.member.immutable' # _.VARIABLE
+    },
+    {
+      match: '^[0-9_$]*[A-Z]',
+      scopes: 'entity.type.class' # _.Type
+    },
+    'entity.variable.member' # _.variable
+  ]
 
   'identifier': [
     {
-      match: '^(global|globalThis|module|exports|__filename|__dirname)$',
-      scopes: 'support.variable'
+      exact: 'Infinity',
+      scopes: 'constant.language.numeric'
+    },
+    {
+      match: '^(global|globalThis||module|exports|process|__filename|__dirname)$',
+      scopes: 'entity.variable.support'
     },
     {
       match: '^(window|self|frames|event|document|performance|screen|navigator|console)$'
-      scopes: 'support.variable.dom'
+      scopes: 'entity.variable.support.dom'
     },
     {
-      exact: 'require',
-      scopes: 'support.function'
+      exact: 'arguments',
+      scopes: 'entity.variable.support.arguments'
     },
     {
-      match: '^[\$A-Z_]{2,}$',
-      scopes: 'constant.other'
+      match: '^[0-9_$]*[A-Z][A-Z0-9_$]*$',
+      scopes: 'entity.variable.immutable'
     },
+    {
+      match: '^[0-9_$]*[A-Z]',
+      scopes: 'entity.type.class'
+    },
+    'entity.variable'
+  ]
+
+  'formal_parameters > identifier': 'entity.variable.parameter'
+  'arrow_function > identifier:nth-child(0)': 'entity.variable.parameter'
+
+  '''
+  jsx_opening_element > identifier,
+  jsx_closing_element > identifier,
+  jsx_self_closing_element > identifier
+  ''': [
     {
       match: '^[A-Z]',
-      scopes: 'meta.class'
+      scopes: 'entity.type.component.jsx'
     },
+    'entity.tag.jsx'
+  ]
+
+  'jsx_attribute > property_identifier': 'entity.attribute.jsx'
+
+  # String
+  'string': 'string.quoted'
+
+  'template_string': 'string.template.quoted'
+  'template_substitution': 'string.part.interpolation'
+
+  'regex': 'string.regexp.quoted'
+  'regex > regex_flags': 'string.regexp.part.language.control.mode'
+
+  'jsx_attribute > string': 'string.quoted.attribute-value.jsx'
+
+  # Constant
+  'escape_sequence': [
+    {
+      match: '^\\\\[uUxftvnrb0-9]',
+      scopes: 'constant.character.escape.code'
+    },
+    'constant.character.escape'
   ]
 
   'number': 'constant.numeric'
-  'string': 'string.quoted'
-  'regex': 'string.regexp'
-  'escape_sequence': 'constant.character.escape'
-  'template_string': 'string.quoted.template'
-  'undefined': 'constant.language'
+
+  'undefined': 'constant.language.undefined'
   'null': 'constant.language.null'
   'true': 'constant.language.boolean.true'
   'false': 'constant.language.boolean.false'
+
+  # Text
+  'jsx_text': 'text.jsx'
+
+  # Comment
   'comment': [
     {
-      match: "^//",
+      match: '^//',
       scopes: 'comment.line'
     },
     'comment.block'
   ]
   'hash_bang_line': 'comment.block'
 
-  '
-    jsx_expression > "{",
-    jsx_expression > "}",
-    template_substitution > "${",
-    template_substitution > "}"
-  ': 'punctuation.section.embedded'
-  'template_substitution': 'embedded.source'
+  # Punctuation
+  '"."': 'punctuation.accessor.member'
+  '"=>"': 'punctuation.delimiter.body.function.arrow'
+  '";"': 'punctuation.delimiter.statement'
+  '":"': 'punctuation.delimiter'
+  '","': 'punctuation.delimiter'
+  '"("': 'punctuation.delimiter'
+  '")"': 'punctuation.delimiter'
+  '"{"': 'punctuation.delimiter'
+  '"}"': 'punctuation.delimiter'
+  '"["': 'punctuation.definition'
+  '"]"': 'punctuation.definition'
+  '"*"': 'punctuation.definition'
+  '"@"': 'punctuation.alteration.decorator'
+  '"..."': 'punctuation.alteration.variadic'
+  '"\\""': 'punctuation.definition.string'
+  '"\'"': 'punctuation.definition.string'
+  'jsx_attribute > string > "\\""': 'punctuation.definition.string.attribute-value.jsx'
+  'jsx_attribute > string > "\'"': 'punctuation.definition.string.attribute-value.jsx'
+  'regex > "/"': 'punctuation.definition.string.regexp'
 
-  '"("': 'punctuation.definition.parameters.begin.bracket.round'
-  '")"': 'punctuation.definition.parameters.end.bracket.round'
-  '"{"': 'punctuation.definition.function.body.begin.bracket.curly'
-  '"}"': 'punctuation.definition.function.body.end.bracket.curly'
-  '";"': 'punctuation.terminator.statement.semicolon'
-  '"["': 'punctuation.definition.array.begin.bracket.square'
-  '"]"': 'punctuation.definition.array.end.bracket.square'
+  'pair > ":"': 'punctuation.delimiter.pair'
 
-  '"var"': 'storage.type'
-  '"let"': 'storage.type'
-  '"class"': 'storage.type'
-  '"extends"': 'storage.modifier'
-  '"const"': 'storage.modifier'
-  '"static"': 'storage.modifier'
-  '"function"': 'storage.type.function'
-  '"=>"': 'storage.type.function.arrow'
+  'generator_function > "*"': 'punctuation.definition.function.generator'
+  'generator_function_declaration > "*"': 'punctuation.definition.function.generator'
+  'method_definition > "*"': 'punctuation.definition.function.generator'
+  'yield_expression > "*"': 'punctuation.definition.function.generator'
 
-  '"="': 'keyword.operator.js'
-  '"+="': 'keyword.operator.js'
-  '"-="': 'keyword.operator.js'
-  '"*="': 'keyword.operator.js'
-  '"/="': 'keyword.operator.js'
-  '"%="': 'keyword.operator.js'
-  '"<<="': 'keyword.operator.js'
-  '">>="': 'keyword.operator.js'
-  '">>>="': 'keyword.operator.js'
-  '"&="': 'keyword.operator.js'
-  '"^="': 'keyword.operator.js'
-  '"|="': 'keyword.operator.js'
-  '"!"': 'keyword.operator.js'
-  '"+"': 'keyword.operator.js'
-  '"-"': 'keyword.operator.js'
-  '"*"': 'keyword.operator.js'
-  '"/"': 'keyword.operator.js'
-  '"%"': 'keyword.operator.js'
-  '"=="': 'keyword.operator.js'
-  '"==="': 'keyword.operator.js'
-  '"!="': 'keyword.operator.js'
-  '"!=="': 'keyword.operator.js'
-  '">="': 'keyword.operator.js'
-  '"<="': 'keyword.operator.js'
-  '">"': 'keyword.operator.js'
-  '"<"': 'keyword.operator.js'
-  '":"': 'keyword.operator.js'
-  '"?"': 'keyword.operator.js'
-  '"&&"': 'keyword.operator.js'
-  '"||"': 'keyword.operator.js'
-  '"&"': 'keyword.operator.js'
-  '"~"': 'keyword.operator.js'
-  '"^"': 'keyword.operator.js'
-  '">>"': 'keyword.operator.js'
-  '">>>"': 'keyword.operator.js'
-  '"<<"': 'keyword.operator.js'
-  '"|"': 'keyword.operator.js'
-  '"++"': 'keyword.operator.js'
-  '"--"': 'keyword.operator.js'
-  '"..."': 'keyword.operator.spread.js'
+  'export_statement > "*"': 'punctuation.definition.package.export.wildcard'
+  'namespace_import > "*"': 'punctuation.definition.package.import.wildcard'
 
-  '"in"': 'keyword.operator.in'
-  '"instanceof"': 'keyword.operator.instanceof'
-  '"of"': 'keyword.operator.of'
-  '"new"': 'keyword.operator.new'
-  '"typeof"': 'keyword.operator.typeof'
+  'jsx_attribute > "="': 'punctuation.delimiter.pair.attribute-value.jsx'
 
-  '"get"': 'keyword.operator.setter'
-  '"set"': 'keyword.operator.setter'
+  'jsx_fragment > "<"': 'punctuation.definition.tag.jsx'
+  'jsx_fragment > "/"': 'punctuation.definition.tag.jsx'
+  'jsx_fragment > ">"': 'punctuation.definition.tag.jsx'
+  'jsx_opening_element > "<"': 'punctuation.definition.tag.jsx'
+  'jsx_opening_element > ">"': 'punctuation.definition.tag.jsx'
+  'jsx_closing_element > "<"': 'punctuation.definition.tag.jsx'
+  'jsx_closing_element > "/"': 'punctuation.definition.tag.jsx'
+  'jsx_closing_element > ">"': 'punctuation.definition.tag.jsx'
+  'jsx_self_closing_element > "<"': 'punctuation.definition.tag.jsx'
+  'jsx_self_closing_element > "/"': 'punctuation.definition.tag.jsx'
+  'jsx_self_closing_element > ">"': 'punctuation.definition.tag.jsx'
 
-  '"."': 'meta.delimiter.period'
-  '","': 'meta.delimiter.comma'
+  'jsx_expression > "{"': 'punctuation.delimiter.embedded.jsx'
+  'jsx_expression > "}"': 'punctuation.delimiter.embedded.jsx'
 
-  '"as"': 'keyword.control'
-  '"if"': 'keyword.control'
-  '"do"': 'keyword.control'
-  '"else"': 'keyword.control'
-  '"while"': 'keyword.control'
-  '"for"': 'keyword.control'
-  '"return"': 'keyword.control'
-  '"break"': 'keyword.control'
-  '"continue"': 'keyword.control'
-  '"throw"': 'keyword.control'
-  '"try"': 'keyword.control'
-  '"catch"': 'keyword.control'
-  '"finally"': 'keyword.control'
-  '"switch"': 'keyword.control'
-  '"case"': 'keyword.control'
-  '"default"': 'keyword.control'
-  '"export"': 'keyword.control'
-  '"import"': 'keyword.control'
-  '"from"': 'keyword.control'
-  '"yield"': 'keyword.control'
-  '"async"': 'keyword.control'
-  '"await"': 'keyword.control'
-  '"debugger"': 'keyword.control'
-  '"delete"': 'keyword.control'
+  'template_substitution > "${"': 'punctuation.delimiter.string.part.interpolation'
+  'template_substitution > "}"': 'punctuation.delimiter.string.part.interpolation'
 
-  'jsx_attribute > property_identifier': 'entity.other.attribute-name'
-  'jsx_opening_element > identifier': 'entity.name.tag'
-  'jsx_closing_element > identifier': 'entity.name.tag'
-  'jsx_self_closing_element > identifier': 'entity.name.tag'
+  'class_body > "{"': 'punctuation.delimiter.body.class'
+  'class_body > "}"': 'punctuation.delimiter.body.class'
+
+  'function > statement_block > "{"': 'punctuation.delimiter.body.function'
+  'function > statement_block > "}"': 'punctuation.delimiter.body.function'
+  'function_declaration > statement_block > "{"': 'punctuation.delimiter.body.function'
+  'function_declaration > statement_block > "}"': 'punctuation.delimiter.body.function'
+  'arrow_function > statement_block > "{"': 'punctuation.delimiter.body.function.lambda'
+  'arrow_function > statement_block > "}"': 'punctuation.delimiter.body.function.lambda'
+  'method_definition > statement_block > "{"': 'punctuation.delimiter.body.function.method'
+  'method_definition > statement_block > "}"': 'punctuation.delimiter.body.function.method'
+  'generator_function > statement_block > "{"': 'punctuation.delimiter.body.function.generator'
+  'generator_function > statement_block > "}"': 'punctuation.delimiter.body.function.generator'
+  'generator_function_declaration > statement_block > "{"': 'punctuation.delimiter.body.function.generator'
+  'generator_function_declaration > statement_block > "}"': 'punctuation.delimiter.body.function.generator'
+
+  'switch_body > "{"': 'punctuation.delimiter.body.switch'
+  'switch_body > "}"': 'punctuation.delimiter.body.switch'
+
+  'export_clause > "{"': 'punctuation.delimiter.package'
+  'export_clause > "}"': 'punctuation.delimiter.package'
+  'named_imports > "{"': 'punctuation.delimiter.package'
+  'named_imports > "}"': 'punctuation.delimiter.package'
+
+  'statement_block > "{"': 'punctuation.delimiter.statement'
+  'statement_block > "}"': 'punctuation.delimiter.statement'
+
+  'object > "{"': 'punctuation.definition.collection.object'
+  'object > "}"': 'punctuation.definition.collection.object'
+
+  'array > "["': 'punctuation.definition.collection.array'
+  'array > "]"': 'punctuation.definition.collection.array'
+
+  'subscript_expression > "["': 'punctuation.accessor.subscript'
+  'subscript_expression > "]"': 'punctuation.accessor.subscript'
+
+  'computed_property_name > "["': 'punctuation.delimiter.expression'
+  'computed_property_name > "]"': 'punctuation.delimiter.expression'
+
+  'catch_clause > "("': 'punctuation.delimiter.expression'
+  'catch_clause > ")"': 'punctuation.delimiter.expression'
+
+  'for_statement > "("': 'punctuation.delimiter.expression'
+  'for_statement > ")"': 'punctuation.delimiter.expression'
+
+  'for_in_statement > "("': 'punctuation.delimiter.expression'
+  'for_in_statement > ")"': 'punctuation.delimiter.expression'
+
+  'parenthesized_expression > "("': 'punctuation.delimiter.expression'
+  'parenthesized_expression > ")"': 'punctuation.delimiter.expression'
+
+  'arguments > "("': 'punctuation.delimiter.arguments'
+  'arguments > ")"': 'punctuation.delimiter.arguments'
+
+  'formal_parameters > "("': 'punctuation.delimiter.parameters'
+  'formal_parameters > ")"': 'punctuation.delimiter.parameters'
+
+  'ERROR > "."': 'punctuation.accessor.member.invalid.illegal'
+  'ERROR > "=>"': 'punctuation.delimiter.body.function.arrow.invalid.illegal'
+  'ERROR > ";"': 'punctuation.delimiter.statement.invalid.illegal'
+  'ERROR > ":"': 'punctuation.delimiter.invalid.illegal'
+  'ERROR > ","': 'punctuation.delimiter.invalid.illegal'
+  'ERROR > "("': 'punctuation.delimiter.invalid.illegal'
+  'ERROR > ")"': 'punctuation.delimiter.invalid.illegal'
+  'ERROR > "{"': 'punctuation.delimiter.invalid.illegal'
+  'ERROR > "}"': 'punctuation.delimiter.invalid.illegal'
+  'ERROR > "["': 'punctuation.definition.invalid.illegal'
+  'ERROR > "]"': 'punctuation.definition.invalid.illegal'
+  'ERROR > "@"': 'punctuation.alteration.decorator.invalid.illegal'
+  'ERROR > "..."': 'punctuation.alteration.variadic.invalid.illegal'
+  'ERROR > "\\""': 'punctuation.definition.string.invalid.illegal'
+  'ERROR > "\'"': 'punctuation.definition.string.invalid.illegal'
+
+  # Meta
+  'jsx_element': 'meta.embedded.jsx'
+  'jsx_element > jsx_element': ''
