@@ -973,7 +973,7 @@
   }
   {
     'match': '''(?x) (?<!\\$) \\b
-      (AggregateError|Array|ArrayBuffer|Atomics|Boolean|DataView|Error|EvalError|Float32Array|Float64Array
+      (AggregateError|Array|ArrayBuffer|Atomics|Boolean|DataView|Date|Error|EvalError|Float32Array|Float64Array
       |Function|Generator|GeneratorFunction|Int16Array|Int32Array|Int8Array|InternalError|Intl|JSON|Map|Number
       |Object|Proxy|RangeError|ReferenceError|Reflect|RegExp|Set|SharedArrayBuffer|SIMD|String|Symbol|SyntaxError
       |TypeError|Uint16Array|Uint32Array|Uint8Array|Uint8ClampedArray|URIError|WeakMap|WeakSet)
