@@ -968,6 +968,25 @@ describe "JavaScript grammar", ->
       expect(tokens[5]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.sql.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
       expect(tokens[6]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.sql.js', 'punctuation.definition.string.end.js']
 
+  describe "ES6 tagged HBS string templates", ->
+    it "tokenizes them as strings", ->
+      {tokens} = grammar.tokenizeLine('hbs`{{#if isAdmin`')
+      expect(tokens[0]).toEqual value: 'hbs', scopes: ['source.js', 'string.quoted.template.hbs.js', 'entity.name.function.js']
+      expect(tokens[1]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.hbs.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[2]).toEqual value: '{{#if isAdmin', scopes: ['source.js', 'string.quoted.template.hbs.js']
+      expect(tokens[3]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.hbs.js', 'punctuation.definition.string.end.js']
+
+  describe "ES6 tagged HBS string templates with interpolation", ->
+    it "tokenizes them as strings", ->
+      {tokens} = grammar.tokenizeLine('hbs`{{#if ${isAdmin}`')
+      expect(tokens[0]).toEqual value: 'hbs', scopes: ['source.js', 'string.quoted.template.hbs.js', 'entity.name.function.js']
+      expect(tokens[1]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.hbs.js', 'punctuation.definition.string.begin.js']
+      expect(tokens[2]).toEqual value: '{{#if ', scopes: ['source.js', 'string.quoted.template.hbs.js']
+      expect(tokens[3]).toEqual value: '${', scopes: ['source.js', 'string.quoted.template.hbs.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
+      expect(tokens[4]).toEqual value: 'isAdmin', scopes: ['source.js', 'string.quoted.template.hbs.js', 'source.js.embedded.source']
+      expect(tokens[5]).toEqual value: '}', scopes: ['source.js', 'string.quoted.template.hbs.js', 'source.js.embedded.source', 'punctuation.section.embedded.js']
+      expect(tokens[6]).toEqual value: '`', scopes: ['source.js', 'string.quoted.template.hbs.js', 'punctuation.definition.string.end.js']
+
   describe "ES6 class", ->
     it "tokenizes class", ->
       {tokens} = grammar.tokenizeLine('class MyClass')
