@@ -1,4 +1,5 @@
-# JavaScript language support in Atom
+##### Atom and all repositories under Atom will be archived on December 15, 2022. Learn more in our [official announcement](https://github.blog/2022-06-08-sunsetting-atom/)
+ # JavaScript language support in Atom
 
 ![ci](https://github.com/atom/language-javascript/workflows/ci/badge.svg)
 [![Dependency Status](https://david-dm.org/atom/language-javascript.svg)](https://david-dm.org/atom/language-javascript)
