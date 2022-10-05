@@ -11,3 +11,31 @@
     'decreaseIndentPattern': '(?x)
         ^ \\s* (\\s* /[*] .* [*]/ \\s*)* [}\\])]
       '
+    scopes:
+      indent:
+        array: true
+        object: true
+        arguments: true
+        statement_block: true
+        class_body: true
+        parenthesized_expression: true
+        jsx_element: true
+        jsx_opening_element: true
+        jsx_expression: true
+        switch_body: true
+      indentExceptFirst:
+        member_expression: true
+        assignment_expression: true
+        expression_statement: true
+        variable_declarator: true
+        lexical_declaration: true
+        binary_expression: true
+        jsx_self_closing_element: true
+      indentExceptFirstOrBlock:
+        if_statement: true
+        while_statement: true
+      types:
+        indent:
+          description: true
+        outdent:
+          else: true
